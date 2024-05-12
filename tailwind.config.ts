@@ -7,6 +7,7 @@ export default {
     },
     extend: {
       colors: {
+        "text-primary": "rgb(var(--text-primary))",
         "primary-50": "rgb(var(--primary-50))",
         "primary-100": "rgb(var(--primary-100))",
         "primary-200": "rgb(var(--primary-200))",

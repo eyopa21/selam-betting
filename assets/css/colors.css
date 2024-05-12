@@ -1,5 +1,6 @@
 @layer base {
     :root {
+        --text-primary: 0, 0, 0;
         --primary-50: 255 252 230;
         --primary-100: 255 251 217;
         --primary-200: 255 247 176;
@@ -25,6 +26,7 @@
 
     @media (prefers-color-scheme: dark) {
         :root {
+            --text-primary: 255, 255, 255;
             --primary-50: 232 236 241;
             --primary-100: 184 195 212;
             --primary-200: 150 167 191;
