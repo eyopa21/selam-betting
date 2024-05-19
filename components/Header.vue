@@ -57,34 +57,5 @@
 </template>
 
 <script setup lang="ts">
-const menuOptions = [
-  {
-    name: "Sport",
-    link: "#",
-  },
-  {
-    name: "Live",
-    link: "#",
-  },
-  {
-    name: "Jackpot",
-    link: "#",
-  },
-  {
-    name: "Virtual Sport",
-    link: "#",
-  },
-  {
-    name: "Promotions",
-    link: "#",
-  },
-  {
-    name: " Deposit",
-    link: "#",
-  },
-  {
-    name: "Rules",
-    link: "#",
-  },
-];
+import { menuOptions } from "../composables/dummyData";
 </script>

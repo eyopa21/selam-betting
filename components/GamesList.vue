@@ -20,206 +20,33 @@
           {{ match.date }}
         </div>
       </div>
-      <div class="tw-flex tw-justify-between">
-        <Odd v-for="odd in match.odds" :value="odd.value" :odd="odd.odd" />
+      <div class="tw-flex tw-justify-between tw-items-center tw-mb-2">
+        <div v-for="odd in match.odds" class="tw-w-full tw-mr-2">
+          <Odd :value="odd.value" :odd="odd.odd" />
+        </div>
+        <q-btn
+          outline
+          class="tw-rounded-lg tw-text-white tw-whitespace-nowrap tw-font-semibold"
+          label="All markets +"
+          @click="
+            !showMarketArray.includes(match.id)
+              ? showMarketArray.push(match.id)
+              : (showMarketArray = showMarketArray.filter(
+                  (id) => id !== match.id
+                ))
+          "
+        />
       </div>
+      <AllMarkets
+        v-if="match.markets && showMarketArray.includes(match.id)"
+        :markets="match.markets"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const matchesArray = [
-  {
-    league: "English Premier League",
-    countryFlagUrl: "https://via.placeholder.com/50",
-    teams: "Manchester United vs. Liverpool",
-    date: "2024-05-15",
-    odds: [
-      { value: "1", odd: "2.1" },
-      { value: "X", odd: "3.25" },
-      { value: "2", odd: "2.8" },
-      { value: "1x", odd: "1.4" },
-      { value: "12", odd: "1.6" },
-      { value: "x2", odd: "1.8" },
-      { value: "Yes", odd: "1.9" },
-      { value: "No", odd: "1.85" },
-    ],
-  },
-  {
-    league: "Spanish La Liga",
-    countryFlagUrl: "https://via.placeholder.com/50",
-    teams: "Barcelona vs. Real Madrid",
-    date: "2024-05-16",
-    odds: [
-      { value: "1", odd: "2.1" },
-      { value: "X", odd: "3.25" },
-      { value: "2", odd: "2.8" },
-      { value: "1x", odd: "1.4" },
-      { value: "12", odd: "1.6" },
-      { value: "x2", odd: "1.8" },
-      { value: "Yes", odd: "1.9" },
-      { value: "No", odd: "1.85" },
-    ],
-  },
-  {
-    league: "Italian Serie A",
-    countryFlagUrl: "https://via.placeholder.com/50",
-    teams: "Juventus vs. Inter Milan",
-    date: "2024-05-17",
-    odds: [
-      { value: "1", odd: "2.1" },
-      { value: "X", odd: "3.25" },
-      { value: "2", odd: "2.8" },
-      { value: "1x", odd: "1.4" },
-      { value: "12", odd: "1.6" },
-      { value: "x2", odd: "1.8" },
-      { value: "Yes", odd: "1.9" },
-      { value: "No", odd: "1.85" },
-    ],
-  },
-  {
-    league: "English Premier League",
-    countryFlagUrl: "https://via.placeholder.com/50",
-    teams: "Manchester United vs. Liverpool",
-    date: "2024-05-15",
-    odds: [
-      { value: "1", odd: "2.1" },
-      { value: "X", odd: "3.25" },
-      { value: "2", odd: "2.8" },
-      { value: "1x", odd: "1.4" },
-      { value: "12", odd: "1.6" },
-      { value: "x2", odd: "1.8" },
-      { value: "Yes", odd: "1.9" },
-      { value: "No", odd: "1.85" },
-    ],
-  },
-  {
-    league: "Spanish La Liga",
-    countryFlagUrl: "https://via.placeholder.com/50",
-    teams: "Barcelona vs. Real Madrid",
-    date: "2024-05-16",
-    odds: [
-      { value: "1", odd: "2.1" },
-      { value: "X", odd: "3.25" },
-      { value: "2", odd: "2.8" },
-      { value: "1x", odd: "1.4" },
-      { value: "12", odd: "1.6" },
-      { value: "x2", odd: "1.8" },
-      { value: "Yes", odd: "1.9" },
-      { value: "No", odd: "1.85" },
-    ],
-  },
-  {
-    league: "Italian Serie A",
-    countryFlagUrl: "https://via.placeholder.com/50",
-    teams: "Juventus vs. Inter Milan",
-    date: "2024-05-17",
-    odds: [
-      { value: "1", odd: "2.1" },
-      { value: "X", odd: "3.25" },
-      { value: "2", odd: "2.8" },
-      { value: "1x", odd: "1.4" },
-      { value: "12", odd: "1.6" },
-      { value: "x2", odd: "1.8" },
-      { value: "Yes", odd: "1.9" },
-      { value: "No", odd: "1.85" },
-    ],
-  },
-  {
-    league: "English Premier League",
-    countryFlagUrl: "https://via.placeholder.com/50",
-    teams: "Manchester United vs. Liverpool",
-    date: "2024-05-15",
-    odds: [
-      { value: "1", odd: "2.1" },
-      { value: "X", odd: "3.25" },
-      { value: "2", odd: "2.8" },
-      { value: "1x", odd: "1.4" },
-      { value: "12", odd: "1.6" },
-      { value: "x2", odd: "1.8" },
-      { value: "Yes", odd: "1.9" },
-      { value: "No", odd: "1.85" },
-    ],
-  },
-  {
-    league: "Spanish La Liga",
-    countryFlagUrl: "https://via.placeholder.com/50",
-    teams: "Barcelona vs. Real Madrid",
-    date: "2024-05-16",
-    odds: [
-      { value: "1", odd: "2.1" },
-      { value: "X", odd: "3.25" },
-      { value: "2", odd: "2.8" },
-      { value: "1x", odd: "1.4" },
-      { value: "12", odd: "1.6" },
-      { value: "x2", odd: "1.8" },
-      { value: "Yes", odd: "1.9" },
-      { value: "No", odd: "1.85" },
-    ],
-  },
-  {
-    league: "Italian Serie A",
-    countryFlagUrl: "https://via.placeholder.com/50",
-    teams: "Juventus vs. Inter Milan",
-    date: "2024-05-17",
-    odds: [
-      { value: "1", odd: "2.1" },
-      { value: "X", odd: "3.25" },
-      { value: "2", odd: "2.8" },
-      { value: "1x", odd: "1.4" },
-      { value: "12", odd: "1.6" },
-      { value: "x2", odd: "1.8" },
-      { value: "Yes", odd: "1.9" },
-      { value: "No", odd: "1.85" },
-    ],
-  },
-  {
-    league: "English Premier League",
-    countryFlagUrl: "https://via.placeholder.com/50",
-    teams: "Manchester United vs. Liverpool",
-    date: "2024-05-15",
-    odds: [
-      { value: "1", odd: "2.1" },
-      { value: "X", odd: "3.25" },
-      { value: "2", odd: "2.8" },
-      { value: "1x", odd: "1.4" },
-      { value: "12", odd: "1.6" },
-      { value: "x2", odd: "1.8" },
-      { value: "Yes", odd: "1.9" },
-      { value: "No", odd: "1.85" },
-    ],
-  },
-  {
-    league: "Spanish La Liga",
-    countryFlagUrl: "https://via.placeholder.com/50",
-    teams: "Barcelona vs. Real Madrid",
-    date: "2024-05-16",
-    odds: [
-      { value: "1", odd: "2.1" },
-      { value: "X", odd: "3.25" },
-      { value: "2", odd: "2.8" },
-      { value: "1x", odd: "1.4" },
-      { value: "12", odd: "1.6" },
-      { value: "x2", odd: "1.8" },
-      { value: "Yes", odd: "1.9" },
-      { value: "No", odd: "1.85" },
-    ],
-  },
-  {
-    league: "Italian Serie A",
-    countryFlagUrl: "https://via.placeholder.com/50",
-    teams: "Juventus vs. Inter Milan",
-    date: "2024-05-17",
-    odds: [
-      { value: "1", odd: "2.1" },
-      { value: "X", odd: "3.25" },
-      { value: "2", odd: "2.8" },
-      { value: "1x", odd: "1.4" },
-      { value: "12", odd: "1.6" },
-      { value: "x2", odd: "1.8" },
-      { value: "Yes", odd: "1.9" },
-      { value: "No", odd: "1.85" },
-    ],
-  },
-];
+import { matchesArray } from "../composables/dummyData";
+
+const showMarketArray: Ref<number[]> = ref([]);
 </script>
