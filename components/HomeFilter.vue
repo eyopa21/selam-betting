@@ -1,5 +1,7 @@
 <template>
-  <div class="tw-bg-secondary-800 tw-rounded tw-p-3 tw-text-text-primary">
+  <div
+    class="tw-bg-secondary-800 tw-rounded tw-p-3 tw-text-text-primary tw-w-full"
+  >
     <p class="tw-font-semibold tw-m-0 tw-p-0">Filter</p>
     <q-list v-for="filter in filters">
       <q-expansion-item expand-separator :label="filter.filterGroup" dense>
