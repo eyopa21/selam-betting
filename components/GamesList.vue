@@ -1,12 +1,12 @@
 <template>
   <div class="tw-bg-secondary-800 tw-p-2 tw-rounded">
     <div class="tw-flex tw-gap-x-4 tw-mb-2">
-      <p class="tw-font-semibold tw-text-text-primary">LIVE</p>
-      <p class="tw-font-semibold tw-text-text-primary">TOMORROW</p>
-      <p class="tw-font-semibold tw-text-text-primary">UPCOMMING</p>
+      <p class="tw-font-semibold tw-text-text-primary text-white">LIVE</p>
+      <p class="tw-font-semibold tw-text-text-primary text-white">TOMORROW</p>
+      <p class="tw-font-semibold tw-text-text-primary text-white">UPCOMMING</p>
     </div>
     <div v-for="match in matchesArray" class="tw-mb-4">
-      <div class="tw-flex tw-justify-between tw-text-text-primary">
+      <div class="tw-flex tw-justify-between text-white">
         <div>
           <div class="tw-flex">
             <q-avatar size="xs" class="tw-mr-2">
