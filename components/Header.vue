@@ -1,9 +1,7 @@
 <template>
-  <div class="tw-py-2 tw-flex tw-justify-between custom-container">
+  <div class="tw-py-2 tw-flex tw-justify-between custom-container items-center">
     <div class="tw-ml-4">
-      <h4 class="tw-font-bold tw-italic tw-text-4xl">
-        HARIF<span class="tw-text-secondary-600">BET</span>
-      </h4>
+      <NuxtImg sizes="250px" src="/images/logo.png" />
     </div>
     <div class="lg:tw-flex tw-items-end tw-hidden">
       <ul v-for="option in menuOptions">

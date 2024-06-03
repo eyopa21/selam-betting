@@ -1,9 +1,11 @@
 <template>
   <div
-    class="tw-flex tw-justify-between tw-bg-secondary-700 tw-py-[2px] tw-px-1 tw-rounded"
+    class="tw-flex tw-justify-between tw-bg-gray-50 dark:tw-bg-secondary-700 tw-py-[2px] tw-px-1 tw-rounded tw-border tw-border-secondary-200 dark:tw-border-none"
   >
-    <p class="tw-font-semibold tw-text-white">{{ value }}</p>
-    <p class="tw-text-gray-300">{{ odd }}</p>
+    <p class="tw-font-semibold dark:tw-text-white tw-text-gray-700">
+      {{ value }}
+    </p>
+    <p class="dark:tw-text-gray-300 tw-text-gray-700">{{ odd }}</p>
   </div>
 </template>
 

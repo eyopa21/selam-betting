@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-bg-secondary-800 tw-h-[90vh]">
+  <div class="tw-bg-secondary-800 tw-h-[85vh]">
     <div
       class="tw-flex tw-items-center tw-justify-around tw-text-white tw-py-3 tw-bg-secondary-700"
     >
@@ -36,7 +36,7 @@
           <q-input
             :dense="true"
             input-class="tw-text-white tw-max-h-6"
-            class="tw-bg-primary-700 tw-text-white tw-w-full tw-max-h-full"
+            class="dark:tw-bg-primary-700 tw-bg-white tw-text-white tw-w-full tw-max-h-full"
           ></q-input>
           <div
             class="tw-bg-gray-400 tw-w-12 tw-h-6 tw-flex tw-justify-around tw-items-center tw-rounded-r"

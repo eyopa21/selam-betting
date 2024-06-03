@@ -1,23 +1,39 @@
 <template>
-  <div class="tw-bg-secondary-800 tw-p-2 tw-rounded">
+  <div class="dark:tw-bg-secondary-800 tw-p-2 tw-rounded tw-bg-secondary-50">
     <div class="tw-flex tw-gap-x-4 tw-mb-2">
-      <p class="tw-font-semibold tw-text-text-primary text-white">LIVE</p>
-      <p class="tw-font-semibold tw-text-text-primary text-white">TOMORROW</p>
-      <p class="tw-font-semibold tw-text-text-primary text-white">UPCOMMING</p>
+      <p
+        class="tw-font-semibold tw-text-text-primary dark:text-white tw-text-gray-600"
+      >
+        LIVE
+      </p>
+      <p
+        class="tw-font-semibold tw-text-text-primary dark:text-white tw-text-gray-600"
+      >
+        TOMORROW
+      </p>
+      <p
+        class="tw-font-semibold tw-text-text-primary dark:text-white tw-text-gray-700"
+      >
+        UPCOMMING
+      </p>
     </div>
     <div v-for="match in matchesArray" class="tw-mb-4">
-      <div class="tw-flex tw-justify-between text-white">
+      <div class="tw-flex tw-justify-between dark:text-white tw-items-end">
         <div>
           <div class="tw-flex">
             <q-avatar size="xs" class="tw-mr-2">
               <NuxtImg :src="match.countryFlagUrl" />
             </q-avatar>
-            <p class="font-semibold">{{ match.league }}</p>
+            <p class="tw-font-semibold tw-text-gray-700 dark:tw-text-white">
+              {{ match.league }}
+            </p>
           </div>
-          <p class="tw-text-xs">{{ match.teams }}</p>
+          <p class="tw-text-xs tw-text-gray-700 dark:tw-text-white">
+            {{ match.teams }}
+          </p>
         </div>
         <div>
-          {{ match.date }}
+          <p class="tw-text-gray-700 dark:tw-text-white">{{ match.date }}</p>
         </div>
       </div>
       <div class="tw-flex tw-justify-between tw-items-center tw-mb-2">
@@ -26,7 +42,7 @@
         </div>
         <q-btn
           outline
-          class="tw-rounded-lg tw-text-white tw-whitespace-nowrap tw-font-semibold"
+          class="tw-rounded-lg dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
           label="All markets +"
           @click="
             !showMarketArray.includes(match.id)

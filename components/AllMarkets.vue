@@ -1,14 +1,14 @@
 <template>
-  <div class="tw-w-full tw-bg-secondary-900 tw-rounded">
+  <div class="tw-w-full dark:tw-bg-secondary-900 tw-rounded">
     <div>
       <q-tabs
         v-model="tabValue"
         inline-label
         outside-arrows
         mobile-arrows
-        class="bg-primary text-white shadow-2"
+        class="bg-primary text-white shadow-2 tw-opacity-80 dark:tw-opacity-100"
       >
-        <q-tab name="all-market" label="All Market">
+        <q-tab name="all-market" label="All Market" class="tw-font-bold">
           <p class="tw-text-white">(112)</p>
         </q-tab>
         <div
@@ -27,9 +27,9 @@
           dense-toggle
           expand-separator
           :label="market.marketName"
-          class="tw-bg-secondary-800 tw-text-white tw-mb-2"
+          class="dark:tw-bg-secondary-800 dark:tw-text-white tw-text-gray-700 tw-mb-2 tw-border dark:tw-border-none"
           :aria-expanded="true"
-          header-class="tw-bg-secondary-700"
+          header-class="dark:tw-bg-secondary-700 tw-bg-gray-200"
         >
           <div class="tw-grid tw-grid-cols-3">
             <Odd
