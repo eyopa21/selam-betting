@@ -1,5 +1,7 @@
 <template>
-  <div class="tw-bg-secondary-800 tw-rounded tw-p-3 text-white tw-w-full">
+  <div
+    class="tw-bg-secondary-800 tw-rounded tw-p-3 text-white tw-w-full tw-h-[85vh] tw-overflow-scroll"
+  >
     <p class="tw-font-semibold tw-m-0 tw-p-0">Filter</p>
     <q-list v-for="filter in filters">
       <q-expansion-item
