@@ -1,18 +1,21 @@
 <template>
   <div class="tw-bg-secondary-800 tw-h-[85vh]">
     <div
-      class="tw-flex tw-items-center tw-justify-around tw-text-white tw-py-3 tw-bg-secondary-700"
+      class="tw-flex tw-items-center tw-justify-around tw-text-white tw-bg-secondary-700"
     >
-      <p>
-        Slip 1 <span> <q-icon name="close" /> </span>
-      </p>
-      <p>
-        Slip 2 <span> <q-icon name="close" /> </span>
-      </p>
-      <p>
-        Slip 3 <span> <q-icon name="close" /> </span>
-      </p>
-      <q-icon name="add" />
+      <div class="tw-max-w-[90%]">
+        <q-tabs v-model="activeSlip" inline-label outside-arrows mobile-arrows>
+          <q-tab v-for="slip in slips" :name="slip.name" :label="slip.name">
+            <q-icon
+              v-if="slips.length > 1"
+              @click="removeSlip(slip.id)"
+              name="close"
+              class="tw-ml-2"
+            />
+          </q-tab>
+        </q-tabs>
+      </div>
+      <q-icon @click="addSlip" name="add" />
     </div>
     <div
       class="tw-text-white tw-m-4 tw-flex tw-flex-col tw-justify-between tw-h-[90%]"
@@ -77,4 +80,27 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+// interface Slip {
+//   id: number;
+//   name: string;
+// }
+
+// const slips = ref<Slip[]>([{ id: 1, name: "Slip 1" }]);
+// const activeSlip = ref<Slip | null>(null);
+// let slipCounter = ref(2);
+
+// const addSlip = () => {
+//   const newSlip: Slip = {
+//     id: Date.now(), // unique identifier based on the current timestamp
+//     name: `Slip ${slipCounter.value}`,
+//   };
+//   slips.value.push(newSlip);
+//   slipCounter.value += 1; // increment slipCounter for the next slip
+// };
+
+// const removeSlip = (id: number) => {
+//   slips.value = slips.value.filter((slip) => slip.id !== id);
+// };
+const { slips, addSlip, removeSlip, activeSlip } = useSlips();
+</script>

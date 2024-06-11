@@ -10,7 +10,7 @@
       <GamesList />
     </div>
     <div class="tw-col-span-2 tw-hidden lg:tw-block">
-      <div class="tw-sticky tw-top-24">
+      <div class="tw-sticky tw-top-24 max-w-full">
         <Slips />
       </div>
     </div>
