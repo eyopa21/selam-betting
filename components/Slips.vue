@@ -4,7 +4,12 @@
       class="tw-flex tw-items-center tw-justify-around tw-text-white tw-bg-secondary-700"
     >
       <div class="tw-max-w-[90%]">
-        <q-tabs v-model="activeSlip" inline-label outside-arrows mobile-arrows>
+        <q-tabs
+          v-model="activeSlipName"
+          inline-label
+          outside-arrows
+          mobile-arrows
+        >
           <q-tab v-for="slip in slips" :name="slip.name" :label="slip.name">
             <q-icon
               v-if="slips.length > 1"
@@ -81,26 +86,6 @@
 </template>
 
 <script setup lang="ts">
-// interface Slip {
-//   id: number;
-//   name: string;
-// }
-
-// const slips = ref<Slip[]>([{ id: 1, name: "Slip 1" }]);
-// const activeSlip = ref<Slip | null>(null);
-// let slipCounter = ref(2);
-
-// const addSlip = () => {
-//   const newSlip: Slip = {
-//     id: Date.now(), // unique identifier based on the current timestamp
-//     name: `Slip ${slipCounter.value}`,
-//   };
-//   slips.value.push(newSlip);
-//   slipCounter.value += 1; // increment slipCounter for the next slip
-// };
-
-// const removeSlip = (id: number) => {
-//   slips.value = slips.value.filter((slip) => slip.id !== id);
-// };
 const { slips, addSlip, removeSlip, activeSlip } = useSlips();
+const activeSlipName = computed(() => activeSlip.value?.name);
 </script>
