@@ -87,5 +87,8 @@
 
 <script setup lang="ts">
 const { slips, addSlip, removeSlip, activeSlip } = useSlips();
-const activeSlipName = computed(() => activeSlip.value?.name);
+const activeSlipName = ref<string | undefined>("");
+watch(activeSlip, () => {
+  activeSlipName.value = activeSlip.value?.name;
+});
 </script>
