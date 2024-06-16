@@ -43,7 +43,7 @@
           </div>
           <q-input
             :dense="true"
-            input-class="tw-text-white tw-max-h-6"
+            input-class="tw-text-white tw-max-h-6 text-center"
             class="dark:tw-bg-primary-700 tw-bg-white tw-text-white tw-w-full tw-max-h-full"
           ></q-input>
           <div

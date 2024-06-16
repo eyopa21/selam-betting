@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-py-2 tw-flex tw-justify-between custom-container items-center">
+  <div class="tw-flex tw-justify-between custom-container items-center">
     <div class="tw-ml-4">
       <NuxtImg sizes="250px" src="/images/logo.png" />
     </div>

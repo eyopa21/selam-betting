@@ -1,12 +1,28 @@
 <template>
-  <div class="dark:tw-bg-secondary-900">
+  <div class="dark:tw-bg-primary-800">
     <q-layout view="lHh lpr lff">
-      <q-header elevated class="tw-bg-secondary-800">
+      <q-header elevated class="tw-bg-secondary-800 dark:tw-bg-primary-700">
         <Header />
       </q-header>
 
       <q-page-container>
-        <slot />
+        <div
+          class="tw-grid tw-grid-cols-12 w-full custom-container tw-gap-4 tw-py-8"
+        >
+          <div class="tw-col-span-2 tw-hidden lg:tw-block">
+            <div class="tw-sticky tw-top-24">
+              <HomeFilter />
+            </div>
+          </div>
+          <div class="lg:tw-col-span-8 tw-col-span-12">
+            <slot />
+          </div>
+          <div class="tw-col-span-2 tw-hidden lg:tw-block">
+            <div class="tw-sticky tw-top-24 max-w-full">
+              <Slips />
+            </div>
+          </div>
+        </div>
       </q-page-container>
 
       <q-footer elevated>
@@ -15,6 +31,8 @@
     </q-layout>
   </div>
 </template>
+
+<script setup lang="ts"></script>
 
 <style>
 .custom-container {
