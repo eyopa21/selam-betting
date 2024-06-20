@@ -14,10 +14,9 @@ export default defineEventHandler(async (event) => {
             throw new Error(`External API request failed with status ${response.status}`)
         }
 
-        const externalData = await response.json()
+        const data = await response.json()
         return {
-            hello: 'world',
-            externalData,
+            data,
         }
     } catch (error) {
         console.error('Error fetching external data:', error)

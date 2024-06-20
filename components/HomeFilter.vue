@@ -82,32 +82,40 @@
         </div>
       </div>
 
-      <!-- <q-list v-for="sport in sportsList?.results">
-        <q-expansion-item
-          expand-separator
-          :label="sport.name"
-          dense
-          class="text-white"
-        >
-          <q-list v-for="value in filter.values" class="tw-ml-4">
+      <template v-if="sportsList?.data?.results">
+        <q-list v-for="sport in sportsList.data.results">
+          <q-expansion-item
+            expand-separator
+            :label="sport.name"
+            dense
+            class="text-white"
+          >
+            <!-- <q-list v-for="value in filter.values" class="tw-ml-4">
             <div class="tw-flex tw-my-2">
               <q-avatar size="xs" class="tw-mr-2">
                 <NuxtImg :src="value.image" />
               </q-avatar>
               <p class="text-white">{{ value.name }}</p>
             </div>
-          </q-list>
-        </q-expansion-item>
-      </q-list> -->
+          </q-list> -->
+          </q-expansion-item>
+        </q-list>
+      </template>
     </q-scroll-area>
   </div>
 </template>
 
 <script setup lang="ts">
-import { filters } from "../composables/dummyData";
+import type { Sports } from "~/types/sports";
+
+interface sportsResponse {
+  data: Sports;
+}
 
 const date = ref("2024/02/01");
 
-const { data } = await useFetch("/api/sports");
-console.log("datas", data.value);
+const { data: sportsList, error } = await useFetch<sportsResponse>(
+  "/api/sports"
+);
+console.log("datas", sportsList.value?.data.results);
 </script>
