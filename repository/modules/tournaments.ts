@@ -1,43 +1,35 @@
 import type { FetchOptions } from 'ofetch';
 import type { AsyncDataOptions } from '#app';
 
-import type { Sports } from '../../types/sports'
+import type { Tournaments } from '../../types/tournaments'
 import FetchFactory from '../factory';
 
-class SportsModule extends FetchFactory<Sports> {
-    private RESOURCE = '/sports'
+class TournametsModule extends FetchFactory<Tournaments> {
+    private RESOURCE = '/tournament'
     /**
    * Return the sports as array 
    * @param asyncDataOptions options for `useAsyncData`
    * @returns 
    */
 
-    async getSports(asyncDataOptions?: AsyncDataOptions<Sports>) {
+    async getTournamentsUnderSport(id: number, asyncDataOptions?: AsyncDataOptions<Tournaments>) {
         /*
          * wrapped with useAsyncData to prevent network call duplications
          */
-        console.log('getting sports');
-
         return useAsyncData(() => {
             const fetchOptions: FetchOptions<'json'> = {
                 headers: {
-                    'Content-Type': 'application/json',
                     'X-API-KEY': 'RUDKb1iueBuAtFhYGKQxyXhSc2rVKYxe5TNIuTxtEDv6o2jcefPb6p7jXeZlu_LgHExd-_USDVruUS2LjHrSnTOXQnrhIrw9vHLlg7eJDNg'
                 }
             }
-            try {
-                return this.call(
-                    'GET',
-                    `${this.RESOURCE}`,
-                    undefined,
-                    fetchOptions
-                );
-            } catch (error) {
-                console.error('Error fetching sports:', error);
-                throw error;
-            }
+            return this.call(
+                'GET',
+                `${this.RESOURCE}/${id}`,
+                undefined,
+                fetchOptions
+            )
         }, asyncDataOptions)
     }
 }
 
-export default SportsModule;
+export default TournametsModule;

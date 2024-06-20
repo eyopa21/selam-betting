@@ -6,8 +6,9 @@
 </template>
 
 <script setup lang="ts">
-const { $api } = useNuxtApp();
+// const { $api } = useNuxtApp();
 
-const { data, error, pending } = await $api.sports.getSports();
-console.log(data.value);
+// const { data, error, pending } = await $api.sports.getSports();
+
+// console.log("add tototototo", data.value);
 </script>

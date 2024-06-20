@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-bg-secondary-800 tw-h-[85vh]">
+  <div class="tw-bg-secondary-800 dark:tw-bg-primary-700 tw-h-[85vh]">
     <div
       class="tw-flex tw-items-center tw-justify-around tw-text-white tw-bg-secondary-700"
     >

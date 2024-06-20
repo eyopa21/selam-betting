@@ -17,7 +17,14 @@ class FetchFactory<T> {
    */
 
     async call(method: string, url: string, data?: object, fetchOptions?: FetchOptions<'json'>): Promise<T> {
-        return this.$fetch<T>(url, { method, body: data, ...fetchOptions })
+        try {
+            console.log('now is trying');
+            return this.$fetch<T>(url, { method, body: data, ...fetchOptions })
+        } catch (error) {
+            console.error('Factory error fetching sports :', error);
+            throw error;
+        }
+
     }
 }
 

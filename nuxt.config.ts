@@ -5,7 +5,8 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
   runtimeConfig: {
     public: {
-      apiBaseUrl: process.env.API_BASE_URL
+      apiBaseUrl: process.env.API_BASE_URL || 'http://162.55.223.95:8000',
+      apiKey: process.env.API_KEY || 'RUDKb1iueBuAtFhYGKQxyXhSc2rVKYxe5TNIuTxtEDv6o2jcefPb6p7jXeZlu_LgHExd-_USDVruUS2LjHrSnTOXQnrhIrw9vHLlg7eJDNg'
     }
   },
   quasar: {
@@ -15,5 +16,5 @@ export default defineNuxtConfig({
         secondary: "rgb(var(--secondary-500))",
       },
     },
-  },
+  }
 });

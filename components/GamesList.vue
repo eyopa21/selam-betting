@@ -1,5 +1,5 @@
 <template>
-  <div class="dark:tw-bg-secondary-800 tw-p-2 tw-rounded tw-bg-secondary-50">
+  <div class="tw-bg-secondary-800 dark:tw-bg-primary-700 tw-p-2 tw-rounded">
     <div class="tw-flex tw-gap-x-4 tw-mb-2">
       <p
         class="tw-font-semibold tw-text-text-primary dark:text-white tw-text-gray-600"

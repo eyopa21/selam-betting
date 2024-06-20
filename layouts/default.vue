@@ -6,6 +6,7 @@
       </q-header>
 
       <q-page-container>
+        <hr class="tw-h-4 tw-bg-secondary-800 tw-my-2" />
         <div
           class="tw-grid tw-grid-cols-12 w-full custom-container tw-gap-4 tw-py-8"
         >
