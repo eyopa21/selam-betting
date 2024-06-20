@@ -5,10 +5,4 @@
   </div>
 </template>
 
-<script setup lang="ts">
-// const { $api } = useNuxtApp();
-
-// const { data, error, pending } = await $api.sports.getSports();
-
-// console.log("add tototototo", data.value);
-</script>
+<script setup lang="ts"></script>
