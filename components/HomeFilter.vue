@@ -1,6 +1,6 @@
 <template>
   <div
-    class="tw-bg-secondary-800 dark:tw-bg-primary-700 tw-rounded tw-p-3 text-white tw-w-full"
+    class="tw-bg-secondary-800 dark:tw-bg-primary-700 tw-rounded tw-py-3 text-white tw-w-full"
   >
     <q-scroll-area style="height: 80vh; max-width: 300px">
       <h2 class="tw-text-[#8E203A] tw-font-bold tw-text-2xl tw-text-center">
@@ -81,41 +81,67 @@
           </q-input>
         </div>
       </div>
-
-      <template v-if="sportsList?.data?.results">
-        <q-list v-for="sport in sportsList.data.results">
-          <q-expansion-item
-            expand-separator
-            :label="sport.name"
-            dense
-            class="text-white"
-          >
-            <!-- <q-list v-for="value in filter.values" class="tw-ml-4">
-            <div class="tw-flex tw-my-2">
-              <q-avatar size="xs" class="tw-mr-2">
-                <NuxtImg :src="value.image" />
-              </q-avatar>
-              <p class="text-white">{{ value.name }}</p>
-            </div>
-          </q-list> -->
-          </q-expansion-item>
-        </q-list>
+      <template v-if="sportsStore.sports.length">
+        <q-scroll-area style="height: 300px">
+          <q-list v-for="sport in sportsStore.sports">
+            <q-expansion-item
+              expand-separator
+              :label="sport.name"
+              dense
+              class="text-white tw-max-h-3"
+              @show="getTournamentForSport(sport.id)"
+            >
+              <q-infinite-scroll :offset="1">
+                <q-list
+                  v-for="value in sport.tournaments?.results"
+                  class="tw-ml-6"
+                >
+                  <div class="tw-flex tw-my-2">
+                    <p class="text-white">{{ value.name }}</p>
+                  </div>
+                </q-list>
+                <!-- <template v-slot:loading>
+                  <div class="row justify-center q-my-md">
+                    <q-spinner-dots color="primary" size="40px" />
+                  </div>
+                </template> -->
+              </q-infinite-scroll>
+            </q-expansion-item>
+          </q-list>
+        </q-scroll-area>
       </template>
     </q-scroll-area>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { Sports } from "~/types/sports";
-
-interface sportsResponse {
-  data: Sports;
-}
-
 const date = ref("2024/02/01");
 
-const { data: sportsList, error } = await useFetch<sportsResponse>(
-  "/api/sports"
-);
-console.log("datas", sportsList.value?.data.results);
+const sportsStore = useSportsStore();
+
+const getTournamentForSport = (id: number, page: string | null = "") => {
+  const sport = sportsStore.sports.find((s) => s.id === id);
+  if (sport?.tournaments) {
+    return;
+  }
+  let pageValue = "1";
+  if (page) {
+    pageValue = getPageValueFromUrl(page) || "1";
+  }
+  sportsStore.fetchTournaments(id, pageValue);
+};
+
+function getPageValueFromUrl(url: string): string | null {
+  try {
+    const urlObj = new URL(url);
+    return urlObj.searchParams.get("page");
+  } catch (error) {
+    return null;
+  }
+}
+
+onMounted(async () => {
+  await sportsStore.fetchSports();
+  sportsStore.fetchTournaments(1, "1");
+});
 </script>

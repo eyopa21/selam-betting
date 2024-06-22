@@ -1,68 +1,173 @@
 <template>
-  <div class="tw-bg-secondary-800 dark:tw-bg-primary-700 tw-p-2 tw-rounded">
-    <div class="tw-flex tw-gap-x-4 tw-mb-2">
-      <p
-        class="tw-font-semibold tw-text-text-primary dark:text-white tw-text-gray-600"
-      >
-        LIVE
-      </p>
-      <p
-        class="tw-font-semibold tw-text-text-primary dark:text-white tw-text-gray-600"
-      >
-        TOMORROW
-      </p>
-      <p
-        class="tw-font-semibold tw-text-text-primary dark:text-white tw-text-gray-700"
-      >
-        UPCOMMING
-      </p>
-    </div>
-    <div v-for="match in matchesArray" class="tw-mb-4">
-      <div class="tw-flex tw-justify-between dark:text-white tw-items-end">
-        <div>
-          <div class="tw-flex">
-            <q-avatar size="xs" class="tw-mr-2">
-              <NuxtImg :src="match.countryFlagUrl" />
-            </q-avatar>
-            <p class="tw-font-semibold tw-text-gray-700 dark:tw-text-white">
-              {{ match.league }}
-            </p>
-          </div>
-          <p class="tw-text-xs tw-text-gray-700 dark:tw-text-white">
-            {{ match.teams }}
-          </p>
-        </div>
-        <div>
-          <p class="tw-text-gray-700 dark:tw-text-white">{{ match.date }}</p>
-        </div>
+  <div>
+    <div
+      class="tw-bg-secondary-800 dark:tw-bg-primary-700 w-full tw-flex tw-justify-between tw-items-center tw-mb-2 tw-p-2"
+    >
+      <div>
+        <p class="tw-font-bold tw-text-white tw-text-xl">
+          THE TOURNAMENT STARTS IN
+        </p>
       </div>
-      <div class="tw-flex tw-justify-between tw-items-center tw-mb-2">
-        <div v-for="odd in match.odds" class="tw-w-full tw-mr-2">
-          <Odd :value="odd.value" :odd="odd.odd" />
-        </div>
-        <q-btn
-          outline
-          class="tw-rounded-lg dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
-          label="All markets +"
-          @click="
-            !showMarketArray.includes(match.id)
-              ? showMarketArray.push(match.id)
-              : (showMarketArray = showMarketArray.filter(
-                  (id) => id !== match.id
-                ))
-          "
+      <div></div>
+      <div></div>
+    </div>
+    <div
+      class="tw-bg-[#8E203A] w-full tw-flex tw-justify-start tw-items-center tw-mb-2 tw-px-2"
+    >
+      <div
+        class="flex tw-items-center tw-border-r tw-border-indigo-900 tw-px-4"
+      >
+        <q-icon name="home" class="tw-text-white tw-text-3xl" />
+        <q-icon
+          name="arrow_forward_ios"
+          class="tw-text-white tw-text-2xl tw-mx-2 tw-font-extralight"
         />
+        <NuxtImg class="tw-w-6 tw-h-6" src="/images/ball.png" />
+        <q-icon
+          name="arrow_forward_ios"
+          class="tw-text-white tw-text-2xl tw-mx-2 tw-font-extralight"
+        />
+        <NuxtImg class="tw-w-7 tw-aspect-ratio" src="/images/cup.png" />
       </div>
-      <AllMarkets
-        v-if="match.markets && showMarketArray.includes(match.id)"
-        :markets="match.markets"
-      />
+      <div class="tw-items-start tw-ml-4">
+        <q-tabs
+          v-model="aciveHeader"
+          inline-label
+          outside-arrows
+          mobile-arrows
+          dense
+        >
+          <q-tab
+            class="tw-text-white tw-font-semibold tw-text-xl"
+            v-for="header in headersArray"
+            :name="header"
+            :label="header"
+          />
+        </q-tabs>
+      </div>
+      <div></div>
     </div>
+    <div
+      class="tw-bg-secondary-800 dark:tw-bg-primary-700 w-full tw-flex tw-justify-start tw-items-center tw-mb-2"
+    >
+      <div class="flex tw-justify-between tw-items-center tw-mr-2">
+        <q-toggle v-model="liveStreamToggle" color="white" />
+        <p class="tw-text-white">With live streams</p>
+      </div>
+      <!-- TODO: should be replaced with read data -->
+      <div class="flex tw-justify-between tw-items-center tw-mx-1">
+        <NuxtImg class="tw-w-6 tw-h-6 tw-mr-1" src="/images/ball.png" />
+        <p class="tw-text-white tw-font-semibold">Football</p>
+      </div>
+      <div class="flex tw-justify-between tw-items-center tw-mx-1">
+        <NuxtImg class="tw-w-6 tw-h-6 tw-mr-1" src="/images/basket.png" />
+        <p class="tw-text-white tw-font-semibold">Basketball</p>
+      </div>
+      <div class="flex tw-justify-between tw-items-center tw-mx-1">
+        <NuxtImg class="tw-w-6 tw-h-6 tw-mr-1" src="/images/tennis.png" />
+        <p class="tw-text-white tw-font-semibold">Tennis</p>
+      </div>
+      <div class="flex tw-justify-between tw-items-center tw-mx-1">
+        <NuxtImg class="tw-w-6 tw-h-6 tw-mr-1" src="/images/volley.png" />
+        <p class="tw-text-white tw-font-semibold">Volleyball</p>
+      </div>
+      <div class="flex tw-justify-between tw-items-center tw-mx-1">
+        <NuxtImg class="tw-w-6 tw-h-6 tw-mr-1" src="/images/hockey.png" />
+        <p class="tw-text-white tw-font-semibold">Hockey</p>
+      </div>
+      <div class="flex tw-justify-between tw-items-center tw-mx-1">
+        <NuxtImg class="tw-w-6 tw-h-6 tw-mr-1" src="/images/teniis2.png" />
+        <p class="tw-text-white tw-font-semibold">Table tennis</p>
+      </div>
+      <div class="flex tw-justify-between tw-items-center tw-mx-1">
+        <NuxtImg class="tw-w-6 tw-h-6 tw-mr-1" src="/images/cricket.png" />
+        <p class="tw-text-white tw-font-semibold">Cricket</p>
+      </div>
+    </div>
+    <q-tab-panels v-model="aciveHeader" animated>
+      <q-tab-panel
+        name="Matches"
+        class="tw-p-2 tw-bg-secondary-800 dark:tw-bg-primary-700"
+      >
+        <div class="tw-rounded" v-if="listOfMatches?.length">
+          <div v-for="match in listOfMatches" class="tw-mb-4">
+            <div
+              class="tw-flex tw-justify-between dark:text-white tw-items-end"
+            >
+              <div>
+                <div class="tw-flex">
+                  <p
+                    class="tw-font-semibold tw-text-gray-700 dark:tw-text-white"
+                  >
+                    {{ match.league }}
+                  </p>
+                </div>
+                <p class="tw-text-xs tw-text-gray-700 dark:tw-text-white">
+                  {{ match.teams }}
+                </p>
+              </div>
+              <div>
+                <p class="tw-text-gray-700 dark:tw-text-white">
+                  {{ match.date }}
+                </p>
+              </div>
+            </div>
+            <div class="tw-flex tw-justify-between tw-items-center tw-mb-2">
+              <div v-for="odd in match.odds" class="tw-w-full tw-mr-2">
+                <Odd :value="odd.value" :odd="odd.odd" />
+              </div>
+              <q-btn
+                outline
+                class="tw-rounded-lg dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
+                label="All markets +"
+                @click="
+                  !showMarketArray.includes(match.id)
+                    ? showMarketArray.push(match.id)
+                    : (showMarketArray = showMarketArray.filter(
+                        (id) => id !== match.id
+                      ))
+                "
+              />
+            </div>
+            <!-- <AllMarkets
+              v-if="match.markets && showMarketArray.includes(match.id)"
+              :markets="match.markets"
+            /> -->
+          </div>
+        </div>
+      </q-tab-panel>
+      <q-tab-panel name="Recommended">recommended matches </q-tab-panel>
+      <q-tab-panel name="Upcoming Event"> upcoming events </q-tab-panel>
+    </q-tab-panels>
   </div>
 </template>
 
 <script setup lang="ts">
 import { matchesArray } from "../composables/dummyData";
+interface MatchOdds {
+  value: string;
+  odd: string;
+}
+
+interface Matches {
+  id: number;
+  league: string;
+  teams: string;
+  date: string;
+  odds: MatchOdds[];
+}
+const props = defineProps<{
+  listOfMatches: Matches[] | null;
+}>();
 
 const showMarketArray: Ref<number[]> = ref([]);
+const aciveHeader: Ref<string> = ref("Matches");
+
+const liveStreamToggle: Ref<boolean> = ref(false);
+
+const headersArray = ["Matches", "Recommended", "Upcoming Event"];
+
+const { data } = await useFetch(
+  `/api/filter_event/?sport_id=${1}&interval_hours=${4}&page_size=${10}`
+);
 </script>

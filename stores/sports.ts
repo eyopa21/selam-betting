@@ -1,0 +1,66 @@
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import type { Sport, Sports } from '~/types/sports'
+import type { Tournament, Tournaments } from '~/types/tournaments'
+
+export const useSportsStore = defineStore('sports', () => {
+    const sportsCount = ref<number>(0)
+    const sportsNext = ref<string>("")
+    const sportsPrev = ref<string>("")
+    const sports = ref<Sport[]>([])
+    const tournamentsCount = ref<number>(0)
+    const tournamentsNext = ref<string>("")
+    const tournamentsPrev = ref<string>("")
+    const tournaments = ref<Tournament[]>([])
+
+    const fetchSports = async () => {
+        try {
+            const data = await $fetch<{ data: Sports }>('/api/sports')
+            sportsCount.value = data.data.count || 0
+            sportsNext.value = data.data.next || ''
+            sportsPrev.value = data.data.previous || ''
+            data.data.results?.forEach((r) => r.tournaments = {} as Tournaments)
+            sports.value = data.data.results || []
+
+        } catch (error) {
+            console.error('Error fetching sports:', error)
+        }
+    }
+
+    const fetchTournaments = async (sportId: number, page: number | string) => {
+        try {
+            const data = await $fetch<{ data: Tournaments }>(`/api/tournaments/${sportId}/?page=${page || 1}`)
+            console.log('ddata', data.data.count);
+
+            const fetchedSportIndex = sports.value.findIndex((s) => s.id === sportId)
+            console.log('sp olis', sports.value[fetchedSportIndex]);
+
+
+            if (fetchedSportIndex !== -1) {
+                sports.value[fetchedSportIndex].tournaments.count = data.data.count
+                sports.value[fetchedSportIndex].tournaments.next = data.data.next
+                sports.value[fetchedSportIndex].tournaments.previous = data.data.previous
+                sports.value[fetchedSportIndex].tournaments.results = [...sports.value[fetchedSportIndex]?.tournaments.results || [], ...data.data.results || []]
+                console.log('spdv', sports.value);
+
+            } else {
+                console.log('Sport not found in the array.');
+            }
+        } catch (error) {
+            console.error(`Error fetching tournaments for sport ${sportId}:`, error)
+        }
+    }
+
+    return {
+        sports,
+        sportsCount,
+        sportsNext,
+        sportsPrev,
+        tournaments,
+        tournamentsCount,
+        tournamentsNext,
+        tournamentsPrev,
+        fetchSports,
+        fetchTournaments,
+    }
+})
