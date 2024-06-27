@@ -8,9 +8,6 @@ export const useSportsStore = defineStore('sports', () => {
     const sportsNext = ref<string>("")
     const sportsPrev = ref<string>("")
     const sports = ref<Sport[]>([])
-    const tournamentsCount = ref<number>(0)
-    const tournamentsNext = ref<string>("")
-    const tournamentsPrev = ref<string>("")
     const tournaments = ref<Tournament[]>([])
 
     const fetchSports = async () => {
@@ -30,10 +27,8 @@ export const useSportsStore = defineStore('sports', () => {
     const fetchTournaments = async (sportId: number, page: number | string) => {
         try {
             const data = await $fetch<{ data: Tournaments }>(`/api/tournaments/${sportId}/?page=${page || 1}`)
-            console.log('ddata', data.data.count);
 
             const fetchedSportIndex = sports.value.findIndex((s) => s.id === sportId)
-            console.log('sp olis', sports.value[fetchedSportIndex]);
 
 
             if (fetchedSportIndex !== -1) {
@@ -41,7 +36,6 @@ export const useSportsStore = defineStore('sports', () => {
                 sports.value[fetchedSportIndex].tournaments.next = data.data.next
                 sports.value[fetchedSportIndex].tournaments.previous = data.data.previous
                 sports.value[fetchedSportIndex].tournaments.results = [...sports.value[fetchedSportIndex]?.tournaments.results || [], ...data.data.results || []]
-                console.log('spdv', sports.value);
 
             } else {
                 console.log('Sport not found in the array.');
@@ -57,9 +51,6 @@ export const useSportsStore = defineStore('sports', () => {
         sportsNext,
         sportsPrev,
         tournaments,
-        tournamentsCount,
-        tournamentsNext,
-        tournamentsPrev,
         fetchSports,
         fetchTournaments,
     }

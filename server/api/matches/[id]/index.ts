@@ -1,10 +1,8 @@
 export default defineEventHandler(async (event) => {
-    const query = getQuery(event);
-    console.log(query);
+    const { id } = getRouterParams(event);
 
 
-    const url = `http://162.55.223.95:8000/betting/api/v1/filter_event/?sport_id=${query.sport_id}&interval_hours=${query.interval_hours}&page_size-${query.page_size}`;
-    console.log("isurl", url);
+    const url = `http://162.55.223.95:8000/betting/api/v1/matches/${id}/`;
 
     try {
         const response = await fetch(url, {
@@ -16,14 +14,12 @@ export default defineEventHandler(async (event) => {
             },
         })
 
-
         if (!response.ok) {
             throw new Error(`External API request failed with status ${response.status}`)
         }
 
-
         const data = await response.json()
-        console.log('respo', data);
+
         return {
             data,
         }

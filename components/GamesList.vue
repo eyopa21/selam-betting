@@ -89,8 +89,8 @@
         name="Matches"
         class="tw-p-2 tw-bg-secondary-800 dark:tw-bg-primary-700"
       >
-        <div class="tw-rounded" v-if="listOfMatches?.length">
-          <div v-for="match in listOfMatches" class="tw-mb-4">
+        <div class="tw-rounded" v-if="matchListStore.listOfMatches?.length">
+          <div v-for="match in matchListStore.listOfMatches" class="tw-mb-4">
             <div
               class="tw-flex tw-justify-between dark:text-white tw-items-end"
             >
@@ -120,19 +120,15 @@
                 outline
                 class="tw-rounded-lg dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
                 label="All markets +"
-                @click="
-                  !showMarketArray.includes(match.id)
-                    ? showMarketArray.push(match.id)
-                    : (showMarketArray = showMarketArray.filter(
-                        (id) => id !== match.id
-                      ))
-                "
+                @click="handleAllMarketClick(match.id)"
               />
             </div>
-            <!-- <AllMarkets
-              v-if="match.markets && showMarketArray.includes(match.id)"
+            <AllMarkets
+              v-if="
+                match.markets && showMarketArray.find((i) => i.id === match.id)
+              "
               :markets="match.markets"
-            /> -->
+            />
           </div>
         </div>
       </q-tab-panel>
@@ -143,10 +139,19 @@
 </template>
 
 <script setup lang="ts">
-import { matchesArray } from "../composables/dummyData";
 interface MatchOdds {
   value: string;
   odd: string;
+}
+interface MarketResults {
+  count: string;
+  odd: string;
+}
+interface Markets {
+  count: string;
+  next: string;
+  previous: string;
+  results: MarketResults[];
 }
 
 interface Matches {
@@ -155,19 +160,31 @@ interface Matches {
   teams: string;
   date: string;
   odds: MatchOdds[];
+  markets: Markets;
 }
-const props = defineProps<{
-  listOfMatches: Matches[] | null;
-}>();
+// const props = defineProps<{
+//   listOfMatches: Matches[] | null;
+// }>();
 
-const showMarketArray: Ref<number[]> = ref([]);
+const matchListStore = useMatchListStore();
+
+const showMarketArray = ref<any[]>([]);
 const aciveHeader: Ref<string> = ref("Matches");
 
 const liveStreamToggle: Ref<boolean> = ref(false);
 
 const headersArray = ["Matches", "Recommended", "Upcoming Event"];
 
-const { data } = await useFetch(
-  `/api/filter_event/?sport_id=${1}&interval_hours=${4}&page_size=${10}`
-);
+const handleAllMarketClick = async (iid: number) => {
+  const isThere = showMarketArray.value.find((i) => i.id == iid);
+  if (!isThere) {
+    showMarketArray.value.push({ id: iid });
+    const { data } = await useFetch(`/api/markets/${iid}/?pageSize=${10}`);
+    const obj = matchListStore.listOfMatches?.find((item) => item.id === iid);
+  } else {
+    showMarketArray.value = showMarketArray.value.filter((id) => {
+      return id.id !== iid;
+    });
+  }
+};
 </script>

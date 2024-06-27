@@ -29,15 +29,17 @@
           label="Print Odds"
         />
       </div>
-      <hr class="tw-mx-4 tw-my-4" />
+      <hr class="tw-mx-4 tw-my-1" />
       <h3 class="tw-font-semibold tw-text-center tw-text-lg">Filter by date</h3>
-      <div class="flex tw-items-center tw-justify-between">
+      <div
+        class="tw-flex tw-justify-between tw-items-center tw-gap-x-4 tw-mx-2"
+      >
         <q-chip
           square
           color="primary"
           text-color="white"
           dense
-          class="tw-px-8 tw-py-4 tw-text-xs tw-cursor-pointer"
+          class="tw-px-2 tw-py-4 tw-text-xs tw-cursor-pointer tw-w-full tw-mx-auto"
           icon="event"
           label="Today"
         />
@@ -46,69 +48,71 @@
           color="primary"
           text-color="white"
           dense
-          class="tw-px-8 tw-py-4 tw-text-xs tw-cursor-pointer"
+          class="tw-px-2 tw-py-4 tw-text-xs tw-cursor-pointer tw-w-full tw-mx-auto"
           icon="event"
           label="Tomorrow"
         />
-      </div>
-      <div>
-        <div class="q-pa-md" style="max-width: 300px">
-          <q-input
-            v-model="date"
-            dense
-            mask="date"
-            :rules="['date']"
-            input-class="tw-text-white"
-            label="pick one"
-            label-color="white"
-            bg-color="primary"
+        <div style="max-width: 100px">
+          <q-btn
+            icon="event"
+            color="primary"
+            class="tw-text-xs tw-whitespace-nowrap tw-w-full tw-mx-auto"
           >
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer tw-text-white">
-                <q-popup-proxy
-                  cover
-                  transition-show="scale"
-                  transition-hide="scale"
-                >
-                  <q-date v-model="date">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="primary" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-          </q-input>
+            <q-popup-proxy
+              cover
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <q-date v-model="date">
+                <div class="row items-center justify-end q-gutter-sm">
+                  <q-btn label="Cancel" color="primary" flat v-close-popup />
+                  <q-btn label="OK" color="primary" flat v-close-popup />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-btn>
         </div>
       </div>
+      <div>
+        <ul class="flex tw-justify-around tw-items-center tw-mx-2 tw-my-2">
+          <li
+            class="tw-bg-gray-200 tw-bg-opacity-40 tw-px-3 tw-py-1 tw-rounded"
+          >
+            All
+          </li>
+          <li>3</li>
+          <li>6</li>
+          <li>9</li>
+          <li>12</li>
+          <li>24</li>
+        </ul>
+      </div>
       <template v-if="sportsStore.sports.length">
-        <q-scroll-area style="height: 300px">
-          <q-list v-for="sport in sportsStore.sports">
-            <q-expansion-item
-              expand-separator
-              :label="sport.name"
-              dense
-              class="text-white tw-max-h-3"
-              @show="getTournamentForSport(sport.id)"
-            >
+        <q-list v-for="sport in sportsStore.sports">
+          <q-expansion-item
+            expand-separator
+            :label="sport.name"
+            dense
+            class="text-white tw-max-h-3 tw-px-1"
+            @show="getTournamentForSport(sport.id)"
+          >
+            <q-scroll-area style="height: 300px">
               <q-infinite-scroll :offset="1">
                 <q-list
                   v-for="value in sport.tournaments?.results"
-                  class="tw-ml-6"
+                  class="tw-cursor-pointer tw-border-y tw-border-gray-800 tw-bg-secondary-900 dark:tw-bg-primary-800"
                 >
-                  <div class="tw-flex tw-my-2">
+                  <div
+                    @click="getAndSetMatchList(value.id)"
+                    class="tw-flex tw-my-2 tw-ml-6"
+                  >
                     <p class="text-white">{{ value.name }}</p>
                   </div>
                 </q-list>
-                <!-- <template v-slot:loading>
-                  <div class="row justify-center q-my-md">
-                    <q-spinner-dots color="primary" size="40px" />
-                  </div>
-                </template> -->
               </q-infinite-scroll>
-            </q-expansion-item>
-          </q-list>
-        </q-scroll-area>
+            </q-scroll-area>
+          </q-expansion-item>
+        </q-list>
       </template>
     </q-scroll-area>
   </div>
@@ -116,6 +120,7 @@
 
 <script setup lang="ts">
 const date = ref("2024/02/01");
+const matchListStore = useMatchListStore();
 
 const sportsStore = useSportsStore();
 
@@ -138,6 +143,20 @@ function getPageValueFromUrl(url: string): string | null {
   } catch (error) {
     return null;
   }
+}
+
+async function getAndSetMatchList(id: number) {
+  const res = await $fetch(`/api/matches/${id}`);
+  const filteredMatches = res?.data.results.map((game: any) => {
+    return {
+      id: game.id,
+      league: game.parent_name,
+      teams: game.name,
+      date: convertToDateString(game.startTime),
+      odds: extractOdds(game.markets, game.name),
+    };
+  });
+  matchListStore.setMatchList(filteredMatches);
 }
 
 onMounted(async () => {
