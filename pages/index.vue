@@ -1,14 +1,21 @@
 <template>
   <div>
     <NuxtImg src="/images/HeroImage.png" class="tw-mb-3 tw-w-full" />
-    <GamesList />
+    <div v-if="pending || layout.mainLoader" class="tw-flex tw-justify-center">
+      <q-spinner color="primary" size="9em" />
+    </div>
+    <div v-else>
+      <GamesList />
+    </div>
+
   </div>
 </template>
 
 <script setup lang="ts">
+const layout = useLayout();
 const matchListStore = useMatchListStore();
 
-const { data: recommendedGames } = await useFetch(
+const { data: recommendedGames, pending } = await useFetch(
   `/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=${10}`
 );
 

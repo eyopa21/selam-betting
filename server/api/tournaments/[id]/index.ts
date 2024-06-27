@@ -1,21 +1,20 @@
 export default defineEventHandler(async (event) => {
     const { id } = getRouterParams(event);
+    const config = useRuntimeConfig();
     const query = getQuery(event);
     const page = query.page || 1;
 
-    const url = `http://162.55.223.95:8000/betting/api/v1/tournament/${id}/?page=${page}`;
+    const url = `${config.restApiEndpoint}/tournament/${id}/?page=${page}`;
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "X-API-KEY":
-                    "AriqTLX3Vps7w_vL5Mv6ufGzcWFAzXM9pEqoUa6tiB19Y9QgjdNvucwfq6NW4cOP5lyp2OlnCXV8QTKSHF2wLGhOvYHgdL57R4eKIXPYFgU",
+                "X-API-KEY": config.serverApiKey
             },
         })
 
         if (!response.ok) {
-            console.log('respo', response);
             throw new Error(`External API request failed with status ${response.status}`)
         }
 
