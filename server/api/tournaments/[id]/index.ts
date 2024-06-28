@@ -14,12 +14,21 @@ export default defineEventHandler(async (event) => {
             },
         })
 
+
+
         if (!response.ok) {
             throw new Error(`External API request failed with status ${response.status}`)
         }
 
-
         const data = await response.json()
+        if (data.results && Array.isArray(data.results)) {
+            data.results = data.results.map((result: any) => ({
+                ...result,
+                id: BigInt(result.id).toString()
+            }));
+        }
+        console.log('responnn', data);
+
         return {
             data,
         }

@@ -70,6 +70,7 @@
                 <div class="tw-flex">
                   <p class="tw-font-semibold tw-text-gray-700 dark:tw-text-white">
                     {{ match.league }}
+                    {{ match.id }}
                   </p>
                 </div>
                 <p class="tw-text-xs tw-text-gray-700 dark:tw-text-white">
@@ -138,6 +139,21 @@ const liveStreamToggle: Ref<boolean> = ref(false);
 const headersArray = ["Matches", "Recommended", "Upcoming Event"];
 
 const handleAllMarketClick = async (iid: number) => {
+  const isThere = showMarketArray.value.find((i) => i.id == iid);
+  if (!isThere) {
+    showMarketArray.value.push({ id: iid });
+    const resp = await $fetch(`/api/markets/${iid}/?pageSize=${10}`);
+    const obj = matchListStore.listOfMatches?.findIndex(
+      (item) => item.id == iid
+    );
+    if (obj) {
+      matchListStore.listOfMatches[obj].markets = resp.data as Markets;
+    }
+  } else {
+    showMarketArray.value = showMarketArray.value.filter((id) => {
+      return id.id !== iid;
+    });
+  }
   // const isThere = showMarketArray.value.find((i) => i.id == iid);
   // if (!isThere) {
   //   showMarketArray.value.push({ id: iid });

@@ -16,6 +16,12 @@ export default defineEventHandler(async (event) => {
         }
 
         const data = await response.json()
+        if (data.results && Array.isArray(data.results)) {
+            data.results = data.results.map((result: any) => ({
+                ...result,
+                id: BigInt(result.id).toString()
+            }));
+        }
         return {
             data,
         }

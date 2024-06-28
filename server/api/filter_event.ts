@@ -15,6 +15,12 @@ export default defineEventHandler(async (event) => {
             throw new Error(`External API request failed with status ${response.status}`)
         }
         const data = await response.json()
+        if (data.results && Array.isArray(data.results)) {
+            data.results = data.results.map((result: any) => ({
+                ...result,
+                id: BigInt(result.id).toString()
+            }));
+        }
         return {
             data,
         }
@@ -24,4 +30,26 @@ export default defineEventHandler(async (event) => {
             error: 'Failed to retrieve external data',
         }
     }
+
+
 })
+
+// const convertToBigInt = (obj) => {
+//     if (Array.isArray(obj)) {
+//       return obj.map(convertToBigInt);
+//     } else if (typeof obj === "object" && obj !== null) {
+//       const newObj = {};
+//       for (const key in obj) {
+//         if (obj.hasOwnProperty(key)) {
+//           if (key === "id" || key === "eventId") {
+//             newObj[key] = BigInt(obj[key]);
+//           } else {
+//             newObj[key] = convertToBigInt(obj[key]);
+//           }
+//         }
+//       }
+//       return newObj;
+//     } else {
+//       return obj;
+//     }
+//   };
