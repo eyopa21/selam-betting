@@ -74,7 +74,7 @@
                   </p>
                 </div>
                 <p class="tw-text-xs tw-text-gray-700 dark:tw-text-white">
-                  {{ match.markets }}
+                  {{ match.teams }}
                 </p>
               </div>
               <div>
@@ -93,7 +93,7 @@
             </div>
             <AllMarkets v-if="
               match.markets && showMarketArray.find((i) => i.id === match.id)
-            " :markets="match.markets" />
+            " :markets="match.markets.results" :marketCount="match.markets.count" />
           </div>
         </div>
       </q-tab-panel>
@@ -128,7 +128,6 @@ interface Matches {
   markets: Markets;
 }
 
-
 const matchListStore = useMatchListStore();
 
 const showMarketArray = ref<any[]>([]);
@@ -154,16 +153,5 @@ const handleAllMarketClick = async (iid: number) => {
       return id.id !== iid;
     });
   }
-  // const isThere = showMarketArray.value.find((i) => i.id == iid);
-  // if (!isThere) {
-  //   showMarketArray.value.push({ id: iid });
-  //   const { data } = await useFetch(`/api/markets/${iid}/?pageSize=${10}`);
-  //   console.log("markets", data);
-  //   const obj = matchListStore.listOfMatches?.find((item) => item.id === iid);
-  // } else {
-  //   showMarketArray.value = showMarketArray.value.filter((id) => {
-  //     return id.id !== iid;
-  //   });
-  // }
 };
 </script>
