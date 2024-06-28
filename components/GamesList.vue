@@ -1,8 +1,7 @@
 <template>
   <div>
     <div
-      class="tw-bg-secondary-800 dark:tw-bg-primary-700 w-full tw-flex tw-justify-between tw-items-center tw-mb-2 tw-p-2"
-    >
+      class="tw-bg-secondary-800 dark:tw-bg-primary-700 w-full tw-flex tw-justify-between tw-items-center tw-mb-2 tw-p-2">
       <div>
         <p class="tw-font-bold tw-text-white tw-text-xl">
           THE TOURNAMENT STARTS IN
@@ -11,45 +10,23 @@
       <div></div>
       <div></div>
     </div>
-    <div
-      class="tw-bg-[#8E203A] w-full tw-flex tw-justify-start tw-items-center tw-mb-2 tw-px-2"
-    >
-      <div
-        class="flex tw-items-center tw-border-r tw-border-indigo-900 tw-px-4"
-      >
+    <div class="tw-bg-[#8E203A] w-full tw-flex tw-justify-start tw-items-center tw-mb-2 tw-px-2">
+      <div class="flex tw-items-center tw-border-r tw-border-indigo-900 tw-px-4">
         <q-icon name="home" class="tw-text-white tw-text-3xl" />
-        <q-icon
-          name="arrow_forward_ios"
-          class="tw-text-white tw-text-2xl tw-mx-2 tw-font-extralight"
-        />
+        <q-icon name="arrow_forward_ios" class="tw-text-white tw-text-2xl tw-mx-2 tw-font-extralight" />
         <NuxtImg class="tw-w-6 tw-h-6" src="/images/ball.png" />
-        <q-icon
-          name="arrow_forward_ios"
-          class="tw-text-white tw-text-2xl tw-mx-2 tw-font-extralight"
-        />
+        <q-icon name="arrow_forward_ios" class="tw-text-white tw-text-2xl tw-mx-2 tw-font-extralight" />
         <NuxtImg class="tw-w-7 tw-aspect-ratio" src="/images/cup.png" />
       </div>
       <div class="tw-items-start tw-ml-4">
-        <q-tabs
-          v-model="aciveHeader"
-          inline-label
-          outside-arrows
-          mobile-arrows
-          dense
-        >
-          <q-tab
-            class="tw-text-white tw-font-semibold tw-text-xl"
-            v-for="header in headersArray"
-            :name="header"
-            :label="header"
-          />
+        <q-tabs v-model="aciveHeader" inline-label outside-arrows mobile-arrows dense>
+          <q-tab class="tw-text-white tw-font-semibold tw-text-xl" v-for="header in headersArray" :name="header"
+            :label="header" />
         </q-tabs>
       </div>
       <div></div>
     </div>
-    <div
-      class="tw-bg-secondary-800 dark:tw-bg-primary-700 w-full tw-flex tw-justify-start tw-items-center tw-mb-2"
-    >
+    <div class="tw-bg-secondary-800 dark:tw-bg-primary-700 w-full tw-flex tw-justify-start tw-items-center tw-mb-2">
       <div class="flex tw-justify-between tw-items-center tw-mr-2">
         <q-toggle v-model="liveStreamToggle" color="white" />
         <p class="tw-text-white">With live streams</p>
@@ -85,25 +62,18 @@
       </div>
     </div>
     <q-tab-panels v-model="aciveHeader" animated>
-      <q-tab-panel
-        name="Matches"
-        class="tw-p-2 tw-bg-secondary-800 dark:tw-bg-primary-700"
-      >
+      <q-tab-panel name="Matches" class="tw-p-2 tw-bg-secondary-800 dark:tw-bg-primary-700">
         <div class="tw-rounded" v-if="matchListStore.listOfMatches?.length">
           <div v-for="match in matchListStore.listOfMatches" class="tw-mb-4">
-            <div
-              class="tw-flex tw-justify-between dark:text-white tw-items-end"
-            >
+            <div class="tw-flex tw-justify-between dark:text-white tw-items-end">
               <div>
                 <div class="tw-flex">
-                  <p
-                    class="tw-font-semibold tw-text-gray-700 dark:tw-text-white"
-                  >
+                  <p class="tw-font-semibold tw-text-gray-700 dark:tw-text-white">
                     {{ match.league }}
                   </p>
                 </div>
                 <p class="tw-text-xs tw-text-gray-700 dark:tw-text-white">
-                  {{ match.teams }}
+                  {{ match.markets }}
                 </p>
               </div>
               <div>
@@ -116,19 +86,13 @@
               <div v-for="odd in match.odds" class="tw-w-full tw-mr-2">
                 <Odd :value="odd.value" :odd="odd.odd" />
               </div>
-              <q-btn
-                outline
+              <q-btn outline
                 class="tw-rounded-lg dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
-                label="All markets +"
-                @click="handleAllMarketClick(match.id)"
-              />
+                label="All markets +" @click="handleAllMarketClick(match.id)" />
             </div>
-            <AllMarkets
-              v-if="
-                match.markets && showMarketArray.find((i) => i.id === match.id)
-              "
-              :markets="match.markets"
-            />
+            <AllMarkets v-if="
+              match.markets && showMarketArray.find((i) => i.id === match.id)
+            " :markets="match.markets" />
           </div>
         </div>
       </q-tab-panel>
@@ -162,9 +126,7 @@ interface Matches {
   odds: MatchOdds[];
   markets: Markets;
 }
-// const props = defineProps<{
-//   listOfMatches: Matches[] | null;
-// }>();
+
 
 const matchListStore = useMatchListStore();
 
@@ -176,15 +138,16 @@ const liveStreamToggle: Ref<boolean> = ref(false);
 const headersArray = ["Matches", "Recommended", "Upcoming Event"];
 
 const handleAllMarketClick = async (iid: number) => {
-  const isThere = showMarketArray.value.find((i) => i.id == iid);
-  if (!isThere) {
-    showMarketArray.value.push({ id: iid });
-    const { data } = await useFetch(`/api/markets/${iid}/?pageSize=${10}`);
-    const obj = matchListStore.listOfMatches?.find((item) => item.id === iid);
-  } else {
-    showMarketArray.value = showMarketArray.value.filter((id) => {
-      return id.id !== iid;
-    });
-  }
+  // const isThere = showMarketArray.value.find((i) => i.id == iid);
+  // if (!isThere) {
+  //   showMarketArray.value.push({ id: iid });
+  //   const { data } = await useFetch(`/api/markets/${iid}/?pageSize=${10}`);
+  //   console.log("markets", data);
+  //   const obj = matchListStore.listOfMatches?.find((item) => item.id === iid);
+  // } else {
+  //   showMarketArray.value = showMarketArray.value.filter((id) => {
+  //     return id.id !== iid;
+  //   });
+  // }
 };
 </script>

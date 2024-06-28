@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig();
-    const url = `${config.serverApiKey}/sports/`;
+    const url = `${config.restApiEndpoint}/sports/`;
     try {
         const response = await fetch(url, {
             method: 'GET',
