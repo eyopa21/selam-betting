@@ -2,16 +2,15 @@ export default defineEventHandler(async (event) => {
     const { id } = getRouterParams(event);
     const query = getQuery(event);
     const pageSize = query.page || 10;
+    const config = useRuntimeConfig()
 
-
-    const url = `http://162.55.223.95:8000/betting/api/v1/event_market/${id}/?page_size=${pageSize}`;
+    const url = `${config.restApiEndpoint}/event_market/${id}/?page_size=${pageSize}`;
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "X-API-KEY":
-                    "AriqTLX3Vps7w_vL5Mv6ufGzcWFAzXM9pEqoUa6tiB19Y9QgjdNvucwfq6NW4cOP5lyp2OlnCXV8QTKSHF2wLGhOvYHgdL57R4eKIXPYFgU",
+                "X-API-KEY": config.serverApiKey
             },
         })
 
