@@ -10,17 +10,25 @@ export default defineEventHandler(async (event) => {
             headers: {
                 'Content-Type': 'application/json',
                 "X-API-KEY":
-                    "RUDKb1iueBuAtFhYGKQxyXhSc2rVKYxe5TNIuTxtEDv6o2jcefPb6p7jXeZlu_LgHExd-_USDVruUS2LjHrSnTOXQnrhIrw9vHLlg7eJDNg",
+                    "AriqTLX3Vps7w_vL5Mv6ufGzcWFAzXM9pEqoUa6tiB19Y9QgjdNvucwfq6NW4cOP5lyp2OlnCXV8QTKSHF2wLGhOvYHgdL57R4eKIXPYFgU",
             },
         })
 
+
+
         if (!response.ok) {
-            console.log('respo', response);
             throw new Error(`External API request failed with status ${response.status}`)
         }
 
-
         const data = await response.json()
+        if (data.results && Array.isArray(data.results)) {
+            data.results = data.results.map((result: any) => ({
+                ...result,
+                id: BigInt(result.id).toString()
+            }));
+        }
+        console.log('responnn', data);
+
         return {
             data,
         }

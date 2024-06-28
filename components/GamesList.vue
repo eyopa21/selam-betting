@@ -100,6 +100,7 @@
                     class="tw-font-semibold tw-text-gray-700 dark:tw-text-white"
                   >
                     {{ match.league }}
+                    {{ match.id }}
                   </p>
                 </div>
                 <p class="tw-text-xs tw-text-gray-700 dark:tw-text-white">
@@ -127,7 +128,8 @@
               v-if="
                 match.markets && showMarketArray.find((i) => i.id === match.id)
               "
-              :markets="match.markets"
+              :markets="match.markets.results"
+              :marketCount="match.markets.count"
             />
           </div>
         </div>
@@ -162,9 +164,6 @@ interface Matches {
   odds: MatchOdds[];
   markets: Markets;
 }
-// const props = defineProps<{
-//   listOfMatches: Matches[] | null;
-// }>();
 
 const matchListStore = useMatchListStore();
 
@@ -179,8 +178,13 @@ const handleAllMarketClick = async (iid: number) => {
   const isThere = showMarketArray.value.find((i) => i.id == iid);
   if (!isThere) {
     showMarketArray.value.push({ id: iid });
-    const { data } = await useFetch(`/api/markets/${iid}/?pageSize=${10}`);
-    const obj = matchListStore.listOfMatches?.find((item) => item.id === iid);
+    const resp = await $fetch(`/api/markets/${iid}/?pageSize=${10}`);
+    const obj = matchListStore.listOfMatches?.findIndex(
+      (item) => item.id == iid
+    );
+    if (obj) {
+      matchListStore.listOfMatches[obj].markets = resp.data as Markets;
+    }
   } else {
     showMarketArray.value = showMarketArray.value.filter((id) => {
       return id.id !== iid;

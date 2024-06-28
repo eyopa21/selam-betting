@@ -9,7 +9,7 @@
 const matchListStore = useMatchListStore();
 
 const { data: recommendedGames } = await useFetch(
-  `/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=${10}`
+  `/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=${20}`
 );
 
 const setList = async () => {

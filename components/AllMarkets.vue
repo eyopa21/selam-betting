@@ -9,14 +9,14 @@
         class="bg-primary text-white shadow-2 tw-opacity-80 dark:tw-opacity-100"
       >
         <q-tab name="all-market" label="All Market" class="tw-font-bold">
-          <p class="tw-text-white">(112)</p>
+          <p class="tw-text-white">({{ marketCount }})</p>
         </q-tab>
         <div
-          v-for="market in marketNames"
+          v-for="market in visibleMarkets"
           class="tw-flex tw-justify-around tw-items-center"
         >
-          <q-tab :name="market.name" :label="market.name">
-            <p class="tw-text-white">({{ market.length }})</p>
+          <q-tab :name="market.marketName" :label="market.marketName">
+            <p class="tw-text-white">({{ market.values.length }})</p>
           </q-tab>
         </div>
       </q-tabs>
@@ -48,17 +48,37 @@
 <script setup lang="ts">
 interface Market {
   marketName: string;
-  values: [value: string, odd: string];
+  values: [{ value: string; odd: string }];
 }
 const props = defineProps<{
-  markets: Market[];
+  markets: any[];
+  marketCount: number;
 }>();
 
-const tabValue = ref("all-market");
+const visibleMarkets = computed(() => {
+  if (props.markets) {
+    const ret = props.markets.map((market) => {
+      const val = [];
+      market.outcomes.forEach((outcome: any) => {
+        val.push({
+          value: outcome.name,
+          odd: outcome.betting_offers[0]?.odds
+            ? outcome.betting_offers[0].odds.toFixed(2).toString()
+            : "1",
+        });
+      });
+      return {
+        marketName: market.bettingTypeId,
+        values: val,
+      };
+    });
+    return ret;
+  } else {
+    return [];
+  }
+});
 
-const marketNames = computed(() =>
-  props.markets.map((m) => ({ name: m.marketName, length: m.values.length }))
-);
+const tabValue = ref("all-market");
 
 const filteredMarkets: Ref<Market[]> = ref([]);
 
@@ -68,9 +88,9 @@ watch(tabValue, () => {
 
 function filterMarkets() {
   if (tabValue.value == "all-market") {
-    filteredMarkets.value = props.markets;
+    filteredMarkets.value = visibleMarkets.value as Market[];
   } else {
-    filteredMarkets.value = props.markets.filter(
+    filteredMarkets.value = (visibleMarkets.value as Market[]).filter(
       (market) => market.marketName == tabValue.value
     );
   }

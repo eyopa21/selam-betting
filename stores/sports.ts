@@ -24,12 +24,14 @@ export const useSportsStore = defineStore('sports', () => {
         }
     }
 
-    const fetchTournaments = async (sportId: number, page: number | string) => {
+    const fetchTournaments = async (sportId: string, page: number | string) => {
         try {
             const data = await $fetch<{ data: Tournaments }>(`/api/tournaments/${sportId}/?page=${page || 1}`)
 
-            const fetchedSportIndex = sports.value.findIndex((s) => s.id === sportId)
+            const fetchedSportIndex = sports.value.findIndex((s) => {
 
+                return s.id == sportId
+            })
 
             if (fetchedSportIndex !== -1) {
                 sports.value[fetchedSportIndex].tournaments.count = data.data.count

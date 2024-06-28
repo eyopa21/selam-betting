@@ -1,7 +1,7 @@
 import type { Tournaments } from "./tournaments"
 
 export interface Sport {
-    id: number,
+    id: string,
     name: string,
     parentId: number | null,
     description: string | null,
