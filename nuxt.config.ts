@@ -10,5 +10,11 @@ export default defineNuxtConfig({
         secondary: "rgb(var(--secondary-500))",
       },
     },
-  }
+  },
+  runtimeConfig: {
+    serverApiKey: '',
+    restApiEndpoint: '',
+
+
+  },
 });

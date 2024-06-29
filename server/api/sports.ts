@@ -1,12 +1,13 @@
 export default defineEventHandler(async (event) => {
-    const url = 'http://162.55.223.95:8000/betting/api/v1/sports/';
+    const config = useRuntimeConfig();
+    const url = `${config.restApiEndpoint}/sports/`;
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "X-API-KEY":
-                    "RUDKb1iueBuAtFhYGKQxyXhSc2rVKYxe5TNIuTxtEDv6o2jcefPb6p7jXeZlu_LgHExd-_USDVruUS2LjHrSnTOXQnrhIrw9vHLlg7eJDNg",
+                "X-API-KEY": config.serverApiKey
+
             },
         })
 

@@ -7,18 +7,16 @@
 
       <q-page-container>
         <hr class="tw-h-4 tw-bg-secondary-800 tw-my-2" />
-        <div
-          class="tw-grid tw-grid-cols-12 w-full custom-container tw-gap-4 tw-py-8"
-        >
-          <div class="tw-col-span-2 tw-hidden lg:tw-block">
+        <div class="tw-grid tw-grid-cols-12 w-full custom-container tw-gap-4 tw-py-8">
+          <div class="tw-col-span-3 tw-hidden lg:tw-block">
             <div class="tw-sticky tw-top-24">
               <HomeFilter />
             </div>
           </div>
-          <div class="lg:tw-col-span-8 tw-col-span-12">
+          <div class="lg:tw-col-span-6 tw-col-span-12">
             <slot />
           </div>
-          <div class="tw-col-span-2 tw-hidden lg:tw-block">
+          <div class="tw-col-span-3 tw-hidden lg:tw-block">
             <div class="tw-sticky tw-top-24 max-w-full">
               <Slips />
             </div>
