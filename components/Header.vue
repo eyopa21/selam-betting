@@ -16,6 +16,7 @@
         label="LOGIN"
         class="tw-font-bold tw-bg-gray-500"
         unelevated
+        @click="signInModal = true"
       />
       <q-btn
         icon="person"
@@ -40,6 +41,7 @@
               label="LOGIN"
               class="tw-font-bold tw-bg-gray-500 tw-mr-4"
               unelevated
+              @click="signInModal = true"
             />
             <q-btn
               icon="person"
@@ -51,9 +53,13 @@
         </q-menu>
       </q-btn>
     </div>
+    <Signin :is-visible="signInModal" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { menuOptions } from "../composables/dummyData";
+
+const signInModal = ref(false);
+const signUpModal = ref(false);
 </script>
