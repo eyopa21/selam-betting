@@ -3,6 +3,9 @@ export default defineEventHandler(async (event) => {
 
     const config = useRuntimeConfig();
     const url = `${config.restApiEndpoint}/filter_event/?sport_id=${query.sport_id}&interval_hours=${query.interval_hours}&page_size-${query.page_size}`;
+    console.log("urllll", url);
+    console.log("urllll", config.serverApiKey);
+
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -11,6 +14,7 @@ export default defineEventHandler(async (event) => {
                 "X-API-KEY": config.serverApiKey
             },
         })
+
         if (!response.ok) {
             throw new Error(`External API request failed with status ${response.status}`)
         }
@@ -33,23 +37,3 @@ export default defineEventHandler(async (event) => {
 
 
 })
-
-// const convertToBigInt = (obj) => {
-//     if (Array.isArray(obj)) {
-//       return obj.map(convertToBigInt);
-//     } else if (typeof obj === "object" && obj !== null) {
-//       const newObj = {};
-//       for (const key in obj) {
-//         if (obj.hasOwnProperty(key)) {
-//           if (key === "id" || key === "eventId") {
-//             newObj[key] = BigInt(obj[key]);
-//           } else {
-//             newObj[key] = convertToBigInt(obj[key]);
-//           }
-//         }
-//       }
-//       return newObj;
-//     } else {
-//       return obj;
-//     }
-//   };

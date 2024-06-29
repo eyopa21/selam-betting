@@ -12,9 +12,7 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    serverApiKey: '',
-    restApiEndpoint: '',
-
-
+    serverApiKey: process.env.API_KEY,
+    restApiEndpoint: process.env.API_BASE_URL,
   },
 });
