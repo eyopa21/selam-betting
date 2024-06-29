@@ -1,6 +1,6 @@
 <template>
-  <q-dialog v-model="visible">
-    <q-card class="tw-p-8">
+  <q-dialog v-model="visible" @hide="$emit('modalClosed')">
+    <q-card class="tw-p-8 tw-w-96">
       <q-icon
         name="close"
         class="tw-flex tw-justify-end tw-w-full"
@@ -42,7 +42,6 @@
           label="Username"
           lazy-rules
           :rules="[(val:string) => (val && val.length > 0) || 'Invalid username']"
-          class="tw-w-96"
         />
         <q-input
           v-if="signInWith === SigninOption.Phone"
@@ -52,7 +51,6 @@
           label="Your phone number"
           lazy-rules
           :rules="[(val:string) => (val && val.length > 0) || 'Invalid phone number']"
-          class="tw-w-96"
         />
         <q-input
           v-model="signInObj.password"
@@ -108,8 +106,13 @@
 </template>
 
 <script setup lang="ts">
+import type { SignInInputs } from "~/types/auth";
+
 const props = defineProps<{
   isVisible: boolean;
+}>();
+const emit = defineEmits<{
+  (event: "modalClosed"): void;
 }>();
 
 enum SigninOption {
@@ -121,7 +124,7 @@ const signInWith = ref<SigninOption>(SigninOption.Phone);
 const isPwd = ref(true);
 
 const visible = ref(false);
-const signInObj = reactive({
+const signInObj = reactive<SignInInputs>({
   username: "",
   phoneNumber: "",
   password: "",

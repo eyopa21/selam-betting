@@ -47,3 +47,4 @@ export interface ParticipantRole {
     id: number
     name: string
     isPrimary: number
+}

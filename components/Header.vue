@@ -23,6 +23,7 @@
         label="REGISTER"
         unelevated
         class="tw-font-bold tw-bg-primary-500"
+        @click="signUpModal = true"
       />
       <div></div>
     </div>
@@ -48,12 +49,14 @@
               label="REGISTER"
               unelevated
               class="tw-font-bold tw-bg-primary-500"
+              @click="signUpModal = true"
             />
           </div>
         </q-menu>
       </q-btn>
     </div>
-    <Signin :is-visible="signInModal" />
+    <Signin :is-visible="signInModal" @modalClosed="signInModal = false" />
+    <Signup :is-visible="signUpModal" @modalClosed="signUpModal = false" />
   </div>
 </template>
 
