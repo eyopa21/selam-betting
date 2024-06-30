@@ -55,8 +55,22 @@
         </q-menu>
       </q-btn>
     </div>
-    <Signin :is-visible="signInModal" @modalClosed="signInModal = false" />
-    <Signup :is-visible="signUpModal" @modalClosed="signUpModal = false" />
+    <Signin
+      :is-visible="signInModal"
+      @modalClosed="signInModal = false"
+      @register="
+        signInModal = false;
+        signUpModal = true;
+      "
+    />
+    <Signup
+      :is-visible="signUpModal"
+      @modalClosed="signUpModal = false"
+      @login="
+        signUpModal = false;
+        signInModal = true;
+      "
+    />
   </div>
 </template>
 

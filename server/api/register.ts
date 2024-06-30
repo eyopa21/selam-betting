@@ -1,12 +1,7 @@
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig();
     const body = await readBody(event)
-    console.log('this is body', body);
-    const url = `${config.restApiEndpoint}/user_register`;
-    console.log('urllllll', url);
-    console.log('bodyyyyy', body);
-    console.log(config.serverApiKey);
-
+    const url = `${config.restApiEndpoint}/user_register/`;
 
     try {
         const response = await fetch(url, {
@@ -15,7 +10,7 @@ export default defineEventHandler(async (event) => {
                 'Content-Type': 'application/json',
                 "X-API-KEY": config.serverApiKey
             },
-            body: body.stringify()
+            body: JSON.stringify(body)
         })
 
         if (!response.ok) {
@@ -23,12 +18,7 @@ export default defineEventHandler(async (event) => {
         }
 
         const data = await response.json()
-        if (data.results && Array.isArray(data.results)) {
-            data.results = data.results.map((result: any) => ({
-                ...result,
-                id: BigInt(result.id).toString()
-            }));
-        }
+
         return {
             data,
         }

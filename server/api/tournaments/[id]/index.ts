@@ -27,8 +27,6 @@ export default defineEventHandler(async (event) => {
                 id: BigInt(result.id).toString()
             }));
         }
-        console.log('responnn', data);
-
         return {
             data,
         }

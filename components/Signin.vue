@@ -79,6 +79,7 @@
           label="Submit"
           type="submit"
           class="tw-w-[96%] tw-flex tw-justify-center tw-bg-[#8E203A] tw-text-white tw-font-semibold"
+          :loading="loading"
         />
         <p class="tw-text-gray-500 tw-font-semibold tw-text-xs tw-text-center">
           You can sign in to the website via
@@ -98,7 +99,12 @@
         <hr class="tw-text-gray-700" />
         <p class="tw-text-gray-500 text-center">
           Dont have an account?
-          <span class="tw-text-[#8E203A]">Create now</span>
+          <span
+            class="tw-text-[#8E203A] tw-cursor-pointer"
+            @click="$emit('register')"
+            v-close-popup
+            >Create now</span
+          >
         </p>
       </q-form>
     </q-card>
@@ -113,7 +119,12 @@ const props = defineProps<{
 }>();
 const emit = defineEmits<{
   (event: "modalClosed"): void;
+  (event: "register"): void;
 }>();
+
+const $q = useQuasar();
+
+const { login, loading } = useAuth();
 
 enum SigninOption {
   Phone = "phone",
@@ -130,6 +141,28 @@ const signInObj = reactive<SignInInputs>({
   password: "",
   remember: false,
 });
+
+const onSubmit = async () => {
+  const res = await login({
+    username: signInObj.username,
+    password: signInObj.password,
+  });
+
+  if (res?.data) {
+    $q.notify({
+      message: "Successfully logged in",
+      color: "green",
+    });
+    visible.value = false;
+    emit("modalClosed");
+  }
+  if (res?.error) {
+    $q.notify({
+      message: res.error,
+      color: "red",
+    });
+  }
+};
 
 watch(
   () => props.isVisible,

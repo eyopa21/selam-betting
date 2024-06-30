@@ -87,7 +87,7 @@
         <q-input
           dense
           outlined
-          v-model="signUpObj.phoneNumber"
+          v-model="signUpObj.phone_number"
           label="Phone number"
           lazy-rules
           :rules="[(val:string) => (val && val.length > 0) || 'Invalid phone']"
@@ -100,12 +100,22 @@
           lazy-rules
           :rules="[(val:string) => (val && val.length > 0) || 'Invalid address']"
         />
+        <p class="tw-text-red-500 tw-my-2">{{ error }}</p>
 
         <q-btn
           label="Regiser"
           type="submit"
           class="tw-w-[96%] tw-flex tw-justify-center tw-bg-[#8E203A] tw-text-white tw-font-semibold"
+          :loading="loading"
         />
+        <p class="tw-text-gray-500 text-center">
+          Already have an account?
+          <span
+            class="tw-text-[#8E203A] tw-cursor-pointer"
+            @click="$emit('login')"
+            >sign in</span
+          >
+        </p>
         <hr class="tw-text-gray-700 tw-my-4" />
         <p class="tw-text-gray-500 text-center">
           By clicking this button you confirm that you have read and agree to
@@ -120,15 +130,17 @@
 
 <script setup lang="ts">
 import type { SignUpInputs } from "~/types/auth";
+const $q = useQuasar();
 
 const props = defineProps<{
   isVisible: boolean;
 }>();
 const emit = defineEmits<{
   (event: "modalClosed"): void;
+  (event: "login"): void;
 }>();
 
-const { register } = useAuth();
+const { register, error, loading } = useAuth();
 
 const isPwd = ref(true);
 
@@ -140,22 +152,22 @@ const signUpObj = reactive<SignUpInputs>({
   password2: "",
   first_name: "",
   last_name: "",
-  phoneNumber: "",
+  phone_number: "",
   address: {
     address_line: "",
-    admin_area: null,
-    locality: null,
-    postal_code: null,
-    thoroughfare: null,
-    premise: null,
-    sub_premise: null,
-    latitude: null,
-    longitude: null,
+    admin_area: "",
+    locality: "",
+    postal_code: "",
+    thoroughfare: "",
+    premise: "",
+    sub_premise: "",
+    latitude: 0,
+    longitude: 0,
   },
 });
 
-const onSubmit = () => {
-  register({
+const onSubmit = async () => {
+  const res = await register({
     username: signUpObj.username,
     email: signUpObj.email,
     password: signUpObj.password,
@@ -163,8 +175,21 @@ const onSubmit = () => {
     address: signUpObj.address,
     first_name: signUpObj.first_name,
     last_name: signUpObj.last_name,
-    phoneNumber: signUpObj.phoneNumber,
+    phone_number: signUpObj.phone_number,
   });
+  if (res?.data) {
+    $q.notify({
+      message: "Successfully registered. please login",
+      color: "green",
+    });
+    emit("login");
+  }
+  if (res?.error) {
+    $q.notify({
+      message: res.error,
+      color: "red",
+    });
+  }
 };
 
 watch(
