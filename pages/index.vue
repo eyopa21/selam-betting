@@ -1,7 +1,7 @@
 <template>
   <div>
     <NuxtImg src="/images/HeroImage.png" class="tw-mb-3 tw-w-full" />
-    <div v-if="pending || layout.mainLoader" class="tw-flex tw-justify-center">
+    <div v-if="layout.mainLoader" class="tw-flex tw-justify-center">
       <q-spinner color="primary" size="9em" />
     </div>
     <div v-else>

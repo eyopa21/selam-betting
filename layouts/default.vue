@@ -7,9 +7,7 @@
 
       <q-page-container>
         <hr class="tw-h-4 tw-bg-secondary-800 tw-my-2" />
-        <div
-          class="tw-grid tw-grid-cols-12 w-full custom-container tw-gap-4 tw-py-8"
-        >
+        <div class="tw-grid tw-grid-cols-12 w-full custom-container tw-gap-4 tw-py-8">
           <div class="tw-col-span-2 tw-hidden lg:tw-block">
             <div class="tw-sticky tw-top-24">
               <HomeFilter />
