@@ -1,5 +1,6 @@
 
 interface MatchOdds {
+    eventId: number
     value: string;
     odd: string;
 }

@@ -1,8 +1,12 @@
 <script setup lang="ts">
-interface MatchOdds {
-  value: string;
-  odd: string;
+
+interface Outcome {
+  eventId: number,
+  name: string
+  odd: number
 }
+
+
 interface MarketResults {
   count: string;
   odd: string;
@@ -19,7 +23,7 @@ interface Matches {
   league: string;
   teams: string;
   date: string;
-  odds: MatchOdds[];
+  odds: Outcome[];
   markets: Markets;
 }
 
@@ -144,7 +148,13 @@ const handleAllMarketClick = async (iid: number) => {
             </div>
             <div class="tw-flex tw-justify-between tw-items-center tw-mb-2">
               <div v-for="odd in match.odds" class="tw-w-full tw-mr-2">
-                <Odd :value="odd.value" :odd="odd.odd" />
+                <Odd :matchDetail="{
+                  id: match.id,
+                  teams: match.teams,
+                  league: match.league,
+                  date: match.date,
+
+                }" :id="odd.eventId" :value="odd.value" :odd="odd.odd" />
               </div>
               <q-btn outline
                 class="tw-rounded-lg dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
@@ -155,9 +165,15 @@ const handleAllMarketClick = async (iid: number) => {
               <q-spinner size="lg" />
             </div>
 
-            <AllMarkets v-if="
-              match.markets && showMarketArray.find((i) => i.id === match.id)
-            " :markets="match.markets.results" :marketCount="parseInt(match.markets.count ?? 0)" />
+            <div v-if="match.markets && showMarketArray.find((i) => i.id === match.id)">
+              <AllMarkets :matchDetail="{
+                id: match.id,
+                teams: match.teams,
+                league: match.league,
+                date: match.date,
+
+              }" :markets="match.markets.results" :marketCount="parseInt(match.markets.count ?? 0)" />
+            </div>
           </div>
 
         </div>

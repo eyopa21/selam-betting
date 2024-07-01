@@ -8,7 +8,7 @@ export function extractOdds(
     data: any[],
     teams: string
 ): { value: string; odd: string }[] {
-    const odds: { value: string; odd: string }[] = [];
+    const odds: { eventId: number, value: string; odd: string }[] = [];
 
     const [team1, team2] = teams.split(" vs ").map((team) => team.trim());
     const betMap: { [key: string]: { [key: string]: string } } = {
@@ -25,6 +25,7 @@ export function extractOdds(
     };
 
     data.forEach((item) => {
+
         const bettingType = item.name;
         item.outcomes.forEach((outcome: any) => {
             const outcomeName = outcome.name;
@@ -32,6 +33,7 @@ export function extractOdds(
             if (oddValue) {
                 if (bettingType in betMap && outcomeName in betMap[bettingType]) {
                     odds.push({
+                        eventId: item.eventId,
                         value: betMap[bettingType][outcomeName],
                         odd: oddValue.toFixed(2),
                     });
