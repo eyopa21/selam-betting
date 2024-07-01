@@ -10,9 +10,10 @@ export const useSlips = () => {
 
     const addSlip = () => {
         const newSlip: Slip = {
-            id: Date.now(),
+            id: slipCounter.value,
             name: `Slip ${slipCounter.value}`,
         };
+
         slips.value.push(newSlip);
         slipCounter.value += 1;
         activeSlip.value = slips.value.find((s) => s.name == newSlip.name)
