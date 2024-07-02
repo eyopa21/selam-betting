@@ -12,7 +12,7 @@
     </div>
     <div class="tw-my-auto lg:tw-flex tw-gap-2 tw-hidden tw-mr-4">
       <q-btn
-        v-if="!userStore.user"
+        v-if="!userStore.user && !userStore.loadingUser"
         icon="login"
         label="LOGIN"
         class="tw-font-bold tw-bg-gray-500"
@@ -20,7 +20,7 @@
         @click="signInModal = true"
       />
       <q-btn
-        v-if="!userStore.user"
+        v-if="!userStore.user && !userStore.loadingUser"
         icon="person"
         label="REGISTER"
         unelevated
@@ -28,13 +28,14 @@
         @click="signUpModal = true"
       />
       <q-btn
-        v-if="userStore.user"
+        v-if="userStore.user && !userStore.loadingUser"
         icon="person"
         label="LOG OUT"
         unelevated
         class="tw-font-bold tw-bg-primary-500"
         @click="logout()"
       />
+      <q-spinner v-if="userStore.loadingUser" color="primary" size="2em" />
       <div></div>
     </div>
     <!-- mobile menu -->
@@ -48,7 +49,7 @@
           </q-list>
           <div class="tw-flex tw-justify-start tw-my-2 tw-text-white tw-mx-2">
             <q-btn
-              v-if="!userStore.user"
+              v-if="!userStore.user && !userStore.loadingUser"
               icon="login"
               label="LOGIN"
               class="tw-font-bold tw-bg-gray-500 tw-mr-4"
@@ -56,7 +57,7 @@
               @click="signInModal = true"
             />
             <q-btn
-              v-if="!userStore.user"
+              v-if="!userStore.user && !userStore.loadingUser"
               icon="person"
               label="REGISTER"
               unelevated
@@ -64,7 +65,7 @@
               @click="signUpModal = true"
             />
             <q-btn
-              v-if="userStore.user"
+              v-if="userStore.user && !userStore.loadingUser"
               icon="logout"
               label="LOG OUT"
               unelevated
