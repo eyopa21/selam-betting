@@ -92,16 +92,17 @@
         </div>
         <div class="tw-flex tw-items-center tw-justify-between">
           <p class="tw-font-semibold">NetWin/ Payout</p>
-          <p>{{ (((findSlipById.birr - (findSlipById.birr * 13) / 100)) * findSlipById.birr).toFixed(2) }}
+          <p>{{ (((findSlipById.birr - (findSlipById.birr * 13) / 100)) *
+            calculateTotalOdd(findSlipById.games)).toFixed(2) }}
             ETB</p>
         </div>
         <div class="tw-py-4">
           <q-btn icon="share" label="SHARE" class="tw-font-bold tw-bg-gray-500 tw-w-full tw-mb-2 tw-mt-4" unelevated />
           <div class="tw-flex tw-gap-2">
-            <q-btn :disabled="!findSlipById.games?.length" @click="showTerms = true" label="BOOK" unelevated
-              class="tw-font-bold tw-bg-primary-600 tw-w-full" />
-            <q-btn :disabled="!findSlipById.games?.length" color="orange" label="PLACE" unelevated
-              class="tw-font-bold tw-bg-primary-600 tw-w-full" />
+            <q-btn :disabled="!findSlipById.games?.length || findSlipById.birr < 10" @click="showTerms = true"
+              label="BOOK" unelevated class="tw-font-bold tw-bg-primary-600 tw-w-full" />
+            <q-btn :disabled="!findSlipById.games?.length || findSlipById.birr < 10" color="orange" label="PLACE"
+              unelevated class="tw-font-bold tw-bg-primary-600 tw-w-full" />
           </div>
         </div>
       </div>

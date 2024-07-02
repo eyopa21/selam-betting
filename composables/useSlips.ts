@@ -37,7 +37,7 @@ export function useSlips() {
         name: 'slip1',
         label: 'Slip 1',
         games: [],
-        birr: 10
+        birr: 0
     }
     ])
 
