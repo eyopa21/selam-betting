@@ -1,12 +1,7 @@
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig();
     const body = await readBody(event)
-    console.log('this is body', body);
-    const url = `${config.restApiEndpoint}/user_register`;
-    console.log('urllllll', url);
-    console.log('bodyyyyy', body);
-    console.log(config.serverApiKey);
-
+    const url = `${config.restApiEndpoint}/user_register/`;
 
     try {
         const response = await fetch(url, {
@@ -15,28 +10,23 @@ export default defineEventHandler(async (event) => {
                 'Content-Type': 'application/json',
                 "X-API-KEY": config.serverApiKey
             },
-            body: body.stringify()
+            body: JSON.stringify(body)
         })
 
-        if (!response.ok) {
-            throw new Error(`External API request failed with status ${response.status}`)
-        }
-
         const data = await response.json()
-        if (data.results && Array.isArray(data.results)) {
-            data.results = data.results.map((result: any) => ({
-                ...result,
-                id: BigInt(result.id).toString()
-            }));
+
+        if (!response.ok) {
+            return {
+                error: data,
+            }
         }
         return {
-            data,
+            data: data,
         }
-    } catch (error) {
-        console.error('Error signing up user:', error)
-        // Handle errors appropriately, e.g., return a specific error response
+    } catch (err) {
+        console.error('Error signing up user:', err)
         return {
-            error: 'Failed to retrieve external data',
+            error: err,
         }
     }
 })

@@ -1,8 +1,8 @@
 export interface SignInInputs {
     username: string;
-    phoneNumber: string;
+    phoneNumber?: string;
     password: string;
-    remember: boolean;
+    remember?: boolean;
 }
 
 interface Address {
@@ -24,6 +24,6 @@ export interface SignUpInputs {
     password2: string;
     first_name: string;
     last_name: string;
-    phoneNumber: string;
+    phone_number: string;
     address: Address;
 }

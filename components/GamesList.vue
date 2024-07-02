@@ -79,9 +79,9 @@ const handleAllMarketClick = async (iid: number) => {
       <div class="flex tw-items-center tw-border-r tw-border-indigo-900 tw-px-4">
         <q-icon name="home" class="tw-text-white tw-text-3xl" />
         <q-icon name="arrow_forward_ios" class="tw-text-white tw-text-2xl tw-mx-2 tw-font-extralight" />
-        <NuxtImg class="tw-w-6 tw-h-6" src="/images/ball.png" />
+        <img class="tw-w-6 tw-h-6" src="/images/ball.png" />
         <q-icon name="arrow_forward_ios" class="tw-text-white tw-text-2xl tw-mx-2 tw-font-extralight" />
-        <NuxtImg class="tw-w-7 tw-aspect-ratio" src="/images/cup.png" />
+        <img class="tw-w-7 tw-aspect-ratio" src="/images/cup.png" />
       </div>
       <div class="tw-items-start tw-ml-4">
         <q-tabs v-model="aciveHeader" inline-label outside-arrows mobile-arrows dense>
@@ -102,27 +102,27 @@ const handleAllMarketClick = async (iid: number) => {
         <p class="tw-text-white tw-font-semibold">Football</p>
       </div>
       <div class="flex tw-justify-between tw-items-center tw-mx-1">
-        <NuxtImg class="tw-w-6 tw-h-6 tw-mr-1" src="/images/basket.png" />
+        <img class="tw-w-6 tw-h-6 tw-mr-1" src="/images/basket.png" />
         <p class="tw-text-white tw-font-semibold">Basketball</p>
       </div>
       <div class="flex tw-justify-between tw-items-center tw-mx-1">
-        <NuxtImg class="tw-w-6 tw-h-6 tw-mr-1" src="/images/tennis.png" />
+        <img class="tw-w-6 tw-h-6 tw-mr-1" src="/images/tennis.png" />
         <p class="tw-text-white tw-font-semibold">Tennis</p>
       </div>
       <div class="flex tw-justify-between tw-items-center tw-mx-1">
-        <NuxtImg class="tw-w-6 tw-h-6 tw-mr-1" src="/images/volley.png" />
+        <img class="tw-w-6 tw-h-6 tw-mr-1" src="/images/volley.png" />
         <p class="tw-text-white tw-font-semibold">Volleyball</p>
       </div>
       <div class="flex tw-justify-between tw-items-center tw-mx-1">
-        <NuxtImg class="tw-w-6 tw-h-6 tw-mr-1" src="/images/hockey.png" />
+        <img class="tw-w-6 tw-h-6 tw-mr-1" src="/images/hockey.png" />
         <p class="tw-text-white tw-font-semibold">Hockey</p>
       </div>
       <div class="flex tw-justify-between tw-items-center tw-mx-1">
-        <NuxtImg class="tw-w-6 tw-h-6 tw-mr-1" src="/images/teniis2.png" />
+        <img class="tw-w-6 tw-h-6 tw-mr-1" src="/images/teniis2.png" />
         <p class="tw-text-white tw-font-semibold">Table tennis</p>
       </div>
       <div class="flex tw-justify-between tw-items-center tw-mx-1">
-        <NuxtImg class="tw-w-6 tw-h-6 tw-mr-1" src="/images/cricket.png" />
+        <img class="tw-w-6 tw-h-6 tw-mr-1" src="/images/cricket.png" />
         <p class="tw-text-white tw-font-semibold">Cricket</p>
       </div>
     </div>
@@ -135,7 +135,6 @@ const handleAllMarketClick = async (iid: number) => {
                 <div class="tw-flex">
                   <p class="tw-font-semibold tw-text-gray-700 dark:tw-text-white">
                     {{ match.league }}
-                    {{ match.id }}
                   </p>
                 </div>
                 <p class="tw-text-xs tw-text-gray-700 dark:tw-text-white">

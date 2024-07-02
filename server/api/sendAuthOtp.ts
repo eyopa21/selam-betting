@@ -1,8 +1,7 @@
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig();
     const body = await readBody(event)
-    const url = `${config.restApiEndpoint}/login/`;
-
+    const url = `${config.restApiEndpoint}/request_otp/`;
 
     try {
         const response = await fetch(url, {
@@ -15,16 +14,19 @@ export default defineEventHandler(async (event) => {
         })
 
         const data = await response.json()
+
         if (!response.ok) {
-            throw new Error(`${data.detail}`)
+            return {
+                error: data,
+            }
         }
         return {
-            data,
+            data: data,
         }
     } catch (err) {
-        console.error('Error signing in user:', err)
+        console.error('Error sending otp user:', err)
         return {
-            error: `${err}`,
+            error: err,
         }
     }
 })

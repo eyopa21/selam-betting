@@ -1,35 +1,52 @@
-import type { SignUpInputs } from "~/types/auth";
+import type { SignInInputs, SignUpInputs } from "~/types/auth";
 
 export const useAuth = () => {
+    const userStore = useUserStore()
     const config = useRuntimeConfig();
-    const user = ref(null);
-    const token = useCookie('auth_token');
     const loading = ref(false);
     const error = ref<null | string>(null);
 
-    const login = async (email: string, password: string) => {
+    const $q = useQuasar();
+
+    const login = async (input: SignInInputs) => {
         loading.value = true;
         error.value = null;
         try {
-            const { data, error: fetchError } = await useFetch(`${config.restApiEndpoint}/betting/api/v1/login/`, {
+            const response = await $fetch(`/api/login/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-API-KEY': config.serverApiKey,
                 },
-                body: JSON.stringify({ email, password }),
+                body: input,
             });
 
-            if (fetchError.value) {
-                throw new Error(fetchError.value.message);
+            if (response?.error) {
+                throw new Error(response?.error);
             }
-            // user.value = data.value?.user;
-            // token.value = data.value?.token;
-            return data.value;
+
+            if (response?.data) {
+                localStorage.setItem('access_token', response.data?.access)
+                localStorage.setItem('refresh_token', response.data?.refresh)
+                const res = await $fetch(`/api/getUser/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-KEY': config.serverApiKey,
+                    },
+                    body: {
+                        access: localStorage.getItem('access_token')
+                    },
+                });
+                userStore.setUser((res.data))
+
+                return {
+                    data: { success: true }
+                };
+            }
+
         } catch (err) {
-            console.error('Login failed:', err);
-            error.value = err.message || 'Login failed';
-            throw err;
+            error.value = `${err}` || 'Login failed';
         } finally {
             loading.value = false;
         }
@@ -39,25 +56,110 @@ export const useAuth = () => {
         loading.value = true;
         error.value = null;
         try {
-            const { data, error: fetchError } = await useFetch(`/api/register`, {
+            const res = await $fetch(`/api/register/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-API-KEY': config.serverApiKey,
                 },
-                body: JSON.stringify(input),
+                body: input,
             });
-            console.log("this is register response", data);
+            if (res.error) {
+                let firstError = null;
+                for (const key in res.error) {
+                    if (res.error[key] && res.error[key].length > 0) {
+                        firstError = res.error[key][0];
+                        break;
+                    }
+                }
+                return {
+                    error: firstError
+                }
+            }
+            if (res.data) {
+                const email = res.data.email
+                const optRes = await sendOtp(email)
+                return optRes
+            }
+        } catch (err) {
+            error.value = `Registration failed: ${err}`;
+            throw err;
+        } finally {
+            loading.value = false;
+        }
+    };
 
+    const sendOtp = async (email: string) => {
+        try {
+            const res = await $fetch(`/api/sendAuthOtp/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-KEY': config.serverApiKey,
+                },
+                body: {
+                    email: email
+                },
+            });
+            if (res.error) {
+                return {
+                    error: res.error
+                }
+            }
+
+            return res.data;
+        } catch (err) {
+            error.value = "couldn't send otp"
+        }
+    }
+
+    const resetPassword = async (otp: string, newPassword: string) => {
+        try {
+            const res = await $fetch(`/api/resetPassword/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-KEY': config.serverApiKey,
+                },
+                body: {
+                    otp: otp,
+                    new_password: newPassword
+                },
+            });
+            if (res.error) {
+                return {
+                    error: res.error
+                }
+            }
+
+            return res.data;
+        } catch (err) {
+            error.value = "couldn't reset pasword"
+        }
+    }
+
+    const verifyOtp = async (email: string, otp: string) => {
+        loading.value = true;
+        error.value = null;
+        try {
+            const { data, error: fetchError } = await useFetch(`/api/verifyOtp/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-KEY': config.serverApiKey,
+                },
+                body: {
+                    email: email,
+                    otp: otp
+                },
+            });
 
             if (fetchError.value) {
                 throw new Error(fetchError.value.message);
             }
-
             return data.value;
         } catch (err) {
-            console.error('Registration failed:', err);
-            error.value = 'Registration failed';
+            error.value = `Otp verification failed: ${err}`;
             throw err;
         } finally {
             loading.value = false;
@@ -65,15 +167,22 @@ export const useAuth = () => {
     };
 
     const logout = () => {
-        user.value = null;
-        token.value = null;
+        userStore.setUser(null)
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
+        $q.notify({
+            message: `Successfully logged out.`,
+            color: "green",
+        });
     };
 
     return {
-        user,
         login,
         register,
         logout,
+        verifyOtp,
+        sendOtp,
+        resetPassword,
         loading,
         error,
     };

@@ -72,7 +72,7 @@ const visibleMarkets = computed(() => {
         });
       });
       return {
-        marketName: market.bettingTypeId,
+        marketName: market.name,
         values: val,
       };
     });
