@@ -4,7 +4,8 @@ export default defineEventHandler(async (event) => {
     const query = getQuery(event);
     const page = query.page || 1;
 
-    const url = `${config.restApiEndpoint}/tournament/${id}/?page=${page}`;
+    const url = `${config.restApiEndpoint}/tournament/${id}/?page_size=${page}`;
+
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -32,7 +33,6 @@ export default defineEventHandler(async (event) => {
         }
     } catch (error) {
         console.error('Error fetching external data:', error)
-        // Handle errors appropriately, e.g., return a specific error response
         return {
             error: 'Failed to retrieve external data',
         }

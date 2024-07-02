@@ -165,6 +165,6 @@ async function getAndSetMatchList(id: number) {
 
 onMounted(async () => {
   await sportsStore.fetchSports();
-  sportsStore.fetchTournaments(1, "10");
+  sportsStore.fetchTournaments("1", "50");
 });
 </script>
