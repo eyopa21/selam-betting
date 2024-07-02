@@ -124,7 +124,7 @@ const emit = defineEmits<{
 
 const $q = useQuasar();
 
-const { login, loading } = useAuth();
+const { login, loading, error } = useAuth();
 
 enum SigninOption {
   Phone = "phone",
@@ -148,17 +148,16 @@ const onSubmit = async () => {
     password: signInObj.password,
   });
 
-  if (res?.data) {
+  if (res?.data.success) {
     $q.notify({
       message: "Successfully logged in",
       color: "green",
     });
     visible.value = false;
     emit("modalClosed");
-  }
-  if (res?.error) {
+  } else {
     $q.notify({
-      message: res.error,
+      message: `${error.value}`,
       color: "red",
     });
   }

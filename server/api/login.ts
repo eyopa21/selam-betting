@@ -14,20 +14,17 @@ export default defineEventHandler(async (event) => {
             body: JSON.stringify(body)
         })
 
-        if (!response.ok) {
-            throw new Error(`External API request failed with status ${response.status}`)
-        }
-
         const data = await response.json()
-
+        if (!response.ok) {
+            throw new Error(`${data.detail}`)
+        }
         return {
             data,
         }
-    } catch (error) {
-        console.error('Error signing up user:', error)
-        // Handle errors appropriately, e.g., return a specific error response
+    } catch (err) {
+        console.error('Error signing in user:', err)
         return {
-            error: 'Failed to retrieve external data',
+            error: `${err}`,
         }
     }
 })

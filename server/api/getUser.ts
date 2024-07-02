@@ -1,16 +1,17 @@
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig();
     const body = await readBody(event)
-    const url = `${config.restApiEndpoint}/user_register/`;
+    const url = `${config.restApiEndpoint}/user_account/`;
+
 
     try {
         const response = await fetch(url, {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "X-API-KEY": config.serverApiKey
+                "X-API-KEY": config.serverApiKey,
+                "Authorization": `Bearer ${body.access}`
             },
-            body: JSON.stringify(body)
         })
 
         const data = await response.json()
@@ -21,7 +22,7 @@ export default defineEventHandler(async (event) => {
             data,
         }
     } catch (err) {
-        console.error('Error signing in user:', err)
+        console.error('Error getting user:', err)
         return {
             error: `${err}`,
         }

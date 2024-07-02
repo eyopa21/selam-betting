@@ -3,7 +3,6 @@ import type { SignInInputs, SignUpInputs } from "~/types/auth";
 export const useAuth = () => {
     const config = useRuntimeConfig();
     const user = ref(null);
-    const token = useCookie('auth_token');
     const loading = ref(false);
     const error = ref<null | string>(null);
 
@@ -11,7 +10,7 @@ export const useAuth = () => {
         loading.value = true;
         error.value = null;
         try {
-            const { data, error: fetchError } = await useFetch(`/api/login/`, {
+            const response = await $fetch(`/api/login/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -20,15 +19,33 @@ export const useAuth = () => {
                 body: input,
             });
 
-            if (fetchError.value) {
-                throw new Error(fetchError.value.message);
+            if (response?.error) {
+                throw new Error(response?.error);
             }
-            return {
-                data: { success: true }
-            };
+
+            if (response?.data) {
+                localStorage.setItem('access_token', response.data?.access)
+                localStorage.setItem('refresh_token', response.data?.refresh)
+                const res = await $fetch(`/api/getUser/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-KEY': config.serverApiKey,
+                    },
+                    body: {
+                        access: localStorage.getItem('access_token')
+                    },
+                });
+                user.value = res.data
+                console.log(user.value);
+
+                return {
+                    data: { success: true }
+                };
+            }
+
         } catch (err) {
-            error.value = err.message || 'Login failed';
-            throw err;
+            error.value = `${err}` || 'Login failed';
         } finally {
             loading.value = false;
         }
@@ -50,8 +67,30 @@ export const useAuth = () => {
             if (fetchError.value) {
                 throw new Error(fetchError.value.message);
             }
+            if (data.value?.data) {
+                const email = data.value?.data?.email
+                try {
+                    console.log('sending otp');
 
-            return data.value;
+                    const { data, error, status } = await useFetch(`/api/sendAuthOtp/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-API-KEY': config.serverApiKey,
+                        },
+                        body: {
+                            email: email
+                        },
+                    });
+                    if (error.value) {
+                        throw new Error(error.value.message);
+                    }
+
+                    return data.value;
+                } catch (err) {
+                    error.value = "couldn't send otp"
+                }
+            }
         } catch (err) {
             error.value = `Registration failed: ${err}`;
             throw err;
@@ -60,9 +99,40 @@ export const useAuth = () => {
         }
     };
 
+    const verifyOtp = async (email: string, otp: string) => {
+        loading.value = true;
+        error.value = null;
+        try {
+            const { data, error: fetchError } = await useFetch(`/api/verifyOtp/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-KEY': config.serverApiKey,
+                },
+                body: {
+                    email: email,
+                    otp: otp
+                },
+            });
+
+            if (fetchError.value) {
+                throw new Error(fetchError.value.message);
+            }
+            return data.value;
+        } catch (err) {
+            error.value = `Otp verification failed: ${err}`;
+            throw err;
+        } finally {
+            loading.value = false;
+        }
+    };
+
     const logout = () => {
+        console.log('logged out');
+
         user.value = null;
-        token.value = null;
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
     };
 
     return {
@@ -70,6 +140,7 @@ export const useAuth = () => {
         login,
         register,
         logout,
+        verifyOtp,
         loading,
         error,
     };

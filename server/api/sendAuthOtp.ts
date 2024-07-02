@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig();
     const body = await readBody(event)
-    const url = `${config.restApiEndpoint}/user_register/`;
+    const url = `${config.restApiEndpoint}/request_otp/`;
 
     try {
         const response = await fetch(url, {
@@ -13,17 +13,20 @@ export default defineEventHandler(async (event) => {
             body: JSON.stringify(body)
         })
 
-        const data = await response.json()
         if (!response.ok) {
-            throw new Error(`${data.detail}`)
+            throw new Error(`External API request failed with status ${response.status}`)
         }
+
+        const data = await response.json()
+
         return {
             data,
         }
-    } catch (err) {
-        console.error('Error signing in user:', err)
+    } catch (error) {
+        console.error('Error sending otp:', error)
+        // Handle errors appropriately, e.g., return a specific error response
         return {
-            error: `${err}`,
+            error: 'Failed to retrieve external data',
         }
     }
 })
