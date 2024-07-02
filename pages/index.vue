@@ -20,13 +20,15 @@ const { data: recommendedGames } = await useFetch(
 );
 
 const setList = async () => {
-  const filteredMatches = await recommendedGames.value?.data.results.map(
+  const filteredMatches = await recommendedGames.value?.data?.results.map(
     (game: any) => {
+      // console.log("recc", recommendedGames.value);
       return {
         id: game.id,
         league: game.parent_name,
         teams: game.name,
         date: convertToDateString(game.startTime),
+        time: new Date(game.startTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }),
         odds: extractOdds(game.markets, game.name),
       };
     }
