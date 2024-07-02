@@ -100,7 +100,6 @@
                     class="tw-font-semibold tw-text-gray-700 dark:tw-text-white"
                   >
                     {{ match.league }}
-                    {{ match.id }}
                   </p>
                 </div>
                 <p class="tw-text-xs tw-text-gray-700 dark:tw-text-white">
