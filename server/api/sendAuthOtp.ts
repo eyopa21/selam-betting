@@ -13,20 +13,20 @@ export default defineEventHandler(async (event) => {
             body: JSON.stringify(body)
         })
 
-        if (!response.ok) {
-            throw new Error(`External API request failed with status ${response.status}`)
-        }
-
         const data = await response.json()
 
-        return {
-            data,
+        if (!response.ok) {
+            return {
+                error: data,
+            }
         }
-    } catch (error) {
-        console.error('Error sending otp:', error)
-        // Handle errors appropriately, e.g., return a specific error response
         return {
-            error: 'Failed to retrieve external data',
+            data: data,
+        }
+    } catch (err) {
+        console.error('Error sending otp user:', err)
+        return {
+            error: err,
         }
     }
 })

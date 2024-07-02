@@ -129,7 +129,7 @@
       <div v-if="isOtp">
         <q-icon
           name="mail"
-          class="tw-flex tw-justify-center tw-text-9xl tw-aspect-square tw-text-primary-700"
+          class="tw-flex tw-justify-center tw-text-9xl tw-aspect-square tw-text-primary-700 tw-w-full mx-auto"
         />
         <p class="tw-text-gray-700 tw-font-semibold tw-text-center tw-text-3xl">
           Please check your email
@@ -219,7 +219,8 @@ const onSubmit = async () => {
     last_name: signUpObj.last_name,
     phone_number: signUpObj.phone_number,
   });
-  if (res?.data) {
+
+  if (res?.message === "OTP sent successfully") {
     isOtp.value = true;
   }
   if (res?.error) {
@@ -240,6 +241,7 @@ const verifyOTP = async () => {
     });
     emit("login");
   }
+
   if (res?.error) {
     $q.notify({
       message: res.error,

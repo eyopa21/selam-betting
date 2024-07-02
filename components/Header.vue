@@ -1,7 +1,7 @@
 <template>
-  <div class="tw-flex tw-justify-between custom-container items-center">
+  <div class="tw-flex tw-justify-between custom-container items-center tw-py-1">
     <div class="tw-ml-4">
-      <NuxtImg sizes="250px" src="/images/logo.png" />
+      <img class="tw-w-64" src="/images/logo.png" />
     </div>
     <div class="lg:tw-flex tw-items-end tw-hidden">
       <ul v-for="option in menuOptions">

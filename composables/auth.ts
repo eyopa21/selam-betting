@@ -56,7 +56,7 @@ export const useAuth = () => {
         loading.value = true;
         error.value = null;
         try {
-            const { data, error: fetchError } = await useFetch(`/api/register/`, {
+            const res = await $fetch(`/api/register/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,33 +64,22 @@ export const useAuth = () => {
                 },
                 body: input,
             });
-
-            if (fetchError.value) {
-                throw new Error(fetchError.value.message);
-            }
-            if (data.value?.data) {
-                const email = data.value?.data?.email
-                try {
-                    console.log('sending otp');
-
-                    const { data, error, status } = await useFetch(`/api/sendAuthOtp/`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-API-KEY': config.serverApiKey,
-                        },
-                        body: {
-                            email: email
-                        },
-                    });
-                    if (error.value) {
-                        throw new Error(error.value.message);
+            if (res.error) {
+                let firstError = null;
+                for (const key in res.error) {
+                    if (res.error[key] && res.error[key].length > 0) {
+                        firstError = res.error[key][0];
+                        break;
                     }
-
-                    return data.value;
-                } catch (err) {
-                    error.value = "couldn't send otp"
                 }
+                return {
+                    error: firstError
+                }
+            }
+            if (res.data) {
+                const email = res.data.email
+                const optRes = await sendOtp(email)
+                return optRes
             }
         } catch (err) {
             error.value = `Registration failed: ${err}`;
@@ -99,6 +88,55 @@ export const useAuth = () => {
             loading.value = false;
         }
     };
+
+    const sendOtp = async (email: string) => {
+        try {
+            const res = await $fetch(`/api/sendAuthOtp/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-KEY': config.serverApiKey,
+                },
+                body: {
+                    email: email
+                },
+            });
+            if (res.error) {
+                return {
+                    error: res.error
+                }
+            }
+
+            return res.data;
+        } catch (err) {
+            error.value = "couldn't send otp"
+        }
+    }
+
+    const resetPassword = async (otp: string, newPassword: string) => {
+        try {
+            const res = await $fetch(`/api/resetPassword/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-KEY': config.serverApiKey,
+                },
+                body: {
+                    otp: otp,
+                    new_password: newPassword
+                },
+            });
+            if (res.error) {
+                return {
+                    error: res.error
+                }
+            }
+
+            return res.data;
+        } catch (err) {
+            error.value = "couldn't reset pasword"
+        }
+    }
 
     const verifyOtp = async (email: string, otp: string) => {
         loading.value = true;
@@ -143,6 +181,8 @@ export const useAuth = () => {
         register,
         logout,
         verifyOtp,
+        sendOtp,
+        resetPassword,
         loading,
         error,
     };
