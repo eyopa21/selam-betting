@@ -20,7 +20,7 @@
           <div class="tw-grid tw-grid-cols-3">
 
             <Odd class="tw-m-2 tw-col-span-1" v-for="outcome in market.values" :matchDetail="props.matchDetail"
-              :value="outcome.name" :odd="outcome.odd" :id="outcome.eventId" />
+              :value="outcome.name" :odd="outcome.odd" :eventId="outcome.eventId" :outcomeId="outcome.outcomeId" />
           </div>
         </q-expansion-item>
       </q-list>
@@ -35,6 +35,7 @@ interface Market {
 }
 
 interface Outcome {
+  outcomeId: number
   eventId: number,
   name: string
   odd: number
@@ -48,6 +49,7 @@ const props = defineProps<{
     teams: string,
     league: string
     date: string
+    time: string
   }
   markets: any[];
   marketCount: number;
@@ -59,7 +61,9 @@ const visibleMarkets = computed(() => {
     const ret = props.markets.map((market) => {
       const val: Outcome[] = [];
       market.outcomes.forEach((outcome: any) => {
+        console.log("ou", outcome);
         val.push({
+          outcomeId: outcome.id,
           eventId: market.id,
           name: outcome.name,
           odd: outcome.betting_offers[0]?.odds

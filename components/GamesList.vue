@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 interface Outcome {
+  outcomeId: number
   eventId: number,
   name: string
   odd: number
@@ -23,6 +24,7 @@ interface Matches {
   league: string;
   teams: string;
   date: string;
+  time: string;
   odds: Outcome[];
   markets: Markets;
 }
@@ -47,7 +49,7 @@ const handleAllMarketClick = async (iid: number) => {
     showMarketArray.value.push({ id: iid });
 
     const resp = await $fetch(`/api/markets/${iid}/?pageSize=${10}`);
-
+    // console.log("markets", resp);
     const obj = matchListStore.listOfMatches?.findIndex(
       (item) => item.id == iid
     );
@@ -142,19 +144,21 @@ const handleAllMarketClick = async (iid: number) => {
               </div>
               <div>
                 <p class="tw-text-gray-700 dark:tw-text-white">
-                  {{ match.date }}
+                  {{ match.date }} - {{ match.time }}
                 </p>
               </div>
             </div>
             <div class="tw-flex tw-justify-between tw-items-center tw-mb-2">
               <div v-for="odd in match.odds" class="tw-w-full tw-mr-2">
+
                 <Odd :matchDetail="{
                   id: match.id,
                   teams: match.teams,
                   league: match.league,
                   date: match.date,
+                  time: match.time
 
-                }" :id="odd.eventId" :value="odd.value" :odd="odd.odd" />
+                }" :outcomeId="odd.outcomeId" :eventId="odd.eventId" :value="odd.value" :odd="odd.odd" />
               </div>
               <q-btn outline
                 class="tw-rounded-lg dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
@@ -171,6 +175,7 @@ const handleAllMarketClick = async (iid: number) => {
                 teams: match.teams,
                 league: match.league,
                 date: match.date,
+                time: match.time
 
               }" :markets="match.markets.results" :marketCount="parseInt(match.markets.count ?? 0)" />
             </div>

@@ -5,10 +5,11 @@ export function convertToDateString(dateStr: string): string {
 }
 
 export function extractOdds(
+
     data: any[],
     teams: string
 ): { value: string; odd: string }[] {
-    const odds: { eventId: number, value: string; odd: string }[] = [];
+    const odds: { outcomeId: number, eventId: number, value: string; odd: string }[] = [];
 
     const [team1, team2] = teams.split(" vs ").map((team) => team.trim());
     const betMap: { [key: string]: { [key: string]: string } } = {
@@ -25,14 +26,16 @@ export function extractOdds(
     };
 
     data.forEach((item) => {
-
+        console.log("item", item.id);
         const bettingType = item.name;
         item.outcomes.forEach((outcome: any) => {
+            console.log("outcome", outcome)
             const outcomeName = outcome.name;
             const oddValue = outcome.betting_offers[0]?.odds;
             if (oddValue) {
                 if (bettingType in betMap && outcomeName in betMap[bettingType]) {
                     odds.push({
+                        outcomeId: outcome.id,
                         eventId: item.eventId,
                         value: betMap[bettingType][outcomeName],
                         odd: oddValue.toFixed(2),

@@ -1,5 +1,6 @@
 
 interface MatchOdds {
+    outcomeId: number
     eventId: number
     value: string;
     odd: string;
@@ -20,6 +21,7 @@ export interface Matches {
     league: string;
     teams: string;
     date: string;
+    time: string;
     odds: MatchOdds[];
     markets: Markets;
     participants: Participant
