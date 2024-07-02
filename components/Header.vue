@@ -11,9 +11,8 @@
       </ul>
     </div>
     <div class="tw-my-auto lg:tw-flex tw-gap-2 tw-hidden tw-mr-4">
-      {{ currentUser }}
       <q-btn
-        v-if="currentUser == null"
+        v-if="!userStore.user"
         icon="login"
         label="LOGIN"
         class="tw-font-bold tw-bg-gray-500"
@@ -21,7 +20,7 @@
         @click="signInModal = true"
       />
       <q-btn
-        v-if="currentUser == null"
+        v-if="!userStore.user"
         icon="person"
         label="REGISTER"
         unelevated
@@ -29,7 +28,7 @@
         @click="signUpModal = true"
       />
       <q-btn
-        v-if="currentUser !== null"
+        v-if="userStore.user"
         icon="person"
         label="LOG OUT"
         unelevated
@@ -49,7 +48,7 @@
           </q-list>
           <div class="tw-flex tw-justify-start tw-my-2 tw-text-white tw-mx-2">
             <q-btn
-              v-if="currentUser == null"
+              v-if="!userStore.user"
               icon="login"
               label="LOGIN"
               class="tw-font-bold tw-bg-gray-500 tw-mr-4"
@@ -57,7 +56,7 @@
               @click="signInModal = true"
             />
             <q-btn
-              v-if="currentUser == null"
+              v-if="!userStore.user"
               icon="person"
               label="REGISTER"
               unelevated
@@ -65,7 +64,7 @@
               @click="signUpModal = true"
             />
             <q-btn
-              v-if="currentUser != null"
+              v-if="userStore.user"
               icon="logout"
               label="LOG OUT"
               unelevated
@@ -98,12 +97,9 @@
 <script setup lang="ts">
 import { menuOptions } from "../composables/dummyData";
 
-const { user, logout } = useAuth();
+const userStore = useUserStore();
 
-const currentUser = computed(() => {
-  if (user) return user;
-  else return null;
-});
+const { logout } = useAuth();
 
 const signInModal = ref(false);
 const signUpModal = ref(false);

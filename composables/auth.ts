@@ -1,10 +1,12 @@
 import type { SignInInputs, SignUpInputs } from "~/types/auth";
 
 export const useAuth = () => {
+    const userStore = useUserStore()
     const config = useRuntimeConfig();
-    const user = ref(null);
     const loading = ref(false);
     const error = ref<null | string>(null);
+
+    const $q = useQuasar();
 
     const login = async (input: SignInInputs) => {
         loading.value = true;
@@ -36,8 +38,7 @@ export const useAuth = () => {
                         access: localStorage.getItem('access_token')
                     },
                 });
-                user.value = res.data
-                console.log(user.value);
+                userStore.setUser((res.data))
 
                 return {
                     data: { success: true }
@@ -128,15 +129,16 @@ export const useAuth = () => {
     };
 
     const logout = () => {
-        console.log('logged out');
-
-        user.value = null;
+        userStore.setUser(null)
         localStorage.removeItem('access_token')
         localStorage.removeItem('refresh_token')
+        $q.notify({
+            message: `Successfully logged out.`,
+            color: "green",
+        });
     };
 
     return {
-        user,
         login,
         register,
         logout,
