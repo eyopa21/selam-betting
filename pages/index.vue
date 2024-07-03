@@ -1,5 +1,6 @@
 <template>
   <div>
+    <<<<<<< HEAD
     <q-carousel
       animated
       v-model="slide"
@@ -13,6 +14,9 @@
       <q-carousel-slide :name="3" img-src="/images/ITSC banner.png" />
       <q-carousel-slide :name="4" img-src="/images/Pepsi banner.png" />
     </q-carousel>
+    =======
+    <NuxtImg src="/images/HeroImage.png" class="tw-mb-3 tw-w-full" />
+    >>>>>>> 604368deec77e3620434e6cbc4081364ff0861c3
     <div v-if="layout.mainLoader" class="tw-flex tw-justify-center">
       <q-spinner color="primary" size="9em" />
     </div>
@@ -33,8 +37,9 @@ const { data: recommendedGames } = await useFetch(
 );
 
 const setList = async () => {
-  const filteredMatches = await recommendedGames.value?.data.results.map(
+  const filteredMatches = await recommendedGames.value?.data?.results.map(
     (game: any) => {
+      // console.log("recc", recommendedGames.value);
       return {
         id: game.id,
         league: game.parent_name,

@@ -1,3 +1,65 @@
+<script setup lang="ts">
+interface Outcome {
+  outcomeId: number;
+  eventId: number;
+  name: string;
+  odd: number;
+}
+
+interface MarketResults {
+  count: string;
+  odd: string;
+}
+interface Markets {
+  count: string;
+  next: string;
+  previous: string;
+  results: MarketResults[];
+}
+
+interface Matches {
+  id: number;
+  league: string;
+  teams: string;
+  date: string;
+  time: string;
+  odds: Outcome[];
+  markets: Markets;
+}
+
+const matchListStore = useMatchListStore();
+const matches = computed(() => {
+  return matchListStore.listOfMatches?.map((match) => {
+    return { ...match, isLoading: false };
+  });
+});
+const showMarketArray = ref<any[]>([]);
+const aciveHeader: Ref<string> = ref("Matches");
+
+const liveStreamToggle: Ref<boolean> = ref(false);
+
+const headersArray = ["Matches", "Recommended", "Upcoming Event"];
+
+const handleAllMarketClick = async (iid: number) => {
+  const isThere = showMarketArray.value.find((i) => i.id == iid);
+  if (!isThere) {
+    showMarketArray.value.push({ id: iid });
+
+    const resp = await $fetch(`/api/markets/${iid}/?pageSize=${10}`);
+    // console.log("markets", resp);
+    const obj = matchListStore.listOfMatches?.findIndex(
+      (item) => item.id == iid
+    );
+    if (obj) {
+      matchListStore.listOfMatches[obj].markets = resp.data as Markets;
+    }
+  } else {
+    showMarketArray.value = showMarketArray.value.filter((id) => {
+      return id.id !== iid;
+    });
+  }
+};
+</script>
 <template>
   <div>
     <div
@@ -89,8 +151,8 @@
         name="Matches"
         class="tw-p-2 tw-bg-secondary-800 dark:tw-bg-primary-700"
       >
-        <div class="tw-rounded" v-if="matchListStore.listOfMatches?.length">
-          <div v-for="match in matchListStore.listOfMatches" class="tw-mb-4">
+        <div class="tw-rounded" v-if="matches?.length">
+          <div v-for="(match, key) in matches" :key="key" class="tw-mb-4">
             <div
               class="tw-flex tw-justify-between dark:text-white tw-items-end"
             >
@@ -108,29 +170,61 @@
               </div>
               <div>
                 <p class="tw-text-gray-700 dark:tw-text-white">
-                  {{ match.date }}
+                  {{ match.date }} - {{ match.time }}
                 </p>
               </div>
             </div>
             <div class="tw-flex tw-justify-between tw-items-center tw-mb-2">
               <div v-for="odd in match.odds" class="tw-w-full tw-mr-2">
-                <Odd :value="odd.value" :odd="odd.odd" />
+                <Odd
+                  :matchDetail="{
+                    id: match.id,
+                    teams: match.teams,
+                    league: match.league,
+                    date: match.date,
+                    time: match.time,
+                  }"
+                  :outcomeId="odd.outcomeId"
+                  :eventId="odd.eventId"
+                  :value="odd.value"
+                  :odd="odd.odd"
+                />
               </div>
               <q-btn
                 outline
                 class="tw-rounded-lg dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
                 label="All markets +"
-                @click="handleAllMarketClick(match.id)"
+                @click="
+                  match.isLoading = true;
+                  handleAllMarketClick(match.id);
+                "
               />
             </div>
-            <AllMarkets
+            <div v-if="match.isLoading && !match.markets">
+              <q-spinner size="lg" />
+            </div>
+
+            <div
               v-if="
                 match.markets && showMarketArray.find((i) => i.id === match.id)
               "
-              :markets="match.markets.results"
-              :marketCount="match.markets.count"
-            />
+            >
+              <AllMarkets
+                :matchDetail="{
+                  id: match.id,
+                  teams: match.teams,
+                  league: match.league,
+                  date: match.date,
+                  time: match.time,
+                }"
+                :markets="match.markets.results"
+                :marketCount="parseInt(match.markets.count ?? 0)"
+              />
+            </div>
           </div>
+        </div>
+        <div v-else>
+          <VUEEmptyState />
         </div>
       </q-tab-panel>
       <q-tab-panel name="Recommended">recommended matches </q-tab-panel>
@@ -138,56 +232,3 @@
     </q-tab-panels>
   </div>
 </template>
-
-<script setup lang="ts">
-interface MatchOdds {
-  value: string;
-  odd: string;
-}
-interface MarketResults {
-  count: string;
-  odd: string;
-}
-interface Markets {
-  count: string;
-  next: string;
-  previous: string;
-  results: MarketResults[];
-}
-
-interface Matches {
-  id: number;
-  league: string;
-  teams: string;
-  date: string;
-  odds: MatchOdds[];
-  markets: Markets;
-}
-
-const matchListStore = useMatchListStore();
-
-const showMarketArray = ref<any[]>([]);
-const aciveHeader: Ref<string> = ref("Matches");
-
-const liveStreamToggle: Ref<boolean> = ref(false);
-
-const headersArray = ["Matches", "Recommended", "Upcoming Event"];
-
-const handleAllMarketClick = async (iid: number) => {
-  const isThere = showMarketArray.value.find((i) => i.id == iid);
-  if (!isThere) {
-    showMarketArray.value.push({ id: iid });
-    const resp = await $fetch(`/api/markets/${iid}/?pageSize=${10}`);
-    const obj = matchListStore.listOfMatches?.findIndex(
-      (item) => item.id == iid
-    );
-    if (obj) {
-      matchListStore.listOfMatches[obj].markets = resp.data as Markets;
-    }
-  } else {
-    showMarketArray.value = showMarketArray.value.filter((id) => {
-      return id.id !== iid;
-    });
-  }
-};
-</script>
