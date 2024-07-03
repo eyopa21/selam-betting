@@ -61,7 +61,6 @@ const visibleMarkets = computed(() => {
     const ret = props.markets.map((market) => {
       const val: Outcome[] = [];
       market.outcomes.forEach((outcome: any) => {
-        console.log("ou", outcome);
         val.push({
           outcomeId: outcome.id,
           eventId: market.id,

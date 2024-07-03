@@ -6,16 +6,21 @@
       </q-header>
 
       <q-page-container>
-        <hr class="tw-h-4 tw-bg-secondary-800 tw-my-2" />
-        <div
-          class="tw-grid tw-grid-cols-12 w-full custom-container tw-gap-4 tw-py-8"
-        >
-          <div class="tw-col-span-2 tw-hidden lg:tw-block">
-            <div class="tw-sticky tw-top-24">
+
+        <div class="">
+          <q-drawer v-model="layout.showDrawer" show-if-above :mini="layout.miniState"
+            @mouseover="layout.miniState = false" @mouseout="layout.miniState = true" mini-to-overlay :width="300"
+            :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'">
+
+            <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: '0' }">
               <HomeFilter />
-            </div>
-          </div>
-          <div class="lg:tw-col-span-8 tw-col-span-12">
+            </q-scroll-area>
+
+          </q-drawer>
+        </div>
+        <div class="tw-grid tw-grid-cols-12 w-full custom-container tw-gap-4 tw-py-8">
+
+          <div class="lg:tw-col-span-10 tw-col-span-12">
             <slot />
           </div>
           <div class="tw-col-span-2 tw-hidden lg:tw-block">
@@ -35,7 +40,7 @@
 
 <script setup lang="ts">
 const userStore = useUserStore();
-
+const layout = useLayout();
 onMounted(async () => {
   await userStore.getUser();
 });
