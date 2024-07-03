@@ -13,8 +13,12 @@ export default defineNuxtConfig({
         secondary: "rgb(var(--secondary-500))",
       }
     },
-    plugins: ['Notify']
+
   },
+
+
+
+
   runtimeConfig: {
     serverApiKey: process.env.API_KEY,
     restApiEndpoint: process.env.API_BASE_URL,

@@ -13,9 +13,9 @@ export const useSportsStore = defineStore('sports', () => {
     const fetchSports = async () => {
         try {
             const data = await $fetch<{ data: Sports }>('/api/sports')
-            sportsCount.value = data.data.count || 0
-            sportsNext.value = data.data.next || ''
-            sportsPrev.value = data.data.previous || ''
+            sportsCount.value = data.data.count ?? 0
+            sportsNext.value = data.data.next ?? ''
+            sportsPrev.value = data.data.previous ?? ''
             data.data.results?.forEach((r) => r.tournaments = {} as Tournaments)
             sports.value = data.data.results || []
 
