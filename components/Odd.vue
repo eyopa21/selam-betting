@@ -27,7 +27,6 @@ const props = defineProps<{
 }>();
 
 function selectBet() {
-  console.log("object", props);
   addGameToSlip(props)
 }
 
