@@ -10,7 +10,9 @@
         </li>
       </ul>
     </div>
-    <div class="tw-my-auto lg:tw-flex tw-gap-2 tw-hidden tw-mr-4">
+    <div
+      class="tw-my-auto lg:tw-flex tw-gap-2 tw-hidden tw-mr-4 tw-items-center"
+    >
       <q-btn
         v-if="!userStore.user && !userStore.loadingUser"
         icon="login"
@@ -27,14 +29,53 @@
         class="tw-font-bold tw-bg-primary-500"
         @click="signUpModal = true"
       />
-      <q-btn
+      <div
         v-if="userStore.user && !userStore.loadingUser"
-        icon="person"
-        label="LOG OUT"
-        unelevated
-        class="tw-font-bold tw-bg-primary-500"
-        @click="logout()"
-      />
+        class="tw-flex tw-text-center tw-gap-2"
+      >
+        <p
+          class="tw-text-[#FADF99] tw-font-bold tw-text-lg tw-flex tw-items-center tw-border tw-rounded tw-border-gray-600 tw-p-1 tw-mr-2"
+        >
+          <span
+            ><img src="/images/$.png" alt="" class="tw-w-4 tw-aspect-auto"
+          /></span>
+          1,000 ETB
+        </p>
+        <p
+          class="tw-text-white tw-font-bold tw-text-lg tw-flex tw-items-center tw-border tw-rounded tw-border-gray-600 tw-p-1"
+        >
+          + Deposite
+        </p>
+        <q-btn dense round flat icon="redeem" class="tw-text-xl">
+          <q-badge color="blue" floating transparent> 2 </q-badge>
+        </q-btn>
+        <q-btn dense round flat icon="email" class="tw-text-xl">
+          <q-badge color="blue" floating transparent> 2 </q-badge>
+        </q-btn>
+        <q-btn dense round flat icon="person" class="tw-text-xl">
+          <q-badge color="red" floating transparent rounded></q-badge>
+        </q-btn>
+        <q-btn
+          round
+          flat
+          icon="logout"
+          dense
+          class="tw-text-xl tw-text-red-600"
+          @click="logout()"
+        />
+        <q-btn
+          icon="phone"
+          dense
+          round
+          flat
+          class="tw-text-lg"
+          @click="logout()"
+        />
+        <div class="tw-border-x tw-border-gray-400 tw-p-1">
+          <q-btn icon="public" dense round flat class="tw-text-lg" />
+        </div>
+        <q-btn icon="translate" dense round flat class="tw-text-lg" />
+      </div>
       <q-spinner v-if="userStore.loadingUser" color="primary" size="2em" />
       <div></div>
     </div>
