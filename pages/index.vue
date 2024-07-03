@@ -1,24 +1,20 @@
 <template>
   <div>
-    <q-carousel
-      animated
-      v-model="slide"
-      arrows
-      navigation
-      infinite
-      height="257px"
-    >
+    <<<<<<< HEAD <q-carousel animated v-model="slide" arrows navigation infinite height="257px">
       <q-carousel-slide :name="1" img-src="/images/Fenan pay.png" />
       <q-carousel-slide :name="2" img-src="/images/Fly emrates.png" />
       <q-carousel-slide :name="3" img-src="/images/ITSC banner.png" />
       <q-carousel-slide :name="4" img-src="/images/Pepsi banner.png" />
-    </q-carousel>
-    <div v-if="layout.mainLoader" class="tw-flex tw-justify-center">
-      <q-spinner color="primary" size="9em" />
-    </div>
-    <div v-else>
-      <GamesList />
-    </div>
+      </q-carousel>
+      =======
+      <NuxtImg src="/images/HeroImage.png" class="tw-mb-3 tw-w-full" />
+      >>>>>>> 604368deec77e3620434e6cbc4081364ff0861c3
+      <div v-if="layout.mainLoader" class="tw-flex tw-justify-center">
+        <q-spinner color="primary" size="9em" />
+      </div>
+      <div v-else>
+        <GamesList />
+      </div>
   </div>
 </template>
 
