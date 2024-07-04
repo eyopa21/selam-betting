@@ -3,17 +3,39 @@ import { ref } from 'vue'
 import type { Sport, Sports } from '~/types/sports'
 import type { Tournament, Tournaments } from '~/types/tournaments'
 
+type Leagues = {
+    id: string
+    name: string
+}
+
+type Tournamentss = {
+    count: number
+    next: string | null
+    previous: string | null
+    leagues: Leagues[]
+}
+type Sports = {
+    id: number,
+    name: string
+    parentId: number | null
+    tournaments: Tournamentss
+
+}
+
+
 export const useSportsStore = defineStore('sports', () => {
     const sportsCount = ref<number>(0)
     const sportsNext = ref<string>("")
     const sportsPrev = ref<string>("")
-    const sports = ref<Sport[]>([])
+    const sports = ref<Sports[]>([])
     const tournaments = ref<Tournament[]>([])
 
     const fetchSports = async () => {
+
         try {
-            const data = await $fetch<{ data: Sports }>('/api/sports')
-            sportsCount.value = data.data.count ?? 0
+            const data = await $fetch('/api/sports')
+            console.log("sportssss", data.data);
+            sportsCount.value = data.data?.count
             sportsNext.value = data.data.next ?? ''
             sportsPrev.value = data.data.previous ?? ''
             data.data.results?.forEach((r) => r.tournaments = {} as Tournaments)
@@ -29,7 +51,6 @@ export const useSportsStore = defineStore('sports', () => {
             const data = await $fetch<{ data: Tournaments }>(`/api/tournaments/${sportId}/?page=${page || 1}`)
 
             const fetchedSportIndex = sports.value.findIndex((s) => {
-
                 return s.id == sportId
             })
 

@@ -1,7 +1,7 @@
 <template>
   <div class="tw-bg-secondary-800 dark:tw-bg-primary-700 tw-min-h-screen tw-py-3 text-white tw-w-full">
     <q-scroll-area style="height: 80vh; max-width: 300px">
-      <h2 class="tw-text-[#8E203A] tw-font-bold tw-text-2xl tw-text-center">
+   <h2 class="tw-text-[#8E203A] tw-font-bold tw-text-2xl tw-text-center">
         Bet Services
       </h2>
       <div class="flex tw-justify-around tw-items-center tw-my-2">
@@ -42,73 +42,61 @@
         </ul>
       </div>
 
-      <template v-if="sportsStore.sports.length">
-        <q-list v-for="sport in sportsStore.sports">
-          <q-expansion-item expand-separator :label="sport.name" dense class="text-white tw-max-h-3 tw-px-1"
-            @show="getTournamentForSport(sport.id)">
-            <q-scroll-area style="height: 300px">
-              <q-infinite-scroll :offset="1">
-                <q-list v-for="value in sport.tournaments?.results"
-                  class="tw-cursor-pointer tw-border-y tw-border-gray-800 tw-bg-secondary-900 dark:tw-bg-primary-800">
-                  <div @click="getAndSetMatchList(value.id)" class="tw-flex tw-my-2 tw-ml-6">
-                    <p class="text-white">{{ value.name }}</p>
-                  </div>
-                </q-list>
-              </q-infinite-scroll>
-            </q-scroll-area>
+      <template v-if="sports.length">
+        <q-list v-for="(sport, key) in sports" :key="key" class="tww-w-32">
+          <q-expansion-item v-model="sport.isOpen" expand-separator :label="sport.name" dense class="text-white tw-max-h-3 tw-px-1"
+            >
+            <div v-if="sport.isOpen">
+   <LazyTournaments :sportId="sport.id"/>
+  </div>
           </q-expansion-item>
         </q-list>
       </template>
+     
     </q-scroll-area>
   </div>
 </template>
 
 <script setup lang="ts">
-const layout = useLayout();
-const date = ref("2024/02/01");
-const matchListStore = useMatchListStore();
-
-const sportsStore = useSportsStore();
-
-const getTournamentForSport = (id: number, page: string | null = "") => {
-  const sport = sportsStore.sports.find((s) => s.id === id);
-  if (sport?.tournaments) {
-    return;
-  }
-  let pageValue = "1";
-  if (page) {
-    pageValue = getPageValueFromUrl(page) || "1";
-  }
-  sportsStore.fetchTournaments(id, pageValue);
-};
-
-function getPageValueFromUrl(url: string): string | null {
-  try {
-    const urlObj = new URL(url);
-    return urlObj.searchParams.get("page");
-  } catch (error) {
-    return null;
-  }
+type Sports = {
+    id: string
+    name: string
+    isOpen: boolean
 }
 
-async function getAndSetMatchList(id: number) {
-  layout.value.mainLoader = true;
-  const res = await $fetch(`/api/matches/${id}`);
-  layout.value.mainLoader = false;
-  const filteredMatches = res?.data?.results?.map((game: any) => {
+
+const sports = ref<Sports[]>([])
+
+function isResponseData(response: any): response is { data: any; error?: undefined } {
+  return 'data' in response && response.data !== undefined;
+}
+
+function isResponseError(response: any): response is { error: string; data?: undefined } {
+  return 'error' in response && response.error !== undefined;
+}
+
+import { useQuasar } from 'quasar'
+
+const $q = useQuasar()
+
+const { data, error } = await useFetch('/api/sports')
+if (isResponseError(data.value) || error.value) {
+  $q.notify({
+    message: 'Error Loading sports',
+    icon: 'announcement',
+    position: 'right'
+  })
+}
+
+else if (data.value && isResponseData(data.value)) {
+  sports.value = data.value.data.results?.map((sport: any) => {
     return {
-      id: game.id,
-      league: game.parent_name,
-      teams: game.name,
-      date: convertToDateString(game.startTime),
-      odds: extractOdds(game.markets, game.name),
-    };
-  });
-  matchListStore.setMatchList(filteredMatches);
+      id: sport.id,
+      name: sport.name,
+      isOpen: false
+    } 
+  })
 }
 
-onMounted(async () => {
-  await sportsStore.fetchSports();
-  sportsStore.fetchTournaments("1", "50");
-});
+
 </script>
