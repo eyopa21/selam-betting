@@ -1,16 +1,11 @@
 <template>
   <div>
-    <q-carousel animated v-model="slide" arrows navigation infinite height="257px">
-      <q-carousel-slide :name="1" img-src="/images/Fenan pay.png" />
-      <q-carousel-slide :name="2" img-src="/images/Fly emrates.png" />
-      <q-carousel-slide :name="3" img-src="/images/ITSC banner.png" />
-      <q-carousel-slide :name="4" img-src="/images/Pepsi banner.png" />
-    </q-carousel>
+   
 
     <NuxtImg src="/images/HeroImage.png" class="tw-mb-3 tw-w-full" />
 
     <div v-if="layout.mainLoader" class="tw-flex tw-justify-center">
-      <q-spinner color="primary" size="9em" />
+      <VUESkeleton/>
     </div>
     <div v-else>
       <GamesList />
@@ -25,13 +20,13 @@ const $q = useQuasar()
 const layout = useLayout();
 const matchListStore = useMatchListStore();
 
-const slide = ref(1);
+
 
 import type { Matches, Participants } from '~/types/matches';
 
-
-const { data: recommendedGames, error } = await useFetch(`/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=${20}`);
-
+layout.value.mainLoader = true
+const { data: recommendedGames, error } = await useFetch(`/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=50`);
+console.log("recc", recommendedGames.value);
 function isResponseData(response: any): response is { data: any; error?: undefined } {
   return 'data' in response && response.data !== undefined;
 }
@@ -41,6 +36,7 @@ function isResponseError(response: any): response is { error: string; data?: und
 }
 
 if (isResponseError(recommendedGames.value) || error.value) {
+  layout.value.mainLoader = false
   $q.notify({
     message: 'Error Loading data',
     icon: 'announcement',
@@ -50,6 +46,7 @@ if (isResponseError(recommendedGames.value) || error.value) {
 
 else if (recommendedGames.value) {
   if (isResponseData(recommendedGames.value)) {
+    layout.value.mainLoader = false
     const filteredMatches: Matches[] = recommendedGames.value.data.results.map((game: any) => {
       
       return {
