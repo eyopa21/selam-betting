@@ -122,17 +122,17 @@ matches.value[key].isLoading = true
                     {{ match.league }}
                   </p>
                 </div>
-                <div class="tw-flex tw-mt-1 tw-gap-2 tw-text-xs tw-text-gray-700 dark:tw-text-gray-200">
-                  <span class="tw-flex tw-gap-1">
+                <div v-if="match.participants?.length" class="tw-flex tw-mt-1 tw-gap-2 tw-text-xs tw-text-gray-700 dark:tw-text-gray-200">
+                  <span  class="tw-flex tw-gap-1">
                     <img class="tw-size-4" :src="match.participants[0].club.logo"
-                      :alt="match.participants[0].club.name" />
-                    {{ match.participants[0].club.name }}
+                      :alt="match.participants[0]?.club.name" />
+                    {{ match.participants[0]?.club.name }}
                   </span>
                   <span>Vs</span>
                   <span class="tw-flex tw-gap-1">
                     <img class="tw-size-4" :src="match.participants[1].club.logo"
-                      :alt="match.participants[1].club.name" />
-                    {{ match.participants[1].club.name }}
+                      :alt="match.participants[1]?.club.name" />
+                    {{ match.participants[1]?.club.name }}
                   </span>
                 </div>
               </div>
@@ -161,7 +161,7 @@ matches.value[key].isLoading = true
                 " />
             </div>
             <div v-if="match.isLoading ">
-              <q-spinner size="lg" />
+               <VUESkeleton/>
             </div>
 
             <div v-if="
