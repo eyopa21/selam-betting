@@ -5,11 +5,6 @@ const props = defineProps<{
   sportId: string;
 }>();
 
-type League = {
-  id: number;
-  name: string;
-  // Add other fields as necessary
-};
 
 const items = ref<League[]>([]);
 const page = ref(1);
@@ -20,7 +15,7 @@ const getTournamentForSport = async () => {
   if (isLoading.value || !hasMore.value) return; // Prevent multiple concurrent fetches or fetching when no more data
   isLoading.value = true;
 
-  const { data, error } = await useFetch<{ data: { results: League[] }, next: string | null }>(
+  const { data, error } = await useFetch(
     `/api/tournaments/${props.sportId}/?page=${page.value}`
   )
 console.log("data", data.value);
