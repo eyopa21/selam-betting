@@ -19,36 +19,23 @@ const $q = useQuasar()
 
 const layout = useLayout();
 const matchListStore = useMatchListStore();
-
-
-
 import type { Matches, Participants } from '~/types/matches';
 
+
+async function getMainData(page: number) {
+
 layout.value.mainLoader = true
-const { data: recommendedGames, error } = await useFetch(`/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=50`);
-console.log("recc", recommendedGames.value);
-function isResponseData(response: any): response is { data: any; error?: undefined } {
-  return 'data' in response && response.data !== undefined;
-}
+const { data: recommendedGames, error } = await useFetch(`/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=50&page=${page}`);
 
-function isResponseError(response: any): response is { error: string; data?: undefined } {
-  return 'error' in response && response.error !== undefined;
-}
 
-if (isResponseError(recommendedGames.value) || error.value) {
-  layout.value.mainLoader = false
-  $q.notify({
-    message: 'Error Loading data',
-    icon: 'announcement',
-    position: 'right'
-  })
-}
-
-else if (recommendedGames.value) {
-  if (isResponseData(recommendedGames.value)) {
-    layout.value.mainLoader = false
-    const filteredMatches: Matches[] = recommendedGames.value.data.results.map((game: any) => {
-      
+if (error.value) {
+    console.log("Error fetching tournaments:", error.value);
+layout.value.mainLoader = false
+    
+    return;
+  }
+if (recommendedGames.value?.data?.results?.length) { 
+ const filteredMatches : Matches[] = recommendedGames.value.data.results.map((game: any) => {
       return {
         id: game.id,
         league: game.parent_name,
@@ -70,16 +57,20 @@ else if (recommendedGames.value) {
               countryId: teams.participant?.countryId,
               logo: teams.participant?.logoUrl,
               name: teams.participant.name
-            }
+            },
           } as Participants
-        })
+        }),
+        showMarket: false
       }
     });
-    matchListStore.setMatchList(filteredMatches);
-  } else if (isResponseError(recommendedGames.value)) {
-    console.error('Error fetching recommended games:', recommendedGames.value.error);
-  } else {
-    console.error('Unexpected response format:', recommendedGames.value);
+  matchListStore.setMatchList(filteredMatches);
+  console.log("store", matchListStore.listOfMatches);
+    layout.value.mainLoader = false
   }
+   
+  
 }
+
+await getMainData(1)
+
 </script>

@@ -1,3 +1,4 @@
+
 <script setup lang="ts">
 const { formatDate } = useHelpers();
 
@@ -14,11 +15,7 @@ interface Markets {
 
 
 const matchListStore = useMatchListStore();
-const matches = computed(() => {
-  return matchListStore.listOfMatches?.map((match) => {
-    return { ...match, isLoading: false };
-  });
-});
+const matches = ref(matchListStore.listOfMatches)
 const openedMarkets = ref<string[]>([]);
 const aciveHeader: Ref<string> = ref("Matches");
 
@@ -26,27 +23,10 @@ const liveStreamToggle: Ref<boolean> = ref(false);
 
 const headersArray = ["Matches", "Recommended", "Upcoming Event"];
 
-const handleAllMarketClick = async (matchId: string, key: number) => {
-  const isThere = openedMarkets.value.find((id) => id === matchId);
- 
-  if (!isThere) {
-    openedMarkets.value.push(matchId);
-matches.value[key].isLoading = true
-    const {data, error} = await useFetch(`/api/markets/${matchId}/?pageSize=${10}`);
-  if(error.value) {
-    console.log("eroror", error.value);
-  } else {
-    
-      matchListStore.listOfMatches[key].markets = data.value.data as Markets;
-    
-  }
-   
-  } else {
-    openedMarkets.value = openedMarkets.value.filter((id) => {
-      return id !== matchId;
-    });
-  }
-};
+
+
+
+
 </script>
 <template>
   <div>
@@ -113,20 +93,23 @@ matches.value[key].isLoading = true
     </div>
     <q-tab-panels v-model="aciveHeader" animated>
       <q-tab-panel name="Matches" class="tw-p-2 tw-bg-secondary-800 dark:tw-bg-primary-700">
-        <div class="tw-rounded" v-if="matches?.length">
+         <q-infinite-scroll v-if="matches?.length" :offset="500">
+
+       
+        <div class="tw-rounded" >
           <div v-for="(match, key) in matches" :key="key" class="tw-mb-2">
             <div class="tw-flex tw-justify-between dark:text-white tw-items-end">
               <div>
                 <div class="tw-flex">
                   <p class="tw-font-semibold tw-text-gray-700 dark:tw-text-gray-400">
-                    {{ match.league }}
+                    {{ match.league }} 
                   </p>
                 </div>
                 <div v-if="match.participants?.length" class="tw-flex tw-mt-1 tw-gap-2 tw-text-xs tw-text-gray-700 dark:tw-text-gray-200">
                   <span  class="tw-flex tw-gap-1">
                     <img class="tw-size-4" :src="match.participants[0].club.logo"
                       :alt="match.participants[0]?.club.name" />
-                    {{ match.participants[0]?.club.name }}
+                    {{ match.participants[0]?.club.name }} 
                   </span>
                   <span>Vs</span>
                   <span class="tw-flex tw-gap-1">
@@ -157,26 +140,29 @@ matches.value[key].isLoading = true
                 class="tw-rounded-lg dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
                 label="All markets +" @click="
                   
-                handleAllMarketClick(match.id, key);
+                match.showMarket = !match.showMarket
                 " />
             </div>
-            <div v-if="match.isLoading ">
-               <VUESkeleton/>
-            </div>
+            
 
-            <div v-if="
-              match.markets && openedMarkets.find((i) => i === match.id)
-            ">
-              <AllMarkets :matchDetail="{
+            <div v-if="match.showMarket">
+             <AllMarkets :matchDetail="{
                 id: match.id,
                 teams: match.teams,
                 league: match.league,
                 date: match.date,
                 time: match.time,
-              }" :markets="match.markets.results" :marketCount="parseInt(match.markets.count ?? 0)" />
+              }"   />
+
             </div>
           </div>
         </div>
+         <template v-slot:loading>
+          <div class="row justify-center q-my-md">
+            <q-spinner-dots color="primary" size="40px" />
+          </div>
+        </template>
+          </q-infinite-scroll>
         <div v-else>
           <VUEEmptyState />
         </div>

@@ -1,3 +1,5 @@
+import { Markets } from "~/types/matches";
+
 export default defineEventHandler(async (event) => {
     const { id } = getRouterParams(event);
     const query = getQuery(event);
@@ -6,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
     const url = `${config.restApiEndpoint}/event_market/${id}/?page_size=${pageSize}`;
     try {
-        const response = await fetch(url, {
+        const response = await $fetch<Markets>(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -14,26 +16,21 @@ export default defineEventHandler(async (event) => {
             },
         })
 
-        if (!response.ok) {
-            throw new Error(`External API request failed with status ${response.status}`)
-        }
-
-
-        const data = await response.json()
-        if (data.results && Array.isArray(data.results)) {
-            data.results = data.results.map((result: any) => ({
+        if (response.results && Array.isArray(response.results)) {
+            response.results = response.results.map((result: any) => ({
                 ...result,
                 id: BigInt(result.id).toString()
             }));
         }
         return {
-            data,
+            data: response,
         }
     } catch (error) {
         console.error('Error fetching external data:', error)
-        // Handle errors appropriately, e.g., return a specific error response
-        return {
-            error: 'Failed to retrieve external data',
-        }
+        throw createError({
+            cause: error,
+            statusCode: 500,
+            message: 'Failed to retrieve external Data'
+        })
     }
 })

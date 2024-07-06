@@ -20,18 +20,27 @@ export type Participants = {
     club: Club
 }
 
-interface MarketResults {
-    count: string;
-    odd: string;
+
+export type Outcome = {
+    outcomeId: bigint
+    name: string
+    odd: string
 }
-interface Markets {
+
+export type MarketResults = {
+    eventId: bigint
+    name: string
+    outcomes: Outcome[]
+}
+
+export type Markets = {
     count: string;
     next: string;
     previous: string;
     results: MarketResults[];
 }
 
-export interface Matches {
+export type Matches = {
     id: string;
     league: string;
     teams: string;
@@ -40,6 +49,8 @@ export interface Matches {
     odds: MatchOdds[];
     markets?: Markets;
     participants: [Participants, Participants]
+    showMarket: boolean
+
 }
 
 

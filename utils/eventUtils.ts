@@ -4,7 +4,7 @@ export function convertToDateString(dateStr: string): string {
     return date.toISOString().slice(0, 10);
 }
 
-export function extractOdds(data: any[], teams: string): { value: string; odd: string }[] {
+export function extractOdds(data: any[], teams: string) {
     const odds: { outcomeId: number, eventId: number, value: string; odd: string }[] = [];
 
     const [team1, team2] = teams.split(" vs ").map((team) => team.trim());

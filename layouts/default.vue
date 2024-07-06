@@ -12,10 +12,28 @@
             @mouseover="layout.miniState = false" @mouseout="layout.miniState = true" mini-to-overlay :width="300"
             :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'">
 
-            <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: '0' }">
-              <HomeFilter />
-            </q-scroll-area>
 
+            <q-scroll-area  class="fit tw-no-scrollbar tw-bg-primary-700" :horizontal-thumb-style="{ opacity: '0' }">
+              <div v-if="layout.miniState" class="tw-flex tw-flex-col tw-gap-4 tw-m-2 tw-mt-8 ">
+                <span> <q-icon name="sports_football" size="md" color="white"/></span>
+                <span><q-icon name="sports_soccer" size="md" color="white"/></span>
+                <span><q-icon name="sports_tennis" size="md" color="white"/></span>
+                <span><q-icon name="sports_basketball" size="md" color="white"/></span>
+                <span><q-icon name="two_wheeler" size="md" color="white"/></span>
+                <span> <q-icon name="sports_football" size="md" color="white"/></span>
+                <span><q-icon name="sports_soccer" size="md" color="white"/></span>
+                <span><q-icon name="sports_tennis" size="md" color="white"/></span>
+                <span><q-icon name="sports_basketball" size="md" color="white"/></span>
+                <span><q-icon name="two_wheeler" size="md" color="white"/></span>
+                <span><q-icon name="sports_basketball" size="md" color="white"/></span>
+                <span><q-icon name="two_wheeler" size="md" color="white"/></span>
+                
+                
+              </div>
+              
+              <HomeFilter  />
+            </q-scroll-area>
+ 
           </q-drawer>
         </div>
         <div class="tw-grid tw-grid-cols-12 w-full custom-container tw-gap-4 tw-py-8">

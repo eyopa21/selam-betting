@@ -1,36 +1,36 @@
+
+import type { Matches, Participants } from '~/types/matches';
+
 export default defineEventHandler(async (event) => {
     const query = getQuery(event);
-
     const config = useRuntimeConfig();
-    const url = `${config.restApiEndpoint}/filter_event/?sport_id=${query.sport_id}&interval_hours=${query.interval_hours}&page_size=${query.page_size}`;
-
+    const page = query.page || 1;
+    const url = `${config.restApiEndpoint}/filter_event/?sport_id=${query.sport_id}&interval_hours=${query.interval_hours}&page_size=50&page=${page}`;
+    console.log("url", url);
     try {
-        const response = await fetch(url, {
+        const response = await $fetch<{ results: Matches[] }>(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 "X-API-KEY": config.serverApiKey
             },
         })
-
-        if (!response.ok) {
-            throw new Error(`External API request failed with status ${response.status}`)
-        }
-        const data = await response.json()
-        if (data.results && Array.isArray(data.results)) {
-            data.results = data.results.map((result: any) => ({
+        if (response.results && Array.isArray(response.results)) {
+            response.results = response.results.map((result: any) => ({
                 ...result,
                 id: BigInt(result.id).toString()
             }));
         }
         return {
-            data,
+            data: response
         }
     } catch (error) {
         console.error('Error fetching external data:', error)
-        return {
-            error: 'Failed to retrieve external data',
-        }
+        throw createError({
+            cause: error,
+            statusCode: 500,
+            message: 'Failed to retrieve external Data'
+        })
     }
 
 
