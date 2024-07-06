@@ -42,6 +42,9 @@
         </ul>
       </div>
 
+      <div v-if="isLoading">
+<VUESkeleton/>
+      </div>
       <template v-if="sports.length">
         <q-list v-for="(sport, key) in sports" :key="key" class="tww-w-32">
           <q-expansion-item v-model="sport.isOpen" expand-separator :label="sport.name" dense class="text-white tw-max-h-3 tw-px-1"
@@ -51,6 +54,9 @@
   </div>
           </q-expansion-item>
         </q-list>
+      </template>
+      <template v-else class="tw-p-4">
+no sports found
       </template>
      
     </q-scroll-area>
@@ -64,6 +70,7 @@ type Sports = {
     isOpen: boolean
 }
 
+const isLoading = ref(true)
 
 const sports = ref<Sports[]>([])
 
@@ -86,6 +93,7 @@ if (isResponseError(data.value) || error.value) {
     icon: 'announcement',
     position: 'right'
   })
+  isLoading.value = false
 }
 
 else if (data.value && isResponseData(data.value)) {
@@ -96,6 +104,7 @@ else if (data.value && isResponseData(data.value)) {
       isOpen: false
     } 
   })
+    isLoading.value = false
 }
 
 

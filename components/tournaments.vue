@@ -28,7 +28,7 @@ console.log("data", data.value);
   if (data.value?.data?.results?.length) {
     items.value.push(...data.value?.data?.results);
     
-    hasMore.value = data.value.next !== null;
+    hasMore.value = data.value.data.next !== null;
   } else {
     hasMore.value = false;
   }
@@ -46,7 +46,7 @@ const loadMore = async (index: number, done: () => void) => {
     }, 5000)
 };
 
-// Initial load
+// Initial loada
 getTournamentForSport();
 
 const isTournamentEmpty = computed(() => {

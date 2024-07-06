@@ -3,10 +3,10 @@ import { Markets } from "~/types/matches";
 export default defineEventHandler(async (event) => {
     const { id } = getRouterParams(event);
     const query = getQuery(event);
-    const pageSize = query.page || 10;
+    const pageSize = query.page || 1000;
     const config = useRuntimeConfig()
 
-    const url = `${config.restApiEndpoint}/event_market/${id}/?page_size=${pageSize}`;
+    const url = `${config.restApiEndpoint}/event_market/${id}/?page_size=20`;
     try {
         const response = await $fetch<Markets>(url, {
             method: 'GET',

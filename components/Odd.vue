@@ -18,7 +18,7 @@ const props = defineProps<{
   value: string;
   odd: string;
   matchDetail: {
-    id: number,
+    id: number | string,
     teams: string,
     league: string
     date: string
