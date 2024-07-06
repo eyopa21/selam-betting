@@ -140,7 +140,7 @@ const headersArray = ["Matches", "Recommended", "Upcoming Event"];
                 class="tw-rounded-lg dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
                 label="All markets +" @click="
                   
-                match.showMarket = !match.showMarket
+                $router.push(`/matches/${match.id}`)
                 " />
             </div>
             

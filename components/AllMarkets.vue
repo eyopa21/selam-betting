@@ -5,6 +5,7 @@
       <VUESkeleton/>
     </div>
     <div v-else>
+      
       <q-tabs v-model="tabValue" inline-label outside-arrows mobile-arrows
         class="bg-primary text-white shadow-2 tw-opacity-80 dark:tw-opacity-100">
         <q-tab name="all-market" label="All Market" class="tw-font-bold">
@@ -12,7 +13,7 @@
         </q-tab>
         <div v-for="market in visibleMarkets" class="tw-flex tw-justify-around tw-items-center">
           <q-tab :name="market.marketName" :label="market.marketName">
-            <p class="tw-text-white">({{ market.values.length }})</p>
+            <p class="tw-text-white">({{ market.values.length }}, {{ props.matchDetail.id }})</p>
           </q-tab>
         </div>
       </q-tabs>
@@ -134,6 +135,6 @@ function filterMarkets() {
     );
   }
 }
-
+console.log("id", props.matchDetail.id);
 filterMarkets();
 </script>
