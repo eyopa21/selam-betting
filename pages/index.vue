@@ -1,11 +1,11 @@
 <template>
   <div>
-   
+
 
     <NuxtImg src="/images/HeroImage.png" class="tw-mb-3 tw-w-full" />
 
     <div v-if="layout.mainLoader" class="tw-flex tw-justify-center">
-      <VUESkeleton/>
+      <VUESkeleton />
     </div>
     <div v-else>
       <GamesList />
@@ -21,21 +21,22 @@ const layout = useLayout();
 const matchListStore = useMatchListStore();
 import type { Matches, Participants } from '~/types/matches';
 
+const page = ref(1)
 
 async function getMainData(page: number) {
+console.log("loadingggggggggggggg");
+  layout.value.mainLoader = true
+  const { data: recommendedGames, error } = await useFetch(`/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=50&page=${page}`);
 
-layout.value.mainLoader = true
-const { data: recommendedGames, error } = await useFetch(`/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=50&page=${page}`);
 
-
-if (error.value) {
+  if (error.value) {
     console.log("Error fetching tournaments:", error.value);
-layout.value.mainLoader = false
-    
+    layout.value.mainLoader = false
+
     return;
   }
-if (recommendedGames.value?.data?.results?.length) { 
- const filteredMatches : Matches[] = recommendedGames.value.data.results.map((game: any) => {
+  if (recommendedGames.value?.data?.results?.length) {
+    const filteredMatches: Matches[] = recommendedGames.value.data.results.map((game: any) => {
       return {
         id: game.id,
         league: game.parent_name,
@@ -63,14 +64,22 @@ if (recommendedGames.value?.data?.results?.length) {
         showMarket: false
       }
     });
-  matchListStore.setMatchList(filteredMatches);
-  console.log("store", matchListStore.listOfMatches);
+    matchListStore.setMatchList(filteredMatches);
+    console.log("store", matchListStore.listOfMatches);
     layout.value.mainLoader = false
   }
-   
-  
+
+
 }
 
-await getMainData(1)
+await getMainData(page.value)
 
+
+ function loadMore(index: number, done:() => void) {
+  setTimeout(async () => {
+    await getMainData(page.value)
+    done()
+    page.value++
+  }, 5000);
+}
 </script>

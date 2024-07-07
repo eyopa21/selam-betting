@@ -65,7 +65,7 @@ const isTournamentEmpty = computed(() => {
     </div>
     <div v-else class="q-pa-md">
       <div v-if="isTournamentEmpty">
-      No sports found
+      No Leagues found
       </div>
       <q-infinite-scroll v-else @load="loadMore" :offset="500" class="tw-max-h-64 tw-h-32">
         <div v-for="(item, index) in items" :key="index" class="caption tw-border tw-w-64">

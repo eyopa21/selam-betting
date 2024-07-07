@@ -86,7 +86,7 @@ import { useQuasar } from 'quasar'
 
 const $q = useQuasar()
 
-const { data, error } = await useFetch('/api/sports')
+const { data, error } = await useLazyFetch('/api/sports')
 if (isResponseError(data.value) || error.value) {
   $q.notify({
     message: 'Error Loading sports',

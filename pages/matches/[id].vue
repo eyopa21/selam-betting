@@ -145,13 +145,6 @@ function filterMarkets() {
 }
 
 filterMarkets();
-const isMatchEmpty = computed(() => {
-  if (loading.value) return false
-  else if (!markets.value?.length) return true
-  else {
-    return false
-  }
-})
 
 </script>
 
@@ -164,10 +157,8 @@ const isMatchEmpty = computed(() => {
     <div v-if="loading">
       <VUESkeleton/>
     </div>
-    <div v-else>
-      <div v-if="isMatchEmpty" >
-        <VUEEmptyState/>
-      </div>
+  
+     
     <div v-else>
       <div class="tw-relative tw-w-full tw-h-64 ">
       <div class="tw-absolute tw-inset-0 tw-bg-cover tw-bg-center tw-h-64" style="background-image: url('/1xdetail.webp');"></div>
@@ -218,6 +209,6 @@ const isMatchEmpty = computed(() => {
           </q-expansion-item>
         </q-list>
     </div>
-    </div>
+
   </div>
 </template>
