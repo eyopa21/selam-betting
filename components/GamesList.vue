@@ -22,10 +22,11 @@ const aciveHeader: Ref<string> = ref("Matches");
 const liveStreamToggle: Ref<boolean> = ref(false);
 
 const headersArray = ["Matches", "Recommended", "Upcoming Event"];
+import type { Matches, Participants } from '~/types/matches';
 
-
-
-
+const props = defineProps<{
+  matches: Matches[]
+}>()
 
 </script>
 <template>
@@ -93,11 +94,11 @@ const headersArray = ["Matches", "Recommended", "Upcoming Event"];
     </div>
     <q-tab-panels v-model="aciveHeader" animated>
       <q-tab-panel name="Matches" class="tw-p-2 tw-bg-secondary-800 dark:tw-bg-primary-700">
-         <q-infinite-scroll v-if="matches?.length" :offset="500">
+         <q-infinite-scroll v-if="props.matches?.length" :offset="500">
 
        
         <div class="tw-rounded" >
-          <div v-for="(match, key) in matches" :key="key" class="tw-mb-2">
+          <div v-for="(match, key) in props.matches" :key="key" class="tw-mb-2">
             <div class="tw-flex tw-justify-between dark:text-white tw-items-end">
               <div>
                 <div class="tw-flex">
@@ -163,9 +164,7 @@ const headersArray = ["Matches", "Recommended", "Upcoming Event"];
           </div>
         </template>
           </q-infinite-scroll>
-        <div v-else>
-          <VUEEmptyState />
-        </div>
+        
       </q-tab-panel>
       <q-tab-panel name="Recommended">recommended matches </q-tab-panel>
       <q-tab-panel name="Upcoming Event"> upcoming events </q-tab-panel>
