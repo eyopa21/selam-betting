@@ -1,27 +1,21 @@
-import { League } from '~/types/sports';
+
+import type { Matches, Participants } from '~/types/matches';
 
 export default defineEventHandler(async (event) => {
     const { id } = getRouterParams(event);
     const config = useRuntimeConfig();
-    const query = getQuery(event);
-    const page = query.page || 1;
 
-    const url = `${config.restApiEndpoint}/tournament/${id}/?page_size=50&page=${page}`;
+    const url = `${config.restApiEndpoint}/event_detail/${id}`;
 
     try {
-        const response = await $fetch<{ results: League[] }>(url, {
+        const response = await $fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 "X-API-KEY": config.serverApiKey
             },
         })
-        if (response.results && Array.isArray(response.results)) {
-            response.results = response.results.map((result: any) => ({
-                ...result,
-                id: BigInt(result.id).toString()
-            }));
-        } console.log("leag", response.results);
+        console.log("resp", response);
         return {
             data: response
         }
@@ -33,4 +27,6 @@ export default defineEventHandler(async (event) => {
             message: 'Failed to retrieve external Data'
         })
     }
+
+
 })

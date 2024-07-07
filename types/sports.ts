@@ -14,3 +14,10 @@ export interface Sports {
     previous: string | null,
     results: Sport[] | null
 }
+
+
+export type League = {
+    id: number;
+    name: string;
+    // Add other fields as necessary
+};

@@ -1,41 +1,42 @@
 <template>
   <div>
-    <q-carousel
-      animated
-      v-model="slide"
-      arrows
-      navigation
-      infinite
-      height="257px"
-    >
-      <q-carousel-slide :name="1" img-src="/images/Fenan pay.png" />
-      <q-carousel-slide :name="2" img-src="/images/Fly emrates.png" />
-      <q-carousel-slide :name="3" img-src="/images/ITSC banner.png" />
-      <q-carousel-slide :name="4" img-src="/images/Pepsi banner.png" />
-    </q-carousel>
-    <div v-if="layout.mainLoader" class="tw-flex tw-justify-center">
-      <q-spinner color="primary" size="9em" />
-    </div>
-    <div v-else>
-      <GamesList />
+
+
+    <NuxtImg @click="$router.push('/test')" src="/images/HeroImage.png" class="tw-mb-3 tw-w-full" />
+
+  
+      <VUESkeleton v-if="status === 'pending'" />
+  
+    <div v-else class="tw-min-h-screen">
+      
+      <GamesList :matches="matches" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useQuasar } from 'quasar'
+const $q = useQuasar()
+
 const layout = useLayout();
-const matchListStore = useMatchListStore();
 
-const slide = ref(1);
+import type { Matches, Participants } from '~/types/matches';
 
-const { data: recommendedGames } = await useFetch(
-  `/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=${20}`
-);
 
-const setList = async () => {
-  const filteredMatches = await recommendedGames.value?.data?.results.map(
-    (game: any) => {
-      // console.log("recc", recommendedGames.value);
+
+const matches = ref<Matches[]>([])
+ const { data, error, status } = await useLazyFetch(`/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=50&page=2`, {
+   server: false,
+   cache: 'force-cache'
+
+ });
+
+if (error.value) {
+    console.log("Error fetching tournaments:", error.value);
+  }
+    watch(data, () => {
+      if (data.value) {
+         matches.value = data.value.data.results.map((game: any) => {
       return {
         id: game.id,
         league: game.parent_name,
@@ -47,12 +48,43 @@ const setList = async () => {
           timeZone: "UTC",
         }),
         odds: extractOdds(game.markets, game.name),
-      };
-    }
-  );
-  matchListStore.setMatchList(filteredMatches);
-};
-if (recommendedGames.value) {
-  setList();
-}
+        participants: game.participant?.map((teams: any) => {
+          return {
+            id: teams.id,
+            role: teams.participantRole.id,
+            eventId: teams.eventId,
+            club: {
+              id: teams.participant?.id,
+              countryId: teams.participant?.countryId,
+              logo: teams.participant?.logoUrl,
+              name: teams.participant.name
+            },
+          } as Participants
+        }),
+        showMarket: false
+      }
+    });
+
+ 
+      }
+  
+   
+ })
+    
+
+
+
+  
+
+  
+   
+
+  
+
+ 
+ 
+ 
+
+
+
 </script>

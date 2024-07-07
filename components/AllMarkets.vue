@@ -1,14 +1,19 @@
 <template>
   <div class="tw-w-full dark:tw-bg-secondary-900 tw-rounded">
-    <div>
+
+    <div v-if="loading">
+      <VUESkeleton/>
+    </div>
+    <div v-else>
+      
       <q-tabs v-model="tabValue" inline-label outside-arrows mobile-arrows
         class="bg-primary text-white shadow-2 tw-opacity-80 dark:tw-opacity-100">
         <q-tab name="all-market" label="All Market" class="tw-font-bold">
-          <p class="tw-text-white">({{ marketCount }})</p>
+          <p class="tw-text-white">({{ count }})</p>
         </q-tab>
         <div v-for="market in visibleMarkets" class="tw-flex tw-justify-around tw-items-center">
           <q-tab :name="market.marketName" :label="market.marketName">
-            <p class="tw-text-white">({{ market.values.length }})</p>
+            <p class="tw-text-white">({{ market.values.length }}, {{ props.matchDetail.id }})</p>
           </q-tab>
         </div>
       </q-tabs>
@@ -29,6 +34,8 @@
 </template>
 
 <script setup lang="ts">
+import type { MarketResults, Markets } from '~/types/matches';
+
 interface Market {
   marketName: string;
   values: Outcome[];
@@ -51,20 +58,49 @@ const props = defineProps<{
     date: string
     time: string
   }
-  markets: any[];
-  marketCount: number;
+ 
 
 }>();
 
+
+
+
+
+const count = ref<string | undefined>(undefined)
+const markets = ref<MarketResults[] >([])
+
+
+ 
+ const loading = ref(true)
+
+    const {data, error} = await useFetch(`/api/markets/${props.matchDetail.id}/?pageSize=${10}`);
+  if(error.value) {
+    console.log("eroror", error.value);
+    loading.value = false
+  } else if(data.value?.data ) {
+    count.value = data.value.data.count
+    markets.value = data.value.data.results
+    setTimeout(() => {
+      
+      loading.value = false
+    }, 5000);
+  }
+   
+  
+
+
+
+
+
+
 const visibleMarkets = computed(() => {
-  if (props.markets) {
-    const ret = props.markets.map((market) => {
+  if (markets.value.length) {
+    const ret = markets.value?.map((market) => {
       const val: Outcome[] = [];
       market.outcomes.forEach((outcome: any) => {
-        console.log("ou", outcome);
         val.push({
           outcomeId: outcome.id,
-          eventId: market.id,
+          eventId: market?.id,
           name: outcome.name,
           odd: outcome.betting_offers[0]?.odds
             ? outcome.betting_offers[0].odds.toFixed(2).toString()
@@ -99,6 +135,6 @@ function filterMarkets() {
     );
   }
 }
-
+console.log("id", props.matchDetail.id);
 filterMarkets();
 </script>

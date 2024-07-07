@@ -5,49 +5,57 @@ interface MatchOdds {
     value: string;
     odd: string;
 }
-interface MarketResults {
-    count: string;
-    odd: string;
+
+type Club = {
+    id: number
+    countryId: number
+    name: string
+    logo: string
+
 }
-interface Markets {
+export type Participants = {
+    id: bigint
+    role: number
+    eventId: bigint
+    club: Club
+}
+
+
+export type Outcome = {
+    outcomeId: bigint
+    name: string
+    odd: string
+}
+
+export type MarketResults = {
+    eventId: bigint
+    name: string
+    outcomes: Outcome[]
+}
+
+export type Markets = {
     count: string;
     next: string;
     previous: string;
     results: MarketResults[];
 }
 
-export interface Matches {
-    id: number;
+export type Matches = {
+    id: string;
     league: string;
     teams: string;
     date: string;
     time: string;
     odds: MatchOdds[];
-    markets: Markets;
-    participants: Participant
+    markets?: Markets;
+    participants: [Participants, Participants]
+    showMarket: boolean
+
 }
 
 
 
-export interface Participant {
-    participant: Participant2
-    parentParticipantId: any
-    eventId: number
-    eventPartId: number
-    participantRole: ParticipantRole
-    id: number
-    participantRoleId: number
-}
 
-export interface Participant2 {
-    id: number
-    name: string
-    countryId: number
-    logoUrl?: string
-}
 
-export interface ParticipantRole {
-    id: number
-    name: string
-    isPrimary: number
-}
+
+
