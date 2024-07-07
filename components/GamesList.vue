@@ -98,36 +98,36 @@ const props = defineProps<{
 
        
         <div class="tw-rounded" >
-          <div v-for="(match, key) in props.matches" :key="key" class="tw-mb-2">
-            <div class="tw-flex tw-justify-between dark:text-white tw-items-end">
-              <div>
-                <div class="tw-flex">
+          <div v-for="(match, key) in props.matches" :key="key" class="tw-mb-3 tw-border-2 tw-rounded-md tw-p-2 tw-bg-gray-800 tw-border-gray-900">
+            <div class="tw-flex tw-justify-start dark:text-white tw-items-end">
+              <div class="tw-w-[30%] tw-mr-3 tw-border-r-2 tw-border-gray-600 tw-pr-3 tw-px-3">
+                <div class="tw-flex tw-justify-between">
                   <p class="tw-font-semibold tw-text-gray-700 dark:tw-text-gray-400">
-                    {{ match.league }} 
+                    {{ match.league.split(',')[1] }} | {{ match.league.split(',')[0] }}
                   </p>
+                  <p class="tw-flex tw-flex-col tw-text-xs tw-text-end tw-text-gray-700  dark:tw-text-gray-300">
+                  <span>{{ formatDate(match.date) }} <span class="tw-bg-green-700 tw-p-1 tw-rounded-md">{{ match.time }}</span> </span>
+                  <span></span>
+                </p>
                 </div>
-                <div v-if="match.participants?.length" class="tw-flex tw-mt-1 tw-gap-2 tw-text-xs tw-text-gray-700 dark:tw-text-gray-200">
-                  <span  class="tw-flex tw-gap-1">
-                    <img class="tw-size-4" :src="match.participants[0].club.logo"
+                <div v-if="match.participants?.length" class="tw-flex tw-mt-4 tw-gap-2 tw-text-xs tw-text-gray-700 dark:tw-text-gray-200">
+                  <span  class="tw-flex tw-gap-2">
+                    <img class="tw-size-6" :src="match.participants[0].club.logo"
                       :alt="match.participants[0]?.club.name" />
                     {{ match.participants[0]?.club.name }} 
                   </span>
                   <span>Vs</span>
-                  <span class="tw-flex tw-gap-1">
-                    <img class="tw-size-4" :src="match.participants[1].club.logo"
+                  <span class="tw-flex tw-gap-2">
+                    <img class="tw-size-6" :src="match.participants[1].club.logo"
                       :alt="match.participants[1]?.club.name" />
                     {{ match.participants[1]?.club.name }}
                   </span>
                 </div>
+               
               </div>
-              <div class="">
-                <p class="tw-flex tw-flex-col tw-text-xs tw-text-end tw-text-gray-700  dark:tw-text-gray-300">
-                  <span>{{ formatDate(match.date) }}</span>
-                  <span>{{ match.time }}</span>
-                </p>
-              </div>
-            </div>
-            <div class="tw-flex tw-justify-between tw-items-center tw-mb-2">
+              
+
+              <div class="tw-grid tw-grid-cols-7 tw-gap-2 tw-mb-2 tw-w-[70%]">
               <div v-for="odd in match.odds" class="tw-w-full tw-mr-2">
                 <Odd :matchDetail="{
                   id: match.id,
@@ -138,12 +138,14 @@ const props = defineProps<{
                 }" :outcomeId="odd.outcomeId" :eventId="odd.eventId" :value="odd.value" :odd="odd.odd" />
               </div>
               <q-btn outline
-                class="tw-rounded-lg dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
-                label="All markets +" @click="
+                class=" tw-rounded-lg dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold" no-caps
+                label="+ All Markets" @click="
                   
                 $router.push(`/matches/${match.id}`)
-                " />
+                " dense color="positive" />
             </div>
+            </div>
+           
             
 
             <div v-if="match.showMarket">
