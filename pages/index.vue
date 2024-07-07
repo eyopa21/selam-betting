@@ -2,13 +2,14 @@
   <div>
 
 
-    <NuxtImg src="/images/HeroImage.png" class="tw-mb-3 tw-w-full" />
+    <NuxtImg @click="$router.push('/test')" src="/images/HeroImage.png" class="tw-mb-3 tw-w-full" />
 
-    <div v-if="layout.mainLoader" class="tw-flex tw-justify-center">
-      <VUESkeleton />
-    </div>
-    <div v-else>
-      <GamesList />
+  
+      <VUESkeleton v-if="status === 'pending'" />
+  
+    <div v-else class="tw-min-h-screen">
+      
+      <GamesList :matches="matches" />
     </div>
   </div>
 </template>
@@ -18,25 +19,24 @@ import { useQuasar } from 'quasar'
 const $q = useQuasar()
 
 const layout = useLayout();
-const matchListStore = useMatchListStore();
+
 import type { Matches, Participants } from '~/types/matches';
 
-const page = ref(1)
-
-async function getMainData(page: number) {
-console.log("loadingggggggggggggg");
-  layout.value.mainLoader = true
-  const { data: recommendedGames, error } = await useFetch(`/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=50&page=${page}`);
 
 
-  if (error.value) {
+const matches = ref<Matches[]>([])
+ const { data, error, status } = await useLazyFetch(`/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=50&page=2`, {
+   server: false,
+   cache: 'force-cache'
+
+ });
+
+if (error.value) {
     console.log("Error fetching tournaments:", error.value);
-    layout.value.mainLoader = false
-
-    return;
   }
-  if (recommendedGames.value?.data?.results?.length) {
-    const filteredMatches: Matches[] = recommendedGames.value.data.results.map((game: any) => {
+    watch(data, () => {
+      if (data.value) {
+         matches.value = data.value.data.results.map((game: any) => {
       return {
         id: game.id,
         league: game.parent_name,
@@ -64,22 +64,27 @@ console.log("loadingggggggggggggg");
         showMarket: false
       }
     });
-    matchListStore.setMatchList(filteredMatches);
-    console.log("store", matchListStore.listOfMatches);
-    layout.value.mainLoader = false
-  }
+
+ 
+      }
+  
+   
+ })
+    
 
 
-}
 
-await getMainData(page.value)
+  
+
+  
+   
+
+  
+
+ 
+ 
+ 
 
 
- function loadMore(index: number, done:() => void) {
-  setTimeout(async () => {
-    await getMainData(page.value)
-    done()
-    page.value++
-  }, 5000);
-}
+
 </script>
