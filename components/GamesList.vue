@@ -100,7 +100,7 @@ const props = defineProps<{
         <div class="tw-rounded" >
           <div v-for="(match, key) in props.matches" :key="key" class="tw-mb-3 tw-border-2 tw-rounded-md tw-p-2 tw-bg-gray-800 tw-border-gray-900">
             <div class="tw-flex tw-justify-start dark:text-white tw-items-end">
-              <div class="tw-w-[30%] tw-mr-3 tw-border-r-2 tw-border-gray-600 tw-pr-3 tw-px-3 tw-py-3">
+              <div class="tw-w-[40%] tw-mr-3 tw-border-r-2 tw-border-gray-600 tw-pr-3 tw-px-3 tw-py-3">
                 <div class="tw-flex tw-justify-between">
                   <p class="tw-font-semibold tw-text-gray-700 dark:tw-text-gray-400">
                     {{ match.league.split(',')[1] }} | {{ match.league.split(',')[0] }}
@@ -112,13 +112,13 @@ const props = defineProps<{
                 </div>
                 <div v-if="match.participants?.length" class="tw-flex tw-mt-4 tw-gap-2 tw-text-sm tw-text-gray-700 dark:tw-text-gray-200">
                   <span  class="tw-flex tw-gap-2">
-                    <img class="tw-size-6" :src="match.participants[0].club.logo"
+                    <img class="tw-size-8" :src="match.participants[0].club.logo"
                       :alt="match.participants[0]?.club.name" />
                     {{ match.participants[0]?.club.name }} 
                   </span>
                   <span>Vs</span>
                   <span class="tw-flex tw-gap-2">
-                    <img class="tw-size-6" :src="match.participants[1].club.logo"
+                    <img class="tw-size-8" :src="match.participants[1].club.logo"
                       :alt="match.participants[1]?.club.name" />
                     {{ match.participants[1]?.club.name }}
                   </span>
@@ -127,7 +127,7 @@ const props = defineProps<{
               </div>
               
 
-              <div class="tw-grid tw-grid-cols-7 tw-gap-2 tw-mb-2 tw-w-[70%]">
+              <div class="tw-grid tw-grid-cols-7 tw-gap-2 tw-mb-2 tw-w-[60%]">
               <div v-for="odd in match.odds" class="tw-w-full tw-mr-2">
                 <Odd :matchDetail="{
                   id: match.id,

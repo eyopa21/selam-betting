@@ -2,7 +2,7 @@
   <div>
 
 
-    <NuxtImg src="/images/HeroImage.png" class="tw-mb-3 tw-w-full" />
+    <NuxtImg src="/images/HeroImage.png" class="tw-mb-3 tw-w-full tw-h-16" />
 
     <div v-if="status==='pending'" class="tw-flex tw-justify-center">
       <VUESkeleton />
