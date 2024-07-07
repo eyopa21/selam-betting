@@ -4,7 +4,7 @@
       <q-btn @click="layout.showDrawer = !layout.showDrawer" flat round dense icon="menu" />
       <q-toolbar-title>
         <div>
-          <img class="tw-w-64" src="/images/logo.png" />
+          <img class="tw-w-44" src="/images/logo.png" />
         </div>
       </q-toolbar-title>
     </q-toolbar>
