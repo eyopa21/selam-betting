@@ -1,11 +1,11 @@
 <template>
   <div class="dark:tw-bg-primary-800">
-    <q-layout view="lHh lpr lff">
-      <q-header elevated class="tw-bg-secondary-800 dark:tw-bg-primary-700">
+    <q-layout view="lHh LpR lff">
+      <q-header elevated class="tw-bg-secondary-800 dark:tw-bg-gray-800">
         <Header />
       </q-header>
 
-      <q-page-container>
+      <q-page-container class="tw-bg-gray-900">
 
         <div class="">
           <q-drawer v-model="layout.showDrawer" show-if-above :mini="layout.miniState"
