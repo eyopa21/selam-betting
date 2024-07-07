@@ -1,6 +1,6 @@
 <template>
   <div @click="selectBet()"
-    :class="isSelected ? 'tw-bg-red-500 tw-dark:bg-red-500' : 'tw-bg-gray-50 dark:tw-bg-secondary-700'"
+    :class="isSelected ? 'tw-bg-red-500 tw-dark:bg-red-500' : 'tw-bg-gray-50 dark:tw-bg-secondary-900'"
     class="tw-flex tw-justify-between tw-cursor-pointer  tw-py-[2px] tw-px-1 tw-rounded tw-border tw-border-secondary-200 dark:tw-border-none active:tw-bg-gray-400">
     <p class="tw-font-medium dark:tw-text-white tw-text-gray-700">
       {{ value }}

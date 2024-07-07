@@ -202,7 +202,7 @@ filterMarkets();
             :label="market.marketName"
             class="dark:tw-bg-secondary-800 dark:tw-text-white tw-text-gray-700 tw-mb-2 tw-border dark:tw-border-none"
             :aria-expanded="true" header-class="tw-bg-secondary-700">
-            <div class="tw-grid tw-grid-cols-3">
+            <div class="tw-grid tw-grid-cols-2">
               <Odd v-if="formattedDetail" class="tw-m-2 tw-col-span-1" v-for="outcome in market.values" :matchDetail="formattedDetail"
                 :value="outcome.name" :odd="outcome.odd" :eventId="outcome.eventId" :outcomeId="outcome.outcomeId" />
             </div>
