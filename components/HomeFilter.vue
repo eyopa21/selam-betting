@@ -1,6 +1,6 @@
 <template>
-  <div class="tw-bg-secondary-800 dark:tw-bg-primary-700 tw-min-h-screen tw-py-3 text-white tw-w-full">
-    <q-scroll-area style="height: 80vh; max-width: 300px">
+  <div class="tw-bg-secondary-800 dark:tw-bg-gray-800  tw-py-3 text-white tw-h-full">
+    <!-- <q-scroll-area style="height: 100vh; max-width: 300px"> -->
    <h2 class="tw-text-[#8E203A] tw-font-bold tw-text-2xl tw-text-center">
         Bet Services
       </h2>
@@ -43,15 +43,15 @@
       </div>
 
       <div v-if="isLoading">
-<VUESkeleton/>
+        <VUESkeleton/>
       </div>
       <template v-if="sports.length">
-        <q-list v-for="(sport, key) in sports" :key="key" class="tww-w-32">
-          <q-expansion-item v-model="sport.isOpen" expand-separator :label="sport.name" dense class="text-white tw-max-h-3 tw-px-1"
+        <q-list v-for="(sport, key) in sports" :key="key" class="tw-bg-gray-800">
+          <q-expansion-item v-model="sport.isOpen" expand-separator :label="sport.name" dense class="tw-px-1"
             >
             <div v-if="sport.isOpen">
-   <LazyTournaments :sportId="sport.id"/>
-  </div>
+              <LazyTournaments :sportId="sport.id"/>
+            </div>
           </q-expansion-item>
         </q-list>
       </template>
@@ -59,7 +59,7 @@
 no sports found
       </template>
      
-    </q-scroll-area>
+    <!-- </q-scroll-area> -->
   </div>
 </template>
 

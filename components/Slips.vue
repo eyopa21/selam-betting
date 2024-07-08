@@ -62,7 +62,7 @@
             </div>
           </div>
           <div v-else>
-            <div class="tw-text-lg ">
+            <div class="tw-text-sm tw-text-center">
               <p>Your Bets Will be Available here</p>
 
             </div>
@@ -72,7 +72,7 @@
 
 
       <!-- Totals -->
-      <div>
+      <div class="tw-p-3 tw-bg-gray-800">
         <div class="tw-flex tw-items-center tw-justify-between">
           <p class="tw-text-gray-400">Total Odds: </p>
           <p> {{ calculateTotalOdd(findSlipById.games).toFixed(2) }}</p>
@@ -95,8 +95,8 @@
             calculateTotalOdd(findSlipById.games)).toFixed(2) }}
             ETB</p>
         </div>
-        <div class="tw-py-4">
-          <q-btn icon="share" label="SHARE" class="tw-font-bold tw-bg-gray-500 tw-w-full tw-mb-2 tw-mt-4" unelevated />
+        <div class="">
+          <q-btn icon="share" label="SHARE" class="tw-font-bold tw-bg-sky-700 tw-w-full tw-mb-2 tw-mt-4" unelevated />
           <div class="tw-flex tw-gap-2">
             <q-btn :disabled="!findSlipById.games?.length || findSlipById.birr < 10" @click="showTerms = true"
               label="BOOK" unelevated class="tw-font-bold bg-grey-7 tw-w-full" />
