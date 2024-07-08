@@ -7,6 +7,9 @@ const props = defineProps<{
     
 }>()
 
+const emit = defineEmits<{
+  close: [void]
+}>()
 
 </script>
 
@@ -78,7 +81,7 @@ const props = defineProps<{
           </q-card-section>
         </div>
          <q-card-actions align="right" class="bg-white text-teal">
-              <q-btn  flat label="OK" />
+              <q-btn @click="emit('close')"  flat label="OK" />
             </q-card-actions>
       </q-card>
   </div>

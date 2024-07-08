@@ -107,7 +107,7 @@
     </div>
     <TermsAndPolicy :loading="loading" :showDialog="showTerms" @confirm="bookBet()" @close="showTerms = false" />
     <q-dialog v-model="showPreviewModal" full-height>
-     <VUETicket :ticket="preview"/>
+     <VUETicket :ticket="preview" @close="preview = null"/>
     </q-dialog>
     <div>
 
