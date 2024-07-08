@@ -107,38 +107,7 @@
     </div>
     <TermsAndPolicy :loading="loading" :showDialog="showTerms" @confirm="bookBet()" @close="showTerms = false" />
     <q-dialog v-model="showPreviewModal" full-height>
-      <q-card v-if="preview" class="column full-height" style="width: 300px">
-        <q-card-section>
-          <div class="text-h6">Success</div>
-        </q-card-section>
-        <q-card-section>
-          <div class="text-h6">
-            <p>
-              Booking Code: {{ preview.booking_code }}
-              <br>
-              Stake: {{ parseInt(preview.stake_amount).toFixed(2) }} ETB
-              <br>
-              Possible Win: {{ preview.possible_win?.toFixed(2) }} ETB
-            </p>
-          </div>
-        </q-card-section>
-
-        <q-card-section v-for="(event, key) in preview.selected_events" :key="key" class="col q-pt-none ">
-          <div class="tw-flex tw-text-xs tw-items-center tw-justify-between ">
-            <p>{{ event.event.name }}, {{ event.event.parent_name }}</p>
-            <p class="tw-text-[10px]">{{ formatDate(event.event.startTime.split('T')[0]) }} </p>
-
-          </div>
-          <div class="tw-flex tw-items-center tw-justify-between">
-            <p class="tw-text-xs tw-text-gray-300">{{ event.outcome.name }}</p>
-            <p>{{ parseInt(event.odds).toFixed(2) }} </p>
-          </div>
-        </q-card-section>
-
-        <q-card-actions align="right" class="bg-white text-teal">
-          <q-btn @click="preview = null" flat label="OK" />
-        </q-card-actions>
-      </q-card>
+     <VUETicket :ticket="preview"/>
     </q-dialog>
     <div>
 

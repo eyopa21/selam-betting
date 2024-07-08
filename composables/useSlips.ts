@@ -1,29 +1,5 @@
 
-interface MatchDetail {
-    id: number,
-    teams: string,
-    league: string
-    date: string
-    time: string
-}
-interface Odds {
-    // id is = eventId
-    outcomeId: number
-    eventId: string | number;
-    value: string;
-    odd: number;
-    matchDetail: MatchDetail
-}
-
-
-interface Slips {
-    id: number,
-    name: string,
-    label: string,
-    birr: number
-    games: Odds[] | [],
-}
-
+import type { MatchDetail, Odds, Slips } from '~/types/slips'
 import { useQuasar } from 'quasar'
 
 export function useSlips() {
