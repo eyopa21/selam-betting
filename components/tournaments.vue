@@ -18,7 +18,7 @@ const getTournamentForSport = async () => {
   const { data, error } = await useFetch(
     `/api/tournaments/${props.sportId}/?page=${page.value}`
   )
-console.log("data", data.value);
+  console.log("data", data.value);
   if (error.value) {
     console.log("Error fetching tournaments:", error.value);
     isLoading.value = false;
@@ -27,7 +27,7 @@ console.log("data", data.value);
 
   if (data.value?.data?.results?.length) {
     items.value.push(...data.value?.data?.results);
-    
+
     hasMore.value = data.value.data.next !== null;
   } else {
     hasMore.value = false;
@@ -37,13 +37,13 @@ console.log("data", data.value);
 };
 
 const loadMore = async (index: number, done: () => void) => {
-    console.log("index", index);
-    setTimeout(async () => {
+  console.log("index", index);
+  setTimeout(async () => {
 
-        await getTournamentForSport();
-      done();
-        page.value++;
-    }, 5000)
+    await getTournamentForSport();
+    done();
+    page.value++;
+  }, 5000)
 };
 
 // Initial loada
@@ -61,24 +61,33 @@ const isTournamentEmpty = computed(() => {
 <template>
   <div class=" max-w-full">
     <div v-if="isLoading && !items?.length">
-      <VUESkeleton/>
+      <VUESkeleton />
     </div>
-    <div v-else class="q-pa-md">
+    <div v-else>
       <div v-if="isTournamentEmpty">
-      No Leagues found
+        No Leagues found
       </div>
-      <q-infinite-scroll v-else @load="loadMore" :offset="500" class="tw-max-h-64 tw-h-32">
-        <div v-for="(item, index) in items" :key="index" class="caption tw-border tw-w-64">
-          <p class="tw-hover:underline tw-p-1 tw-truncate">{{ index }} - {{ item.name }}</p>
-        </div>
+      <q-infinite-scroll v-else @load="loadMore" :offset="500" class="tw-max-h-64  tw-h-32">
+
+        <q-list dense bordered padding class="rounded-borders ">
+          <q-item v-for="(item, index) in items" :key="index" clickable v-ripple
+            @click="$router.push(`/sports/${item.id}`)">
+            <q-item-section>
+              {{ item.name }}
+            </q-item-section>
+          </q-item>
+
+
+        </q-list>
+
         <template v-slot:loading>
           <div class="row justify-center q-my-md">
             <q-spinner-dots color="primary" size="40px" />
           </div>
         </template>
-        
+
       </q-infinite-scroll>
-      
+
     </div>
   </div>
 </template>
