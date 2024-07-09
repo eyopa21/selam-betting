@@ -7,7 +7,6 @@
             <q-icon v-if="slips.length > 1" @click="removeSlip(slip.id)" name="close" class="tw-ml-2" />
           </q-tab>
         </q-tabs>
-
       </div>
       <q-icon @click="addSlip()" name="add" />
     </div>
