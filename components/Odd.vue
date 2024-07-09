@@ -1,7 +1,7 @@
 <template>
   <div @click="selectBet()"
-    :class="isSelected ? 'tw-bg-blue-900 tw-text-black tw-dark:bg-red-500' : 'tw-bg-gray-50 dark:tw-bg-gray-700'"
-    class="tw-flex tw-justify-between tw-cursor-pointer  tw-py-3 tw-px-3 hover:tw-bg-blue-800 tw-rounded tw-border tw-border-secondary-200 dark:tw-border-none active:tw-bg-gray-400">
+    :class="isSelected ? 'tw-bg-amber-500 tw-text-black tw-dark:bg-red-500' : 'tw-bg-gray-50 dark:tw-bg-gray-700'"
+    class="tw-flex tw-justify-between tw-cursor-pointer  tw-py-3 tw-px-3 hover:tw-bg-amber-600 tw-rounded tw-border tw-border-secondary-200 dark:tw-border-none active:tw-bg-gray-400">
     <p class="tw-font-medium dark:tw-text-white tw-text-gray-700">
       {{ value }}
     </p>

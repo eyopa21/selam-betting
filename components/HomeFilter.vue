@@ -1,7 +1,21 @@
 <template>
   <div class="tw-bg-secondary-800 dark:tw-bg-gray-800  tw-py-3 text-white tw-h-full">
     <!-- <q-scroll-area style="height: 100vh; max-width: 300px"> -->
-   <h2 class="tw-text-[#8E203A] tw-font-bold tw-text-2xl tw-text-center">
+      <div class="tw-flex tw-justify-center tw-mt-6 tw-gap-4">
+        <q-btn icon="favorite" flat no-caps label="Popular" ></q-btn>
+        <q-btn icon="videocam" flat no-caps label="Live" ></q-btn>
+
+
+      </div>
+
+      <div>
+        <q-input v-model="search_key" outlined label="Search" input-style="" bg-color="grey-8" input-class="" dense class="tw-p-3 tw-mt-3 tw-rounded-md">
+          <template #append>
+            <q-icon name="search"></q-icon>
+          </template>
+        </q-input>
+      </div>
+   <!-- <h2 class="tw-text-[#8E203A] tw-font-bold tw-text-2xl tw-text-center">
         Bet Services
       </h2>
       <div class="flex tw-justify-around tw-items-center tw-my-2">
@@ -9,7 +23,7 @@
         <q-chip square text-color="white" class="tw-bg-[#8E203A] tw-px-2" size="md" label="Results" />
         <q-chip square text-color="white" class="tw-bg-[#8E203A] tw-px-2" size="md" label="Print Odds" />
       </div>
-      <hr class="tw-mx-4 tw-my-1" />
+      <hr class="tw-mx-4 tw-my-1" /> -->
       <h3 class="tw-font-semibold tw-text-center tw-text-lg">Filter by date</h3>
       <div class="tw-flex tw-justify-between tw-items-center tw-gap-x-4 tw-mx-2">
         <q-chip square color="primary" text-color="white" dense
@@ -71,6 +85,7 @@ type Sports = {
 }
 
 const isLoading = ref(true)
+const search_key = ref(null)
 
 const sports = ref<Sports[]>([])
 

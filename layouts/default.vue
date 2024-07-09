@@ -7,7 +7,7 @@
 
       <q-drawer v-model="layout.showDrawer"  side="left"  show-if-above
               :width="300"
-              class="tw-mt-8"
+              
             :class="$q.dark.isActive ? 'tw-gray-800' : 'tw-gray-800'">
               <HomeFilter  />
           </q-drawer>
