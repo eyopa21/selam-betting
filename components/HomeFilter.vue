@@ -95,6 +95,7 @@ type Sports = {
 const isLoading = ref(true)
 const search_key = ref(null)
 
+const date = ref(null)
 const sports = ref<Sports[]>([])
 
 function isResponseData(response: any): response is { data: any; error?: undefined } {
