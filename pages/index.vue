@@ -4,16 +4,16 @@
 
     <q-carousel
         v-model="slide"
-        transition-prev="scale"
-        transition-next="scale"
-        swipeable
+        transition-prev="slide-right"
+        transition-next="slide-left"
+        infinite
         animated
         control-color="white"
         navigation
         padding
         arrows
         height="300px"
-        
+        :autoplay="true"
         class="text-white shadow-1 rounded-border"
       >
         <q-carousel-slide name="1" img-src="/images/HeroImage.png" class="tw-w-full tw-h-full"></q-carousel-slide>
