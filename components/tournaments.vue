@@ -59,7 +59,7 @@ const isTournamentEmpty = computed(() => {
 
 
 <template>
-  <div class=" max-w-full">
+  <div class="">
     <div v-if="isLoading && !items?.length">
       <VUESkeleton/>
     </div>
@@ -68,8 +68,8 @@ const isTournamentEmpty = computed(() => {
       No Leagues found
       </div>
       <q-infinite-scroll v-else @load="loadMore" :offset="500" class="">
-        <div v-for="(item, index) in items" :key="index" class="caption tw-border tw-w-64">
-          <p class="tw-hover:underline tw-p-1 tw-truncate">{{ index }} - {{ item.name }}</p>
+        <div v-for="(item, index) in items" :key="index" class="caption tw-border">
+          <p class="tw-hover:underline tw-p-1">{{ index }} - {{ item.name }}</p>
         </div>
         <template v-slot:loading>
           <div class="row justify-center q-my-md">

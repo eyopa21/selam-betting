@@ -1,6 +1,6 @@
 <template>
   <div class="dark:tw-bg-primary-800">
-    <q-layout view="hHh LpR lff">
+    <q-layout view="hHh LpR fff">
       <q-header elevated class="tw-bg-secondary-800 dark:tw-bg-gray-800">
         <Header />
       </q-header>

@@ -16,7 +16,9 @@
         :autoplay="true"
         class="text-white shadow-1 rounded-border"
       >
-        <q-carousel-slide name="1" img-src="/images/HeroImage.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+        <q-carousel-slide name="1" img-src="/images/image 63.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+        <q-carousel-slide name="6" img-src="/images/image 64.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+        <q-carousel-slide name="7" img-src="/images/image 65.png" class="tw-w-full tw-h-full"></q-carousel-slide>
         <q-carousel-slide name="2" img-src="/images/Fenan pay.png" class="tw-w-full tw-h-full"></q-carousel-slide>
         <q-carousel-slide name="3" img-src="/images/Fly emrates.png" class="tw-w-full tw-h-full"></q-carousel-slide>
         <q-carousel-slide name="4" img-src="/images/Pepsi banner.png" class="tw-w-full tw-h-full"></q-carousel-slide>
