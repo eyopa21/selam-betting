@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-bg-secondary-800 dark:tw-bg-gray-800  tw-py-3 text-white tw-h-full">
+  <div class="tw-bg-secondary-800 dark:tw-bg-gray-800  tw-py-3 text-white tw-h-full custom-scrollbar">
     <!-- <q-scroll-area style="height: 100vh; max-width: 300px"> -->
       <div class="tw-flex tw-justify-center tw-mt-6 tw-gap-4">
         <q-btn icon="favorite" flat no-caps label="Popular" ></q-btn>
@@ -133,3 +133,19 @@ else if (data.value && isResponseData(data.value)) {
 
 
 </script>
+
+<style scoped>
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px; /* Set scrollbar width */
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Set background of the scrollbar track */
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #d8d8d8; /* Set scrollbar thumb color */
+    border-radius: 3px; /* Set scrollbar thumb rounded corners */
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Set scrollbar thumb hover color */
+  }
+</style>

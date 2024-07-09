@@ -68,8 +68,8 @@ const isTournamentEmpty = computed(() => {
       No Leagues found
       </div>
       <q-infinite-scroll v-else @load="loadMore" :offset="500" class="">
-        <div v-for="(item, index) in items" :key="index" class="caption tw-border">
-          <p class="tw-hover:underline tw-p-1">{{ index }} - {{ item.name }}</p>
+        <div v-for="(item, index) in items" :key="index" class="tw-flex tw-justify-start tw-items-center caption tw-border-l-4 tw-border-green-600 tw-mb-2 tw-px-2 tw-rounded-md tw-py-2 hover:tw-bg-gray-700 tw-bg-gray-900">
+          <q-icon name="sports_soccer" class="tw-mr-2"></q-icon><p class="">{{ item.name }}</p>
         </div>
         <template v-slot:loading>
           <div class="row justify-center q-my-md">
