@@ -10,13 +10,13 @@
     </q-toolbar>
 
     <div class="lg:tw-flex tw-items-end tw-hidden">
-      <ul v-for="option in menuOptions">
+      <ul v-for="option in menuOptions" :key="option.name">
         <li class="tw-font-semibold tw-mx-4 tw-whitespace-nowrap">
           {{ option.name }}
         </li>
       </ul>
     </div>
-    <div class="tw-my-auto lg:tw-flex tw-gap-2 tw-hidden tw-mr-4 tw-items-center">
+    <div class="tw-my-auto lg:tw-flex lg:tw-justify-between tw-gap-2 tw-hidden tw-mr-4 tw-items-center">
       <q-btn v-if="!userStore.user && !userStore.loadingUser" label="LOGIN"
         class="tw-font-bold tw-bg-gray-500" unelevated @click="signInModal = true" />
       <q-btn v-if="!userStore.user && !userStore.loadingUser"  label="REGISTER" unelevated

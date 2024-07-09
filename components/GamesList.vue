@@ -13,6 +13,52 @@ interface Markets {
   results: MarketResults[];
 }
 
+const sport_categories = ref([
+  {
+    value: 'Football',
+    label: 1,
+    icon: '/images/ball.png',
+    selected: true
+  },
+  {
+    value: 'Baseball',
+    label: 2,
+    icon: '/images/basket.png',
+    selected: false
+  },
+  {
+    value: 'Tennis',
+    label: 3,
+    icon: '/images/tennis.png',
+    selected: false
+
+  },
+  {
+    value: 'Volleyball',
+    label: 4,
+    selected: false,
+    icon: '/images/volley.png'
+  },
+  {
+    value: 'Hockey',
+    label: 5,
+    selected: false,
+    icon: '/images/hockey.png'
+  },
+  {
+    value: 'Table Tennis',
+    label: 6,
+    selected: false,
+    icon: '/images/teniis2.png'
+  },
+  {
+    value: 'Cricket',
+    label: 7,
+    selected: false,
+    icon: '/images/cricket.png'
+  },
+])
+
 
 const matchListStore = useMatchListStore();
 const matches = ref(matchListStore.listOfMatches)
@@ -28,10 +74,15 @@ const props = defineProps<{
   matches: Matches[]
 }>()
 
+const activate_sport = (sport) => {
+  const index = sport_categories.value.findIndex(t => t.label === sport.label)
+  sport_categories.value.forEach((t) => t.selected = false)
+  sport_categories.value[index].selected = true
+}
 </script>
 <template>
   <div>
-    <div
+    <!-- <div
       class="tw-bg-secondary-800 dark:tw-bg-gray-800 w-full tw-flex tw-justify-between tw-items-center tw-mb-2 tw-p-2">
       <div>
         <p class="tw-font-bold tw-text-white tw-text-xl">
@@ -40,7 +91,7 @@ const props = defineProps<{
       </div>
       <div></div>
       <div></div>
-    </div>
+    </div> -->
     <div class="tw-bg-gray-800 w-full tw-flex tw-justify-start tw-items-center tw-mb-2 tw-px-2">
       <div class="flex tw-items-center tw-border-r tw-border-gray-900 tw-px-4">
         <q-icon name="home" class="tw-text-white tw-text-3xl" size="sm"/>
@@ -63,34 +114,12 @@ const props = defineProps<{
         <p class="tw-text-white">With live streams</p>
       </div>
       <!-- TODO: should be replaced with read data -->
-      <div class="flex tw-justify-between tw-items-center tw-mx-1 tw-cursor-pointer">
-        <NuxtImg class="tw-w-5 tw-h-5 tw-mr-3" src="/images/ball.png" />
-        <p class="tw-text-white tw-font-semibold">Football</p>
+      <div class="flex tw-justify-between tw-rounded-full  tw-px-4 tw-p-1 tw-items-center tw-mx-1 tw-cursor-pointer" :class="[sport.selected? 'tw-bg-green-700': 'tw-bg-gray-800']" v-for="sport in sport_categories" :key="sport.label" @click="activate_sport(sport)">
+        <NuxtImg class="tw-w-5 tw-h-5 tw-mr-3" :src="sport.icon" />
+        <p class="tw-text-white tw-font-semibold">{{sport.value}}</p>
       </div>
-      <div class="flex tw-justify-between tw-items-center tw-mx-1 tw-cursor-pointer">
-        <img class="tw-w-5 tw-h-5 tw-mr-3" src="/images/basket.png" />
-        <p class="tw-text-white tw-font-semibold">Basketball</p>
-      </div>
-      <div class="flex tw-justify-between tw-items-center tw-mx-1 tw-cursor-pointer">
-        <img class="tw-w-5 tw-h-5 tw-mr-3" src="/images/tennis.png" />
-        <p class="tw-text-white tw-font-semibold">Tennis</p>
-      </div>
-      <div class="flex tw-justify-between tw-items-center tw-mx-1 tw-cursor-pointer">
-        <img class="tw-w-5 tw-h-5 tw-mr-3" src="/images/volley.png" />
-        <p class="tw-text-white tw-font-semibold">Volleyball</p>
-      </div>
-      <div class="flex tw-justify-between tw-items-center tw-mx-1 tw-cursor-pointer">
-        <img class="tw-w-5 tw-h-5 tw-mr-3" src="/images/hockey.png" />
-        <p class="tw-text-white tw-font-semibold">Hockey</p>
-      </div>
-      <div class="flex tw-justify-between tw-items-center tw-mx-1 tw-cursor-pointer" >
-        <img class="tw-w-5 tw-h-5 tw-mr-3" src="/images/teniis2.png" />
-        <p class="tw-text-white tw-font-semibold">Table tennis</p>
-      </div>
-      <div class="flex tw-justify-between tw-items-center tw-mx-1 tw-cursor-pointer">
-        <img class="tw-w-5 tw-h-5 tw-mr-3" src="/images/cricket.png" />
-        <p class="tw-text-white tw-font-semibold">Cricket</p>
-      </div>
+      
+      
     </div>
     <q-tab-panels v-model="aciveHeader" animated>
       <q-tab-panel name="Matches" class="tw-p-2 tw-bg-secondary-800 dark:tw-bg-gray-900">

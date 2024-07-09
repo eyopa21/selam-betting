@@ -2,7 +2,7 @@
   <div>
 
 
-    <NuxtImg @click="$router.push('/test')" src="/images/HeroImage.png" class="tw-mb-3 tw-w-full tw-rounded-xl" />
+    <NuxtImg @click="$router.push('/')" src="/images/HeroImage.png" class="tw-mb-3 tw-w-full tw-rounded-xl" />
 
   
       <VUESkeleton v-if="status === 'pending'" />
