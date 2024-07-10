@@ -9,7 +9,7 @@
       </q-toolbar-title>
     </q-toolbar>
 
-    <div class="lg:tw-flex tw-items-end tw-hidden">
+    <div class="lg:tw-flex tw-justify-center tw-items-start tw-hidden">
       <ul v-for="option in menuOptions" :key="option.name">
         <li class="tw-font-semibold tw-mx-4 tw-whitespace-nowrap">
           {{ option.name }}
@@ -17,9 +17,9 @@
       </ul>
     </div>
     <div class="tw-my-auto lg:tw-flex lg:tw-justify-between tw-gap-2 tw-hidden tw-mr-4 tw-items-center">
-      <q-btn v-if="!userStore.user && !userStore.loadingUser" label="LOGIN"
+      <q-btn v-if="!userStore.user && !userStore.loadingUser" label="LOGIN" no-wrap icon="login"
         class="tw-font-bold tw-bg-gray-500" unelevated @click="signInModal = true" />
-      <q-btn v-if="!userStore.user && !userStore.loadingUser"  label="REGISTER" unelevated
+      <q-btn v-if="!userStore.user && !userStore.loadingUser" no-wrap icon="app_registration" label="REGISTER" unelevated
         class="tw-font-bold bg-positive" @click="signUpModal = true" />
       <div v-if="userStore.user && !userStore.loadingUser" class="tw-flex tw-text-center tw-gap-2">
         <p

@@ -35,7 +35,7 @@ export const footerItems = [
         link: "#",
       },
       {
-        item: "contact methusods",
+        item: "contact methods",
         link: "#",
       },
     ],

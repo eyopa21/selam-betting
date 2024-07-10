@@ -124,8 +124,6 @@ const activate_sport = (sport) => {
     <q-tab-panels v-model="aciveHeader" animated>
       <q-tab-panel name="Matches" class="tw-p-2 tw-bg-secondary-800 dark:tw-bg-gray-900">
          <q-infinite-scroll v-if="props.matches?.length" :offset="500">
-
-       
         <div class="tw-rounded" >
           <div v-for="(match, key) in props.matches" :key="key" class="tw-mb-3 tw-border-2 tw-rounded-md tw-p-2 tw-bg-gray-800 tw-border-gray-900">
             <div class="tw-flex tw-justify-start dark:text-white tw-items-end">
@@ -198,7 +196,7 @@ const activate_sport = (sport) => {
         
       </q-tab-panel>
       <q-tab-panel name="Recommended">recommended matches </q-tab-panel>
-      <q-tab-panel name="Upcoming Event"> upcoming events </q-tab-panel>
+      <q-tab-panel name="Upcoming Event" class="tw-bg-gray-900"> <upcomming-events :matches="props.matches"/> </q-tab-panel>
     </q-tab-panels>
   </div>
 </template>
