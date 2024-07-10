@@ -19,10 +19,14 @@
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
 const $q = useQuasar()
-
+const { scrollToTop } = useHelpers()
 const layout = useLayout();
 
 import type { Matches, Participants } from '~/types/matches';
+
+if (import.meta.client) {
+    scrollToTop()
+}
 
 const route = useRoute();
 const isLoading = ref(true)
