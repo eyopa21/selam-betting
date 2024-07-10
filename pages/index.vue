@@ -2,8 +2,18 @@
   <div>
 
 
-    <NuxtImg src="/images/HeroImage.png" class="tw-mb-3 tw-w-full" />
+    <q-carousel v-model="slide" transition-prev="slide-right" transition-next="slide-left" infinite animated
+      control-color="white" navigation padding arrows height="300px" :autoplay="true"
+      class="text-white shadow-1 rounded-border">
+      <q-carousel-slide name="1" img-src="/images/image 63.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+      <q-carousel-slide name="6" img-src="/images/image 64.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+      <q-carousel-slide name="7" img-src="/images/image 65.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+      <q-carousel-slide name="2" img-src="/images/Fenan pay.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+      <q-carousel-slide name="3" img-src="/images/Fly emrates.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+      <q-carousel-slide name="4" img-src="/images/Pepsi banner.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+      <q-carousel-slide name="5" img-src="/images/ITSC banner.png" class="tw-w-full tw-h-full"></q-carousel-slide>
 
+    </q-carousel>
 
     <VUESkeleton v-if="status === 'pending'" />
 
@@ -19,7 +29,7 @@ import { useQuasar } from 'quasar'
 const $q = useQuasar()
 const { formatDate, scrollToTop } = useHelpers()
 const layout = useLayout();
-
+const slide = ref('1')
 import type { Matches, Participants } from '~/types/matches';
 if (import.meta.client) {
   scrollToTop()

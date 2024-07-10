@@ -59,7 +59,7 @@ const isTournamentEmpty = computed(() => {
 
 
 <template>
-  <div class=" max-w-full">
+  <div class="">
     <div v-if="isLoading && !items?.length">
       <VUESkeleton />
     </div>
