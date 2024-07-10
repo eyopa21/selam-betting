@@ -204,7 +204,8 @@ const activate_sport = (sport) => {
 
       </q-tab-panel>
       <q-tab-panel name="Recommended">recommended matches </q-tab-panel>
-      <q-tab-panel name="Upcoming Event"> upcoming events </q-tab-panel>
+      <q-tab-panel name="Upcoming Event" class="tw-bg-gray-900"> <upcomming-events :matches="props.matches" />
+      </q-tab-panel>
     </q-tab-panels>
   </div>
 </template>
