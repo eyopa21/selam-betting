@@ -141,7 +141,8 @@ const props = defineProps<{
                 <q-btn outline dense padding="xs lg" size="sm" color="red-8"
                   class="tw-rounded-lg  dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
                   :label="`+${match.numberOfMarkets}`" @click="  $router.push(`/matches/${match.id}`)">
-                  <q-tooltip class="bg-accent">View all Markets</q-tooltip>
+                  <q-tooltip class="bg-accent">View all <span class="tw-underline">{{ match.numberOfMarkets }}</span>
+                    Markets</q-tooltip>
 
                 </q-btn>
 
