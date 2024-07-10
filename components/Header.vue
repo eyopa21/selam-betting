@@ -10,7 +10,7 @@
     </q-toolbar>
 
     <div class="lg:tw-flex tw-items-end tw-hidden">
-      <ul v-for="option in menuOptions">
+      <ul v-for="option in menuOptions" :key="option.name">
         <li class="tw-font-semibold tw-mx-4 tw-whitespace-nowrap">
           {{ option.name }}
         </li>
@@ -54,7 +54,7 @@
     <div class="lg:tw-hidden">
       <q-btn unelevated icon="menu">
         <q-menu fit class="tw-bg-primary-600 tw-w-[100vw]">
-          <q-list v-for="option in menuOptions">
+          <q-list v-for="option in menuOptions" :key="option.name">
             <q-item clickable class="text-white font-bold">
               <q-item-section>{{ option.name }}</q-item-section>
             </q-item>
