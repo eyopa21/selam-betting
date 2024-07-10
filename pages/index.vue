@@ -2,13 +2,23 @@
   <div>
 
 
-    <NuxtImg @click="$router.push('/test')" src="/images/HeroImage.png" class="tw-mb-3 tw-w-full" />
+    <q-carousel v-model="slide" transition-prev="slide-right" transition-next="slide-left" infinite animated
+      control-color="white" navigation padding arrows height="300px" :autoplay="true"
+      class="text-white shadow-1 rounded-border">
+      <q-carousel-slide name="1" img-src="/images/image 63.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+      <q-carousel-slide name="6" img-src="/images/image 64.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+      <q-carousel-slide name="7" img-src="/images/image 65.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+      <q-carousel-slide name="2" img-src="/images/Fenan pay.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+      <q-carousel-slide name="3" img-src="/images/Fly emrates.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+      <q-carousel-slide name="4" img-src="/images/Pepsi banner.png" class="tw-w-full tw-h-full"></q-carousel-slide>
+      <q-carousel-slide name="5" img-src="/images/ITSC banner.png" class="tw-w-full tw-h-full"></q-carousel-slide>
 
-  
-      <VUESkeleton v-if="status === 'pending'" />
-  
+    </q-carousel>
+
+    <VUESkeleton v-if="status === 'pending'" />
+
     <div v-else class="tw-min-h-screen">
-      
+
       <GamesList :matches="matches" />
     </div>
   </div>
@@ -17,31 +27,34 @@
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
 const $q = useQuasar()
-
+const { formatDate, scrollToTop } = useHelpers()
 const layout = useLayout();
-
+const slide = ref('1')
 import type { Matches, Participants } from '~/types/matches';
-
-
+if (import.meta.client) {
+  scrollToTop()
+}
 
 const matches = ref<Matches[]>([])
- const { data, error, status } = await useLazyFetch(`/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=50&page=2`, {
-   server: false,
-   cache: 'force-cache'
+const { data, error, status } = await useLazyFetch(`/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=50&page=1`, {
+  server: false,
+  cache: 'no-cache'
 
- });
+});
 
 if (error.value) {
-    console.log("Error fetching tournaments:", error.value);
-  }
-    watch(data, () => {
-      if (data.value) {
-         matches.value = data.value.data.results.map((game: any) => {
+  console.log("Error fetching tournaments:", error.value);
+}
+watch(data, () => {
+  if (data.value) {
+    matches.value = data.value.data.results.map((game: any) => {
+
       return {
         id: game.id,
         league: game.parent_name,
         teams: game.name,
-        date: convertToDateString(game.startTime),
+        numberOfMarkets: game.no_market,
+        date: formatDate(game.startTime),
         time: new Date(game.startTime).toLocaleTimeString("en-US", {
           hour: "2-digit",
           minute: "2-digit",
@@ -65,25 +78,25 @@ if (error.value) {
       }
     });
 
- 
-      }
-  
-   
- })
-    
+
+  }
+
+
+})
 
 
 
-  
 
-  
-   
 
-  
 
- 
- 
- 
+
+
+
+
+
+
+
+
 
 
 

@@ -5,7 +5,8 @@ export default defineEventHandler(async (event) => {
     const query = getQuery(event);
     const config = useRuntimeConfig();
     const page = query.page || 1;
-    const url = `${config.restApiEndpoint}/filter_event/?sport_id=${query.sport_id}&interval_hours=${query.interval_hours}&page_size=50&page=${page}`;
+    const date = new Date();
+    const url = `${config.restApiEndpoint}/filter_event/?sport_id=${query.sport_id}&interval_hours=${query.interval_hours ?? 24}&page_size=50&page=${page}`;
     console.log("url", url);
     try {
         const response = await $fetch<{ results: Matches[] }>(url, {
