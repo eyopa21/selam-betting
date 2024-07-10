@@ -4,7 +4,7 @@
       <q-btn @click="layout.showDrawer = !layout.showDrawer" flat round dense icon="menu" />
       <q-toolbar-title>
         <div>
-          <img class="tw-w-44" src="/images/logo.png" />
+          <img @click="navigateTo('/')" class="tw-w-44" src="/images/logo.png" />
         </div>
       </q-toolbar-title>
     </q-toolbar>
@@ -19,8 +19,8 @@
     <div class="tw-my-auto lg:tw-flex lg:tw-justify-between tw-gap-2 tw-hidden tw-mr-4 tw-items-center">
       <q-btn v-if="!userStore.user && !userStore.loadingUser" label="LOGIN" no-wrap icon="login"
         class="tw-font-bold tw-bg-gray-500" unelevated @click="signInModal = true" />
-      <q-btn v-if="!userStore.user && !userStore.loadingUser" no-wrap icon="app_registration" label="REGISTER" unelevated
-        class="tw-font-bold bg-positive" @click="signUpModal = true" />
+      <q-btn v-if="!userStore.user && !userStore.loadingUser" no-wrap icon="app_registration" label="REGISTER"
+        unelevated class="tw-font-bold bg-positive" @click="signUpModal = true" />
       <div v-if="userStore.user && !userStore.loadingUser" class="tw-flex tw-text-center tw-gap-2">
         <p
           class="tw-text-[#FADF99] tw-font-bold tw-text-lg tw-flex tw-items-center tw-border tw-rounded tw-border-gray-600 tw-p-1 tw-mr-2">

@@ -81,23 +81,11 @@ const activate_sport = (sport) => {
 </script>
 <template>
   <div>
-    <!-- <div
-      class="tw-bg-secondary-800 dark:tw-bg-gray-800 w-full tw-flex tw-justify-between tw-items-center tw-mb-2 tw-p-2">
-      <div>
-        <p class="tw-font-bold tw-text-white tw-text-xl">
-          THE TOURNAMENT STARTS IN
-        </p>
-      </div>
-      <div></div>
-      <div></div>
-    </div> -->
+
     <div class="tw-bg-gray-800 w-full tw-flex tw-justify-start tw-items-center tw-mb-2 tw-px-2">
       <div class="flex tw-items-center tw-border-r tw-border-gray-900 tw-px-4">
         <q-icon name="home" class="tw-text-white tw-text-3xl" size="sm" />
-        <!-- <q-icon name="arrow_forward_ios" class="tw-text-white tw-text-2xl tw-mx-2 tw-font-extralight" />
-        <img class="tw-w-6 tw-h-6" src="/images/ball.png" />
-        <q-icon name="arrow_forward_ios" class="tw-text-white tw-text-2xl tw-mx-2 tw-font-extralight" />
-        <img class="tw-w-7 tw-aspect-ratio" src="/images/cup.png" /> -->
+
       </div>
       <div class="tw-items-start tw-ml-4">
         <q-tabs v-model="aciveHeader" inline-label outside-arrows mobile-arrows dense>
@@ -105,7 +93,7 @@ const activate_sport = (sport) => {
             :label="header" />
         </q-tabs>
       </div>
-      <div></div>
+
     </div>
     <div
       class="tw-bg-secondary-800 dark:tw-bg-gray-700 w-full tw-flex tw-gap-3 tw-justify-start tw-items-center tw-mb-2">
@@ -171,10 +159,10 @@ const activate_sport = (sport) => {
                       time: match.time,
                     }" :outcomeId="odd.outcomeId" :eventId="odd.eventId" :value="odd.value" :odd="odd.odd" />
                   </div>
-                  <q-btn outline dense padding="xs lg" size="sm" color="red-8"
+                  <q-btn outline dense padding="xs lg" size="sm" color="green"
                     class="tw-rounded-lg  dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
                     :label="`+${match.numberOfMarkets}`" @click="  $router.push(`/matches/${match.id}`)">
-                    <q-tooltip class="bg-accent">View all <span class="tw-underline">{{ match.numberOfMarkets }}</span>
+                    <q-tooltip class="bg-green">View all <span class="tw-underline">{{ match.numberOfMarkets }}</span>
                       Markets</q-tooltip>
 
                   </q-btn>
@@ -204,7 +192,8 @@ const activate_sport = (sport) => {
 
       </q-tab-panel>
       <q-tab-panel name="Recommended">recommended matches </q-tab-panel>
-      <q-tab-panel name="Upcoming Event" class="tw-bg-gray-900"> <upcomming-events :matches="props.matches" />
+      <q-tab-panel name="Upcoming Event" class="tw-bg-gray-900">
+        <upcomming-events :matches="props.matches" />
       </q-tab-panel>
     </q-tab-panels>
   </div>
