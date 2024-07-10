@@ -139,7 +139,7 @@ const activate_sport = (sport) => {
                     </p>
                     <p class="tw-flex tw-flex-col tw-text-xs tw-text-end tw-text-gray-700  dark:tw-text-gray-300">
                       <span>{{ formatDate(match.date) }} <span class="tw-bg-green-700 tw-p-1 tw-rounded-md">{{
-                          match.time }}</span> </span>
+                        match.time }}</span> </span>
                       <span></span>
                     </p>
                   </div>
@@ -171,12 +171,13 @@ const activate_sport = (sport) => {
                       time: match.time,
                     }" :outcomeId="odd.outcomeId" :eventId="odd.eventId" :value="odd.value" :odd="odd.odd" />
                   </div>
-                  <q-btn outline
-                    class=" tw-rounded-lg dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
-                    no-caps label="+ All Markets" @click="
+                  <q-btn outline dense padding="xs lg" size="sm" color="red-8"
+                    class="tw-rounded-lg  dark:tw-text-white tw-whitespace-nowrap tw-text-gray-600 tw-font-semibold"
+                    :label="`+${match.numberOfMarkets}`" @click="  $router.push(`/matches/${match.id}`)">
+                    <q-tooltip class="bg-accent">View all <span class="tw-underline">{{ match.numberOfMarkets }}</span>
+                      Markets</q-tooltip>
 
-                      $router.push(`/matches/${match.id}`)
-                      " dense color="positive" />
+                  </q-btn>
                 </div>
               </div>
 
