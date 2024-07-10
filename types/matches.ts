@@ -50,6 +50,7 @@ export type Matches = {
     markets?: Markets;
     participants: [Participants, Participants]
     showMarket: boolean
+    numberOfMarkets: number
 
 }
 

@@ -1,36 +1,41 @@
 <template>
-  <div class="tw-bg-secondary-800 dark:tw-bg-primary-700 tw-min-h-screen tw-py-3 text-white tw-w-full">
-    <q-scroll-area style="height: 80vh; max-width: 300px">
-   <h2 class="tw-text-[#8E203A] tw-font-bold tw-text-2xl tw-text-center">
-        Bet Services
-      </h2>
-      <div class="flex tw-justify-around tw-items-center tw-my-2">
-        <q-chip square text-color="white" class="tw-bg-[#8E203A] tw-px-2" size="md" label="Live score" />
-        <q-chip square text-color="white" class="tw-bg-[#8E203A] tw-px-2" size="md" label="Results" />
-        <q-chip square text-color="white" class="tw-bg-[#8E203A] tw-px-2" size="md" label="Print Odds" />
+  <div class="tw-bg-secondary-800 dark:tw-bg-gray-800  tw-py-3 text-white tw-h-full custom-scrollbar">
+    <!-- <q-scroll-area style="height: 100vh; max-width: 300px"> -->
+      <div class="tw-flex tw-justify-center tw-mt-6 tw-gap-4">
+        <q-btn icon="favorite" flat no-caps label="Popular" ></q-btn>
+        <q-btn icon="videocam" flat no-caps label="Live" ></q-btn>
+
+
       </div>
-      <hr class="tw-mx-4 tw-my-1" />
-      <h3 class="tw-font-semibold tw-text-center tw-text-lg">Filter by date</h3>
-      <div class="tw-flex tw-justify-between tw-items-center tw-gap-x-4 tw-mx-2">
-        <q-chip square color="primary" text-color="white" dense
-          class="tw-px-2 tw-py-4 tw-text-xs tw-cursor-pointer tw-w-full tw-mx-auto" icon="event" label="Today" />
-        <q-chip square color="primary" text-color="white" dense
-          class="tw-px-2 tw-py-4 tw-text-xs tw-cursor-pointer tw-w-full tw-mx-auto" icon="event" label="Tomorrow" />
-        <div style="max-width: 100px">
-          <q-btn icon="event" color="primary" class="tw-text-xs tw-whitespace-nowrap tw-w-full tw-mx-auto">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="date">
-                <div class="row items-center justify-end q-gutter-sm">
-                  <q-btn label="Cancel" color="primary" flat v-close-popup />
-                  <q-btn label="OK" color="primary" flat v-close-popup />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-btn>
+
+      <div>
+        <q-input v-model="search_key" outlined clearable  label="Search" bg-color="grey-6" dense class="tw-p-3 tw-mt-3 tw-rounded-md">
+          <template #append>
+            <q-icon name="search"></q-icon>
+          </template>
+        </q-input>
+      </div>
+  
+      <h3 class="tw-font-semibold tw-text-center tw-text-lg tw-mt-3">Filter Event</h3>
+      <div class="tw-flex tw-justify-between tw-items-center tw-gap-x-4 tw-mx-2 tw-mt-3">
+        <div class="q-pa-md q-gutter-y-md column items-center">
+          <q-btn-group outline>
+            <q-btn outline color="positive" no-caps no-wrap label="Today" icon="event" />
+            <q-btn outline color="positive" no-caps no-wrap label="Pick Date" icon="event" >
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-date v-model="date" color="positive">
+                  <div class="row items-center justify-end q-gutter-sm">
+                    <q-btn label="Cancel" color="positive" flat v-close-popup />
+                    <q-btn label="OK" color="positive" flat v-close-popup />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-btn>
+          </q-btn-group>
         </div>
       </div>
       <div>
-        <ul class="flex tw-justify-around tw-items-center tw-mx-2 tw-my-2">
+        <ul class="flex tw-justify-around tw-items-center tw-mx-2 tw-my-2 tw-mt-4">
           <li class="tw-bg-gray-200 tw-bg-opacity-40 tw-px-3 tw-py-1 tw-rounded">
             All
           </li>
@@ -43,23 +48,40 @@
       </div>
 
       <div v-if="isLoading">
-<VUESkeleton/>
+        <VUESkeleton/>
       </div>
-      <template v-if="sports.length">
-        <q-list v-for="(sport, key) in sports" :key="key" class="tww-w-32">
-          <q-expansion-item v-model="sport.isOpen" expand-separator :label="sport.name" dense class="text-white tw-max-h-3 tw-px-1"
+      
+      <div class="">
+        <div class="tw-font-extrabold tw-text-lg tw-p-3 tw-mt-3">Popular</div>
+        <ul class="tw-mx-2 tw-p-2 ">
+          <li class="tw-mb-1 tw-px-2 tw-rounded-md tw-py-2 hover:tw-bg-gray-700">
+            <q-icon name="sports_soccer" class="tw-mr-2 "></q-icon>Premier League
+          </li>
+          <li class="tw-mb-1 tw-px-2 tw-rounded-md tw-py-2 hover:tw-bg-gray-700"><q-icon name="sports_soccer" class="tw-mr-2"></q-icon>MLB</li>
+          <li class="tw-mb-1 tw-px-2 tw-rounded-md tw-py-2 hover:tw-bg-gray-700"><q-icon name="sports_soccer" class="tw-mr-2"></q-icon>LaLiga</li>
+          <li class="tw-mb-1 tw-px-2 tw-rounded-md tw-py-2 hover:tw-bg-gray-700"><q-icon name="sports_soccer" class="tw-mr-2"></q-icon>NFL</li>
+          <li class="tw-mb-1 tw-px-2 tw-rounded-md tw-py-2 hover:tw-bg-gray-700"><q-icon name="sports_soccer" class="tw-mr-2"></q-icon>Serie A</li>
+        </ul>
+      </div>
+      <div class="tw-mt-">
+        <div  class="tw-font-extrabold tw-text-lg tw-p-3">All Sports</div>
+        <div v-if="sports.length">
+        <q-list v-for="(sport, key) in sports" :key="key" class="tw-bg-gray-800">
+          <q-expansion-item v-model="sport.isOpen" expand-separator :label="sport.name" dense class="tw-px-1"
             >
             <div v-if="sport.isOpen">
-   <LazyTournaments :sportId="sport.id"/>
-  </div>
+              <LazyTournaments :sportId="sport.id"/>
+            </div>
           </q-expansion-item>
         </q-list>
-      </template>
-      <template v-else class="tw-p-4">
-no sports found
-      </template>
+      </div>
+      <div v-else class="tw-p-4">
+          No sports found
+      </div>
+      </div>
+      
      
-    </q-scroll-area>
+    <!-- </q-scroll-area> -->
   </div>
 </template>
 
@@ -71,7 +93,9 @@ type Sports = {
 }
 
 const isLoading = ref(true)
+const search_key = ref(null)
 
+const date = ref(null)
 const sports = ref<Sports[]>([])
 
 function isResponseData(response: any): response is { data: any; error?: undefined } {
@@ -109,3 +133,19 @@ else if (data.value && isResponseData(data.value)) {
 
 
 </script>
+
+<style scoped>
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px; /* Set scrollbar width */
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Set background of the scrollbar track */
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #d8d8d8; /* Set scrollbar thumb color */
+    border-radius: 3px; /* Set scrollbar thumb rounded corners */
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Set scrollbar thumb hover color */
+  }
+</style>

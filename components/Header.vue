@@ -1,10 +1,10 @@
 <template>
-  <div class="tw-flex tw-justify-between custom-container items-center tw-py-1">
+  <div class="tw-flex tw-justify-between items-center tw-py-1">
     <q-toolbar>
       <q-btn @click="layout.showDrawer = !layout.showDrawer" flat round dense icon="menu" />
       <q-toolbar-title>
         <div>
-          <img class="tw-w-64" src="/images/logo.png" />
+          <img class="tw-w-44" src="/images/logo.png" />
         </div>
       </q-toolbar-title>
     </q-toolbar>
@@ -16,11 +16,11 @@
         </li>
       </ul>
     </div>
-    <div class="tw-my-auto lg:tw-flex tw-gap-2 tw-hidden tw-mr-4 tw-items-center">
-      <q-btn v-if="!userStore.user && !userStore.loadingUser" icon="login" label="LOGIN"
+    <div class="tw-my-auto lg:tw-flex lg:tw-justify-between tw-gap-2 tw-hidden tw-mr-4 tw-items-center">
+      <q-btn v-if="!userStore.user && !userStore.loadingUser" label="LOGIN"
         class="tw-font-bold tw-bg-gray-500" unelevated @click="signInModal = true" />
-      <q-btn v-if="!userStore.user && !userStore.loadingUser" icon="person" label="REGISTER" unelevated
-        class="tw-font-bold tw-bg-primary-500" @click="signUpModal = true" />
+      <q-btn v-if="!userStore.user && !userStore.loadingUser"  label="REGISTER" unelevated
+        class="tw-font-bold bg-positive" @click="signUpModal = true" />
       <div v-if="userStore.user && !userStore.loadingUser" class="tw-flex tw-text-center tw-gap-2">
         <p
           class="tw-text-[#FADF99] tw-font-bold tw-text-lg tw-flex tw-items-center tw-border tw-rounded tw-border-gray-600 tw-p-1 tw-mr-2">
@@ -61,7 +61,7 @@
           </q-list>
           <div class="tw-flex tw-justify-start tw-my-2 tw-text-white tw-mx-2">
             <q-btn v-if="!userStore.user && !userStore.loadingUser" icon="login" label="LOGIN"
-              class="tw-font-bold tw-bg-gray-500 tw-mr-4" unelevated @click="signInModal = true" />
+              class="tw-font-bold tw-bg-gray-500 tw-mr-4 tw-text-nowrap" unelevated @click="signInModal = true" />
             <q-btn v-if="!userStore.user && !userStore.loadingUser" icon="person" label="REGISTER" unelevated
               class="tw-font-bold tw-bg-primary-500" @click="signUpModal = true" />
             <q-btn v-if="userStore.user && !userStore.loadingUser" icon="logout" label="LOG OUT" unelevated

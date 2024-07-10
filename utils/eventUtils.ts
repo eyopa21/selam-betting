@@ -21,7 +21,7 @@ export function extractOdds(data: any[], teams: string) {
         },
     };
 
-    data.forEach((item) => {
+    data?.forEach((item) => {
         const bettingType = item.name;
         item.outcomes.forEach((outcome: any) => {
 

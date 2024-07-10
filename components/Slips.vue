@@ -1,47 +1,47 @@
 <template>
-  <div class="tw-bg-secondary-800 dark:tw-bg-primary-700 tw-h-[85vh]">
-    <div class="tw-flex tw-items-center tw-justify-around tw-text-white tw-bg-secondary-700">
+  <div class="tw-bg-secondary-800 dark:tw-bg-gray-800 tw-h-[85vh]">
+    <div class="tw-flex tw-items-center tw-justify-around tw-text-white tw-bg-gray-600">
       <div class="tw-max-w-[90%]">
-        <q-tabs v-model="activeSlip" dense inline-label outside-arrows mobile-arrows>
+        <q-tabs v-model="activeSlip" dense inline-label narrow-indicator outside-arrows mobile-arrows align="left">
           <q-tab v-for="(slip, key) in slips" :key="key" :name="slip.name" :label="slip.label">
             <q-icon v-if="slips.length > 1" @click="removeSlip(slip.id)" name="close" class="tw-ml-2" />
           </q-tab>
         </q-tabs>
-
       </div>
       <q-icon @click="addSlip()" name="add" />
     </div>
-    <div class="tw-text-white tw-m-4 tw-flex tw-flex-col tw-justify-between tw-h-[90%]">
+    <div class="tw-text-white tw-mt-1 tw-flex tw-flex-col tw-justify-between tw-h-full">
       <!-- List of games -->
-      <q-tab-panels v-model="activeSlip" animated class=" tw-bg-primary-500">
+      <q-tab-panels v-model="activeSlip" animated class=" tw-bg-gray-800">
         <q-tab-panel :name="activeSlip" class="">
 
           <div v-if="findSlipById?.games?.length">
-            <div v-for="(game, key) in findSlipById?.games" :key="key">
-              <div class="tw-flex tw-justify-end">
+            <div v-for="(game, key) in findSlipById?.games" :key="key" class="tw-rounded-md tw-bg-slate-700 tw-mb-2 tw-p-2">
+              <div class="tw-flex tw-justify-between">
+                <p class="tw-text-xs">{{game.eventId}}</p>
                 <q-btn @click="removeBet(game.outcomeId)" dense size="xs" color="red" flat round icon="close" />
               </div>
-              <div class="tw-flex tw-text-xs tw-items-center tw-justify-between">
+              <div class="">
                 <p>{{ game.matchDetail.teams }}</p>
                 <p class="tw-text-[10px]">{{ formatDate(game.matchDetail.date) }} - {{
                   game.matchDetail.time }}</p>
 
               </div>
-              <div class="tw-flex tw-items-center tw-justify-between">
+              <div class="tw-flex tw-items-center tw-justify-between tw-mt-2">
                 <p class="tw-text-xs tw-text-gray-300">{{ game.value }}</p>
-                <p>{{ game.odd }}</p>
+                <p class="tw-bg-green-800 tw-p-1 tw-rounded-md tw-px-2">{{ game.odd }}</p>
               </div>
               <div v-if="slipType === 'Single'" class="tw-mt-4 tw-flex tw-items-center tw-justify-around tw-h-6">
                 <div class="tw-bg-gray-400 tw-w-12 tw-h-6 tw-flex tw-justify-around tw-items-center tw-rounded-l">
                   <q-icon name="-" />
                 </div>
-                <q-input v-model="game.birr" dense input-class="tw-text-white tw-max-h-6 text-center"
-                  class="dark:tw-bg-primary-700 tw-bg-white tw-text-white tw-w-full tw-max-h-full" />
+                <q-input v-model="game.birr" dense input-class=" tw-max-h-6 text-center"
+                  class="dark:tw-bg-white tw-bg-white tw-text-gray-900 tw-w-full tw-max-h-full" />
                 <div class="tw-bg-gray-400 tw-w-12 tw-h-6 tw-flex tw-justify-around tw-items-center tw-rounded-r">
                   <q-icon name="add" />
                 </div>
               </div>
-              <q-separator color="red" class="tw-my-2" />
+              
             </div>
             <q-separator color="gray" class=" tw-mt-16 " />
             <div class="tw-py-2">
@@ -53,15 +53,15 @@
               <div class="tw-bg-gray-400 tw-w-12 tw-h-6 tw-flex tw-justify-around tw-items-center tw-rounded-l">
                 <q-icon name="-" />
               </div>
-              <q-input v-model="findSlipById.birr" dense input-class="tw-text-white tw-max-h-6 text-center"
-                class="dark:tw-bg-primary-700 tw-bg-white tw-text-white tw-w-full tw-max-h-full" />
+              <q-input v-model="findSlipById.birr" dense input-class=" tw-max-h-6 text-center"
+                class="dark:tw-bg-white tw-bg-white tw-text-black tw-w-full tw-max-h-full" />
               <div class="tw-bg-gray-400 tw-w-12 tw-h-6 tw-flex tw-justify-around tw-items-center tw-rounded-r">
                 <q-icon name="add" />
               </div>
             </div>
           </div>
           <div v-else>
-            <div class="tw-text-lg ">
+            <div class="tw-text-sm tw-text-center">
               <p>Your Bets Will be Available here</p>
 
             </div>
@@ -71,7 +71,7 @@
 
 
       <!-- Totals -->
-      <div>
+      <div class="tw-p-3 tw-bg-gray-800">
         <div class="tw-flex tw-items-center tw-justify-between">
           <p class="tw-text-gray-400">Total Odds: </p>
           <p> {{ calculateTotalOdd(findSlipById.games).toFixed(2) }}</p>
@@ -94,11 +94,11 @@
             calculateTotalOdd(findSlipById.games)).toFixed(2) }}
             ETB</p>
         </div>
-        <div class="tw-py-4">
-          <q-btn icon="share" label="SHARE" class="tw-font-bold tw-bg-gray-500 tw-w-full tw-mb-2 tw-mt-4" unelevated />
+        <div class="">
+          <q-btn icon="share" label="SHARE" class="tw-font-bold tw-bg-sky-700 tw-w-full tw-mb-2 tw-mt-4" unelevated />
           <div class="tw-flex tw-gap-2">
             <q-btn :disabled="!findSlipById.games?.length || findSlipById.birr < 10" @click="showTerms = true"
-              label="BOOK" unelevated class="tw-font-bold tw-bg-primary-600 tw-w-full" />
+              label="BOOK" unelevated class="tw-font-bold bg-grey-7 tw-w-full" />
             <q-btn @click="showTerms = true" color="orange" label="PLACE" unelevated
               class="tw-font-bold tw-bg-primary-600 tw-w-full" />
           </div>
@@ -107,38 +107,7 @@
     </div>
     <TermsAndPolicy :loading="loading" :showDialog="showTerms" @confirm="bookBet()" @close="showTerms = false" />
     <q-dialog v-model="showPreviewModal" full-height>
-      <q-card v-if="preview" class="column full-height" style="width: 300px">
-        <q-card-section>
-          <div class="text-h6">Success</div>
-        </q-card-section>
-        <q-card-section>
-          <div class="text-h6">
-            <p>
-              Booking Code: {{ preview.booking_code }}
-              <br>
-              Stake: {{ parseInt(preview.stake_amount).toFixed(2) }} ETB
-              <br>
-              Possible Win: {{ preview.possible_win?.toFixed(2) }} ETB
-            </p>
-          </div>
-        </q-card-section>
-
-        <q-card-section v-for="(event, key) in preview.selected_events" :key="key" class="col q-pt-none ">
-          <div class="tw-flex tw-text-xs tw-items-center tw-justify-between ">
-            <p>{{ event.event.name }}, {{ event.event.parent_name }}</p>
-            <p class="tw-text-[10px]">{{ formatDate(event.event.startTime.split('T')[0]) }} </p>
-
-          </div>
-          <div class="tw-flex tw-items-center tw-justify-between">
-            <p class="tw-text-xs tw-text-gray-300">{{ event.outcome.name }}</p>
-            <p>{{ parseInt(event.odds).toFixed(2) }} </p>
-          </div>
-        </q-card-section>
-
-        <q-card-actions align="right" class="bg-white text-teal">
-          <q-btn @click="preview = null" flat label="OK" />
-        </q-card-actions>
-      </q-card>
+     <VUETicket :ticket="preview" @close="preview = null"/>
     </q-dialog>
     <div>
 
