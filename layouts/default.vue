@@ -5,17 +5,17 @@
         <Header />
       </q-header>
 
-      <q-drawer v-model="layout.showDrawer"  side="left"  show-if-above
-              :width="300"
-              
-            :class="$q.dark.isActive ? 'tw-gray-800' : 'tw-gray-800'">
-              <HomeFilter  />
-          </q-drawer>
+      <q-drawer v-model="layout.showDrawer" side="left" show-if-above :width="300"
+        :class="$q.dark.isActive ? 'tw-gray-800' : 'tw-gray-800'">
+        <q-scroll-area class="fit">
+          <HomeFilter />
+        </q-scroll-area>
+      </q-drawer>
 
       <q-page-container class="tw-bg-gray-900">
 
         <div class="">
-          
+
         </div>
         <div class="tw-grid tw-grid-cols-12 w-full tw-ml-4 tw-gap-4 tw-py-8">
 
