@@ -1,12 +1,10 @@
 <template>
   <div class="tw-bg-secondary-800 dark:tw-bg-gray-800  tw-py-3 text-white tw-h-full custom-scrollbar">
     <!-- <q-scroll-area style="height: 100vh; max-width: 300px"> -->
-      <div class="tw-flex tw-justify-center tw-mt-6 tw-gap-4">
+      <!-- <div class="tw-flex tw-justify-center tw-mt-6 tw-gap-4">
         <q-btn icon="favorite" flat no-caps label="Popular" ></q-btn>
         <q-btn icon="videocam" flat no-caps label="Live" ></q-btn>
-
-
-      </div>
+      </div> -->
 
       <div>
         <q-input v-model="search_key" outlined clearable  label="Search" bg-color="grey-6" dense class="tw-p-3 tw-mt-3 tw-rounded-md">
