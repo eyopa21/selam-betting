@@ -8,7 +8,7 @@
         <VUESkeleton v-if="status === 'pending' || isLoading" />
 
         <div v-else class="tw-min-h-screen">
-            <div v-if="!matches.length">
+            <div v-if="!matches?.length">
                 <VUEEmptyState />
             </div>
             <GamesList v-else :matches="matches" />
@@ -47,7 +47,7 @@ watch(data, () => {
     if (data.value) {
         console.log("data", data.value);
         isLoading.value = false
-        matches.value = data.value.data.results.map((game: any) => {
+        matches.value = data.value.data?.results.map((game: any) => {
             return {
                 id: game.id,
                 league: game.parent_name,
