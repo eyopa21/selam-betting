@@ -19,10 +19,10 @@
         </div>
         <div class="tw-grid tw-grid-cols-12 w-full tw-ml-4 tw-gap-4 tw-py-8">
 
-          <div class="lg:tw-col-span-10 tw-col-span-12">
+          <div class="lg:tw-col-span-9 tw-col-span-12">
             <slot />
           </div>
-          <div class="tw-col-span-2 tw-hidden lg:tw-block">
+          <div class="tw-col-span-3 tw-hidden lg:tw-block">
             <div class="tw-sticky tw-top-24 max-w-full">
               <Slips />
             </div>
