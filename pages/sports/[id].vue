@@ -11,7 +11,7 @@
             <div v-if="!matches?.length">
                 <VUEEmptyState />
             </div>
-            <GamesList v-else :matches="matches" />
+            <GamesList v-else />
         </div>
     </div>
 </template>
@@ -21,7 +21,7 @@ import { useQuasar } from 'quasar'
 const $q = useQuasar()
 const { scrollToTop } = useHelpers()
 const layout = useLayout();
-
+const matchListStore = useMatchListStore();
 import type { Matches, Participants } from '~/types/matches';
 
 if (import.meta.client) {
@@ -76,6 +76,7 @@ watch(data, () => {
                 showMarket: false
             }
         });
+        matchListStore.setMatchList(matches.value)
 
 
     }

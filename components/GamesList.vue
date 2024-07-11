@@ -56,6 +56,18 @@ const sport_categories = ref([
     selected: false,
     icon: '/images/cricket.png'
   },
+  {
+    value: 'Table Tennis',
+    label: 6,
+    selected: false,
+    icon: '/images/teniis2.png'
+  },
+  {
+    value: 'Cricket',
+    label: 7,
+    selected: false,
+    icon: '/images/cricket.png'
+  },
 ])
 
 
@@ -69,15 +81,25 @@ const liveStreamToggle: Ref<boolean> = ref(false);
 const headersArray = ["Matches", "Recommended", "Upcoming Event"];
 import type { Matches, Participants } from '~/types/matches';
 
-const props = defineProps<{
-  matches: Matches[]
-}>()
 
 const activate_sport = (sport) => {
   const index = sport_categories.value.findIndex(t => t.label === sport.label)
   sport_categories.value.forEach((t) => t.selected = false)
   sport_categories.value[index].selected = true
 }
+
+
+
+
+const getMatches = computed(() => {
+  if (matchListStore.listOfMatches.length) {
+    return matchListStore.listOfMatches
+  }
+  else {
+    return []
+  }
+})
+
 </script>
 <template>
   <div>
@@ -95,29 +117,35 @@ const activate_sport = (sport) => {
       </div>
 
     </div>
+
     <div
       class="tw-bg-secondary-800 dark:tw-bg-gray-700 w-full tw-flex tw-gap-3 tw-justify-start tw-items-center tw-mb-2">
       <div class="flex tw-justify-between tw-items-center tw-mr-2">
         <q-toggle v-model="liveStreamToggle" color="white" />
         <p class="tw-text-white">With live streams</p>
       </div>
-      <!-- TODO: should be replaced with read data -->
-      <div class="flex tw-justify-between tw-rounded-full  tw-px-4 tw-p-1 tw-items-center tw-mx-1 tw-cursor-pointer"
-        :class="[sport.selected ? 'tw-bg-green-700' : 'tw-bg-gray-800']" v-for="sport in sport_categories"
-        :key="sport.label" @click="activate_sport(sport)">
-        <NuxtImg class="tw-w-5 tw-h-5 tw-mr-3" :src="sport.icon" />
-        <p class="tw-text-white tw-font-semibold">{{ sport.value }}</p>
-      </div>
-
-
     </div>
-    <q-tab-panels v-model="aciveHeader" animated>
+
+    <q-tabs inline-label outside-arrows mobile-arrows narrow-indicator indicator-color="positive" no-caps
+      class="tw-bg-gray-800 text-white shadow-2 tw-opacity-80 dark:tw-opacity-100">
+
+      <q-tab v-for="sport in sport_categories" :key="sport.label" :name="sport.value">
+        <NuxtImg class="tw-w-5 tw-h-5 tw-mr-1" :src="sport.icon" />
+        <p class="tw-text-white tw-font-semibold">{{ sport.value }}</p>
+      </q-tab>
+
+    </q-tabs>
+
+    <div v-if="!getMatches?.length">
+      <VUEEmptyState />
+    </div>
+    <q-tab-panels v-else v-model="aciveHeader" animated>
       <q-tab-panel name="Matches" class="tw-p-2 tw-bg-secondary-800 dark:tw-bg-gray-900">
-        <q-infinite-scroll v-if="props.matches?.length" :offset="500">
+        <q-infinite-scroll v-if="getMatches?.length" :offset="500">
 
 
           <div class="tw-rounded">
-            <div v-for="(match, key) in props.matches" :key="key"
+            <div v-for="(match, key) in getMatches " :key="key"
               class="tw-mb-3 tw-border-2 tw-rounded-md tw-p-2 tw-bg-gray-800 tw-border-gray-900">
               <div class="tw-flex tw-justify-start dark:text-white tw-items-end">
                 <div class="tw-w-[40%] tw-mr-3 tw-border-r-2 tw-border-gray-600 tw-pr-3 tw-px-3 tw-py-3">
@@ -193,7 +221,7 @@ const activate_sport = (sport) => {
       </q-tab-panel>
       <q-tab-panel name="Recommended">recommended matches </q-tab-panel>
       <q-tab-panel name="Upcoming Event" class="tw-bg-gray-900">
-        <upcomming-events :matches="props.matches" />
+        <upcomming-events :matches="getMatches" />
       </q-tab-panel>
     </q-tab-panels>
   </div>

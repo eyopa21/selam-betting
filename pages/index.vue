@@ -15,26 +15,25 @@
 
     </q-carousel>
 
-    <VUESkeleton v-if="status === 'pending'" />
+    <VUESkeleton v-if="status === 'pending' || layout.mainLoader" />
 
     <div v-else class="tw-min-h-screen">
 
-      <GamesList :matches="matches" />
+      <GamesList />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useQuasar } from 'quasar'
-const $q = useQuasar()
-const { formatDate, scrollToTop } = useHelpers()
-const layout = useLayout();
-const slide = ref('1')
 import type { Matches, Participants } from '~/types/matches';
+const layout = useLayout();
+const { formatDate, scrollToTop } = useHelpers()
+const slide = ref('1')
 if (import.meta.client) {
   scrollToTop()
 }
 
+const matchListStore = useMatchListStore()
 const matches = ref<Matches[]>([])
 const { data, error, status } = await useLazyFetch(`/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=50&page=1`, {
   server: false,
@@ -77,6 +76,10 @@ watch(data, () => {
         showMarket: false
       }
     });
+    matchListStore.setMatchList(matches.value)
+
+
+
 
 
   }
