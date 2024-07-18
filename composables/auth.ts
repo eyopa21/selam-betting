@@ -1,6 +1,11 @@
 import type { SignInInputs, SignUpInputs } from "~/types/auth";
-
+type loginResult = {
+    access: string
+    refresh: string
+}
+import type {Auth} from '~/types/login'
 export const useAuth = () => {
+    const { $authentication } = useNuxtApp();
     const userStore = useUserStore()
     const config = useRuntimeConfig();
     const loading = ref(false);
@@ -12,33 +17,37 @@ export const useAuth = () => {
         loading.value = true;
         error.value = null;
         try {
-            const response = await $fetch(`/api/login/`, {
+            const response = await $fetch <{ data: loginResult, error: string}>(`/api/auth/login/`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-API-KEY': config.serverApiKey,
-                },
+                
                 body: input,
             });
+            console.log("res", response);
 
             if (response?.error) {
                 throw new Error(response?.error);
             }
 
             if (response?.data) {
-                localStorage.setItem('access_token', response.data?.access)
-                localStorage.setItem('refresh_token', response.data?.refresh)
-                const res = await $fetch(`/api/getUser/`, {
+                const res = await $fetch <{data: Auth}>(`/api/getUser/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-API-KEY': config.serverApiKey,
                     },
                     body: {
-                        access: localStorage.getItem('access_token')
+                        access: response.data.access
                     },
                 });
-                userStore.setUser((res.data))
+                console.log("ressss", res);
+                $authentication.updateSession({
+                    access_token: response.data?.access,
+                    refresh_token: response.data?.refresh,
+                    user_id: res.data.id,
+                    user_name: res.data.username,
+                    email: res.data.email,
+                    phone_number: res.data.phone_number,
+                });
 
                 return {
                     data: { success: true }
