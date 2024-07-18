@@ -1,4 +1,5 @@
 import type { SignInInputs, SignUpInputs } from "~/types/auth";
+import type { RegisterError } from "~/types/register";
 type loginResult = {
     access: string
     refresh: string
@@ -18,8 +19,7 @@ export const useAuth = () => {
         error.value = null;
         try {
             const response = await $fetch <{ data: loginResult, error: string}>(`/api/auth/login/`, {
-                method: 'POST',
-                
+                method: 'POST',        
                 body: input,
             });
             console.log("res", response);
@@ -31,10 +31,6 @@ export const useAuth = () => {
             if (response?.data) {
                 const res = await $fetch <{data: Auth}>(`/api/getUser/`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-API-KEY': config.serverApiKey,
-                    },
                     body: {
                         access: response.data.access
                     },
@@ -65,21 +61,18 @@ export const useAuth = () => {
         loading.value = true;
         error.value = null;
         try {
-            const res = await $fetch(`/api/register/`, {
+            const res = await $fetch<{ data: Auth, error: RegisterError }>(`/api/auth/register`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-API-KEY': config.serverApiKey,
-                },
+                
                 body: input,
             });
+            console.log("respon", res);
             if (res.error) {
                 let firstError = null;
-                for (const key in res.error) {
-                    if (res.error[key] && res.error[key].length > 0) {
-                        firstError = res.error[key][0];
-                        break;
-                    }
+                if (res.error && res.error[key] && res.error[key].length) {
+                    console.log("key", key, res.error[key]);
+                    firstError = res.error[key][0];
+                    
                 }
                 return {
                     error: firstError
@@ -99,26 +92,25 @@ export const useAuth = () => {
     };
 
     const sendOtp = async (email: string) => {
+        loading.value = true;
+        error.value = null;
         try {
-            const res = await $fetch(`/api/sendAuthOtp/`, {
+            const res = await $fetch<{data: {message: string},error: {error: string}}>(`/api/sendAuthOtp/`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-API-KEY': config.serverApiKey,
-                },
                 body: {
                     email: email
                 },
             });
+            console.log("res", res);
             if (res.error) {
-                return {
-                    error: res.error
-                }
+                return res?.error
             }
 
             return res.data;
         } catch (err) {
             error.value = "couldn't send otp"
+        } finally {
+            loading.value = false;
         }
     }
 
