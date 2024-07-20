@@ -18,9 +18,9 @@
     </div>
     <div class="tw-my-auto lg:tw-flex lg:tw-justify-between tw-gap-2 tw-hidden tw-mr-4 tw-items-center">
       <q-btn v-if="!userStore.user && !userStore.loadingUser" label="LOGIN" no-wrap icon="login"
-        class="tw-font-bold tw-bg-gray-500" unelevated @click="signInModal = true" />
+        class="tw-font-bold tw-bg-gray-500" unelevated @click="layout.showLogin = true" />
       <q-btn v-if="!userStore.user && !userStore.loadingUser" no-wrap icon="app_registration" label="REGISTER"
-        unelevated class="tw-font-bold bg-positive" @click="signUpModal = true" />
+        unelevated class="tw-font-bold bg-positive" @click="layout.showRegister = true" />
       <div v-if="userStore.user && !userStore.loadingUser" class="tw-flex tw-text-center tw-gap-2">
         <p
           class="tw-text-[#FADF99] tw-font-bold tw-text-lg tw-flex tw-items-center tw-border tw-rounded tw-border-gray-600 tw-p-1 tw-mr-2">
@@ -29,7 +29,7 @@
         </p>
         <p
           class="tw-text-white tw-font-bold tw-text-lg tw-flex tw-items-center tw-border tw-rounded tw-border-gray-600 tw-p-1">
-          + Deposite
+          + Deposit
         </p>
         <q-btn dense round flat icon="redeem" class="tw-text-xl">
           <q-badge color="blue" floating transparent> 2 </q-badge>
@@ -61,34 +61,29 @@
           </q-list>
           <div class="tw-flex tw-justify-start tw-my-2 tw-text-white tw-mx-2">
             <q-btn v-if="!userStore.user && !userStore.loadingUser" icon="login" label="LOGIN"
-              class="tw-font-bold tw-bg-gray-500 tw-mr-4 tw-text-nowrap" unelevated @click="signInModal = true" />
+              class="tw-font-bold tw-bg-gray-500 tw-mr-4 tw-text-nowrap" unelevated @click="layout.showLogin = true" />
             <q-btn v-if="!userStore.user && !userStore.loadingUser" icon="person" label="REGISTER" unelevated
-              class="tw-font-bold tw-bg-primary-500" @click="signUpModal = true" />
+              class="tw-font-bold tw-bg-primary-500" @click="layout.showRegister = true" />
             <q-btn v-if="userStore.user && !userStore.loadingUser" icon="logout" label="LOG OUT" unelevated
               class="tw-font-bold tw-bg-primary-500" @click="logout()" />
           </div>
         </q-menu>
       </q-btn>
     </div>
-    <Signin :is-visible="signInModal" @modalClosed="signInModal = false" @register="
-      signInModal = false;
-    signUpModal = true;
-    " />
-    <Signup :is-visible="signUpModal" @modalClosed="signUpModal = false" @login="
-      signUpModal = false;
-    signInModal = true;
-    " />
+    <Signin  />
+    <Signup />
   </div>
 </template>
 
 <script setup lang="ts">
-import { menuOptions } from "../composables/dummyData";
 
+import { menuOptions } from "../composables/dummyData";
+const layout = useLayout();
 const userStore = useUserStore();
 
-const layout = useLayout();
+
 const { logout } = useAuth();
 
-const signInModal = ref(false);
-const signUpModal = ref(false);
+
+
 </script>

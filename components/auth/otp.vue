@@ -1,49 +1,54 @@
 <template>
     <div >
-        <h3 class="tw-text-2xl tw-font-bold tw-text-primary-700 tw-text-center">
-            Forgot password
-        </h3>
-        <q-form @submit="onSendOtp" class="q-gutter-md tw-my-8">
-            <q-input dense outlined v-model="state.email" label="Your email" lazy-rules
-                :rules="[(val: string) => (val && validateEmail(val)) || 'Invalid email']" />
-            <q-btn label="Send Code" type="submit"
-                class="tw-w-[96%] tw-flex tw-justify-center tw-bg-[#8E203A] tw-text-white tw-font-semibold"
-                :loading="loading" />
+        <q-icon  name="mail"
+            class="tw-flex tw-justify-center tw-text-9xl tw-aspect-square tw-text-primary-700 tw-w-full mx-auto" />
+        <p class="tw-text-gray-700 tw-font-semibold tw-text-center tw-text-3xl">
+            Please check your email
+        </p>
+        <p class="tw-text-gray-500 tw-text-center tw-text-md tw-font-semibold tw-my-4">
+            We've sent a code to {{ isOtpSent }}
+        </p>
+        <q-form @submit="onResetPassword" class="q-gutter-md tw-my-8">
+            <q-input dense outlined v-model="state.code" label="Code" lazy-rules class="tw-my-4" />
+            <q-input dense outlined v-model="state.newPassword" label="New password" lazy-rules class="tw-my-4"
+                :rules="[(val: string) => (validatePassword(val)) || 'Invalid password or Weak Password']" />
+            <q-btn :loading="loading" label="Reset" type="submit"
+                class="tw-w-[96%] tw-flex tw-justify-center tw-bg-[#8E203A] tw-text-white tw-font-semibold tw-my-2" />
         </q-form>
-        <hr class="tw-text-gray-700 tw-py-4" />
-        <p class="tw-text-gray-500 text-center">
+        <p class="tw-text-center tw-text-gray-600">
             Go back to
-            <span class="tw-text-[#8E203A] tw-cursor-pointer">sign in</span>
+            <span class="tw-text-[#8E203A] tw-cursor-pointer" >Sign in</span>
         </p>
     </div>
 </template>
 
-
 <script setup lang="ts">
 const $q = useQuasar();
-
-const { login, loading, error, sendOtp, resetPassword } = useAuth();
+const layout = useLayout();
+const isOtpSent = useCookie('otpSent')
 const state = ref({
-    email: ''
+    code: '',
+    newPassword: ''
 })
 
-const isOtpSent = useCookie('otpSent');
-const onSendOtp = async () => {
-    const res = await sendOtp(state.value.email);
-    console.log("resi", res);
-    if (res.error) {
+const { login, loading, error, sendOtp, resetPassword } = useAuth();
+const onResetPassword = async () => {
+    const res = await resetPassword(state.value.code, state.value.newPassword);
+    if (res && 'error' in res) {
         $q.notify({
-            message: `${res?.error}`,
+            message: `${res.error.Error}`,
             color: "red",
         });
-    } else if (res.message) {
+    }
+    if (res && 'Message' in res) {
         $q.notify({
-            message: `${res?.message}`,
+            message: res.Message,
             color: "green",
         });
-        isOtpSent.value = state.value.email
-        
+       // layout.value.showLogin = false
+       // isOtpSent.value = null
     }
-
 };
+
+
 </script>

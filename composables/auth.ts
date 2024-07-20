@@ -91,6 +91,7 @@ export const useAuth = () => {
         }
     };
 
+    
     const sendOtp = async (email: string) => {
         loading.value = true;
         error.value = null;
@@ -115,8 +116,10 @@ export const useAuth = () => {
     }
 
     const resetPassword = async (otp: string, newPassword: string) => {
+        loading.value = true;
+        error.value = null;
         try {
-            const res = await $fetch(`/api/resetPassword/`, {
+            const res = await $fetch<{data: {Message: string}, error: {Error: string}}>(`/api/resetPassword/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -127,6 +130,7 @@ export const useAuth = () => {
                     new_password: newPassword
                 },
             });
+            console.log("res", res);
             if (res.error) {
                 return {
                     error: res.error
@@ -136,6 +140,8 @@ export const useAuth = () => {
             return res.data;
         } catch (err) {
             error.value = "couldn't reset pasword"
+        } finally {
+            loading.value = false
         }
     }
 
