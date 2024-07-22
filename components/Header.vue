@@ -56,7 +56,7 @@
         <q-menu fit class="tw-bg-primary-600 tw-w-[100vw]">
           <q-list v-for="option in menuOptions">
             <q-item clickable class="text-white font-bold">
-              <q-item-section>{{ option.name }}</q-item-section>
+              <q-item-section>{{ option.name }} </q-item-section>
             </q-item>
           </q-list>
           <div class="tw-flex tw-justify-start tw-my-2 tw-text-white tw-mx-2">

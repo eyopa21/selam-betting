@@ -130,7 +130,7 @@ const onSubmit = async () => {
       <hr class="tw-text-gray-700" />
       <p class="tw-text-gray-500 text-center">
         Dont have an account?
-        <span class="tw-text-[#8E203A] tw-cursor-pointer" v-close-popup
+        <span class="tw-text-[#8E203A] tw-cursor-pointer" @click="layout.showLogin = false; layout.showRegister = true"
           >Create now</span
         >
       </p>
