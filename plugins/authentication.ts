@@ -1,8 +1,5 @@
 
-
-import type { AuthSessionSchema } from '~/types/login'
-
-
+import type { AuthSessionSchema } from '~/types/login';
 
 export default defineNuxtPlugin({
     name: 'authentication',
@@ -11,74 +8,61 @@ export default defineNuxtPlugin({
         const sessionCookie = useCookie('auth_session', {
             maxAge: 60 * 60 * 24 * 30, // 30 days
             sameSite: 'lax',
-        })
-        const session = computed(() => {
+        });
+
+        const session = computed<AuthSessionSchema | null>(() => {
             if (!sessionCookie.value) {
-                return null
+                return null;
             }
             try {
                 if (typeof sessionCookie.value === 'object') {
-                    const result = sessionCookie.value
-                    return result
+                    return sessionCookie.value as AuthSessionSchema;
                 }
-                const data = JSON.parse(sessionCookie.value)
-
-                return data as AuthSessionSchema
+                const data = JSON.parse(sessionCookie.value);
+                return data as AuthSessionSchema;
             } catch (error) {
-                console.warn(`Error parsing session cookie, received value that is not JSON serializable (${sessionCookie.value})`)
-                return null
+                console.warn(`Error parsing session cookie, received value that is not JSON serializable (${sessionCookie.value})`);
+                return null;
             }
-        })
+        });
 
-        const loggedIn = computed(() => {
+        const loggedIn = computed<boolean>(() => {
+            return session.value !== null && typeof session.value.access_token === 'string';
+        });
 
-            return session.value !== null && typeof session.value.access_token === 'string'
-        })
-
-        const accessToken = computed(() => {
+        const accessToken = computed<string | null>(() => {
             if (loggedIn.value) {
-                return session.value?.access_token ?? null
+                return session.value?.access_token ?? null;
             }
+            return null;
+        });
 
-            return null
-        })
-        const userId = computed(() => {
+        const userId = computed<string | null>(() => {
             if (loggedIn.value) {
-                return session.value?.user_id ?? null
+                return session.value?.user_id ?? null;
             }
-            return null
-        })
+            return null;
+        });
+
         const updateSession = (candidate: AuthSessionSchema | null) => {
-            sessionCookie.value = candidate && JSON.stringify(candidate)
-        }
-
-
-
-
-
-
+            sessionCookie.value = candidate && JSON.stringify(candidate);
+        };
 
         const logout = () => {
-            updateSession(null)
-
-        }
-
-
+            updateSession(null);
+        };
 
         return {
             provide: {
                 authentication: {
                     session,
                     loggedIn,
-
                     updateSession,
-
                     accessToken,
                     userId,
-
                     logout,
                 },
             },
-        }
+        };
     },
-})
+});

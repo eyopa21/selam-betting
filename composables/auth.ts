@@ -170,9 +170,7 @@ export const useAuth = () => {
     };
 
     const logout = () => {
-        userStore.setUser(null)
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('refresh_token')
+        $authentication.logout();
         $q.notify({
             message: `Successfully logged out.`,
             color: "green",
