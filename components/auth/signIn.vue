@@ -4,11 +4,11 @@
 
       <q-icon @click="closePopup" name="close" class="tw-flex tw-justify-end tw-w-full" size="sm" v-close-popup />
 
-      <div v-if="loginState === 'otp' || isOtpSent">
-        <AuthOtp />
+      <div v-if="loginState === 'otp' && currentEmail">
+        <AuthOtp :email="currentEmail" />
       </div>
       <div v-else-if="loginState==='forgot'">
-        <AuthForgot @otpSent="loginState = 'otp'" />
+        <AuthForgot @otpSent="(n: string) => { currentEmail = n; loginState = 'otp' }" />
       </div>
 
       <div v-else-if="loginState === 'login'">
@@ -21,7 +21,7 @@
 <script setup lang="ts">
 type LoginState = 'forgot' | 'login' | 'otp'
 const loginState = ref<LoginState>('login') 
-const isOtpSent = useCookie('otpSent')
+const currentEmail = ref<string | undefined>(undefined)
 const layout = useLayout();
 const emit = defineEmits<{
   (event: "modalClosed"): void;
@@ -30,10 +30,8 @@ const emit = defineEmits<{
 
 
 function closePopup() {
-  if (isOtpSent.value) {
-    isOtpSent.value = null
     loginState.value = 'login'
-  }
+  
 }
 
 
