@@ -2,7 +2,7 @@
 <script setup lang="ts">
 
 const $q = useQuasar();
-const isOtpSent = useCookie('otpSent')
+const layout = useLayout();
 
 const props = defineProps<{
     email: string
@@ -20,6 +20,8 @@ const verifyOTP = async () => {
                 color: "red",
             });
         } else {
+            layout.value.showRegister = false
+            layout.value.showLogin = true
             $q.notify({
                 message: "Registered successfully!",
                 color: "green",

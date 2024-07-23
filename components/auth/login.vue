@@ -116,20 +116,10 @@ const onSubmit = async () => {
         class="tw-w-[96%] tw-flex tw-justify-center tw-bg-[#8E203A] tw-text-white tw-font-semibold"
         :loading="loading"
       />
-      <p class="tw-text-gray-500 tw-font-semibold tw-text-xs tw-text-center">
-        You can sign in to the website via
-      </p>
-      <div class="tw-flex tw-justify-center tw-items-center">
-        <img
-          src="/images/telegram.svg"
-          alt=""
-          class="tw-mr-4 tw-w-7 tw-aspect-square"
-        />
-        <img src="/images/google.svg" alt="" class="tw-w-7 tw-aspect-square" />
-      </div>
+   
       <hr class="tw-text-gray-700" />
       <p class="tw-text-gray-500 text-center">
-        Dont have an account?
+        Don't have an account?
         <span class="tw-text-[#8E203A] tw-cursor-pointer" @click="layout.showLogin = false; layout.showRegister = true"
           >Create now</span
         >
