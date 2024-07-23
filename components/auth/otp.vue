@@ -6,7 +6,7 @@
             Please check your email
         </p>
         <p class="tw-text-gray-500 tw-text-center tw-text-md tw-font-semibold tw-my-4">
-            We've sent a code to {{ isOtpSent }}
+            We've sent a code to {{ props.email }}
         </p>
         <q-form @submit="onResetPassword" class="q-gutter-md tw-my-8">
             <q-input dense outlined v-model="state.code" label="Code" lazy-rules class="tw-my-4" />
@@ -25,13 +25,15 @@
 <script setup lang="ts">
 const $q = useQuasar();
 const layout = useLayout();
-const isOtpSent = useCookie('otpSent')
+const props = defineProps<{
+    email: string
+}>()
 const state = ref({
     code: '',
     newPassword: ''
 })
 
-const { login, loading, error, sendOtp, resetPassword } = useAuth();
+const { loading, resetPassword } = useAuth();
 const onResetPassword = async () => {
     const res = await resetPassword(state.value.code, state.value.newPassword);
     if (res && 'error' in res) {
@@ -45,8 +47,8 @@ const onResetPassword = async () => {
             message: res.Message,
             color: "green",
         });
-       // layout.value.showLogin = false
-       // isOtpSent.value = null
+       layout.value.showLogin = false
+      
     }
 };
 

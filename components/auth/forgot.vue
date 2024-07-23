@@ -22,14 +22,14 @@
 <script setup lang="ts">
 const $q = useQuasar();
 const emit = defineEmits<{
-    otpSent: [void]
+    otpSent: [string]
 }>()
-const { login, loading, error, sendOtp, resetPassword } = useAuth();
+const {  loading, sendOtp } = useAuth();
 const state = ref({
     email: ''
 })
 
-const isOtpSent = useCookie('otpSent');
+
 const onSendOtp = async () => {
     const res = await sendOtp(state.value.email);
     if (res && 'error' in res) {
@@ -42,8 +42,7 @@ const onSendOtp = async () => {
             message: `${res?.message}`,
             color: "green",
         });
-        isOtpSent.value = state.value.email
-        emit('otpSent')
+        emit('otpSent', state.value.email)
         
     }
 
