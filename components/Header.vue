@@ -17,11 +17,11 @@
       </ul>
     </div>
     <div class="tw-my-auto lg:tw-flex lg:tw-justify-between tw-gap-2 tw-hidden tw-mr-4 tw-items-center">
-      <q-btn v-if="!userStore.user && !userStore.loadingUser" label="LOGIN" no-wrap icon="login"
+      <q-btn v-if="!$authentication.loggedIn.value" label="LOGIN" no-wrap icon="login"
         class="tw-font-bold tw-bg-gray-500" unelevated @click="layout.showLogin = true" />
-      <q-btn v-if="!userStore.user && !userStore.loadingUser" no-wrap icon="app_registration" label="REGISTER"
+      <q-btn v-if="!$authentication.loggedIn.value" no-wrap icon="app_registration" label="REGISTER"
         unelevated class="tw-font-bold bg-positive" @click="layout.showRegister = true" />
-      <div v-if="userStore.user && !userStore.loadingUser" class="tw-flex tw-text-center tw-gap-2">
+      <div v-if="$authentication.loggedIn.value" class="tw-flex tw-text-center tw-gap-2">
         <p
           class="tw-text-[#FADF99] tw-font-bold tw-text-lg tw-flex tw-items-center tw-border tw-rounded tw-border-gray-600 tw-p-1 tw-mr-2">
           <span><img src="/images/$.png" alt="" class="tw-w-4 tw-aspect-auto" /></span>
@@ -60,22 +60,23 @@
             </q-item>
           </q-list>
           <div class="tw-flex tw-justify-start tw-my-2 tw-text-white tw-mx-2">
-            <q-btn v-if="!userStore.user && !userStore.loadingUser" icon="login" label="LOGIN"
+            <q-btn v-if="!$authentication.loggedIn.value" icon="login" label="LOGIN"
               class="tw-font-bold tw-bg-gray-500 tw-mr-4 tw-text-nowrap" unelevated @click="layout.showLogin = true" />
-            <q-btn v-if="!userStore.user && !userStore.loadingUser" icon="person" label="REGISTER" unelevated
+            <q-btn v-if="!$authentication.loggedIn.value" icon="person" label="REGISTER" unelevated
               class="tw-font-bold tw-bg-primary-500" @click="layout.showRegister = true" />
-            <q-btn v-if="userStore.user && !userStore.loadingUser" icon="logout" label="LOG OUT" unelevated
+            <q-btn v-if="$authentication.loggedIn.value" icon="logout" label="LOG OUT" unelevated
               class="tw-font-bold tw-bg-primary-500" @click="logout()" />
           </div>
         </q-menu>
       </q-btn>
     </div>
-    <Signin  />
-    <Signup />
+    <AuthSignIn />
+    <AuthSignUp />
   </div>
 </template>
 
 <script setup lang="ts">
+const { $authentication } = useNuxtApp();
 
 import { menuOptions } from "../composables/dummyData";
 const layout = useLayout();
