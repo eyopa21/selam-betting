@@ -1,87 +1,159 @@
 <script setup lang="ts">
+import type {CountriesResult, Root} from '~/types/countries'
 
-console.log("tournamentssss");
 const props = defineProps<{
   sportId: string;
 }>();
 
-
-const items = ref<League[]>([]);
+const countries = ref<CountriesResult[]>([])
 const page = ref(1);
 const isLoading = ref(false);
 const hasMore = ref(true);
 
-const getTournamentForSport = async () => {
-  if (isLoading.value || !hasMore.value) return; // Prevent multiple concurrent fetches or fetching when no more data
-  isLoading.value = true;
+const nodes = computed(() => {
+  return countries.value?.map(count => {
+    return {
+      id: count.id,
+      label: count.name,
+      lazy: true
+    }
+  })
+})
 
-  const { data, error } = await useFetch(
-    `/api/tournaments/${props.sportId}/?page=${page.value}`
+
+const lazy = ref(nodes)
+
+
+const getTournamentForSport = async (countryId: number) => {
+
+
+  const { data, error } = await useLazyFetch(
+    `/api/tournaments/${props.sportId}/?countryId=${countryId}`
   )
-  console.log("data", data.value);
   if (error.value) {
     console.log("Error fetching tournaments:", error.value);
-    isLoading.value = false;
-    return;
+    throw new Error(error.value.message);
   }
 
   if (data.value?.data?.results?.length) {
-    items.value.push(...data.value?.data?.results);
+    return data.value?.data?.results 
+  } 
 
-    hasMore.value = data.value.data.next !== null;
-  } else {
-    hasMore.value = false;
-  }
 
-  isLoading.value = false;
 };
+
+const getCountries = async () => {
+  if (isLoading.value || !hasMore.value) return; // Prevent multiple concurrent fetches or fetching when no more data
+
+  isLoading.value = true;
+  const { data, error } = await useFetch <{ data: Root }>(
+    `/api/tournaments/countries/?page=${page.value}`
+  )
+
+  if (error.value) {
+    console.error("cannot fetch countries", error.value);
+    isLoading.value = false;
+    return;
+  } else {
+    console.log("count", data.value?.data);
+    if (data.value?.data?.results?.length) {
+      
+      countries.value.push(...data?.value?.data?.results)
+      hasMore.value = !!data.value.data.next
+    } else {
+      hasMore.value = false
+    }
+    isLoading.value = false;
+  }
+}
+getCountries()
 
 const loadMore = async (index: number, done: () => void) => {
   console.log("index", index);
   setTimeout(async () => {
 
-    await getTournamentForSport();
-    done();
     page.value++;
+    await getCountries();
+    done();
   }, 5000)
 };
 
-// Initial loada
-getTournamentForSport();
 
-const isTournamentEmpty = computed(() => {
+
+const isCountriesEmpty = computed(() => {
   if (isLoading.value) return false
-  else if (!items.value.length) return true
+  else if (!countries.value.length) return true
 
   return false
 })
+
+
+interface LazyLoadParams {
+  node: any;
+  done: (children?: readonly any[]) => void;
+  fail: () => void;
+  key: string;
+}
+
+
+async function onLazyLoad({ node, done, fail }: LazyLoadParams ){
+
+  console.log('node', node);
+  try {
+  
+   const tournaments =  await getTournamentForSport(node.id)
+
+    if (!tournaments) {
+      fail()
+    }
+    else if (tournaments.length) {
+      done(tournaments?.map((tour:any) => {
+        return {
+          label: tour.name,
+          selectable: true,
+          tickable: true,
+          handler: () => {
+            navigateTo(`/sports/${tour.id}`)
+          }
+
+        }
+      }))
+   }
+  } catch (err) {
+    fail()
+}
+
+}
+
 </script>
 
 
 <template>
   <div class="">
-    <div v-if="isLoading && !items?.length">
+    <div v-if="isLoading && !countries?.length">
       <VUESkeleton />
     </div>
     <div v-else>
-      <div v-if="isTournamentEmpty">
-        No Leagues found
+      <div v-if="isCountriesEmpty">
+        No countries found
       </div>
       <q-infinite-scroll v-else @load="loadMore" :offset="500" class="tw-max-h-64  tw-h-32">
 
-        <q-list dense bordered padding class="rounded-borders ">
-          <q-item v-for="(item, index) in items" :key="index" clickable v-ripple
-            @click="$router.push(`/sports/${item.id}`)">
-            <q-item-section>
-              {{ item.name }}
-            </q-item-section>
-          </q-item>
+       
+        <q-tree :nodes="lazy" no-connectors text-color="white" color="white" default-expand-all node-key="label"
+          @lazy-load="onLazyLoad">
+          <template v-slot:default-header="prop">
+            <div class="row items-center">
 
+              <div class="text-weight-bold tw-cursor-pointer">{{ prop.node.label }}</div>
+            </div>
+          </template>
 
-        </q-list>
+         
+        </q-tree>
 
         <template v-slot:loading>
-          <div class="row justify-center q-my-md">
+          <div v-if="hasMore" class="row justify-center q-my-md">
             <q-spinner-dots color="primary" size="40px" />
           </div>
         </template>

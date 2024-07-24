@@ -7,7 +7,8 @@
   },
   "cSpell.words": [
     "Afriwork",
-    "heroicons"
+    "heroicons",
+    "tickable"
   ],
   // Set css custom data to handle tailwind directives
   "css.customData": [
