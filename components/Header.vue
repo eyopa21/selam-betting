@@ -19,18 +19,12 @@
     <div class="tw-my-auto lg:tw-flex lg:tw-justify-between tw-gap-2 tw-hidden tw-mr-4 tw-items-center">
       <q-btn v-if="!$authentication.loggedIn.value" label="LOGIN" no-wrap icon="login"
         class="tw-font-bold tw-bg-gray-500" unelevated @click="layout.showLogin = true" />
-      <q-btn v-if="!$authentication.loggedIn.value" no-wrap icon="app_registration" label="REGISTER"
-        unelevated class="tw-font-bold bg-positive" @click="layout.showRegister = true" />
-      <div v-if="$authentication.loggedIn.value" class="tw-flex tw-text-center tw-gap-2">
-        <p
-          class="tw-text-[#FADF99] tw-font-bold tw-text-lg tw-flex tw-items-center tw-border tw-rounded tw-border-gray-600 tw-p-1 tw-mr-2">
-          <span><img src="/images/$.png" alt="" class="tw-w-4 tw-aspect-auto" /></span>
-          1,000 ETB
-        </p>
-        <p
-          class="tw-text-white tw-font-bold tw-text-lg tw-flex tw-items-center tw-border tw-rounded tw-border-gray-600 tw-p-1">
-          + Deposit
-        </p>
+      <q-btn v-if="!$authentication.loggedIn.value" no-wrap icon="app_registration" label="REGISTER" unelevated
+        class="tw-font-bold bg-positive" @click="layout.showRegister = true" />
+      <div v-if="$authentication.loggedIn.value" class="tw-flex tw-text-center tw-gap-2 tw-py-1">
+
+        <q-btn color="amber-8" class="tw-w-full" label="2,000ETB" dense />
+        <q-btn  label="Deposit" color="secondary" dense />
         <q-btn dense round flat icon="redeem" class="tw-text-xl">
           <q-badge color="blue" floating transparent> 2 </q-badge>
         </q-btn>
@@ -41,14 +35,14 @@
           <q-badge color="red" floating transparent rounded></q-badge>
         </q-btn>
         <q-btn round flat icon="logout" dense class="tw-text-xl tw-text-red-600" @click="logout()" />
-        <q-btn icon="phone" dense round flat class="tw-text-lg" @click="logout()" />
+        <!-- <q-btn icon="phone" dense round flat class="tw-text-lg" @click="logout()" />
         <div class="tw-border-x tw-border-gray-400 tw-p-1">
           <q-btn icon="public" dense round flat class="tw-text-lg" />
         </div>
-        <q-btn icon="translate" dense round flat class="tw-text-lg" />
+        <q-btn icon="translate" dense round flat class="tw-text-lg" /> -->
       </div>
-      <q-spinner v-if="userStore.loadingUser" color="primary" size="2em" />
-      <div></div>
+
+
     </div>
     <!-- mobile menu -->
     <div class="lg:tw-hidden">
