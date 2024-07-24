@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type {CountriesResult, Root} from '~/types/countries'
+import type { CountriesResult, Root } from '~/types/countries'
+import type { Tournaments } from '~/types/tournaments'
 
 const props = defineProps<{
   sportId: string;
@@ -27,9 +28,10 @@ const lazy = ref(nodes)
 const getTournamentForSport = async (countryId: number) => {
 
 
-  const { data, error } = await useLazyFetch(
+  const { data, error } = await useLazyFetch <{data: Tournaments}>(
     `/api/tournaments/${props.sportId}/?countryId=${countryId}`
   )
+  console.log("tourn", data.value);
   if (error.value) {
     console.log("Error fetching tournaments:", error.value);
     throw new Error(error.value.message);
@@ -38,7 +40,6 @@ const getTournamentForSport = async (countryId: number) => {
   if (data.value?.data?.results?.length) {
     return data.value?.data?.results 
   } 
-
 
 };
 
@@ -104,14 +105,17 @@ async function onLazyLoad({ node, done, fail }: LazyLoadParams ){
    const tournaments =  await getTournamentForSport(node.id)
 
     if (!tournaments) {
-      fail()
+      // fail()
+      done([{
+        label: 'No tournaments found',
+        expandable: false,
+        disabled: true,
+      }])
     }
     else if (tournaments.length) {
       done(tournaments?.map((tour:any) => {
         return {
           label: tour.name,
-          selectable: true,
-          tickable: true,
           handler: () => {
             navigateTo(`/sports/${tour.id}`)
           }
@@ -124,7 +128,7 @@ async function onLazyLoad({ node, done, fail }: LazyLoadParams ){
 }
 
 }
-
+const selected = ref(null)
 </script>
 
 
@@ -135,21 +139,19 @@ async function onLazyLoad({ node, done, fail }: LazyLoadParams ){
     </div>
     <div v-else>
       <div v-if="isCountriesEmpty">
-        No countries found
+        Can not fetch countries
       </div>
       <q-infinite-scroll v-else @load="loadMore" :offset="500" class="tw-max-h-64  tw-h-32">
 
-       
-        <q-tree :nodes="lazy" no-connectors text-color="white" color="white" default-expand-all node-key="label"
-          @lazy-load="onLazyLoad">
-          <template v-slot:default-header="prop">
-            <div class="row items-center">
 
-              <div class="text-weight-bold tw-cursor-pointer">{{ prop.node.label }}</div>
+        <q-tree  default-expand-all :nodes="lazy" dense no-connectors text-color="white" color="white"
+          node-key="label" @lazy-load="onLazyLoad" class="tw-mx-4">
+          <template v-slot:default-header="prop">
+            <div class="row items-center  tw-p-1">
+              <div class="text-weight-bold tw-cursor-pointer ">{{ prop.node.label }}</div>
             </div>
           </template>
-
-         
+          
         </q-tree>
 
         <template v-slot:loading>

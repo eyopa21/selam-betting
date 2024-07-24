@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     
     const countryId = query.countryId || 0;
 
-    const url = `${config.restApiEndpoint}/events_in_country/${id}/${countryId}`;
+    const url = `${config.restApiEndpoint}/events_in_country/${id}/${countryId}?page_size=30`;
     try {
         const response = await $fetch<{ results: League[] }>(url, {
             method: 'GET',
