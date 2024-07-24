@@ -1,27 +1,28 @@
-import { League } from '~/types/sports';
+import { Root } from '~/types/countries';
 
 export default defineEventHandler(async (event) => {
     const { id } = getRouterParams(event);
     const config = useRuntimeConfig();
     const query = getQuery(event);
-    
-    const countryId = query.countryId || 0;
+    const page = query.page || 1;
 
-    const url = `${config.restApiEndpoint}/events_in_country/${id}/${countryId}?page_size=30`;
+    const url = `${config.restApiEndpoint}/location/?page_size=100&page=${page}`;
+
     try {
-        const response = await $fetch<{ results: League[] }>(url, {
+        const response = await $fetch<{ res: Root }>(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 "X-API-KEY": config.serverApiKey
             },
         })
-        if (response.results && Array.isArray(response.results)) {
-            response.results = response.results.map((result: any) => ({
+        console.log("res", response);
+        if (response.res && Array.isArray(response.res.results)) {
+            response.res.results = response.res.results.map((result: any) => ({
                 ...result,
                 id: BigInt(result.id).toString()
             }));
-        } 
+        }
         return {
             data: response
         }
