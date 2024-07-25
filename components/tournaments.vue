@@ -128,7 +128,6 @@ async function onLazyLoad({ node, done, fail }: LazyLoadParams ){
 }
 
 }
-const selected = ref(null)
 </script>
 
 
@@ -142,7 +141,6 @@ const selected = ref(null)
         Can not fetch countries
       </div>
       <q-infinite-scroll v-else @load="loadMore" :offset="500" class="tw-max-h-64  tw-h-32">
-
 
         <q-tree  default-expand-all :nodes="lazy" dense no-connectors text-color="white" color="white"
           node-key="label" @lazy-load="onLazyLoad" class="tw-mx-4">
