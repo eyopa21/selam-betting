@@ -83,8 +83,9 @@ const getMatches = computed(() => {
 });
 
 const loading = ref(false);
+const hasMore = ref(true)
 async function getMoreMatches(page: number) {
-  if (loading.value) return;
+  if (loading.value ||  !hasMore.value) return;
   console.log("fetching", matchListStore.listOfMatches?.length);
   loading.value = true;
   const { data, error } = await useFetch(
@@ -127,14 +128,15 @@ async function getMoreMatches(page: number) {
 
       console.log("adding");
       matchListStore.addMatchList(matches.value);
+      hasMore.value = !!data.value.data.next
       loading.value = false;
+
     }
   }
 }
 
 const page = ref(2);
 const loadMore = async (index: number, done: () => void) => {
-  console.log("index", index);
   setTimeout(async () => {
     await getMoreMatches(page.value);
     page.value++;
@@ -316,7 +318,7 @@ const loadMore = async (index: number, done: () => void) => {
           </div>
         </div>
         <template v-slot:loading>
-          <div class="row justify-center q-my-md">
+          <div v-if="hasMore" class="row justify-center q-my-md">
             <q-spinner-dots color="primary" size="40px" />
           </div>
         </template>
