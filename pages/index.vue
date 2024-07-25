@@ -40,6 +40,7 @@ const { data, error, status } = await useLazyFetch(`/api/filter_event/?sport_id=
   cache: 'no-cache'
 
 });
+console.log("all home", data.value?.data);
 
 if (error.value) {
   console.log("Error fetching tournaments:", error.value);
@@ -47,7 +48,6 @@ if (error.value) {
 watch(data, () => {
   if (data.value) {
     matches.value = data.value.data.results.map((game: any) => {
-
       return {
         id: game.id,
         league: game.parent_name,
@@ -76,12 +76,8 @@ watch(data, () => {
         showMarket: false
       }
     });
+    console.log("matches", matches.value);
     matchListStore.setMatchList(matches.value)
-
-
-
-
-
   }
 
 

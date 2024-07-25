@@ -5,7 +5,7 @@
         <Header />
       </q-header>
 
-      <q-drawer v-model="layout.showDrawer" side="left" show-if-above :width="300"
+      <q-drawer v-model="layout.showDrawer" side="left"  :width="300"
         :class="$q.dark.isActive ? 'tw-gray-800' : 'tw-gray-800'">
         <q-scroll-area class="fit">
           <HomeFilter />
