@@ -85,7 +85,7 @@
         </q-scroll-area>
       </div>
       <div v-else class="tw-p-4">
-        No sports found
+        Unable to fetch Sports
       </div>
     </div>
 
