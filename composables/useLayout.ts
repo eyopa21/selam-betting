@@ -2,8 +2,10 @@ export default function () {
     return useState('layout', () => {
         return {
             mainLoader: false,
-            showDrawer: false,
-            miniState: true,
+            showLeftDrawer: false,
+            showRightDrawer: true,
+            leftMiniState: false, 
+            rightMiniState: false,
             showLogin: false,
             showRegister: false
         }

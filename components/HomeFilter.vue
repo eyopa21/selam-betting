@@ -53,6 +53,9 @@
       <VUESkeleton />
     </div>
 
+    <div>
+      <NavPopularCountries/>
+    </div>
     <div class="">
       <div class="tw-font-extrabold tw-text-lg tw-p-3 tw-mt-3">Popular</div>
       <ul class="tw-mx-2 tw-p-2 ">
@@ -83,7 +86,7 @@
         </q-scroll-area>
       </div>
       <div v-else class="tw-p-4">
-        No sports found
+        Unable to fetch Sports
       </div>
     </div>
 

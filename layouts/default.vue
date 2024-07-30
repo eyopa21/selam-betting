@@ -1,53 +1,55 @@
+
+
+
+
+
+
+
+
 <template>
-  <div class="dark:tw-bg-primary-800">
-    <q-layout view="hHh LpR fff">
-      <q-header elevated class="tw-bg-secondary-800 dark:tw-bg-gray-800">
-        <Header />
-      </q-header>
+  <q-layout view="lHh LpR fff" class="dark:tw-bg-primary-800">
 
-      <q-drawer v-model="layout.showDrawer" side="left" show-if-above :width="300"
-        :class="$q.dark.isActive ? 'tw-gray-800' : 'tw-gray-800'">
-        <q-scroll-area class="fit">
-          <HomeFilter />
-        </q-scroll-area>
-      </q-drawer>
+    <q-header elevated class="tw-bg-secondary-800 dark:tw-bg-gray-800">
+      <Header />
+    </q-header>
 
-      <q-page-container class="tw-bg-gray-900">
+    <q-drawer v-model="layout.showLeftDrawer" side="left" behavior="mobile">
+      <q-scroll-area class="fit">
+        <HomeFilter />
+      </q-scroll-area>
+    </q-drawer>
 
-        <div class="">
+    <q-drawer show-if-above v-model="layout.showRightDrawer" side="right" :mini="layout.rightMiniState"
+      class="tw-bg-secondary-800 dark:tw-bg-gray-800 tw-px-2">
 
-        </div>
-        <div class="tw-grid tw-grid-cols-12 w-full tw-ml-4 tw-gap-4 tw-py-8">
+      <div class="tw-w-full  tw-flex tw-justify-center tw-my-4">
+        <q-btn @click="layout.rightMiniState = !layout.rightMiniState" padding="none" color="primary"
+          class="full-width">
+          <span v-if="!layout.rightMiniState" class="tw-text-xs">Collapse Block</span>
+          <q-icon name="double_arrow" :class="{'tw-rotate-180': layout.rightMiniState}" />
+          <q-tooltip v-if="layout.rightMiniState" anchor="top left" self="center middle">Expand/Collapse</q-tooltip>
+        </q-btn>
+      </div>
+      <NavMiniRightDrawerContent v-if="layout.rightMiniState" />
+      <Slips v-else />
+    </q-drawer>
 
-          <div class="lg:tw-col-span-9 tw-col-span-12">
-            <slot />
-          </div>
-          <div class="tw-col-span-3 tw-hidden lg:tw-block">
-            <div class="tw-sticky tw-top-24 max-w-full">
-              <Slips />
-            </div>
-          </div>
-        </div>
-      </q-page-container>
+    <q-page-container>
+      <router-view />
+    </q-page-container>
 
-      <q-footer elevated>
-        <Footer />
-      </q-footer>
-    </q-layout>
-  </div>
+    <q-footer elevated>
+      <Footer />
+    </q-footer>
+
+  </q-layout>
 </template>
 
-<script setup lang="ts">
+<script setup>
+
 const userStore = useUserStore();
 const layout = useLayout();
 onMounted(async () => {
   await userStore.getUser();
 });
 </script>
-
-<style>
-.custom-container {
-  max-width: 1800px;
-  margin: auto;
-}
-</style>

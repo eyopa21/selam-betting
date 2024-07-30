@@ -1,7 +1,7 @@
 <template>
   <div class="tw-flex tw-justify-between items-center tw-py-1">
     <q-toolbar>
-      <q-btn @click="layout.showDrawer = !layout.showDrawer" flat round dense icon="menu" />
+      <q-btn @click="layout.showLeftDrawer = !layout.showLeftDrawer" flat round dense icon="menu" />
       <q-toolbar-title>
         <div>
           <img @click="navigateTo('/')" class="tw-w-44" src="/images/logo.png" />
