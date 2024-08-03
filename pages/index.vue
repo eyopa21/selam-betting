@@ -19,7 +19,7 @@
 
     <div v-else class="tw-min-h-screen">
 
-      <GamesList />
+      <GamesList :hasMore="getHasMore" />
     </div>
   </div>
 </template>
@@ -47,6 +47,7 @@ if (error.value) {
 }
 watch(data, () => {
   if (data.value) {
+    
     matches.value = data.value.data.results.map((game: any) => {
       return {
         id: game.id,
@@ -84,7 +85,9 @@ watch(data, () => {
 })
 
 
-
+const getHasMore = computed(() => {
+  return !!data.value?.data.next
+})
 
 
 
