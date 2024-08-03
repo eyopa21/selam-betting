@@ -55,9 +55,6 @@
       <VUESkeleton />
     </div>
 
-    <div>
-      <NavPopularCountries/>
-    </div>
     <div class="">
       <div class="tw-font-extrabold tw-text-lg tw-p-3 tw-mt-3">Popular</div>
       <ul class="tw-mx-2 tw-p-2 ">
@@ -82,6 +79,7 @@
             <q-expansion-item v-model="sport.isOpen" expand-separator :label="sport.name" dense class="tw-px-1">
               <div v-if="sport.isOpen">
                 <LazyTournaments :sportId="sport.id" />
+                
               </div>
             </q-expansion-item>
           </q-list>

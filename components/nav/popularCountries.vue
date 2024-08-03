@@ -73,12 +73,12 @@ const getTournamentForSport = async (country: PopularCountries, index: number) =
             :expand-icon-class="i.isLoading ? ' tw-text-white' :'tw-text-white'"
             @show="getTournamentForSport(i,key )">
             <template v-slot:header>
-                <q-item-section avatar>
+                <!-- <q-item-section avatar>
                     <q-avatar>
                         <img :src="i.icon" :alt="i.name" class="tw-size-6">
                     </q-avatar>
 
-                </q-item-section>
+                </q-item-section> -->
 
                 <q-item-section>
                     {{i.name}}

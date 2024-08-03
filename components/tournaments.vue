@@ -142,14 +142,17 @@ async function onLazyLoad({ node, done, fail }: LazyLoadParams ){
       </div>
       <q-infinite-scroll v-else @load="loadMore" :offset="500" class="tw-max-h-64  tw-h-32">
 
-        <q-tree  default-expand-all :nodes="lazy" dense no-connectors text-color="white" color="white"
-          node-key="label" @lazy-load="onLazyLoad" class="tw-mx-4">
+        <div>
+          <NavPopularCountries />
+        </div>
+        <q-tree default-expand-all :nodes="lazy" dense no-connectors text-color="white" color="white" node-key="label"
+          @lazy-load="onLazyLoad" class="tw-mx-4">
           <template v-slot:default-header="prop">
             <div class="row items-center  tw-p-1">
               <div class="text-weight-bold tw-cursor-pointer ">{{ prop.node.label }}</div>
             </div>
           </template>
-          
+
         </q-tree>
 
         <template v-slot:loading>
