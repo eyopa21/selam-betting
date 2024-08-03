@@ -6,7 +6,7 @@ const oddTypes = ref([
 ])
 const matches = ref<Matches[]>([]);
 const props = defineProps<{
-  hasMore: boolean
+  hasMore?: boolean
 }>()
 const emit = defineEmits<{
   load: [number];

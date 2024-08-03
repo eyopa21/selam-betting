@@ -48,7 +48,9 @@ const getCountries = async () => {
 
   isLoading.value = true;
   const { data, error } = await useFetch <{ data: Root }>(
-    `/api/tournaments/countries/?page=${page.value}`
+    `/api/tournaments/countries/?page=${page.value}`, {
+      cache: 'force-cache'
+    }
   )
 
   if (error.value) {
