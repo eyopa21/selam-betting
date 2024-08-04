@@ -3,9 +3,7 @@
     <q-toolbar>
       <q-btn @click="layout.showLeftDrawer = !layout.showLeftDrawer" flat round dense icon="menu" />
       <q-toolbar-title>
-        <div>
-          <img @click="navigateTo('/')" class="tw-w-44" src="/images/logo.png" />
-        </div>
+<NavLogo/>
       </q-toolbar-title>
     </q-toolbar>
 
