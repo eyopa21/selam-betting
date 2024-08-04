@@ -127,10 +127,11 @@ const payments = ref([{
                 <q-tab-panels v-model="tab" animated swipeable vertical transition-prev="jump-up"
                     transition-next="jump-up">
                     <q-tab-panel name="recommended">
-                        <div class="tw-font-bold q-mb-md">RECOMMENDED METHODS</div>
-                        <div v-for="(i, key) in payments" :key="key">
+                        <div class=" tw-grid tw-grid-cols-3 tw-gap-4 tw-justify-items-end tw-font-bold q-mb-md">
+                            RECOMMENDED METHODS</div>
+                        <div v-for="(i, key) in payments" :key="key" class="tw-border tw-w-min">
                             <div v-if="i.tags.includes('recommended')">
-                                <img :src="i.icon" :alt="i.name">
+                                <q-img fit="scale-down" :src="i.icon" :alt="i.name" class="tw-w-32 tw-h-20" />
                                 <div style="width: 150px;" class="  tw-text-white tw-text-center tw-bg-primary-500">
                                     {{ i.label }}
                                 </div>
@@ -141,10 +142,10 @@ const payments = ref([{
                     <q-tab-panel name="all">
                         <div class="tw-font-bold q-mb-md">All METHODS</div>
                         <div class="tw-grid tw-grid-cols-3 tw-gap-4 tw-justify-items-end">
-                            <div v-for="(i, key) in payments" :key="key">
+                            <div v-for="(i, key) in payments" :key="key" class="tw-border">
 
                                 <div>
-                                    <q-img fit="fill" :src="i.icon" :alt="i.name" />
+                                    <q-img fit="scale-down" :src="i.icon" :alt="i.name" class="tw-w-32 tw-h-20" />
                                     <div class="tw-w-full  tw-text-white tw-text-center tw-bg-primary-500">
                                         {{ i.label }}
                                     </div>
@@ -159,8 +160,8 @@ const payments = ref([{
                         <div class="tw-grid tw-grid-cols-3 tw-gap-4 tw-justify-items-end">
                             <div v-for="(i, key) in payments" :key="key">
 
-                                <div v-if="i.tags.includes('mobile')">
-                                    <q-img fit="fill" :src="i.icon" :alt="i.name" />
+                                <div v-if="i.tags.includes('mobile')" class="tw-border">
+                                    <q-img fit="scale-down" :src="i.icon" :alt="i.name" class="tw-w-32 tw-h-20" />
                                     <div class="tw-w-full  tw-text-white tw-text-center tw-bg-primary-500">
                                         {{ i.label }}
                                     </div>
@@ -172,10 +173,10 @@ const payments = ref([{
                     <q-tab-panel name="wallet">
                         <div class="tw-font-bold q-mb-md">WALLET METHODS</div>
                         <div class="tw-grid tw-grid-cols-3 tw-gap-4 tw-justify-items-end">
-                            <div v-for="(i, key) in payments" :key="key">
+                            <div v-for="(i, key) in payments" :key="key" class="tw-border">
 
                                 <div v-if="i.tags.includes('wallet')">
-                                    <q-img fit="fill" :src="i.icon" :alt="i.name" />
+                                    <q-img fit="scale-down" :src="i.icon" :alt="i.name" class="tw-w-32 tw-h-20" />
                                     <div class="tw-w-full  tw-text-white tw-text-center tw-bg-primary-500">
                                         {{ i.label }}
                                     </div>
@@ -187,10 +188,10 @@ const payments = ref([{
                     <q-tab-panel name="internet">
                         <div class="tw-font-bold q-mb-md">INTERNET BANKING METHODS</div>
                         <div class="tw-grid tw-grid-cols-3 tw-gap-4 tw-justify-items-end">
-                            <div v-for="(i, key) in payments" :key="key">
+                            <div v-for="(i, key) in payments" :key="key" class="tw-border">
 
                                 <div v-if="i.tags.includes('internet')">
-                                    <q-img fit="fill" :src="i.icon" :alt="i.name" />
+                                    <q-img fit="scale-down" :src="i.icon" :alt="i.name" class="tw-w-32 tw-h-20" />
                                     <div class="tw-w-full  tw-text-white tw-text-center tw-bg-primary-500">
                                         {{ i.label }}
                                     </div>
