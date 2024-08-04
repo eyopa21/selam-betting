@@ -38,49 +38,117 @@ const payments = ref([{
     name: 'zele',
     icon: '/icons/payment/zele.svg',
     tags: ['mobile', 'internet']
-}])
+    }])
+
+ 
+const columns = ref([
+   
+  
+    { name: 'date', label: 'Date Of Request', field: 'date' },
+    { name: 'from', label: 'Payout available from', field: 'from' },
+    { name: 'method', label: 'Payment method', field: 'method' },
+    { name: 'amount', label: 'Amount', field: 'amount' },
+    { name: 'status', label: 'Status', field: 'status' },
+    
+   ])
+
+const rows = ref([
+    {
+        date: 'Frozen Yogurt',
+        from: 159,
+        method: 6.0,
+        amount: 24,
+        status: 4.0,
+        
+    }
+    
+])
+
+   
 </script>
 
 <template>
-    <div class="tw-space-y-4 tw-p-2">
+    <div class="tw-space-y-4 tw-p-2 tw-pt-0">
         <div>
-            <p>Select Your Payment Method to Top Up your account</p>
+            <p>Select payment method to withdraw money:</p>
         </div>
-        <div class="tw-space-y-4">
-            <q-banner inline-actions class="text-white tw-bg-white " dense>
-                <template v-slot:avatar>
-                    <q-icon name="error" color="blue-grey-7" size="md" />
-                </template>
-                <div class="text-accent tw-font-bold">
+      
+        <div class="tw-space-y-4 tw-pt-8">
 
-                    Dear User, Please send the deposit request with the correct information to avoid delay in the
-                    amount. If you have made a deposit and the money has not been credited to your personal account
-                    within 3 hours, please contact our support team by email. example@harifsport.com
+            <div class="tw-flex tw-justify-between">
+                <div class="tw-text-base">
+                    Confirm transactions via: <q-btn icon="mail" label="SMS" color="red-10"/>
                 </div>
+                <q-expansion-item dense label="WITHDRAWAL REQUESTS" header-class="bg-red-10 text-white"
+                    expand-icon-class="text-white" expand-icon="keyboard_double_arrow_down">
 
-            </q-banner>
-            <q-banner inline-actions class="text-white tw-bg-white ">
-                <template v-slot:avatar>
-                    <q-icon name="error" color="blue-grey-7" size="md" />
-                </template>
-                <div class="text-accent tw-font-bold">
+                    <div>
 
-                    Earn money by becoming a HarifSport partner using eam cash. Earn commissions for HarifSport users by
-                    making deposits and withdrawals.
-                    Write to us for more information Telegram: https://t.me/TeamcashET WhatsApp: https://wa.me/+251 91
-                    173 7798
-                </div>
-                <template v-slot:action>
-                    <q-btn flat color="white" icon="close" />
-                </template>
-            </q-banner>
+
+                        <div class="tw-border tw-border-gray-400 tw-border-t-0 ">
+
+                            <q-table dense hide-pagination flat bordered :rows="rows" :columns="columns" row-key="name">
+                                <template v-slot:top>
+                                    <q-bar dark class="bg-red-10 -mx-8 tw-w-full text-white">
+                                        <q-btn dense flat round icon="cached" size="md" color="white" />
+
+
+                                        <div class=" text-weight-bold">
+                                            REFRESH STATUS
+                                        </div>
+                                    </q-bar>
+                                </template>
+                                <template v-slot:header="props">
+                                    <q-tr :props="props">
+                                        <q-th v-for="col in props.cols" :key="col.name" :props="props"
+                                            class="tw-font-bold tw-text-lg tw-text-primary-500">
+                                            {{ col.label }}
+                                        </q-th>
+                                    </q-tr>
+                                </template>
+                                <template v-slot:body="props">
+                                    <q-tr :props="props">
+
+                                        <q-td key="date" :props="props">
+                                            <q-input dense filled type="date" />
+                                        </q-td>
+                                        <q-td key="from" :props="props">
+                                            <div class="tw-w-16">
+                                                <q-input dense />
+                                            </div>
+                                        </q-td>
+                                        <q-td key="method" :props="props">
+                                            <div class="tw-w-16">
+                                                <q-input dense />
+                                            </div>
+                                        </q-td>
+                                        <q-td key="amount" :props="props">
+                                            <div class="tw-w-16">
+                                                0.0
+                                            </div>
+                                        </q-td>
+                                        <q-td key="status" :props="props">
+                                            <div class="tw-w-16">
+                                                N/A
+                                            </div>
+                                        </q-td>
+
+                                    </q-tr>
+                                </template>
+                            </q-table>
+
+                        </div>
+                    </div>
+
+                </q-expansion-item>
+            </div>
         </div>
         <div class="tw-flex tw-justify-between tw-gap-32">
             <div class="tw-h-min">
 
                 <q-tabs :outside-arrows="true" v-model="tab" inline-label vertical class="text-primary-500  bg-white"
                     style="min-width: 300px; max-height: 240px;"
-                    active-class="tw-bg-primary-500 tw-text-white tw-font-bold">
+                    active-class="bg-red-10 tw-text-white tw-font-bold">
                     <q-tab name="recommended" class="tw-place-content-start  "
                         content-class="tw-flex tw-w-full tw-justify-between tw-relative ">
 
