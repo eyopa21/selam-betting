@@ -112,7 +112,10 @@ function isResponseData(response: any): response is { data: any; error?: undefin
 }
 
 function isResponseError(response: any): response is { error: string; data?: undefined } {
-  return 'error' in response && response.error !== undefined;
+  if (response) { 
+    return 'error' in response 
+  } 
+  return false
 }
 
 import { useQuasar } from 'quasar'
