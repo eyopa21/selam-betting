@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     const url = `${config.restApiEndpoint}/filter_event/?sport_id=${query.sport_id}&interval_hours=${query.interval_hours ?? 24}&page_size=50&page=${page}`;
     console.log("url", url);
     try {
-        const response = await $fetch<{ results: Matches[] }>(url, {
+        const response = await $fetch<{ next: String, results: Matches[] }>(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

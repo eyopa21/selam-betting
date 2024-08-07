@@ -5,6 +5,9 @@ const oddTypes = ref([
   '1', 'x', '2', '1x', '12', '2x'
 ])
 const matches = ref<Matches[]>([]);
+const props = defineProps<{
+  hasMore?: boolean
+}>()
 const emit = defineEmits<{
   load: [number];
 }>();
@@ -85,7 +88,7 @@ const getMatches = computed(() => {
 });
 
 const loading = ref(false);
-const hasMore = ref(true)
+const hasMore = ref(props.hasMore ?? true)
 async function getMoreMatches(page: number) {
   if (loading.value ||  !hasMore.value) return;
   console.log("fetching", matchListStore.listOfMatches?.length);
@@ -174,7 +177,7 @@ const groupedByLeague = computed<GroupedMatches>(() => {
       class="tw-bg-secondary-800 dark:tw-bg-gray-700 w-full tw-flex tw-gap-3 tw-justify-start tw-items-center tw-mb-2">
       <div class="flex tw-justify-between tw-items-center tw-mr-2">
         <q-toggle v-model="liveStreamToggle" color="white" />
-        <p class="tw-text-white">With live streams</p>
+        <p class="tw-text-white">With live streams {{ hasMore }}</p>
       </div>
     </div>
 

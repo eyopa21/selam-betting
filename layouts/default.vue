@@ -35,7 +35,7 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+     <slot/>
     </q-page-container>
 
     <q-footer elevated>

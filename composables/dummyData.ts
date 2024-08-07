@@ -70,7 +70,7 @@ export const footerItems = [
     items: [
       {
         item: "Casino",
-        link: "#",
+        link: "/casino",
       },
       {
         item: "1XFGAMES",

@@ -18,7 +18,7 @@
           <div v-if="findSlipById?.games?.length">
             <div v-for="(game, key) in findSlipById?.games" :key="key" class="tw-rounded-md tw-bg-slate-700 tw-mb-2 tw-p-2">
               <div class="tw-flex tw-justify-between">
-                <p class="tw-text-xs">{{game.eventId}}</p>
+                <p class="tw-text-xs">{{key+1}}</p>
                 <q-btn @click="removeBet(game.outcomeId)" dense size="xs" color="red" flat round icon="close" />
               </div>
               <div class="">
@@ -169,6 +169,7 @@ async function bookBet() {
         amount: findSlipById.value.birr
       }
     })
+    console.log("data", data.value);
     if (error.value) {
       loading.value = false
       $q.notify({
@@ -177,13 +178,28 @@ async function bookBet() {
         position: 'right'
       })
     }
+    
     else if (data.value) {
-      preview.value = data.value.data
-      loading.value = false
-
-      showTerms.value = false
-      findSlipById.value.games = []
+      if ('error' in data.value) {
+        $q.notify({
+          message: 'Booking Error',
+          color: 'red',
+          position: 'right'
+        })
+      }
+      else {
+        preview.value = data.value.data
+        loading.value = false
+        showTerms.value = false
+        findSlipById.value.games = []
+        $q.notify({
+          message: 'Booking Success',
+          color: 'green',
+          position: 'right'
+        })
+     }
     }
+
   } else if (slipType.value === 'Single') {
 
     console.log("single betting")
