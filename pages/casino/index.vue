@@ -2,6 +2,7 @@
 definePageMeta({
     layout: 'casino'
 })
+
 const slide = ref('1')
 const games = ref([
     {
@@ -32,23 +33,23 @@ const games = ref([
     }, {
         image: 'https://client.qtlauncher.com/images/?id=PPC-bookofthefallen_en_US&type=logo-square&version=1664534218304',
         name: 'hello',
-        link: ''
+        link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=36ad70595ac14a55b324c992c7afb87b-CIS&amp;hideSplash=true'
     }, {
         image: 'https://client.qtlauncher.com/images/?id=WAZ-burningstars3_en_US&type=logo-square&version=1671629244294',
         name: 'hello',
-        link: ''
+        link: "https://fg-launcher-api.ffaassttyy-54rg78cw.com/?PartnerId=CF76253AC5DF2E930A950C189E35F281&amp;culture=en&amp;Mode=2&amp;gameType=Mines&amp;isMobile=true&amp;IsDemo=true"
     }, {
         image: 'https://client.qtlauncher.com/images/?id=GZX-bookofcairo_en_US&type=logo-square&version=1663271874047',
         name: 'hello',
-        link: ''
+        link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=c6459495-20ec-4125-a267-d8f3a44093cc&amp;hideSplash=true'
     }, {
         image: 'https://client.qtlauncher.com/images/?id=1x2-disco777_en_US&type=logo-square&version=1662575710450',
         name: 'hello',
-        link: ''
+        link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true'
     }, {
         image: 'https://client.qtlauncher.com/images/?id=NLC-fireintheholexbomb_en_US&type=logo-square&version=1683223361283',
         name: 'hello',
-        link: ''
+        link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true'
     }, {
         image: 'https://client.qtlauncher.com/images/?id=PPC-fruitparty_en_US&type=logo-square&version=1668596261144',
         name: 'hello',
@@ -56,43 +57,44 @@ const games = ref([
     }, {
         image: 'https://client.qtlauncher.com/images/?id=KGL-goldtracker7s_en_US&type=logo-square&version=1690366810894',
         name: 'hello',
-        link: ''
+        link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true'
     }, {
         image: 'https://client.qtlauncher.com/images/?id=NLC-folsomprison_en_US&type=logo-square&version=1655284194010',
         name: 'hello',
-        link: ''
+        link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true'
     }, {
         image: 'https://client.qtlauncher.com/images/?id=OPY-foresttreasures_en_US&type=logo-square&version=1710228210833',
         name: 'hello',
-        link: ''
+        link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true'
     }, {
         image: 'https://client.qtlauncher.com/images/?id=PPC-fruitparty2_en_US&type=logo-square&version=1668596625406',
         name: 'hello',
-        link: ''
+        link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true'
     }, {
         image: 'https://client.qtlauncher.com/images/?id=PPC-hottoburn_en_US&type=logo-square&version=1668608315631',
         name: 'hello',
-        link: ''
+        link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true'
     }, {
         image: 'https://client.qtlauncher.com/images/?id=PPC-johnhunterandthemayangods_en_US&type=logo-square&version=1668683586324',
         name: 'hello',
-        link: ''
+        link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true'
     }, {
         image: 'https://client.qtlauncher.com/images/?id=GMC-lukeechanceandthebookofluck_en_US&type=logo-square&version=1696431217748',
         name: 'hello',
-        link: ''
+        link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true'
     }, {
         image: 'https://client.qtlauncher.com/images/?id=PPC-shininghot100_en_US&type=logo-square&version=1658249402144',
         name: 'hello',
-        link: ''
+        link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true'
     }, {
         image: 'https://client.qtlauncher.com/images/?id=PPC-shininghot40_en_US&type=logo-square&version=1658249173497',
         name: 'hello',
-        link: ''
+        link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true'
     }
 
 ])
 
+const selectedGameLink  = ref('')
 
 </script>
 
@@ -122,7 +124,7 @@ const games = ref([
             <q-tabs narrow-indicator dense align="justify" class="text-white">
                 <q-route-tab name="mails" icon="home" label="LOBBY" />
                 <q-route-tab name="virtual" icon="add_to_queue" label="VIRTUAL" />
-                <q-route-tab name="league" icon="api" label="HARIFSPORT LEAGUE" />
+                <q-route-tab name="league" icon="api" label=" LEAGUE" />
                 <q-route-tab name="crash" icon="videogame_asset" label="CRASH GAMES" />
                 <q-route-tab name="mines" icon="emoji_events" label="MINES" />
                 <q-route-tab name="instant" icon="casino" label="INSTANT WINS" />
@@ -134,10 +136,10 @@ const games = ref([
 
             </q-tabs>
         </div>
-        <div class="tw-flex tw-mt-6 tw-justify-center tw-gap-4">
+        <div class="tw-flex  tw-mt-6 tw-justify-center tw-gap-4">
 
-            <q-input outlined standout="text-blue-grey-5" input-class="text-white" label="Search for your Games"
-                class="tw-bg-primary-700 tw-w-72">
+            <q-input outlined standout="text-blue-grey-5"  input-class="text-white" placeholder="Search for your Games"
+                class="tw-bg-primary-700 tw-w-72 ">
                 <template v-slot:prepend>
                     <q-icon name="search" color="blue-grey-2" />
                 </template>
@@ -156,8 +158,9 @@ const games = ref([
                     </div>
                     <img :src="i.image" :alt="i.name" class="tw-rounded">
                     <div class="tw-flex tw-mt-2 tw-space-x-4 tw-justify-between tw-w-full">
-                        <q-btn color="primary" label="Play" class="tw-w-full" " />
-                        <q-btn color=" black" label="Practice" class="tw-w-full tw-hidden lg:tw-block" />
+                        <q-btn @click="selectedGameLink = i.link" color="primary" label="Play" class="tw-w-full" " />
+                        <q-btn @click="selectedGameLink = i.link" color="black" label="Practice"
+                            class="tw-w-full tw-hidden lg:tw-block" />
 
                     </div>
 
@@ -165,6 +168,9 @@ const games = ref([
 
             </div>
 
+        </div>
+        <div v-if="selectedGameLink">
+            <GamePlayer :game-link="selectedGameLink" @close="selectedGameLink = ''" />
         </div>
     </div>
 </template>
