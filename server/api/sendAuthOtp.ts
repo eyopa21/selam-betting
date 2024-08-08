@@ -15,11 +15,7 @@ export default defineEventHandler(async (event) => {
 
         const data = await response.json()
 
-        if (!response.ok) {
-            return {
-                error: data,
-            }
-        }
+        
         return {
             data: data,
         }

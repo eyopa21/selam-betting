@@ -31,24 +31,34 @@ const State = reactive<SignUpInputs>({
 
 
 const onSubmit = async () => {
-    const res = await register({
-        username: State.username,
-        email: State.email,
-        password: State.password,
-        password2: State.password2,
-        address: State.address,
-        first_name: State.first_name,
-        last_name: State.last_name,
-        phone_number: State.phone_number,
-    });
-    if (res && 'error' in res) {
-        $q.notify({
-            message: res.error,
-            color: "red",
+    try { 
+        const res = await register({
+            username: State.username,
+            email: State.email,
+            password: State.password,
+            password2: State.password2,
+            address: State.address,
+            first_name: State.first_name,
+            last_name: State.last_name,
+            phone_number: State.phone_number,
         });
-    } else if ( res && 'message' in res ) {
-        emit('otpSent', State.email)
+        if (res && 'error' in res) {
+            console.log("eriii", res);
+            $q.notify({
+                message: res.error,
+                color: "red",
+            });
+        } else if (res && 'message' in res) {
+            emit('otpSent', State.email)
+        }
+    } catch (err) {
+        $q.notify({
+            message: 'error',
+            icon: 'announcement',
+            position: 'top'
+        });
     }
+    
     
 };
 

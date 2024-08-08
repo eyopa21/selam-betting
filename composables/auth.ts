@@ -66,25 +66,29 @@ export const useAuth = () => {
 
                 body: input,
             });
-            if (res.error) {
-                console.log("respon error", res.error);
-                let firstError = null;
-
-                for (const key in res.error) {
-                    if (res.error[key] && res.error[key].length > 0) {
-                        firstError = res.error[key][0];
-                        break;
-                    }
-                }
-                return {
-                    error: firstError
-                }
-            }
             if (res.data) {
+                console.log("resssi", res.data.email);
                 const email = res.data.email
                 const optRes = await sendOtp(email)
                 return optRes
             }
+            else if (res.error ) {
+                console.log("respon error", res.error);
+                let firstError = null;
+                Object.entries(res.error).forEach(([key, value]) => {
+                    if (value.length > 0) {
+                        console.log("good");
+                       console.log(`${key}: ${value[0]}`);
+                        firstError = value[0]
+                    } else {
+                        firstError= 'Connection Error'
+                    }
+                });
+                return {
+                    error: firstError
+                }
+            }
+             
         } catch (err) {
             error.value = `Registration failed: ${err}`;
             throw err;
