@@ -32,7 +32,7 @@
 
 <template>
     <div class="">
-        <div class="tw-font-bold">
+        <div class="tw-font-bold ">
             <h4 class="tw-text-lg">Bet History</h4>
             <p>More information about your bets</p>
         </div>
@@ -64,8 +64,6 @@
                             <div class="tw-mb-2 tw-bg-gray-100 tw-text-gray-400 tw-text-xs tw-border tw-px-2">Maximum
                                 period: 32 days
                             </div>
-
-
 
                             <div class="tw-pb-1 tw-text-gray-500 ">
                                 PERIOD
@@ -109,6 +107,64 @@
                     <q-btn-dropdown color="primary" label="Send To Email" class="tw-px-10 ">
                         hello
                     </q-btn-dropdown>
+                    <q-btn-dropdown color="primary" label="Clear History" class="tw-px-10 ">
+                        <div class="column  q-pa-md">
+                            <div class="tw-pb-1 tw-text-gray-500 ">
+                                PERIOD
+                            </div>
+                            <div class="tw-flex tw-justify-between tw-space-x-2 ">
+                                <div>
+                                    <q-input dense :hide-bottom-space="true" filled type="date" class="tw-w-24 " />
+                                </div>
+                                <div>
+                                    <q-input dense filled type="date" class="tw-w-24 !tw-bg-white" />
+                                </div>
+                            </div>
+                            <div class="tw-mt-2">
+                                <q-btn class="tw-w-full" text-color="black" color="blue-grey-1">Apply</q-btn>
+                            </div>
+                        </div>
+
+                    </q-btn-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="tw-mt-6">
+            <div class="tw-font-bold tw-p-2 tw-pl-0 tw-text-[15px]">
+                Results
+            </div>
+            <div class="tw-flex tw-justify-between">
+                <div>
+                    <q-bar dark class="bg-white text-white tw-w-full tw-h-full">
+                        <div
+                            class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-black tw-pr-2 tw-font-bold">
+                            <q-icon name="alarm" size="md" class="" />
+                            <span>Bet slips: 0</span>
+                        </div>
+                        <div
+                            class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-black tw-pr-2 tw-font-bold">
+                            <q-icon name="alarm" size="md" class="" />
+                            <span>Total winnings: 0 ETB</span>
+                        </div>
+                        <div
+                            class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-black tw-pr-2 tw-font-bold">
+                            <q-icon name="alarm" size="md" class="" />
+                            <span>Paid out: 0 ETB</span>
+                        </div>
+                        <div class="tw-flex tw-items-center tw-gap-2 tw-text-black tw-pr-2 tw-font-bold">
+                            <q-icon name="alarm" size="md" class="" />
+                            <span>Period: 21/06 - 29/06</span>
+                        </div>
+
+                    </q-bar>
+                </div>
+                <div>
+                    <q-input outlined  input-class="text-white"
+                        placeholder="Search for your Games" class="tw-bg-white tw-rounded-xl">
+                        <template v-slot:append>
+                            <q-icon name="search" color="blue-grey-2" />
+                        </template>
+                    </q-input>
                 </div>
             </div>
         </div>
