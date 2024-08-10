@@ -9,7 +9,7 @@
 
     <div class="lg:tw-flex tw-justify-center tw-items-start tw-hidden">
       <ul v-for="option in menuOptions" :key="option.name">
-        <a :href="option.link" class="tw-font-semibold tw-mx-4 tw-whitespace-nowrap">
+        <a :href="option.link" class="tw-font-semibold hover:tw-underline hover:tw-text-primary-300 tw-underline-offset-4 tw-mx-4 tw-whitespace-nowrap">
           {{ option.name }}
         </a>
       </ul>
