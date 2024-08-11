@@ -72,12 +72,12 @@ const rows = ref([
         <div>
             <p>Select payment method to withdraw money:</p>
         </div>
-      
+
         <div class="tw-space-y-4 tw-pt-8">
 
             <div class="tw-flex tw-justify-between">
                 <div class="tw-text-base">
-                    Confirm transactions via: <q-btn icon="mail" label="SMS" color="red-10"/>
+                    Confirm transactions via: <q-btn icon="mail" label="SMS" color="red-10" />
                 </div>
                 <q-expansion-item dense label="WITHDRAWAL REQUESTS" header-class="bg-red-10 text-white"
                     expand-icon-class="text-white" expand-icon="keyboard_double_arrow_down">
@@ -141,14 +141,14 @@ const rows = ref([
                     </div>
 
                 </q-expansion-item>
+              
             </div>
         </div>
         <div class="tw-flex tw-justify-between tw-gap-32">
             <div class="tw-h-min">
 
                 <q-tabs :outside-arrows="true" v-model="tab" inline-label vertical class="text-primary-500  bg-white"
-                    style="min-width: 300px; max-height: 240px;"
-                    active-class="bg-red-10 tw-text-white tw-font-bold">
+                    style="min-width: 300px; max-height: 240px;" active-class="bg-red-10 tw-text-white tw-font-bold">
                     <q-tab name="recommended" class="tw-place-content-start  "
                         content-class="tw-flex tw-w-full tw-justify-between tw-relative ">
 

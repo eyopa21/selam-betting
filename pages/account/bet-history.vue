@@ -136,18 +136,15 @@
             <div class="tw-flex tw-justify-between">
                 <div>
                     <q-bar dark class="bg-white text-white tw-w-full tw-h-full">
-                        <div
-                            class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-black tw-pr-2 tw-font-bold">
+                        <div class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-black tw-pr-2 tw-font-bold">
                             <q-icon name="alarm" size="md" class="" />
                             <span>Bet slips: 0</span>
                         </div>
-                        <div
-                            class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-black tw-pr-2 tw-font-bold">
+                        <div class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-black tw-pr-2 tw-font-bold">
                             <q-icon name="alarm" size="md" class="" />
                             <span>Total winnings: 0 ETB</span>
                         </div>
-                        <div
-                            class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-black tw-pr-2 tw-font-bold">
+                        <div class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-black tw-pr-2 tw-font-bold">
                             <q-icon name="alarm" size="md" class="" />
                             <span>Paid out: 0 ETB</span>
                         </div>
@@ -159,13 +156,19 @@
                     </q-bar>
                 </div>
                 <div>
-                    <q-input outlined  input-class="text-white"
-                        placeholder="Search for your Games" class="tw-bg-white tw-rounded-xl">
+                    <q-input outlined input-class="text-white" placeholder="Search for your Games"
+                        class="tw-bg-white tw-rounded-xl">
                         <template v-slot:append>
                             <q-icon name="search" color="blue-grey-2" />
                         </template>
                     </q-input>
                 </div>
+            </div>
+        </div>
+        <div class="tw-mt-6 tw-w-full  tw-bg-white tw-h-64">
+            <div class="tw-flex tw-h-full tw-flex-col tw-justify-center tw-items-center">
+                <h3 class="tw-font-bold tw-text-2xl">Events not found</h3>
+                <p>No events found for the period 14/06 to 20/06. Try changing the display period.</p>
             </div>
         </div>
     </div>

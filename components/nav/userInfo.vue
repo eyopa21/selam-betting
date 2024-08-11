@@ -50,7 +50,7 @@ const percentage = ref(50)
                             class=" tw-place-content-start " />
                         <q-route-tab to="/account/bet-history" name="bet_history" icon="access_time" label="Bet History"
                             class=" tw-place-content-start " />
-                        <q-route-tab name="transaction_history" icon="multiple_stop" label="Transaction History"
+                        <q-route-tab to="/account/transaction-history" name="transaction_history" icon="multiple_stop" label="Transaction History"
                             class=" tw-place-content-start " />
                     </q-tabs>
 
