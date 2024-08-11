@@ -63,7 +63,7 @@ const percentage = ref(50)
 
 
                     <q-tabs vertical inline-label dense no-caps>
-                        <q-route-tab name="invite" icon="groups" label="Invite Friends"
+                        <q-route-tab to="/account/invite" name="invite" icon="groups" label="Invite Friends"
                             class=" tw-place-content-start " />
 
                         <q-route-tab name="cashback" icon="currency_exchange" label="Casino VIP Cashback"

@@ -2,32 +2,8 @@
 definePageMeta({
     layout: 'account'
 })
-const selectedCheckboxes = ref([])
-const options = [{
-    label: 'Sports',
-    value: 'sports'
-},
-{
-    label: 'Live',
-    value: 'live'
-},
-{
-    label: 'Settled',
-    value: 'settled'
-},
-{
-    label: 'Unsettled',
-    value: 'unsettled'
-},
-{
-    label: 'By settlement time',
-    value: 'time'
-},
-{
-    label: 'Deleted',
-    value: 'deleted'
-},
-]
+
+
 </script>
 
 <template>
