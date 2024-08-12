@@ -88,7 +88,7 @@ const percentage = ref(50)
 
                         <q-route-tab to="/account/security" name="security" icon="lock" label="Security" class=" tw-place-content-start " />
 
-                        <q-route-tab  name="settings" icon="settings" label="Account settings"
+                        <q-route-tab to="/account/settings"  name="settings" icon="settings" label="Account settings"
                             class=" tw-place-content-start " />
                     </q-tabs>
 
