@@ -70,7 +70,7 @@ const percentage = ref(50)
                             class=" tw-place-content-start " />
                         <q-route-tab to="/account/bonus" name="bonus" icon="redeem" label="Bonuses and gifts"
                             class=" tw-place-content-start " />
-                        <q-route-tab name="support" icon="support_agent" label="Customer Support"
+                        <q-route-tab to="/account/support" name="support" icon="support_agent" label="Customer Support"
                             class=" tw-place-content-start " />
                     </q-tabs>
 
