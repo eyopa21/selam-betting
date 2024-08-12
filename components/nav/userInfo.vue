@@ -43,14 +43,14 @@ const percentage = ref(50)
 
 
                     <q-tabs vertical inline-label dense no-caps>
-                        <q-route-tab to="/account/deposit" name="deposit" icon="monetization_on" label="Deposit"
+                        <q-route-tab active-class="tw-bg-primary-900" to="/account/deposit" name="deposit" icon="monetization_on" label="Deposit"
                             class=" tw-place-content-start " />
 
-                        <q-route-tab to="/account/withdraw" name="withdraw" icon="upload" label="Withdraw Funds"
+                        <q-route-tab active-class="tw-bg-primary-900" to="/account/withdraw" name="withdraw" icon="upload" label="Withdraw Funds"
                             class=" tw-place-content-start " />
-                        <q-route-tab to="/account/bet-history" name="bet_history" icon="access_time" label="Bet History"
+                        <q-route-tab active-class="tw-bg-primary-900" to="/account/bet-history" name="bet_history" icon="access_time" label="Bet History"
                             class=" tw-place-content-start " />
-                        <q-route-tab to="/account/transaction-history" name="transaction_history" icon="multiple_stop" label="Transaction History"
+                        <q-route-tab active-class="tw-bg-primary-900" to="/account/transaction-history" name="transaction_history" icon="multiple_stop" label="Transaction History"
                             class=" tw-place-content-start " />
                     </q-tabs>
 
@@ -63,14 +63,14 @@ const percentage = ref(50)
 
 
                     <q-tabs vertical inline-label dense no-caps>
-                        <q-route-tab to="/account/invite" name="invite" icon="groups" label="Invite Friends"
+                        <q-route-tab active-class="tw-bg-primary-900" to="/account/invite" name="invite" icon="groups" label="Invite Friends"
                             class=" tw-place-content-start " />
 
-                        <q-route-tab to="/account/vip-cashback" name="cashback" icon="currency_exchange" label="Casino VIP Cashback"
+                        <q-route-tab active-class="tw-bg-primary-900" to="/account/vip-cashback" name="cashback" icon="currency_exchange" label="Casino VIP Cashback"
                             class=" tw-place-content-start " />
-                        <q-route-tab to="/account/bonus" name="bonus" icon="redeem" label="Bonuses and gifts"
+                        <q-route-tab active-class="tw-bg-primary-900" to="/account/bonus" name="bonus" icon="redeem" label="Bonuses and gifts"
                             class=" tw-place-content-start " />
-                        <q-route-tab to="/account/support" name="support" icon="support_agent" label="Customer Support"
+                        <q-route-tab active-class="tw-bg-primary-900" to="/account/support" name="support" icon="support_agent" label="Customer Support"
                             class=" tw-place-content-start " />
                     </q-tabs>
 
@@ -83,12 +83,12 @@ const percentage = ref(50)
 
 
                     <q-tabs vertical inline-label dense no-caps>
-                        <q-route-tab to="/account/profile" name="profile" icon="person" label="Personal profile"
+                        <q-route-tab active-class="tw-bg-primary-900" to="/account/profile" name="profile" icon="person" label="Personal profile"
                             class=" tw-place-content-start " />
 
-                        <q-route-tab to="/account/security" name="security" icon="lock" label="Security" class=" tw-place-content-start " />
+                        <q-route-tab active-class="tw-bg-primary-900" to="/account/security" name="security" icon="lock" label="Security" class=" tw-place-content-start " />
 
-                        <q-route-tab to="/account/settings"  name="settings" icon="settings" label="Account settings"
+                        <q-route-tab active-class="tw-bg-primary-900" to="/account/settings"  name="settings" icon="settings" label="Account settings"
                             class=" tw-place-content-start " />
                     </q-tabs>
 

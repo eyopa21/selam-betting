@@ -141,7 +141,7 @@ const rows = ref([
                     </div>
 
                 </q-expansion-item>
-              
+
             </div>
         </div>
         <div class="tw-flex tw-justify-between tw-gap-32">
@@ -195,7 +195,7 @@ const rows = ref([
                 <q-tab-panels v-model="tab" animated swipeable vertical transition-prev="jump-up"
                     transition-next="jump-up">
                     <q-tab-panel name="recommended">
-                        <div class=" tw-grid tw-grid-cols-3 tw-gap-4 tw-justify-items-end tw-font-bold q-mb-md">
+                        <div class=" tw-flex tw-flex-wrap   tw-gap-4  tw-font-bold q-mb-md">
                             RECOMMENDED METHODS</div>
                         <div v-for="(i, key) in payments" :key="key" class="tw-border tw-w-min">
                             <div v-if="i.tags.includes('recommended')">
@@ -209,7 +209,7 @@ const rows = ref([
 
                     <q-tab-panel name="all">
                         <div class="tw-font-bold q-mb-md">All METHODS</div>
-                        <div class="tw-grid tw-grid-cols-3 tw-gap-4 tw-justify-items-end">
+                        <div class="tw-flex tw-flex-wrap   tw-gap-4 ">
                             <div v-for="(i, key) in payments" :key="key" class="tw-border">
 
                                 <div>
@@ -225,7 +225,7 @@ const rows = ref([
 
                     <q-tab-panel name="mobile">
                         <div class="tw-font-bold q-mb-md">MOBILE PAYMENTS</div>
-                        <div class="tw-grid tw-grid-cols-3 tw-gap-4 tw-justify-items-end">
+                        <div class="tw-flex tw-flex-wrap   tw-gap-4 ">
                             <div v-for="(i, key) in payments" :key="key">
 
                                 <div v-if="i.tags.includes('mobile')" class="tw-border">
@@ -240,10 +240,10 @@ const rows = ref([
                     </q-tab-panel>
                     <q-tab-panel name="wallet">
                         <div class="tw-font-bold q-mb-md">WALLET METHODS</div>
-                        <div class="tw-grid tw-grid-cols-3 tw-gap-4 tw-justify-items-end">
-                            <div v-for="(i, key) in payments" :key="key" class="tw-border">
+                        <div class="tw-flex tw-flex-wrap   tw-gap-4 ">
+                            <div v-for="(i, key) in payments" :key="key">
 
-                                <div v-if="i.tags.includes('wallet')">
+                                <div v-if="i.tags.includes('wallet')" class="tw-border">
                                     <q-img fit="scale-down" :src="i.icon" :alt="i.name" class="tw-w-32 tw-h-20" />
                                     <div class="tw-w-full  tw-text-white tw-text-center tw-bg-primary-500">
                                         {{ i.label }}
@@ -255,10 +255,10 @@ const rows = ref([
                     </q-tab-panel>
                     <q-tab-panel name="internet">
                         <div class="tw-font-bold q-mb-md">INTERNET BANKING METHODS</div>
-                        <div class="tw-grid tw-grid-cols-3 tw-gap-4 tw-justify-items-end">
-                            <div v-for="(i, key) in payments" :key="key" class="tw-border">
+                        <div class="tw-flex tw-flex-wrap   tw-gap-4 ">
+                            <div v-for="(i, key) in payments" :key="key">
 
-                                <div v-if="i.tags.includes('internet')">
+                                <div v-if="i.tags.includes('internet')" class="tw-border">
                                     <q-img fit="scale-down" :src="i.icon" :alt="i.name" class="tw-w-32 tw-h-20" />
                                     <div class="tw-w-full  tw-text-white tw-text-center tw-bg-primary-500">
                                         {{ i.label }}
