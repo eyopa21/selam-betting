@@ -68,7 +68,7 @@ const percentage = ref(50)
 
                         <q-route-tab to="/account/vip-cashback" name="cashback" icon="currency_exchange" label="Casino VIP Cashback"
                             class=" tw-place-content-start " />
-                        <q-route-tab name="bonus" icon="redeem" label="Bonuses and gifts"
+                        <q-route-tab to="/account/bonus" name="bonus" icon="redeem" label="Bonuses and gifts"
                             class=" tw-place-content-start " />
                         <q-route-tab name="support" icon="support_agent" label="Customer Support"
                             class=" tw-place-content-start " />

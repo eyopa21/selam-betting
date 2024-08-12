@@ -13,7 +13,7 @@
                     <q-btn flat color="white" icon="close" />
                 </template>
             </q-banner>
-            <div class=" dark:tw-bg-gray-200 tw-bg-gray-200 tw-min-h-screen tw-mt-4 tw-p-2">
+            <div :class="$route.name === 'account-bonus' ? 'dark:tw-bg-primary-800 tw-bg-primary-800' : 'dark:tw-bg-gray-200 tw-bg-gray-200'" class="  tw-min-h-screen tw-mt-4 tw-p-2">
                 <div v-if="$route.name === 'account-deposit' || $route.name === 'account-withdraw'" class="tw-font-extrabold tw-text-lg tw-leading-tight tw-border-b-2">
                     <span>Account Number: </span>
                     <span class="tw-text-amber-500">12097267625</span>

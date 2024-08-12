@@ -153,8 +153,8 @@ const rows = [
                         <p class="tw-font-bold">Type of Cashback</p>
                     </div>
                     <div class="tw-flex tw-text-base tw-w-full  tw-h-8 tw-justify-around">
-                        <p>Type of Cashback</p>
-                        <p class="tw-font-bold">Type of Cashback</p>
+                        <p>Main Account</p>
+                        <p class="tw-font-bold">0</p>
                     </div>
                 </div>
                 <div class="tw-mt-2 tw-flex tw-justify-between tw-text-base tw-text-primary-800 tw-font-semibold">
@@ -246,7 +246,7 @@ const rows = [
 
                     </ol>
                 </q-card-section>
-<hr>
+                <hr>
                 <q-card-actions align="right">
 
                     <q-btn flat label="Okay" color="primary" v-close-popup />
