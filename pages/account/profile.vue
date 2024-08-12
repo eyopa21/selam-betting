@@ -8,7 +8,7 @@ const progress  = ref(0.33)
 </script>
 
 <template>
-    <div class="tw-px-4">
+    <div class="tw-px-4 tw-text-primary-500">
         <div class="tw-font-bold ">
             <h4 class="tw-text-lg">Personal Profile</h4>
             <p>Fill in the empty fields to take advantage of the enhanced features of the HarifSport website</p>

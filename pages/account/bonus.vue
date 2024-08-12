@@ -30,9 +30,8 @@ definePageMeta({
         </div>
         <div class="tw-flex  tw-mt-2 tw-pl-4 tw-gap-4">
 
-            <q-input outlined standout="text-blue-grey-5" input-class="text-white" label="Enter Promo code"
-                class="tw-bg-primary-700 tw-w-72 ">
-
+            <q-input outlined standout="text-grey-8"  label-color="grey-8" input-class="text-white" label="Enter Promo code"
+                class=" tw-w-72 ">
             </q-input>
             <q-btn class="tw-bg-primary-900 tw-px-8" label="OK" text-color="blue-grey-2" />
 

@@ -7,7 +7,7 @@ definePageMeta({
 </script>
 
 <template>
-    <div>
+    <div class="tw-text-primary-500">
         <div class="tw-font-bold tw-pl-4">
             <h4 class="tw-text-lg">Support Center</h4>
             <p>For all your website queries</p>

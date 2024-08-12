@@ -6,7 +6,7 @@ const termsAndPolicy = ref(false)
 </script>
 
 <template>
-    <div>
+    <div class="tw-text-primary-500">
         <div class="tw-font-bold tw-pl-4">
             <h4 class="tw-text-lg">Become an affiliate and start earning!</h4>
             <p>Build a multi-level network by inviting your friends who in turn will refer their friends</p>

@@ -31,7 +31,7 @@
 </script>
 
 <template>
-    <div class="">
+    <div class="tw-text-primary-500">
         <div class="tw-font-bold ">
             <h4 class="tw-text-lg">Bet History</h4>
             <p>More information about your bets</p>
@@ -136,19 +136,19 @@
             <div class="tw-flex tw-justify-between">
                 <div>
                     <q-bar dark class="bg-white text-white tw-w-full tw-h-full">
-                        <div class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-black tw-pr-2 tw-font-bold">
+                        <div class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-primary-500 tw-pr-2 tw-font-bold">
                             <q-icon name="alarm" size="md" class="" />
                             <span>Bet slips: 0</span>
                         </div>
-                        <div class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-black tw-pr-2 tw-font-bold">
+                        <div class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-primary-500 tw-pr-2 tw-font-bold">
                             <q-icon name="alarm" size="md" class="" />
                             <span>Total winnings: 0 ETB</span>
                         </div>
-                        <div class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-black tw-pr-2 tw-font-bold">
+                        <div class="tw-flex tw-border-r-2 tw-items-center tw-gap-2 tw-text-primary-500 tw-pr-2 tw-font-bold">
                             <q-icon name="alarm" size="md" class="" />
                             <span>Paid out: 0 ETB</span>
                         </div>
-                        <div class="tw-flex tw-items-center tw-gap-2 tw-text-black tw-pr-2 tw-font-bold">
+                        <div class="tw-flex tw-items-center tw-gap-2 tw-text-primary-500 tw-pr-2 tw-font-bold">
                             <q-icon name="alarm" size="md" class="" />
                             <span>Period: 21/06 - 29/06</span>
                         </div>

@@ -68,7 +68,7 @@ const rows = ref([
 </script>
 
 <template>
-    <div class="tw-space-y-4 tw-p-2 tw-pt-0">
+    <div class="tw-space-y-4 tw-p-2 tw-pt-0 tw-text-primary-500 tw-font-semibold">
         <div>
             <p>Select payment method to withdraw money:</p>
         </div>

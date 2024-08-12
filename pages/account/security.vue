@@ -8,7 +8,7 @@ const progress = ref(0.33)
 </script>
 
 <template>
-    <div class="tw-px-4">
+    <div class="tw-px-4 tw-text-primary-500">
         <div class="tw-font-bold ">
             <h4 class="tw-text-lg">Account Security</h4>
             <p>To prevent fraud and keep your account secure, please complete all the steps below</p>

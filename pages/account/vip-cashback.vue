@@ -70,7 +70,7 @@ const rows = [
 </script>
 
 <template>
-    <div>
+    <div class="tw-text-primary-500">
         <div class="tw-font-bold tw-pl-4 tw-w-2/3 tw-space-y-2">
             <h4 class="tw-text-lg">Casino VIP Cashback</h4>
             <p>Find out about the HarifSport casino loyalty levels here, and learn how to get your cashback.

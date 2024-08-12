@@ -42,7 +42,7 @@
 </script>
 
 <template>
-    <div>
+    <div class="tw-text-primary-500 tw-font-semibold">
         
         <div class="tw-space-y-4 tw-p-2">
             <div>
