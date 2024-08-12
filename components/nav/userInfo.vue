@@ -83,7 +83,7 @@ const percentage = ref(50)
 
 
                     <q-tabs vertical inline-label dense no-caps>
-                        <q-route-tab name="profile" icon="person" label="Personal profile"
+                        <q-route-tab to="/account/profile" name="profile" icon="person" label="Personal profile"
                             class=" tw-place-content-start " />
 
                         <q-route-tab name="security" icon="lock" label="Security" class=" tw-place-content-start " />
