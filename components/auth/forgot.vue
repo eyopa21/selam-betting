@@ -13,7 +13,7 @@
         <hr class="tw-text-gray-700 tw-py-4" />
         <p class="tw-text-gray-500 text-center">
             Go back to
-            <span class="tw-text-[#8E203A] tw-cursor-pointer">sign in</span>
+            <span @click="emit('login')" class="tw-text-[#8E203A] tw-cursor-pointer">sign in</span>
         </p>
     </div>
 </template>
@@ -22,7 +22,9 @@
 <script setup lang="ts">
 const $q = useQuasar();
 const emit = defineEmits<{
-    otpSent: [string]
+    otpSent: [string],
+    login: [void]
+
 }>()
 const {  loading, sendOtp } = useAuth();
 const state = ref({

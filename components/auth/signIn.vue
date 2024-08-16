@@ -8,7 +8,7 @@
         <AuthOtp :email="currentEmail" />
       </div>
       <div v-else-if="loginState==='forgot'">
-        <AuthForgot @otpSent="(n: string) => { currentEmail = n; loginState = 'otp' }" />
+        <AuthForgot @login="loginState='login'" @otpSent="(n: string) => { currentEmail = n; loginState = 'otp' }" />
       </div>
 
       <div v-else-if="loginState === 'login'">
