@@ -1,6 +1,6 @@
 <template>
   <div class="tw-bg-secondary-800 dark:tw-bg-gray-800  tw-py-3 text-white tw-h-full tw-min-h-screen">
-    <div v-if="$authentication.loggedIn.value">
+    <div v-if="!$authentication.loggedIn.value">
       <!-- <q-scroll-area style="height: 100vh; max-width: 300px"> -->
         <div class="tw-flex tw-justify-center tw-mt-6 tw-gap-4">
           <q-btn icon="favorite" flat no-caps label="Popular"></q-btn>
