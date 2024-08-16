@@ -112,7 +112,7 @@ export const useAuth = () => {
 
             return res.data;
         } catch (err) {
-            console.log("err", err.message);
+           
             error.value = "couldn't send otp"
         } finally {
             loading.value = false;

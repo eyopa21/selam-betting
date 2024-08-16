@@ -1,7 +1,7 @@
 <script setup>
 const { logout} = useAuth();
 const percentage = ref(50)
-
+const {$authentication} = useNuxtApp()
 </script>
 
 
@@ -16,9 +16,9 @@ const percentage = ref(50)
                 <div class="tw-flex tw-flex-col tw-text-base">
                     <div class="tw-flex tw-justify-start">
                         <p class="tw-font-semibold">Account NO: </p>
-                        <span class="tw-text-amber-500 tw-font-extrabold">123456789</span>
+                        <span class="tw-text-amber-500 tw-font-extrabold">{{ $authentication.session.value.user_name }}</span>
                     </div>
-                    <p class="tw-text-gray-400 tw-text-xs tw-underline">jobtennis21@gmail.com</p>
+                    <p class="tw-text-gray-400 tw-text-xs tw-underline">{{ $authentication.session.value.email }}</p>
                 </div>
                 <div>
                     <q-knob rounded readonly show-value  :model-value="percentage" size="50px" 
