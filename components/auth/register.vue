@@ -43,7 +43,6 @@ const onSubmit = async () => {
             phone_number: State.phone_number,
         });
         if (res && 'error' in res) {
-            console.log("eriii", res);
             $q.notify({
                 message: res.error,
                 color: "red",
