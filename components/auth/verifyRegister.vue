@@ -7,6 +7,9 @@ const layout = useLayout();
 const props = defineProps<{
     email: string
 }>()
+const emit = defineEmits<{
+    finishVerify: [void]
+}>()
 const { register, error, loading, verifyOtp } = useAuth();
 const State = ref({
     otp: ''
@@ -14,7 +17,7 @@ const State = ref({
 const verifyOTP = async () => {
    
     verifyOtp(props.email, State.value.otp).then(res => {
-        if (res?.error) {
+        if ( res && 'error' in res) {
             $q.notify({
                 message: res?.error,
                 color: "red",
@@ -22,10 +25,12 @@ const verifyOTP = async () => {
         } else {
             layout.value.showRegister = false
             layout.value.showLogin = true
+            emit('finishVerify')
             $q.notify({
                 message: "Registered successfully!",
                 color: "green",
             });
+
         }
     }).catch(error => {
         $q.notify({
@@ -53,6 +58,9 @@ const verifyOTP = async () => {
         </p>
         <q-form @submit="verifyOTP" class="q-gutter-md tw-my-8">
             <q-input dense outlined v-model="State.otp" label="Code" lazy-rules class="tw-my-4" />
+            <div v-if="error">
+                {{ error }}
+            </div>
             <q-btn :loading="loading" label="Verify" type="submit"
                 class="tw-w-[96%] tw-flex tw-justify-center tw-bg-[#8E203A] tw-text-white tw-font-semibold tw-my-2" />
         </q-form>

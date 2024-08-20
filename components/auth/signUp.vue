@@ -15,7 +15,7 @@ const otpEmail = ref<string>()
         <q-btn icon="close" v-close-popup />
       </div>
       <div v-if="registerState === 'otp' && otpEmail">
-        <AuthVerifyRegister :email="otpEmail" />
+        <AuthVerifyRegister :email="otpEmail" @finishVerify="otpEmail = undefined; registerState = 'register'" />
       </div>
       <div v-else-if="registerState === 'register'">
         <AuthRegister @otpSent="(n) => {

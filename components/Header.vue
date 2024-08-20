@@ -9,9 +9,9 @@
 
     <div class="lg:tw-flex tw-justify-center tw-items-start tw-hidden">
       <ul v-for="option in menuOptions" :key="option.name">
-        <li class="tw-font-semibold tw-mx-4 tw-whitespace-nowrap">
+        <a :href="option.link" class="tw-font-semibold hover:tw-underline hover:tw-text-primary-300 tw-underline-offset-4 tw-mx-4 tw-whitespace-nowrap">
           {{ option.name }}
-        </li>
+        </a>
       </ul>
     </div>
     <div class="tw-my-auto lg:tw-flex lg:tw-justify-between tw-gap-2 tw-hidden tw-mr-4 tw-items-center">
@@ -70,13 +70,46 @@
 <script setup lang="ts">
 const { $authentication } = useNuxtApp();
 
-import { menuOptions } from "../composables/dummyData";
+
 const layout = useLayout();
 const userStore = useUserStore();
 
 
 const { logout } = useAuth();
 
-
+ const menuOptions = ref([
+  {
+    name: "Sport",
+    link: "#",
+  },
+  {
+    name: "Live",
+    link: "#",
+  },
+  {
+    name: "Jackpot",
+    link: "#",
+  },
+  {
+    name: "Virtual Sport",
+    link: "#",
+   },
+   {
+     name: "Casino",
+     link: "/casino",
+   },
+  {
+    name: "Promotions",
+    link: "#",
+  },
+  {
+    name: " Deposit",
+    link: "#",
+  },
+  {
+    name: "Rules",
+    link: "#",
+  },
+])
 
 </script>

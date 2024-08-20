@@ -12,13 +12,9 @@ export default defineEventHandler(async (event) => {
             },
             body: JSON.stringify(body)
         })
-
         const data = await response.json()
-console.log("data", data);
-        if (!response.ok) {
-            return {
-                error: data,
-            }
+        if (response.status === 400) {
+            return { error: data }
         }
         return {
             data: data,

@@ -148,7 +148,6 @@ else if (data.value && isResponseData(data.value)) {
 
 const layout = useLayout();
 async function filterGamesByDate(date: Date) {
-
   scrollToTop();
   layout.value.mainLoader = true
 
