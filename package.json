@@ -2,6 +2,10 @@
   "name": "nuxt-app",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@9.9.0",
+  "engines": {
+    "node": "20.17.0"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --dotenv .env",
