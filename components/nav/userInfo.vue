@@ -1,7 +1,18 @@
 <script setup>
 const { logout} = useAuth();
 const percentage = ref(50)
-const {$authentication} = useNuxtApp()
+const { $authentication } = useNuxtApp()
+
+
+const { data, error } = await useAuthenticatedFetch('/api/finance/get-stake-amount', {
+    method: 'POST',
+})
+if (error.value) {
+    console.log("erii", error.value);
+} else {
+    console.log("data", data.value);
+}
+
 </script>
 
 

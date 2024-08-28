@@ -9,15 +9,14 @@ export function useAuthenticatedFetch<T>(url: string, options: UseFetchOptions<T
     }
     const runtimeConfig = useRuntimeConfig()
     const defaults = {
-        baseURL: '',
         headers: {
             Authorization: `Bearer ${$authentication.accessToken.value}`,
         },
         async onResponseError(error) {
-            // if (error.response.status === 401) {
-            //     const currentPath = $router.currentRoute.value.path
-            //     return $auth.promptLogin(currentPath)
-            // }
+            if (error.response.status === 401) {
+                const currentPath = router.currentRoute.value.path
+                return navigateTo('/test')
+            }
             throw error
         },
     } satisfies UseFetchOptions<T>
