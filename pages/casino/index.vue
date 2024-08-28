@@ -97,7 +97,17 @@ const games = ref <CasinoGame[]>([
 
 ])
 
-const selectedGameLink  = ref('')
+const filterType = ref<'square' | 'circle'>('square')
+const selectedGameLink = ref('')
+
+function toggleType() {
+    if (filterType.value === 'circle') {
+        filterType.value = 'square'
+    } else {
+        filterType.value = 'circle'
+    }
+    
+}
 
 </script>
 
@@ -133,7 +143,8 @@ const selectedGameLink  = ref('')
             </q-scroll-area>
         </div>
         <div class="tw-flex tw-my-8 tw-justify-center">
-            <q-tabs narrow-indicator dense align="justify" class="text-white text-weight-bolder tw-font-extrabold" content-class="text-white">
+            <q-tabs narrow-indicator dense align="justify" class="text-white text-weight-bolder tw-font-extrabold"
+                content-class="text-white">
                 <q-route-tab name="home" icon="home" label="LOBBY" />
                 <q-route-tab name="virtual" icon="add_to_queue" label="VIRTUAL" />
                 <q-route-tab name="league" icon="api" label=" LEAGUE" />
@@ -165,29 +176,44 @@ const selectedGameLink  = ref('')
             <div class="tw-flex1 tw-self-center tw-border-[2px] tw-rounded-lg tw-border-primary-400">
                 <q-btn-group outline stretch>
                     <q-btn color="primary-10" icon="filter_alt" size="lg" />
-                    <q-btn color="primary-10" icon="apps" size="lg" />
+                    <q-btn @click="toggleType()" color="primary-10" icon="apps" size="lg" />
                     <q-btn color="primary-10" icon="control_camera" size="lg" />
                 </q-btn-group>
             </div>
         </div>
         <div class="tw-p-8">
-            <div class="tw-grid tw-grid-cols-4 tw-gap-4 tw-gap-y-8">
+            <div class="tw-grid  tw-gap-4 tw-gap-y-8"
+                :class="filterType === 'square' ? 'tw-grid-cols-4' :'tw-grid-cols-7'">
                 <div v-for="(i, key) in games" :key="key"
                     class="tw-relative hover:-tw-translate-y-2  tw-transition-all tw-duration-500">
-                    <div class="tw-absolute tw-right-0">
-                        <q-btn flat round color="white" icon="favorite_outline"
-                            class="hover:tw-scale-110 tw-transition-all tw-duration-500" />
+                    <div v-if="filterType === 'square'">
+                        <div class="tw-absolute tw-right-0">
+                            <q-btn flat round color="white" icon="favorite_outline"
+                                class="hover:tw-scale-110 tw-transition-all tw-duration-500" />
+                        </div>
+                        <q-img :src="i.image" :alt="i.name" class="tw-rounded tw-ring tw-ring-blue-500" />
+                        <div class="tw-flex tw-mt-3 tw-space-x-4 tw-justify-between tw-w-full">
+                            <q-btn @click="selectedGameLink = i.link" color="deep-purple-14" label="Play"
+                                class="tw-w-full tw-ring-2 tw-ring-white tw-rounded-xl" />
+                            <q-btn @click=" selectedGameLink=i.link" color="black" label="Practice"
+                                class="tw-w-full tw-hidden lg:tw-block tw-ring-2 tw-ring-white tw-rounded-xl" />
+                        </div>
                     </div>
-                    <q-img :src="i.image" :alt="i.name" class="tw-rounded tw-ring tw-ring-blue-500" />
-                    <div class="tw-flex tw-mt-3 tw-space-x-4 tw-justify-between tw-w-full">
-                        <q-btn @click="selectedGameLink = i.link" color="deep-purple-14" label="Play"
-                            class="tw-w-full tw-ring-2 tw-ring-white tw-rounded-xl" />
-                        <q-btn @click=" selectedGameLink=i.link" color="black" label="Practice"
-                            class="tw-w-full tw-hidden lg:tw-block tw-ring-2 tw-ring-white tw-rounded-xl" />
-
+                    <div v-else>
+                        <q-avatar size="150px" font-size="52px" color="primary" text-color="white"
+                            class="tw-ring-1 hover:tw-scale-105 tw-transition-all tw-duration-500 tw-cursor-pointer">
+                            <q-img :src="i.image" />
+                        </q-avatar>
+                        <div class="tw-flex  tw-mt-3 tw-space-x-2 tw-justify-around ">
+                            <q-btn size="sm" @click="selectedGameLink = i.link" color="deep-purple-14" label="Play"
+                                class="tw-h-6 tw-ring-1 tw-ring-white tw-rounded-xl" />
+                            <q-btn size="sm" @click=" selectedGameLink = i.link" color="black" label="Practice"
+                                class=" tw-hidden tw-h-6 lg:tw-block tw-ring-1 tw-ring-white tw-rounded-xl" />
+                        </div>
                     </div>
 
                 </div>
+
 
             </div>
 
@@ -199,7 +225,7 @@ const selectedGameLink  = ref('')
             <CasinoCategories :games />
         </div>
         <div class="tw-mx-auto tw-w-3/4 tw-bg-primary-500 tw-h-full tw-mt-8">
-            <CasinoBottomAd/>
+            <CasinoBottomAd />
         </div>
     </div>
 </template>
