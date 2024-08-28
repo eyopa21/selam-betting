@@ -133,8 +133,8 @@ const selectedGameLink  = ref('')
             </q-scroll-area>
         </div>
         <div class="tw-flex tw-my-8 tw-justify-center">
-            <q-tabs narrow-indicator dense align="justify" class="text-white">
-                <q-route-tab name="mails" icon="home" label="LOBBY" />
+            <q-tabs narrow-indicator dense align="justify" class="text-white text-weight-bolder tw-font-extrabold" content-class="text-white">
+                <q-route-tab name="home" icon="home" label="LOBBY" />
                 <q-route-tab name="virtual" icon="add_to_queue" label="VIRTUAL" />
                 <q-route-tab name="league" icon="api" label=" LEAGUE" />
                 <q-route-tab name="crash" icon="videogame_asset" label="CRASH GAMES" />
@@ -162,7 +162,7 @@ const selectedGameLink  = ref('')
                 <q-btn color="primary" label="Let's Look" text-color="blue-grey-2" />
             </div>
 
-            <div class="tw-flex1 tw-self-center tw-border-[2px] tw-rounded-lg border-primary">
+            <div class="tw-flex1 tw-self-center tw-border-[2px] tw-rounded-lg tw-border-primary-400">
                 <q-btn-group outline stretch>
                     <q-btn color="primary-10" icon="filter_alt" size="lg" />
                     <q-btn color="primary-10" icon="apps" size="lg" />
@@ -179,7 +179,7 @@ const selectedGameLink  = ref('')
                             class="hover:tw-scale-110 tw-transition-all tw-duration-500" />
                     </div>
                     <q-img :src="i.image" :alt="i.name" class="tw-rounded tw-ring tw-ring-blue-500" />
-                    <div class="tw-flex tw-mt-2 tw-space-x-4 tw-justify-between tw-w-full">
+                    <div class="tw-flex tw-mt-3 tw-space-x-4 tw-justify-between tw-w-full">
                         <q-btn @click="selectedGameLink = i.link" color="deep-purple-14" label="Play"
                             class="tw-w-full tw-ring-2 tw-ring-white tw-rounded-xl" />
                         <q-btn @click=" selectedGameLink=i.link" color="black" label="Practice"

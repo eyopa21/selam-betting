@@ -9,7 +9,7 @@
 
         <div class="lg:tw-flex tw-justify-center tw-items-start tw-hidden">
             <ul v-for="option in menuOptions" :key="option.name" class="tw-gap-2">
-                <q-btn outline dense :href="option.link" text-color="cyan-8" class="tw-px-2 tw-mr-2">
+                <q-btn  outline dense  :icon="option.icon ?? undefined" no-wrap :href="option.link" :text-color="option.active? 'white':'grey-5' " class="tw-px-3 tw-rounded- tw-mr-2">
                     {{ option.name }}
                 </q-btn>
             </ul>
@@ -19,11 +19,12 @@
 
 
 
-            <q-btn color="amber-4" outline class="tw-w-full" icon="currency_pound"  no-wrap label="2,000ETB" dense />
-            <q-btn icons="add" label="Deposit" color="primary" dense no-wrap outline text-color="cyan-8" class="tw-px-4" />
-           
-           
-            <q-btn round flat icon="logout" dense class="tw-text-xl tw-text-red-600" @click="logout()" /> 
+            <q-btn color="amber-4" outline class="tw-w-full" icon="currency_pound" no-wrap label="2,000ETB" dense />
+            <q-btn icons="add" label="Deposit" color="primary" dense no-wrap outline text-color="grey-5"
+                class="tw-px-4" />
+
+
+            <q-btn round flat icon="logout" dense class="tw-text-xl tw-text-red-600" @click="logout()" />
 
 
 
@@ -40,8 +41,8 @@
                     </q-list>
                     <div class="tw-flex tw-justify-start tw-my-2 tw-text-white tw-mx-2">
 
-                        <q-btn  icon="logout" label="LOG OUT" unelevated
-                            class="tw-font-bold tw-bg-primary-500" @click="logout()" />
+                        <q-btn icon="logout" label="LOG OUT" unelevated class="tw-font-bold tw-bg-primary-500"
+                            @click="logout()" />
                     </div>
                 </q-menu>
             </q-btn>
@@ -65,22 +66,26 @@ const menuOptions = ref([
     {
         name: "Home",
         link: "#",
-        icon: ''
+        icon: null, 
+        active: false
     },
     {
         name: "Profile",
         link: "#",
-        icon: ''
+        icon: 'person',
+        active: true
     },
     {
         name: "Promotions",
         link: "#",
-        ico: ''
+        icon: null, 
+        active: false
     },
     {
         name: "Withdraw",
         link: "#",
-        ico: ''
+        icon: null, 
+        active: false
     },
     
 ])
