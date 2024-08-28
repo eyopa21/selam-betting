@@ -50,6 +50,7 @@ export default defineNuxtPlugin({
 
         const logout = () => {
             updateSession(null);
+            navigateTo('/s')
         };
 
         return {
