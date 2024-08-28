@@ -25,8 +25,11 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    serverApiKey: process.env.API_KEY,
-    restApiEndpoint: process.env.API_BASE_URL,
+    public: {
+      financeApiEndpoint: ''
+    },
+    serverApiKey: '',
+    restApiEndpoint: '',
   },
 
   compatibilityDate: "2024-07-04",
