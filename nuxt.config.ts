@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     },
     serverApiKey: '',
     restApiEndpoint: '',
+    baseApiEndpoint: ''
   },
 
   compatibilityDate: "2024-07-04",

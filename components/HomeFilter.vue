@@ -91,6 +91,7 @@
 </template>
 
 <script setup lang="ts">
+import { useQuasar } from 'quasar'
 import type { Matches, Participants } from '~/types/matches';
 type Sports = {
   id: string
@@ -118,7 +119,6 @@ function isResponseError(response: any): response is { error: string; data?: und
   return false
 }
 
-import { useQuasar } from 'quasar'
 
 const $q = useQuasar()
 
