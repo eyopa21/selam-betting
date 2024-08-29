@@ -47,7 +47,7 @@ if (error.value) {
                 </div>
                 <div class="tw-flex tw-justify-between   tw-items-center">
                     <p>Main Account(ETB)</p>
-                    <p>{{ data.stake_balance }}ETB</p>
+                    <p>{{ data?.stake_balance }}ETB</p>
                 </div>
             </div>
             <q-expansion-item default-opened expand-separator label="ACCOUNT"
