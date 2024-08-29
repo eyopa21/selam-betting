@@ -1,18 +1,20 @@
-<script setup>
+<script setup lang="ts">
+
+
 const { logout} = useAuth();
 const percentage = ref(50)
 const { $authentication } = useNuxtApp()
 
 
-const { data, error } = await useAuthenticatedFetch('/api/finance/get-stake-amount', {
+const { data, error } = await useFetch('/api/finance/get-stake-amount', {
     method: 'POST',
+    headers: {
+       Authorization: `Bearer ${$authentication.accessToken.value}`,
+    },
 })
 if (error.value) {
-    console.log("erii", error.value);
-} else {
-    console.log("data", data.value);
-}
-
+    useErrorNotifications(error)
+} 
 </script>
 
 
@@ -45,7 +47,7 @@ if (error.value) {
                 </div>
                 <div class="tw-flex tw-justify-between   tw-items-center">
                     <p>Main Account(ETB)</p>
-                    <p>1000ETB</p>
+                    <p>{{ data.stake_balance }}ETB</p>
                 </div>
             </div>
             <q-expansion-item default-opened expand-separator label="ACCOUNT"

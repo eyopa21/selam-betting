@@ -1,5 +1,5 @@
 import { defu } from 'defu'
-import type { UseFetchOptions } from '#app'
+import type { UseFetchOptions  } from '#app'
 
 export function useAuthenticatedFetch<T>(url: string, options: UseFetchOptions<T>) {
     const { $authentication } = useNuxtApp()
@@ -10,7 +10,7 @@ export function useAuthenticatedFetch<T>(url: string, options: UseFetchOptions<T
     const runtimeConfig = useRuntimeConfig()
     const defaults = {
         headers: {
-            Authorization: `Bearer ${$authentication.accessToken.value}`,
+           // Authorization: `Bearer ${$authentication.accessToken.value}`,
         },
         async onResponseError(error) {
             if (error.response.status === 401) {
