@@ -13,6 +13,7 @@ const { data, error } = await useFetch('/api/finance/get-stake-amount', {
 if (error.value) {
     useErrorNotifications(error)
 } else {
+    console.log("user", data.value);
     userStore.user.accountBalance = data.value?.stake_balance
 }
 </script>

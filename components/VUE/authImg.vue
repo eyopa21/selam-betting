@@ -1,15 +1,20 @@
 <template>
-    <q-img v-if="imageData" fit="scale-down" :src="imageData" :alt="props.name" class="tw-w-32 tw-h-20" />
-    <div class="tw-w-full tw-capitalize tw-text-white tw-text-center tw-bg-primary-500">
-        {{ getName }}
+    <div @click="pay()" class="tw-cursor-pointer hover:tw-scale-105 tw-transition-all tw-duration-500">
+        <q-img v-if="imageData" fit="scale-down" :src="imageData" :alt="props.name" class="tw-w-32 tw-h-20" />
+        <div class="tw-w-full tw-capitalize tw-text-white tw-text-center tw-bg-primary-500">
+            {{ getName }}
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import type { InputBody } from '~/server/api/finance/pay.post';
+
 const props = defineProps<{
     url: string
     name: string
 }>()
+
 
 
 const getName = computed(() => {
@@ -19,7 +24,6 @@ const getName = computed(() => {
         return props.name
     }
 })
-
 const { $authentication } = useNuxtApp();
 const imageData = ref<string | null>(null);
 
@@ -29,7 +33,7 @@ onMounted(async () => {
             headers: {
                 Authorization: `Bearer ${$authentication.accessToken.value}`,
             },
-            cache: 'force-cache'
+            cache: 'force-cache',
         });
         if (response) {
             imageData.value = URL.createObjectURL(response);
@@ -42,4 +46,33 @@ onMounted(async () => {
 }
     
 });
+
+
+async function pay() {
+    try {
+        const response = await $fetch('/api/finance/pay', {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${$authentication.accessToken.value}`,
+            },
+            cache: 'force-cache',
+            body: {
+                amount: 1,
+                is_direct_payment: false,
+                paymentMethods: props.name
+            } as InputBody
+        });
+        if (response.error === false && response.data.paymentUrl) {
+            console.log("response", response);
+            window.open(response.data.paymentUrl)
+        } else {
+            console.error('Failed to fetch the image:');
+        }
+    } catch (err) {
+        console.log("pay err", err);
+    }
+   
+}
+
+
 </script>
