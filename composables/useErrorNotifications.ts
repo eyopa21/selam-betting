@@ -1,16 +1,17 @@
-import { useQuasar } from 'quasar'
-import type { NuxtError } from '#app'
+import { useQuasar } from "quasar";
+import type { NuxtError } from "#app";
+import { FetchError } from "ofetch";
 
+export function useErrorNotifications(
+  error: Ref<NuxtError> | Ref<FetchError | null>
+) {
+  const $q = useQuasar();
 
-export function useErrorNotifications(error: Ref<NuxtError> | unknown) {
-    const $q = useQuasar()
-   // console.log("errororororrrrrrrrrrrrrrrrrrrr", error);
-    if(error.value.statusCode === 401)
-{
-    error.value.message = 'Token is missing'
-}
+  if (error.value && error.value.statusCode === 401) {
+    error.value.message = error.value.message;
+  }
 
-    $q.notify({
-       message: error.value.message
-   })
+  $q.notify({
+    message: error.value?.message,
+  });
 }
