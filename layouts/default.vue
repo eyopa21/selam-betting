@@ -49,7 +49,5 @@
 
 const userStore = useUserStore();
 const layout = useLayout();
-onMounted(async () => {
-  await userStore.getUser();
-});
+
 </script>
