@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import type { CasinoGame } from '~/types/casino/games'
+
+
 definePageMeta({
-    layout: 'casino'
+    layout: 'casino',
+    pageType: 'authenticated'
 })
 
 const slide = ref('1')
-const games = ref([
+const games = ref <CasinoGame[]>([
     {
         image: 'https://client.qtlauncher.com/images/?id=1x2-plinkogo_en_US&type=logo-square&version=1677489299406',
         name: 'Plinko Go',
@@ -94,35 +98,55 @@ const games = ref([
 
 ])
 
-const selectedGameLink  = ref('')
+const filterType = ref<'square' | 'circle'>('square')
+const selectedGameLink = ref('')
+
+function toggleType() {
+    if (filterType.value === 'circle') {
+        filterType.value = 'square'
+    } else {
+        filterType.value = 'circle'
+    }
+    
+}
 
 </script>
 
 <template>
-    <div class="tw-mx-auto">
-        <div class="tw-p-4 ">
-            <q-carousel v-model="slide" transition-prev="slide-right" transition-next="slide-left" infinite animated
-                control-color="white" navigation padding arrows height="300px" :autoplay="true"
-                class="text-white shadow-1 tw-rounded-3xl rounded-border">
-                <q-carousel-slide name="1" img-src="/images/image 63.png"
-                    class="tw-w-full tw-h-full"></q-carousel-slide>
-                <q-carousel-slide name="6" img-src="/images/image 64.png"
-                    class="tw-w-full tw-h-full"></q-carousel-slide>
-                <q-carousel-slide name="7" img-src="/images/image 65.png"
-                    class="tw-w-full tw-h-full"></q-carousel-slide>
-                <q-carousel-slide name="2" img-src="/images/Fenan pay.png"
-                    class="tw-w-full tw-h-full"></q-carousel-slide>
-                <q-carousel-slide name="3" img-src="/images/Fly emrates.png"
-                    class="tw-w-full tw-h-full"></q-carousel-slide>
-                <q-carousel-slide name="4" img-src="/images/Pepsi banner.png"
-                    class="tw-w-full tw-h-full"></q-carousel-slide>
-                <q-carousel-slide name="5" img-src="/images/ITSC banner.png"
-                    class="tw-w-full tw-h-full"></q-carousel-slide>
-            </q-carousel>
+    <div class="tw-mx-auto tw-pb-20">
+        <div class="tw-p-2 tw-flex tw-w-full tw-gap-2 ">
+            <div class="tw-w-2/3">
+                <q-carousel v-model="slide" transition-prev="slide-right" transition-next="slide-left" infinite animated
+                    control-color="white" navigation padding arrows height="300px" :autoplay="true"
+                    class="text-white shadow-1  rounded-border">
+                    <q-carousel-slide name="1" img-src="/casino/casinoImage.png"
+                        class="tw-w-full tw-h-full"></q-carousel-slide>
+
+                </q-carousel>
+            </div>
+            <q-scroll-area class="tw-w-1/3 tw-overflow-auto tw-max-h-[300px] tw-gap-2">
+                <div v-for="i in 7" class="tw-flex tw-flex-col tw-space-y-8 tw-gap-y-4 ">
+                    <div
+                        class="tw-flex tw-justify-between tw-shadow-sm tw-shadow-gray-400 tw-ml-1 tw-gap-4 tw-bg-primary-900 tw-h-20 tw-rounded-lg tw-p-2 tw-my-1 ">
+                        <q-img :src="games[0].image" alt="img" class="tw-size-16 tw-rounded" />
+                        <div class="tw-flex tw-flex-col text-white tw-text-xs tw-w-1/2">
+                            <p class="tw-text-primary-300 tw-text-base">Congratulations</p>
+                            <span class="tw-pl-4 tw-pt-2 font-prosto">
+                                <p>Football FreeStyler</p>
+                                <p>121* won</p>
+                            </span>
+                        </div>
+                        <div class="tw-self-end tw-w-1/3 tw-text-base tw-text-amber-400">
+                            $3000 ETB
+                        </div>
+                    </div>
+                </div>
+            </q-scroll-area>
         </div>
-        <div class="tw-flex tw-justify-center">
-            <q-tabs narrow-indicator dense align="justify" class="text-white">
-                <q-route-tab name="mails" icon="home" label="LOBBY" />
+        <div class="tw-flex tw-my-8 tw-justify-center">
+            <q-tabs narrow-indicator dense align="justify" class="text-white text-weight-bolder tw-font-extrabold"
+                content-class="text-white">
+                <q-route-tab name="home" icon="home" label="LOBBY" />
                 <q-route-tab name="virtual" icon="add_to_queue" label="VIRTUAL" />
                 <q-route-tab name="league" icon="api" label=" LEAGUE" />
                 <q-route-tab name="crash" icon="videogame_asset" label="CRASH GAMES" />
@@ -136,41 +160,73 @@ const selectedGameLink  = ref('')
 
             </q-tabs>
         </div>
-        <div class="tw-flex  tw-mt-6 tw-justify-center tw-gap-4">
+        <div class="tw-flex tw-mt-6 tw-justify-between tw-gap-4 tw-px-8">
+            <div class="tw-self-end tw-text-lg tw-text-white">
+                HarifSport - Special
+            </div>
+            <div class="tw-flex tw-gap-2">
+                <q-input outlined standout="text-blue-grey-5" input-class="text-white"
+                    placeholder="Search for your Games" class="tw-bg-primary-700 tw-w-72 ">
+                    <template v-slot:prepend>
+                        <q-icon name="search" color="blue-grey-2" />
+                    </template>
+                </q-input>
+                <q-btn color="primary" label="Let's Look" text-color="blue-grey-2" />
+            </div>
 
-            <q-input outlined standout="text-blue-grey-5"  input-class="text-white" placeholder="Search for your Games"
-                class="tw-bg-primary-700 tw-w-72 ">
-                <template v-slot:prepend>
-                    <q-icon name="search" color="blue-grey-2" />
-                </template>
-            </q-input>
-            <q-btn color="primary" label="Let's Look" text-color="blue-grey-2" />
-
-
+            <div class="tw-flex1 tw-self-center tw-border-[2px] tw-rounded-lg tw-border-primary-400">
+                <q-btn-group outline stretch>
+                    <q-btn color="primary-10" icon="filter_alt" size="lg" />
+                    <q-btn @click="toggleType()" color="primary-10" icon="apps" size="lg" />
+                    <q-btn color="primary-10" icon="control_camera" size="lg" />
+                </q-btn-group>
+            </div>
         </div>
         <div class="tw-p-8">
-            <div class="tw-grid tw-grid-cols-4 tw-gap-4">
+            <div class="tw-grid  tw-gap-4 tw-gap-y-8"
+                :class="filterType === 'square' ? 'tw-grid-cols-4' :'tw-grid-cols-7'">
                 <div v-for="(i, key) in games" :key="key"
-                    class="tw-relative hover:-tw-translate-y-2 tw-transition-all tw-duration-500">
-                    <div class="tw-absolute tw-right-0">
-                        <q-btn flat round color="white" icon="favorite_outline"
-                            class="hover:tw-scale-110 tw-transition-all tw-duration-500" />
+                    class="tw-relative hover:-tw-translate-y-2  tw-transition-all tw-duration-500">
+                    <div v-if="filterType === 'square'">
+                        <div class="tw-absolute tw-right-0">
+                            <q-btn flat round color="white" icon="favorite_outline"
+                                class="hover:tw-scale-110 tw-transition-all tw-duration-500" />
+                        </div>
+                        <q-img :src="i.image" :alt="i.name" class="tw-rounded tw-ring tw-ring-blue-500" />
+                        <div class="tw-flex tw-mt-3 tw-space-x-4 tw-justify-between tw-w-full">
+                            <q-btn @click="selectedGameLink = i.link" color="deep-purple-14" label="Play"
+                                class="tw-w-full tw-ring-2 tw-ring-white tw-rounded-xl" />
+                            <q-btn @click=" selectedGameLink=i.link" color="black" label="Practice"
+                                class="tw-w-full tw-hidden lg:tw-block tw-ring-2 tw-ring-white tw-rounded-xl" />
+                        </div>
                     </div>
-                    <img :src="i.image" :alt="i.name" class="tw-rounded">
-                    <div class="tw-flex tw-mt-2 tw-space-x-4 tw-justify-between tw-w-full">
-                        <q-btn @click="selectedGameLink = i.link" color="primary" label="Play" class="tw-w-full" " />
-                        <q-btn @click="selectedGameLink = i.link" color="black" label="Practice"
-                            class="tw-w-full tw-hidden lg:tw-block" />
-
+                    <div v-else>
+                        <q-avatar size="150px" font-size="52px" color="primary" text-color="white"
+                            class="tw-ring-1 hover:tw-scale-105 tw-transition-all tw-duration-500 tw-cursor-pointer">
+                            <q-img :src="i.image" />
+                        </q-avatar>
+                        <div class="tw-flex  tw-mt-3 tw-space-x-2 tw-justify-around ">
+                            <q-btn size="sm" @click="selectedGameLink = i.link" color="deep-purple-14" label="Play"
+                                class="tw-h-6 tw-ring-1 tw-ring-white tw-rounded-xl" />
+                            <q-btn size="sm" @click=" selectedGameLink = i.link" color="black" label="Practice"
+                                class=" tw-hidden tw-h-6 lg:tw-block tw-ring-1 tw-ring-white tw-rounded-xl" />
+                        </div>
                     </div>
 
                 </div>
+
 
             </div>
 
         </div>
         <div v-if="selectedGameLink">
-            <GamePlayer :game-link="selectedGameLink" @close="selectedGameLink = ''" />
+            <CasinoGamePlayer :game-link="selectedGameLink" @close="selectedGameLink = ''" />
+        </div>
+        <div class=" tw-p-8">
+            <CasinoCategories :games />
+        </div>
+        <div class="tw-mx-auto tw-w-3/4 tw-bg-primary-500 tw-h-full tw-mt-8">
+            <CasinoBottomAd />
         </div>
     </div>
 </template>

@@ -2,6 +2,10 @@
   "name": "nuxt-app",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@9.9.0",
+  "engines": {
+    "node": "20.17.0"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --dotenv .env",
@@ -25,6 +29,11 @@
     "vue-router": "^4.4.0"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^6.12.0"
+    "@antfu/eslint-config": "^2.27.3",
+    "@nuxt/eslint": "^0.5.3",
+    "@nuxtjs/tailwindcss": "^6.12.0",
+    "eslint": "^9.9.1",
+    "eslint-plugin-tailwindcss": "^3.17.4",
+    "typescript": "^5.5.4"
   }
 }
