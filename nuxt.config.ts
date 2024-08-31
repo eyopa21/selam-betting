@@ -24,6 +24,9 @@ export default defineNuxtConfig({
 
   },
 
+  eslint: {
+    config: { stylistic: false, standalone: false },
+  },
   runtimeConfig: {
     public: {
       financeApiEndpoint: ''
