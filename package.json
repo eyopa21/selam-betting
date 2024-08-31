@@ -1,7 +1,7 @@
 {
-  "name": "nuxt-app",
-  "private": true,
+  "name": "harif-sport-betting",
   "type": "module",
+  "private": true,
   "packageManager": "pnpm@9.9.0",
   "engines": {
     "node": "20.17.0"
@@ -9,9 +9,13 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --dotenv .env",
+    "cleanup": "nuxt cleanup",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@nuxt/image": "^1.7.0",
