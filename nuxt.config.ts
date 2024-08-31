@@ -24,9 +24,16 @@ export default defineNuxtConfig({
 
   },
 
+  eslint: {
+    config: { stylistic: false, standalone: false },
+  },
   runtimeConfig: {
-    serverApiKey: process.env.API_KEY,
-    restApiEndpoint: process.env.API_BASE_URL,
+    public: {
+      financeApiEndpoint: ''
+    },
+    serverApiKey: '',
+    restApiEndpoint: '',
+    baseApiEndpoint: ''
   },
 
   compatibilityDate: "2024-07-04",

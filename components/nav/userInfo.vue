@@ -1,7 +1,21 @@
-<script setup>
+<script setup lang="ts">
 const { logout} = useAuth();
 const percentage = ref(50)
-const {$authentication} = useNuxtApp()
+const { $authentication } = useNuxtApp()
+const userStore = useUserStore()
+
+const { data, error } = await useFetch('/api/finance/get-stake-amount', {
+    method: 'POST',
+    headers: {
+       Authorization: `Bearer ${$authentication.accessToken.value}`,
+    },
+})
+if (error.value) {
+    useErrorNotifications(error)
+} else {
+    console.log("user", data.value);
+    userStore.user.accountBalance = data.value?.stake_balance
+}
 </script>
 
 
@@ -16,9 +30,9 @@ const {$authentication} = useNuxtApp()
                 <div class="tw-flex tw-flex-col tw-text-base">
                     <div class="tw-flex tw-justify-start">
                         <p class="tw-font-semibold">Account NO: </p>
-                        <span class="tw-text-amber-500 tw-font-extrabold">{{ $authentication.session.value.user_name }}</span>
+                        <span class="tw-text-amber-500 tw-font-extrabold">{{ $authentication.session.value?.user_name }}</span>
                     </div>
-                    <p class="tw-text-gray-400 tw-text-xs tw-underline">{{ $authentication.session.value.email }}</p>
+                    <p class="tw-text-gray-400 tw-text-xs tw-underline">{{ $authentication.session.value?.email }}</p>
                 </div>
                 <div>
                     <q-knob rounded readonly show-value  :model-value="percentage" size="50px" 
@@ -34,7 +48,7 @@ const {$authentication} = useNuxtApp()
                 </div>
                 <div class="tw-flex tw-justify-between   tw-items-center">
                     <p>Main Account(ETB)</p>
-                    <p>1000ETB</p>
+                    <p>{{ userStore.user?.accountBalance }}ETB</p>
                 </div>
             </div>
             <q-expansion-item default-opened expand-separator label="ACCOUNT"

@@ -3,7 +3,8 @@ import type { CasinoGame } from '~/types/casino/games'
 
 
 definePageMeta({
-    layout: 'casino'
+    layout: 'casino',
+    pageType: 'authenticated'
 })
 
 const slide = ref('1')

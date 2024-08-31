@@ -6,7 +6,6 @@
     "editor.defaultFormatter": "Vue.volar"
   },
   "cSpell.words": [
-    "Afriwork",
     "heroicons",
     "tickable"
   ],
@@ -67,7 +66,7 @@
       "severity": "off"
     }
   ],
-  "eslint.runtime": "node",
+  "eslint.useFlatConfig": true,
   // Enable eslint for all supported languages
   "eslint.validate": [
     "javascript",
@@ -93,5 +92,6 @@
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "tailwindCSS.emmetCompletions": true
+  "tailwindCSS.emmetCompletions": true,
+  "eslint.format.enable": true
 }
