@@ -1,5 +1,5 @@
-export type CasinoGame =  {
-    image: string
-    name: string,
-    link: string
+export type CasinoGame = {
+  image: string
+  name: string
+  link: string
 }

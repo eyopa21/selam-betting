@@ -2,24 +2,24 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
-    "nuxt-quasar-ui",
-    "@nuxtjs/tailwindcss",
-    "@nuxt/image",
+    'nuxt-quasar-ui',
+    '@nuxtjs/tailwindcss',
+    '@nuxt/image',
     '@pinia/nuxt',
     '@vueuse/nuxt',
-    "@nuxt/eslint"
+    '@nuxt/eslint',
   ],
-  css: ["~/assets/css/main.css"],
+  css: ['~/assets/css/main.css'],
 
   quasar: {
     plugins: [
-      'Notify'
+      'Notify',
     ],
     config: {
       brand: {
-        primary: "rgb(var(--secondary-800))",
-        secondary: "rgb(var(--secondary-500))",
-      }
+        primary: 'rgb(var(--secondary-800))',
+        secondary: 'rgb(var(--secondary-500))',
+      },
     },
 
   },
@@ -29,12 +29,12 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      financeApiEndpoint: ''
+      financeApiEndpoint: '',
     },
     serverApiKey: '',
     restApiEndpoint: '',
-    baseApiEndpoint: ''
+    baseApiEndpoint: '',
   },
 
-  compatibilityDate: "2024-07-04",
-});
+  compatibilityDate: '2024-07-04',
+})

@@ -1,6 +1,3 @@
-import { FetchError } from 'ofetch'
-import type { NuxtError } from '#app'
-
 export type Result = {
   id: string
   user: string

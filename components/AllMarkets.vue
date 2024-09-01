@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MarketResults, Markets } from '~/types/matches'
+import type { MarketResults } from '~/types/matches'
 
 type Market = {
   marketName: string
@@ -75,11 +75,11 @@ watch(tabValue, () => {
 })
 
 function filterMarkets() {
-  if (tabValue.value == 'all-market') {
+  if (tabValue.value === 'all-market') {
     filteredMarkets.value = visibleMarkets.value as Market[]
   } else {
     filteredMarkets.value = (visibleMarkets.value as Market[]).filter(
-      market => market.marketName == tabValue.value,
+      market => market.marketName === tabValue.value,
     )
   }
 }

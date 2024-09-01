@@ -1,31 +1,18 @@
-<template>
-  <div @click="selectBet()"
-    :class="isSelected ? 'tw-bg-amber-500 tw-text-black tw-dark:bg-red-500' : 'tw-bg-gray-50 dark:tw-bg-gray-700'"
-    class="tw-flex tw-justify-between tw-cursor-pointer  tw-py-3 tw-px-3 hover:tw-bg-amber-600 tw-rounded tw-border tw-border-secondary-200 dark:tw-border-none active:tw-bg-gray-400">
-    <p class="tw-font-medium dark:tw-text-white tw-text-gray-700">
-      {{ value }}
-    </p>
-    <p class="dark:tw-text-gray-300 tw-text-gray-700">{{ odd }} </p>
-  </div>
-</template>
-
 <script setup lang="ts">
-
-const { addGameToSlip, findSlipById } = useSlips();
 const props = defineProps<{
-  outcomeId: number,
-  eventId: string | number;
-  value: string;
-  odd: string;
+  outcomeId: number
+  eventId: string | number
+  value: string
+  odd: string
   matchDetail: {
-    id: number | string,
-    teams: string,
+    id: number | string
+    teams: string
     league: string
     date: string
     time: string
   }
-}>();
-
+}>()
+const { addGameToSlip, findSlipById } = useSlips()
 function selectBet() {
   addGameToSlip(props)
 }
@@ -34,3 +21,18 @@ const isSelected = computed(() => {
   return findSlipById.value.games?.find(game => game.outcomeId === props.outcomeId) !== undefined
 })
 </script>
+
+<template>
+  <div
+    :class="isSelected ? 'tw-bg-amber-500 tw-text-black tw-dark:bg-red-500' : 'tw-bg-gray-50 dark:tw-bg-gray-700'"
+    class="tw-flex tw-cursor-pointer tw-justify-between  tw-rounded tw-border tw-border-secondary-200 tw-p-3 hover:tw-bg-amber-600 active:tw-bg-gray-400 dark:tw-border-none"
+    @click="selectBet()"
+  >
+    <p class="tw-font-medium tw-text-gray-700 dark:tw-text-white">
+      {{ value }}
+    </p>
+    <p class="tw-text-gray-700 dark:tw-text-gray-300">
+      {{ odd }}
+    </p>
+  </div>
+</template>

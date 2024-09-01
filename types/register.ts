@@ -1,7 +1,6 @@
 export type RegisterError = {
-    username?: string[]
-    phone_number?: string[]
-    password?: string[]
-    email?: string[]
+  username?: string[]
+  phone_number?: string[]
+  password?: string[]
+  email?: string[]
 }
-
