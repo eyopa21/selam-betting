@@ -88,8 +88,6 @@ async function bookBet() {
         }),
       },
     })
-    console.log('error', error.value)
-    console.log('data', data.value)
     if (error.value) {
       loading.value = false
       $q.notify({

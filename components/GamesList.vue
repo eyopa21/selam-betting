@@ -4,10 +4,7 @@ import type { Matches, Participants } from '~/types/matches'
 const props = defineProps<{
   hasMore?: boolean
 }>()
-const emit = defineEmits<{
-  load: [number]
-}>()
-const layout = useLayout()
+
 const oddTypes = ref([
   '1',
   'x',
@@ -98,13 +95,11 @@ async function getMoreMatches(page: number) {
   if (loading.value || !hasMore.value) {
     return
   }
-  console.log('fetching', matchListStore.listOfMatches?.length)
   loading.value = true
   const { data, error } = await useFetch(
     `/api/filter_event/?sport_id=${1}&interval_hours=${24}&page_size=50&page=${page}`,
   )
   if (error.value) {
-    console.log('Error fetching matches:', error.value)
     loading.value = false
   } else {
     if (data.value?.data.results?.length) {
@@ -137,8 +132,6 @@ async function getMoreMatches(page: number) {
           showMarket: false,
         }
       })
-
-      console.log('adding')
       matchListStore.addMatchList(matches.value)
       hasMore.value = !!data.value.data.next
       loading.value = false
@@ -174,7 +167,7 @@ const groupedByLeague = computed<GroupedMatches>(() => {
       <div class="tw-ml-4 tw-items-start">
         <q-tabs v-model="activeHeader" inline-label outside-arrows mobile-arrows dense>
           <q-tab
-            v-for="header in headersArray" class="tw-text-xl tw-font-semibold tw-text-white" :name="header"
+            v-for="(header, key) in headersArray " :key class="tw-text-xl tw-font-semibold tw-text-white" :name="header"
             :label="header"
           />
         </q-tabs>
@@ -287,7 +280,7 @@ const groupedByLeague = computed<GroupedMatches>(() => {
                 </div>
 
                 <div class="tw-mb-2 tw-grid tw-w-3/5 tw-grid-cols-7 tw-gap-2">
-                  <div v-for="odd in match.odds" class="tw-mr-2 tw-w-full">
+                  <div v-for="odd in match.odds" :key="odd.eventId" class="tw-mr-2 tw-w-full">
                     <Odd
                       :match-detail="{
                         id: match.id,
@@ -301,7 +294,8 @@ const groupedByLeague = computed<GroupedMatches>(() => {
                   <q-btn
                     outline dense padding="xs lg" size="sm" color="green"
                     class="tw-whitespace-nowrap tw-rounded-lg tw-font-semibold tw-text-gray-600 dark:tw-text-white"
-                    :label="`+${match.numberOfMarkets}`" @click="$router.push(`/matches/${match.id}`)"
+                    :label="`+${match.numberOfMarkets}`"
+                    @to="`/matches/${match.id}`"
                   >
                     <q-tooltip class="bg-green">
                       View all

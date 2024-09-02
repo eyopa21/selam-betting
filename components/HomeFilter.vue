@@ -98,6 +98,7 @@ async function filterGamesByDate(date: Date) {
       matchListStore.listOfMatches = []
     }
   }).catch((err) => {
+    console.error(err)
     layout.value.mainLoader = false
     $q.notify({
       message: 'Error filtering matches',

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MarketResults } from '~/types/matches'
+import type { MarketResults, Markets } from '~/types/matches'
 
 type Market = {
   marketName: string
@@ -31,7 +31,6 @@ const loading = ref(true)
 
 const { data, error } = await useFetch(`/api/markets/${props.matchDetail.id}/?pageSize=${10}`)
 if (error.value) {
-  console.log('eroror', error.value)
   loading.value = false
 } else if (data.value?.data) {
   count.value = data.value.data.count
