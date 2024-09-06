@@ -1,15 +1,8 @@
 import { defineStore } from 'pinia'
+import type { Root } from '~/types/auth/user-info'
 
-type UserInfo = {
-  accountBalance?: string
-  accountNumber?: string
-
-}
 export const useUserStore = defineStore('user', () => {
-  const user = ref<UserInfo>({
-    accountBalance: '0',
-    accountNumber: undefined,
-  })
+  const user = ref<Root>()
   return {
     user,
   }
