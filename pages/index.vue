@@ -15,7 +15,6 @@ const { data, error, status } = await useLazyFetch(`/api/filter_event/?sport_id=
   cache: 'no-cache',
 
 })
-console.log('all home', data.value?.data)
 
 if (error.value) {
   console.log('Error fetching tournaments:', error.value)

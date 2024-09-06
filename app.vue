@@ -14,7 +14,6 @@ if ($authentication.loggedIn.value) {
     },
   })
   if (error.value) {
-    console.log('erri', error)
     useErrorNotifications(error)
   } else if (data.value) {
     // console.log('app', data.value)
