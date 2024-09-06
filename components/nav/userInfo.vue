@@ -1,22 +1,7 @@
 <script setup lang="ts">
+const userStore = useUserStore()
 const { logout } = useAuth()
 const percentage = ref(50)
-const { $authentication } = useNuxtApp()
-const userStore = useUserStore()
-
-const { data, error } = await useFetch('/api/finance/get-stake-amount', {
-  method: 'GET',
-  headers: {
-    Authorization: `Bearer ${$authentication.accessToken.value}`,
-  },
-})
-if (error.value) {
-  console.log('wuu', error.value.statusMessage)
-  useErrorNotifications(error)
-} else {
-  console.log('user', data.value)
-  userStore.user.accountBalance = data.value?.stake_balance
-}
 </script>
 
 <template>
@@ -27,12 +12,12 @@ if (error.value) {
         <div class="tw-flex tw-flex-col tw-text-base">
           <div class="tw-flex tw-justify-start">
             <p class="tw-font-semibold">
-              Account NO:
+              Account No:
             </p>
-            <span class="tw-font-extrabold tw-text-amber-500">{{ $authentication.session.value?.user_name }}</span>
+            <span v-if="userStore.user?.user.phone_number" class="tw-font-extrabold tw-text-amber-500">{{ userStore.user?.user.phone_number }}</span>
           </div>
-          <p class="tw-text-xs tw-text-gray-400 tw-underline">
-            {{ $authentication.session.value?.email }}
+          <p v-if="userStore.user?.user.email" class="tw-text-xs tw-text-gray-400 tw-underline">
+            {{ userStore.user?.user.email }}
           </p>
         </div>
         <div>
@@ -49,9 +34,9 @@ if (error.value) {
           <p>Bonus Points</p>
           <p>0</p>
         </div>
-        <div class="tw-flex tw-items-center   tw-justify-between">
+        <div v-if="userStore.user?.stake_balance.stake_balance" class="tw-flex tw-items-center   tw-justify-between">
           <p>Main Account(ETB)</p>
-          <p>{{ userStore.user?.accountBalance }}ETB</p>
+          <p>{{ userStore.user?.stake_balance.stake_balance }}ETB</p>
         </div>
       </div>
       <q-expansion-item
