@@ -8,7 +8,7 @@ definePageMeta({
 
 const { $authentication } = useNuxtApp()
 
-const { data: games2, error } = await useFetch('/api/casino/get-games', {
+const { data: games, error } = await useFetch('/api/casino/get-games', {
 
   method: 'GET',
   headers: {
@@ -20,114 +20,6 @@ if (error.value) {
 }
 
 const slide = ref('1')
-const games = ref <CasinoGame[]>([
-  {
-    image: 'https://client.qtlauncher.com/images/?id=1x2-plinkogo_en_US&type=logo-square&version=1677489299406',
-    name: 'Plinko Go',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=36ad70595ac14a55b324c992c7afb87b-CIS&amp;hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=GLX-fmines_en_US&type=logo-square&version=1692005766333',
-    name: 'F Mines',
-    link: 'https://fg-launcher-api.ffaassttyy-54rg78cw.com/?PartnerId=CF76253AC5DF2E930A950C189E35F281&amp;culture=en&amp;Mode=2&amp;gameType=Mines&amp;isMobile=true&amp;IsDemo=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=TRB-aero_en_US&type=logo-square&version=1701153611058',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=c6459495-20ec-4125-a267-d8f3a44093cc&amp;hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=GMC-footballfreestyler_en_US&type=logo-square&version=1715673674871',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=SPB-hilo_en_US&type=logo-square&version=1671525909235',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=49cdb228-8dba-4382-991f-e5efb838bcc6&hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=RED-alexanderthegreatworldconqueror_en_US&type=logo-square&version=1684145060701',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=f97ed8ffb04647f88f12b376725593a1-CIS&hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=PPC-bookofthefallen_en_US&type=logo-square&version=1664534218304',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=36ad70595ac14a55b324c992c7afb87b-CIS&amp;hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=WAZ-burningstars3_en_US&type=logo-square&version=1671629244294',
-    name: 'hello',
-    link: 'https://fg-launcher-api.ffaassttyy-54rg78cw.com/?PartnerId=CF76253AC5DF2E930A950C189E35F281&amp;culture=en&amp;Mode=2&amp;gameType=Mines&amp;isMobile=true&amp;IsDemo=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=GZX-bookofcairo_en_US&type=logo-square&version=1663271874047',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=c6459495-20ec-4125-a267-d8f3a44093cc&amp;hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=1x2-disco777_en_US&type=logo-square&version=1662575710450',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=NLC-fireintheholexbomb_en_US&type=logo-square&version=1683223361283',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=PPC-fruitparty_en_US&type=logo-square&version=1668596261144',
-    name: 'hello',
-    link: '',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=KGL-goldtracker7s_en_US&type=logo-square&version=1690366810894',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=NLC-folsomprison_en_US&type=logo-square&version=1655284194010',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=OPY-foresttreasures_en_US&type=logo-square&version=1710228210833',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=PPC-fruitparty2_en_US&type=logo-square&version=1668596625406',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=PPC-hottoburn_en_US&type=logo-square&version=1668608315631',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=PPC-johnhunterandthemayangods_en_US&type=logo-square&version=1668683586324',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=GMC-lukeechanceandthebookofluck_en_US&type=logo-square&version=1696431217748',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=PPC-shininghot100_en_US&type=logo-square&version=1658249402144',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true',
-  },
-  {
-    image: 'https://client.qtlauncher.com/images/?id=PPC-shininghot40_en_US&type=logo-square&version=1658249173497',
-    name: 'hello',
-    link: 'https://client.qtlauncher.com/client/game-launcher.html#/?gameSession=543c5434-7d9a-4dda-90ef-bc6a43f31483&hideSplash=true',
-  },
-
-])
 
 const filterType = ref<'square' | 'circle'>('square')
 const selectedGameLink = ref('')
@@ -220,7 +112,7 @@ function toggleType() {
         </q-btn-group>
       </div>
     </div>
-    <div v-for="(i, key) in games2" :key="key" class="tw-p-8">
+    <div v-for="(i, key) in games" :key="key" class="tw-p-8">
       <h1 class="my-8 tw-text-7xl tw-font-extrabold tw-text-white">
         {{ i.name }}
       </h1>
@@ -275,8 +167,8 @@ function toggleType() {
     <div v-if="selectedGameLink">
       <CasinoGamePlayer :game-link="selectedGameLink" @close="selectedGameLink = ''" />
     </div>
-    <div class=" tw-p-8">
-      <CasinoCategories :games2 />
+    <div v-if="games" class=" tw-p-8">
+      <CasinoCategories :games />
     </div>
     <div class="tw-mx-auto tw-mt-8 tw-h-full tw-w-3/4 tw-bg-primary-500">
       <CasinoBottomAd />
