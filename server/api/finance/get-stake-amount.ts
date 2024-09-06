@@ -1,3 +1,6 @@
+import { NuxtError } from 'nuxt/app'
+import { FetchError } from 'ofetch'
+
 export type Result = {
   id: string
   user: string
@@ -21,7 +24,6 @@ export default defineEventHandler(async (event) => {
         },
       })
 
-      // Process the result if the fetch is successful
       return result
     } else {
       throw createError({

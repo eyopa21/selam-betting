@@ -3,15 +3,15 @@ import type { FetchError } from 'ofetch'
 import type { NuxtError } from '#app'
 
 export function useErrorNotifications(
-  error: Ref<NuxtError> | Ref<FetchError | null>,
+  error: Ref<unknown>,
 ) {
   const $q = useQuasar()
-
-  if (error.value && error.value.statusCode === 401) {
-    error.value.message = error.value.message
-  }
+  const err = error.value as NuxtError
+  // if (error.value && error.value.statusCode === 401) {
+  //   error.value.message = error.value.message
+  // }
 
   $q.notify({
-    message: error.value?.message,
+    message: err?.message,
   })
 }
