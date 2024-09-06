@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MarketResults, Markets } from '~/types/matches'
+import type { MarketResults } from '~/types/matches'
 
 type Market = {
   marketName: string

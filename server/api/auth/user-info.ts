@@ -1,5 +1,4 @@
 import type { NuxtError } from 'nuxt/app'
-import { FetchError } from 'ofetch'
 import type { Root } from '~/types/auth/user-info'
 
 type ErrorResponse = {

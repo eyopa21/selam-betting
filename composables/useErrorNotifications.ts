@@ -1,5 +1,4 @@
 import { useQuasar } from 'quasar'
-import type { FetchError } from 'ofetch'
 import type { NuxtError } from '#app'
 
 export function useErrorNotifications(
