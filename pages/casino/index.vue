@@ -6,6 +6,19 @@ definePageMeta({
   pageType: 'authenticated',
 })
 
+const { $authentication } = useNuxtApp()
+
+const { data: games2, error } = await useFetch('/api/casino/get-games', {
+
+  method: 'GET',
+  headers: {
+    Authorization: `Bearer ${$authentication.accessToken.value}`,
+  },
+})
+if (error.value) {
+  useErrorNotifications(error)
+}
+
 const slide = ref('1')
 const games = ref <CasinoGame[]>([
   {
@@ -144,11 +157,11 @@ function toggleType() {
         </q-carousel>
       </div>
       <q-scroll-area class="tw-max-h-[300px] tw-w-1/3 tw-gap-2 tw-overflow-auto">
-        <div v-for="i in 7" class="tw-flex tw-flex-col tw-gap-y-4 tw-space-y-8 ">
+        <div v-for="i in 7" :key="i" class="tw-flex tw-flex-col tw-gap-y-4 tw-space-y-8 ">
           <div
             class="tw-my-1 tw-ml-1 tw-flex tw-h-20 tw-justify-between tw-gap-4 tw-rounded-lg tw-bg-primary-900 tw-p-2 tw-shadow-sm tw-shadow-gray-400 "
           >
-            <q-img :src="games[0].image" alt="img" class="tw-size-16 tw-rounded" />
+            <q-img src="https://client.qtlauncher.com/images/?id=1x2-plinkogo_en_US&type=logo-square&version=1677489299406" alt="img" class="tw-size-16 tw-rounded" />
             <div class="text-white tw-flex tw-w-1/2 tw-flex-col tw-text-xs">
               <p class="tw-text-base tw-text-primary-300">
                 Congratulations
@@ -207,13 +220,16 @@ function toggleType() {
         </q-btn-group>
       </div>
     </div>
-    <div class="tw-p-8">
+    <div v-for="(i, key) in games2" :key="key" class="tw-p-8">
+      <h1 class="my-8 tw-text-7xl tw-font-extrabold tw-text-white">
+        {{ i.name }}
+      </h1>
       <div
         class="tw-grid  tw-gap-4 tw-gap-y-8"
         :class="filterType === 'square' ? 'tw-grid-cols-4' : 'tw-grid-cols-7'"
       >
         <div
-          v-for="(i, key) in games" :key="key"
+          v-for="(ii, k) in i.games" :key="k"
           class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
         >
           <div v-if="filterType === 'square'">
@@ -223,15 +239,15 @@ function toggleType() {
                 class="tw-transition-all tw-duration-500 hover:tw-scale-110"
               />
             </div>
-            <q-img :src="i.image" :alt="i.name" class="tw-rounded tw-ring tw-ring-blue-500" />
+            <q-img :src="ii.logo_url" :alt="ii.label" class="tw-rounded tw-ring tw-ring-blue-500" />
             <div class="tw-mt-3 tw-flex tw-w-full tw-justify-between tw-space-x-4">
               <q-btn
                 color="deep-purple-14" label="Play" class="tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white"
-                @click="selectedGameLink = i.link"
+                @click="selectedGameLink = ii.play_url"
               />
               <q-btn
                 color="black" label="Practice" class="tw-hidden tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white lg:tw-block"
-                @click=" selectedGameLink = i.link"
+                @click=" selectedGameLink = ii.play_url"
               />
             </div>
           </div>
@@ -240,16 +256,16 @@ function toggleType() {
               size="150px" font-size="52px" color="primary" text-color="white"
               class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105"
             >
-              <q-img :src="i.image" />
+              <q-img :src="ii.logo_url" />
             </q-avatar>
             <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-2 ">
               <q-btn
                 size="sm" color="deep-purple-14" label="Play" class="tw-h-6 tw-rounded-xl tw-ring-1 tw-ring-white"
-                @click="selectedGameLink = i.link"
+                @click="selectedGameLink = ii.play_url"
               />
               <q-btn
                 size="sm" color="black" label="Practice" class=" tw-hidden tw-h-6 tw-rounded-xl tw-ring-1 tw-ring-white lg:tw-block"
-                @click=" selectedGameLink = i.link"
+                @click=" selectedGameLink = ii.play_url"
               />
             </div>
           </div>
@@ -260,7 +276,7 @@ function toggleType() {
       <CasinoGamePlayer :game-link="selectedGameLink" @close="selectedGameLink = ''" />
     </div>
     <div class=" tw-p-8">
-      <CasinoCategories :games />
+      <CasinoCategories :games2 />
     </div>
     <div class="tw-mx-auto tw-mt-8 tw-h-full tw-w-3/4 tw-bg-primary-500">
       <CasinoBottomAd />
