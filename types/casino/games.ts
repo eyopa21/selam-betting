@@ -11,6 +11,7 @@ export type Root2 = {
   name: string
   games: Game[]
   order: number
+  icon_url: string
 }
 
 export type Game = {
