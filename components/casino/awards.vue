@@ -1,5 +1,5 @@
 <template>
-  <q-scroll-area class="tw-max-h-[300px] tw-w-1/3 tw-gap-2 tw-overflow-auto">
+  <q-scroll-area class="tw-max-h-[300px] tw-w-1/3 tw-gap-2 tw-overflow-auto tw-overflow-x-hidden">
     <div v-for="i in 7" :key="i" class="tw-flex tw-flex-col tw-gap-y-4 tw-space-y-8 ">
       <div
         class="tw-my-1 tw-ml-1 tw-flex tw-h-20 tw-justify-between tw-gap-4 tw-rounded-lg tw-bg-primary-900 tw-p-2 tw-shadow-sm tw-shadow-gray-400 "
