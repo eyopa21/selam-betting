@@ -10,7 +10,7 @@ enum LoginOption {
 
 const $q = useQuasar()
 const layout = useLayout()
-const { login, loading, error, sendOtp, resetPassword } = useAuth()
+const { login, loading, error } = useAuth()
 const showPassword = ref(false)
 const state = ref({
   username: '',

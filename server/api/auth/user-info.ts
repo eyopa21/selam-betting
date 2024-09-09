@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const url = `${config.restApiEndpoint}/user_account/`
   const authHeader = getHeader(event, 'authorization')
-
+  console.log(authHeader)
   try {
     const result = await $fetch<Root>(url, {
       method: 'GET',
@@ -22,6 +22,7 @@ export default defineEventHandler(async (event) => {
   } catch (err: unknown) {
     const error = err as NuxtError
     const errorResponse = error.data as ErrorResponse
+    // console.log('ouu', err)
     throw createError({
       statusCode: error.statusCode,
       statusMessage: errorResponse.detail,

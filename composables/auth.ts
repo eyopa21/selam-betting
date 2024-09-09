@@ -2,14 +2,9 @@ import type { SignInInputs, SignUpInputs } from '~/types/auth'
 import type { RegisterError } from '~/types/register'
 import type { Auth } from '~/types/login'
 
-type loginResult = {
-  access: string
-  refresh: string
-}
 export function useAuth() {
   const { $authentication } = useNuxtApp()
   const userStore = useUserStore()
-  const config = useRuntimeConfig()
   const loading = ref(false)
   const error = ref<null | string>(null)
 
@@ -19,32 +14,26 @@ export function useAuth() {
     loading.value = true
     error.value = null
     try {
-      const response = await $fetch<{ data: loginResult, error: string }>(`/api/auth/login/`, {
+      const response = await $fetch(`/api/auth/login/`, {
         method: 'POST',
         body: input,
       })
-      console.log('res', response)
-
-      if (response?.error) {
-        throw new Error(response?.error)
-      }
-
-      if (response?.data) {
-        const res = await $fetch<{ data: Auth }>(`/api/getUser/`, {
+      if (response) {
+        const res = await $fetch(`/api/auth/user-info`, {
           method: 'POST',
-          body: {
-            access: response.data.access,
+          headers: {
+            Authorization: `Bearer ${response.access}`,
           },
         })
-        console.log('ressss', res)
         $authentication.updateSession({
-          access_token: response.data?.access,
-          refresh_token: response.data?.refresh,
-          user_id: res.data.id,
-          user_name: res.data.username,
-          email: res.data.email,
-          phone_number: res.data.phone_number,
+          access_token: response?.access,
+          refresh_token: response?.refresh,
+          user_id: res.user.id,
+          user_name: res.user.username,
+          email: res.user.email,
+          phone_number: res.user.phone_number,
         })
+        userStore.user = res
 
         return {
           data: { success: true },
