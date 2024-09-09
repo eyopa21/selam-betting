@@ -31,6 +31,22 @@ function toggleType() {
     filterType.value = 'circle'
   }
 }
+const tempQuery = ref('')
+const q = ref('')
+function search() {
+  q.value = tempQuery.value
+}
+const filteredGames = computed(() => {
+  if (!q.value) {
+    return games.value
+  }
+
+  return games.value?.filter((game) => {
+    return Object.values(game).some((value) => {
+      return String(value).toLowerCase().includes(q.value.toLowerCase())
+    })
+  })
+})
 </script>
 
 <template>
@@ -72,6 +88,7 @@ function toggleType() {
       <div class="tw-self-end tw-text-lg tw-text-white" />
       <div class="tw-flex tw-gap-2">
         <q-input
+          v-model="tempQuery"
           outlined standout="text-blue-grey-5" input-class="text-white"
           placeholder="Search for your Games" class="tw-w-72 tw-bg-primary-700 "
         >
@@ -79,7 +96,7 @@ function toggleType() {
             <q-icon name="search" color="blue-grey-2" />
           </template>
         </q-input>
-        <q-btn color="primary" label="Let's Look" text-color="blue-grey-2" />
+        <q-btn color="primary" label="Let's Look" text-color="blue-grey-2" @click="search()" />
       </div>
 
       <div class="tw-flex1 tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
@@ -90,57 +107,62 @@ function toggleType() {
         </q-btn-group>
       </div>
     </div>
-    <div v-for="(i, key) in games" :key="key" class="tw-p-8">
-      <h1 class="tw-my-4 tw-text-3xl tw-font-extrabold tw-capitalize tw-text-white">
-        {{ i.name }}
-      </h1>
-      <div
-        class="tw-grid  tw-gap-4 tw-gap-y-8"
-        :class="filterType === 'square' ? 'tw-grid-cols-4' : 'tw-grid-cols-7'"
-      >
+    <div v-if="!!filteredGames?.length">
+      <div v-for="(i, key) in filteredGames" :key="key" class="tw-p-8">
+        <h1 class="tw-my-4 tw-text-3xl tw-font-extrabold tw-capitalize tw-text-white">
+          {{ i.name }}
+        </h1>
         <div
-          v-for="(ii, k) in i.games" :key="k"
-          class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
+          class="tw-grid  tw-gap-4 tw-gap-y-8"
+          :class="filterType === 'square' ? 'tw-grid-cols-4' : 'tw-grid-cols-7'"
         >
-          <div v-if="filterType === 'square'">
-            <div class="tw-absolute tw-right-0">
-              <q-btn
-                flat round color="white" icon="favorite_outline"
-                class="tw-transition-all tw-duration-500 hover:tw-scale-110"
-              />
+          <div
+            v-for="(ii, k) in i.games" :key="k"
+            class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
+          >
+            <div v-if="filterType === 'square'">
+              <div class="tw-absolute tw-right-0">
+                <q-btn
+                  flat round color="white" icon="favorite_outline"
+                  class="tw-transition-all tw-duration-500 hover:tw-scale-110"
+                />
+              </div>
+              <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64 tw-rounded tw-ring tw-ring-blue-500" />
+              <div class="tw-mt-3 tw-flex tw-w-full tw-justify-between tw-space-x-4">
+                <q-btn
+                  color="deep-purple-14" label="Play" class="tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white"
+                  @click="selectedGameLink = ii.play_url"
+                />
+                <q-btn
+                  color="black" label="Practice" class="tw-hidden tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white lg:tw-block"
+                  @click=" selectedGameLink = ii.play_url"
+                />
+              </div>
             </div>
-            <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64 tw-rounded tw-ring tw-ring-blue-500" />
-            <div class="tw-mt-3 tw-flex tw-w-full tw-justify-between tw-space-x-4">
-              <q-btn
-                color="deep-purple-14" label="Play" class="tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white"
-                @click="selectedGameLink = ii.play_url"
-              />
-              <q-btn
-                color="black" label="Practice" class="tw-hidden tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white lg:tw-block"
-                @click=" selectedGameLink = ii.play_url"
-              />
-            </div>
-          </div>
-          <div v-else>
-            <q-avatar
-              size="200px" font-size="52px" color="primary" text-color="white"
-              class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105"
-            >
-              <q-img :src="ii.logo_url" />
-            </q-avatar>
-            <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-4 ">
-              <q-btn
-                size="sm" color="deep-purple-14" label="Play" class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
-                @click="selectedGameLink = ii.play_url"
-              />
-              <q-btn
-                size="sm" color="black" label="Practice" class=" tw-hidden tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white lg:tw-block"
-                @click=" selectedGameLink = ii.play_url"
-              />
+            <div v-else>
+              <q-avatar
+                size="200px" font-size="52px" color="primary" text-color="white"
+                class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105"
+              >
+                <q-img :src="ii.logo_url" />
+              </q-avatar>
+              <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-4 ">
+                <q-btn
+                  size="sm" color="deep-purple-14" label="Play" class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
+                  @click="selectedGameLink = ii.play_url"
+                />
+                <q-btn
+                  size="sm" color="black" label="Practice" class=" tw-hidden tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white lg:tw-block"
+                  @click=" selectedGameLink = ii.play_url"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div v-else class="tw-flex tw-justify-center ">
+      <VUENoItemsFound :search="true" @back="tempQuery = ''; q = ''" />
     </div>
     <div v-if="selectedGameLink">
       <CasinoGamePlayer :game-link="selectedGameLink" @close="selectedGameLink = ''" />
