@@ -1,6 +1,4 @@
 <script setup lang="ts">
-const { $authentication } = useNuxtApp()
-
 const layout = useLayout()
 const userStore = useUserStore()
 
@@ -9,25 +7,25 @@ const { logout } = useAuth()
 const menuOptions = ref([
   {
     name: 'Home',
-    link: '#',
+    link: '/',
     icon: null,
     active: false,
   },
   {
     name: 'Profile',
-    link: '#',
+    link: '/account/profile',
     icon: 'person',
     active: true,
   },
   {
     name: 'Promotions',
-    link: '#',
+    link: '/account/vip-cashback',
     icon: null,
     active: false,
   },
   {
     name: 'Withdraw',
-    link: '#',
+    link: '/account/withdraw',
     icon: null,
     active: false,
   },
@@ -46,7 +44,7 @@ const menuOptions = ref([
 
     <div class="tw-hidden tw-items-start tw-justify-center lg:tw-flex">
       <ul v-for="option in menuOptions" :key="option.name" class="tw-gap-2">
-        <q-btn outline dense :icon="option.icon ?? undefined" no-wrap :href="option.link" :text-color="option.active ? 'white' : 'grey-5' " class="tw-rounded- tw-mr-2 tw-px-3">
+        <q-btn outline dense :icon="option.icon ?? undefined" no-wrap :to="option.link" :text-color="option.active ? 'white' : 'grey-5' " class="tw-rounded- tw-mr-2 tw-px-3">
           {{ option.name }}
         </q-btn>
       </ul>
@@ -55,6 +53,7 @@ const menuOptions = ref([
     <div class="tw-my-auto tw-mr-4 tw-hidden tw-items-center tw-gap-2 lg:tw-flex lg:tw-justify-between">
       <q-btn color="amber-4" outline class="tw-w-full" icon="currency_pound" no-wrap :label="`${userStore.user?.stake_balance.stake_balance}ETB`" dense />
       <q-btn
+        to="/account/deposit"
         icons="add" label="Deposit" color="primary" dense no-wrap outline text-color="grey-5"
         class="tw-px-4"
       />
