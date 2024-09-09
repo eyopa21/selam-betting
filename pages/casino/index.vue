@@ -48,27 +48,7 @@ function toggleType() {
           />
         </q-carousel>
       </div>
-      <q-scroll-area class="tw-max-h-[300px] tw-w-1/3 tw-gap-2 tw-overflow-auto">
-        <div v-for="i in 7" :key="i" class="tw-flex tw-flex-col tw-gap-y-4 tw-space-y-8 ">
-          <div
-            class="tw-my-1 tw-ml-1 tw-flex tw-h-20 tw-justify-between tw-gap-4 tw-rounded-lg tw-bg-primary-900 tw-p-2 tw-shadow-sm tw-shadow-gray-400 "
-          >
-            <q-img src="https://client.qtlauncher.com/images/?id=1x2-plinkogo_en_US&type=logo-square&version=1677489299406" alt="img" class="tw-size-16 tw-rounded" />
-            <div class="text-white tw-flex tw-w-1/2 tw-flex-col tw-text-xs">
-              <p class="tw-text-base tw-text-primary-300">
-                Congratulations
-              </p>
-              <span class="font-prosto tw-pl-4 tw-pt-2">
-                <p>Football FreeStyler</p>
-                <p>121* won</p>
-              </span>
-            </div>
-            <div class="tw-w-1/3 tw-self-end tw-text-base tw-text-amber-400">
-              $3000 ETB
-            </div>
-          </div>
-        </div>
-      </q-scroll-area>
+      <CasinoAwards />
     </div>
     <div class="tw-my-8 tw-flex tw-justify-center">
       <q-tabs
@@ -89,9 +69,7 @@ function toggleType() {
       </q-tabs>
     </div>
     <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-8">
-      <div class="tw-self-end tw-text-lg tw-text-white">
-        HarifSport - Special
-      </div>
+      <div class="tw-self-end tw-text-lg tw-text-white" />
       <div class="tw-flex tw-gap-2">
         <q-input
           outlined standout="text-blue-grey-5" input-class="text-white"
@@ -113,7 +91,7 @@ function toggleType() {
       </div>
     </div>
     <div v-for="(i, key) in games" :key="key" class="tw-p-8">
-      <h1 class="my-8 tw-text-7xl tw-font-extrabold tw-text-white">
+      <h1 class="tw-my-4 tw-text-3xl tw-font-extrabold tw-capitalize tw-text-white">
         {{ i.name }}
       </h1>
       <div
@@ -131,7 +109,7 @@ function toggleType() {
                 class="tw-transition-all tw-duration-500 hover:tw-scale-110"
               />
             </div>
-            <q-img :src="ii.logo_url" :alt="ii.label" class="tw-rounded tw-ring tw-ring-blue-500" />
+            <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64 tw-rounded tw-ring tw-ring-blue-500" />
             <div class="tw-mt-3 tw-flex tw-w-full tw-justify-between tw-space-x-4">
               <q-btn
                 color="deep-purple-14" label="Play" class="tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white"
@@ -145,18 +123,18 @@ function toggleType() {
           </div>
           <div v-else>
             <q-avatar
-              size="150px" font-size="52px" color="primary" text-color="white"
+              size="200px" font-size="52px" color="primary" text-color="white"
               class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105"
             >
               <q-img :src="ii.logo_url" />
             </q-avatar>
-            <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-2 ">
+            <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-4 ">
               <q-btn
-                size="sm" color="deep-purple-14" label="Play" class="tw-h-6 tw-rounded-xl tw-ring-1 tw-ring-white"
+                size="sm" color="deep-purple-14" label="Play" class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
                 @click="selectedGameLink = ii.play_url"
               />
               <q-btn
-                size="sm" color="black" label="Practice" class=" tw-hidden tw-h-6 tw-rounded-xl tw-ring-1 tw-ring-white lg:tw-block"
+                size="sm" color="black" label="Practice" class=" tw-hidden tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white lg:tw-block"
                 @click=" selectedGameLink = ii.play_url"
               />
             </div>
