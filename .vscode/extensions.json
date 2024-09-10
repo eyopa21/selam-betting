@@ -6,7 +6,6 @@
     "vue.volar",
     "streetsidesoftware.code-spell-checker",
     "aaron-bond.better-comments",
-    "antfu.goto-alias",
-    "graphql.vscode-graphql"
+    "antfu.goto-alias"
   ]
 }

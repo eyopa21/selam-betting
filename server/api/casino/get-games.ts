@@ -1,25 +1,22 @@
 import type { NuxtError } from 'nuxt/app'
+import type { CasinoRoot } from '~/types/casino/games'
 
-type LoginResult = {
-  access: string
-  refresh: string
-}
 type ErrorResponse = {
   detail: string
 }
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  const body = await readBody(event)
-  const url = `${config.restApiEndpoint}/login/`
-
+  const url = `${config.baseApiEndpoint}/betting/casino/api/v1/all_games`
+  const authHeader = getHeader(event, 'authorization')
   try {
-    const result = await $fetch<LoginResult>(url, {
-      method: 'POST',
+    const result = await $fetch<CasinoRoot>(url, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'X-API-KEY': config.serverApiKey,
+        'Authorization': authHeader!.toString()!,
       },
-      body,
     })
     return result
   } catch (err: unknown) {

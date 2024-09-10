@@ -7,6 +7,7 @@
   },
   "cSpell.words": [
     "heroicons",
+    "Nuxt",
     "tickable"
   ],
   // Set css custom data to handle tailwind directives
@@ -25,7 +26,7 @@
     "strings": true
   },
   // Enable the ESlint flat config support
-//   "eslint.experimental.useFlatConfig": true,
+  //   "eslint.experimental.useFlatConfig": true,
   "eslint.ignoreUntitled": true,
   // Silent the stylistic rules in you IDE, but still auto fix them
   "eslint.rules.customizations": [

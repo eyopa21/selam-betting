@@ -1,30 +1,28 @@
 import type { NuxtError } from 'nuxt/app'
+import type { Root } from '~/types/auth/user-info'
 
-type LoginResult = {
-  access: string
-  refresh: string
-}
 type ErrorResponse = {
   detail: string
 }
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  const body = await readBody(event)
-  const url = `${config.restApiEndpoint}/login/`
-
+  const url = `${config.restApiEndpoint}/user_account/`
+  const authHeader = getHeader(event, 'authorization')
+  console.log(authHeader)
   try {
-    const result = await $fetch<LoginResult>(url, {
-      method: 'POST',
+    const result = await $fetch<Root>(url, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'X-API-KEY': config.serverApiKey,
+        'Authorization': authHeader!.toString()!,
       },
-      body,
     })
     return result
   } catch (err: unknown) {
     const error = err as NuxtError
     const errorResponse = error.data as ErrorResponse
+    // console.log('ouu', err)
     throw createError({
       statusCode: error.statusCode,
       statusMessage: errorResponse.detail,
