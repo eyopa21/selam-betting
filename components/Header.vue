@@ -86,7 +86,7 @@ const menuOptions = ref([
             2
           </q-badge>
         </q-btn>
-        <q-btn dense round flat icon="person" size="md" class="tw-text-xl">
+        <q-btn dense round flat icon="person" size="md" class="tw-text-xl" @click="layout.showSideBarProfileMenu = true; layout.showLeftDrawer = true">
           <q-badge color="red" floating transparent rounded />
         </q-btn>
         <q-btn round flat icon="logout" dense class="tw-text-xl tw-text-red-600" @click="logout()" />

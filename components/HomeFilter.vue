@@ -111,7 +111,10 @@ async function filterGamesByDate(date: Date) {
 
 <template>
   <div class="text-white tw-h-full  tw-min-h-screen tw-bg-secondary-800 tw-py-3 dark:tw-bg-gray-800">
-    <div v-if="!$authentication.loggedIn.value">
+    <div v-if="$authentication.loggedIn.value && layout.showSideBarProfileMenu">
+      <NavUserInfo />
+    </div>
+    <div v-else>
       <!-- <q-scroll-area style="height: 100vh; max-width: 300px"> -->
       <div class="tw-mt-6 tw-flex tw-justify-center tw-gap-4">
         <q-btn icon="favorite" flat no-caps label="Popular" />
@@ -229,9 +232,6 @@ async function filterGamesByDate(date: Date) {
         </div>
       </div>
       <!-- </q-scroll-area> -->
-    </div>
-    <div v-else>
-      <NavUserInfo />
     </div>
   </div>
 </template>

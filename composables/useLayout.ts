@@ -8,6 +8,7 @@ export default function () {
       rightMiniState: false,
       showLogin: false,
       showRegister: false,
+      showSideBarProfileMenu: false,
     }
   })
 }

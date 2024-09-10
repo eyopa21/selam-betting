@@ -8,7 +8,7 @@ const layout = useLayout()
       <Header />
     </q-header>
 
-    <q-drawer v-model="layout.showLeftDrawer" side="left" behavior="mobile">
+    <q-drawer v-model="layout.showLeftDrawer" side="left" behavior="mobile" @hide="layout.showSideBarProfileMenu = false">
       <q-scroll-area class="fit">
         <HomeFilter />
       </q-scroll-area>
