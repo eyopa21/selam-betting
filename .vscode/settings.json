@@ -6,8 +6,8 @@
     "editor.defaultFormatter": "Vue.volar"
   },
   "cSpell.words": [
-    "Afriwork",
     "heroicons",
+    "Nuxt",
     "tickable"
   ],
   // Set css custom data to handle tailwind directives
@@ -26,7 +26,7 @@
     "strings": true
   },
   // Enable the ESlint flat config support
-//   "eslint.experimental.useFlatConfig": true,
+  //   "eslint.experimental.useFlatConfig": true,
   "eslint.ignoreUntitled": true,
   // Silent the stylistic rules in you IDE, but still auto fix them
   "eslint.rules.customizations": [
@@ -67,7 +67,7 @@
       "severity": "off"
     }
   ],
-  "eslint.runtime": "node",
+  "eslint.useFlatConfig": true,
   // Enable eslint for all supported languages
   "eslint.validate": [
     "javascript",
@@ -93,5 +93,6 @@
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "tailwindCSS.emmetCompletions": true
+  "tailwindCSS.emmetCompletions": true,
+  "eslint.format.enable": true
 }

@@ -1,5 +1,5 @@
 <template>
-    <div>
-        <img @click="navigateTo('/')" class="tw-w-44" src="/images/logo.png" />
-    </div>
+  <div>
+    <img class="tw-w-44" src="/images/logo.png" @click="navigateTo('/')">
+  </div>
 </template>

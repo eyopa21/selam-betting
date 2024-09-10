@@ -1,52 +1,52 @@
-<template>
-    <div >
-        <h3 class="tw-text-2xl tw-font-bold tw-text-primary-700 tw-text-center">
-            Forgot password
-        </h3>
-        <q-form @submit="onSendOtp" class="q-gutter-md tw-my-8">
-            <q-input dense outlined v-model="state.email" label="Your email" lazy-rules
-                :rules="[(val: string) => (val && validateEmail(val)) || 'Invalid email']" />
-            <q-btn label="Send Code" type="submit"
-                class="tw-w-[96%] tw-flex tw-justify-center tw-bg-[#8E203A] tw-text-white tw-font-semibold"
-                :loading="loading" />
-        </q-form>
-        <hr class="tw-text-gray-700 tw-py-4" />
-        <p class="tw-text-gray-500 text-center">
-            Go back to
-            <span @click="emit('login')" class="tw-text-[#8E203A] tw-cursor-pointer">sign in</span>
-        </p>
-    </div>
-</template>
-
-
 <script setup lang="ts">
-const $q = useQuasar();
 const emit = defineEmits<{
-    otpSent: [string],
-    login: [void]
+  otpSent: [string]
+  login: [void]
 
 }>()
-const {  loading, sendOtp } = useAuth();
+const $q = useQuasar()
+const { loading, sendOtp } = useAuth()
 const state = ref({
-    email: ''
+  email: '',
 })
 
-
-const onSendOtp = async () => {
-    const res = await sendOtp(state.value.email);
-    if (res && 'error' in res) {
-        $q.notify({
-            message: `${res?.error}`,
-            color: "red",
-        });
-    } else if ( res && 'message' in res) {
-        $q.notify({
-            message: `${res?.message}`,
-            color: "green",
-        });
-        emit('otpSent', state.value.email)
-        
-    }
-
-};
+async function onSendOtp() {
+  const res = await sendOtp(state.value.email)
+  if (res && 'error' in res) {
+    $q.notify({
+      message: `${res?.error}`,
+      color: 'red',
+    })
+  } else if (res && 'message' in res) {
+    $q.notify({
+      message: `${res?.message}`,
+      color: 'green',
+    })
+    emit('otpSent', state.value.email)
+  }
+}
 </script>
+
+<template>
+  <div>
+    <h3 class="tw-text-center tw-text-2xl tw-font-bold tw-text-primary-700">
+      Forgot password
+    </h3>
+    <q-form class="q-gutter-md tw-my-8" @submit="onSendOtp">
+      <q-input
+        v-model="state.email" dense outlined label="Your email" lazy-rules
+        :rules="[(val: string) => (val && validateEmail(val)) || 'Invalid email']"
+      />
+      <q-btn
+        label="Send Code" type="submit"
+        class="tw-flex tw-w-[96%] tw-justify-center tw-bg-[#8E203A] tw-font-semibold tw-text-white"
+        :loading="loading"
+      />
+    </q-form>
+    <hr class="tw-py-4 tw-text-gray-700">
+    <p class="text-center tw-text-gray-500">
+      Go back to
+      <span class="tw-cursor-pointer tw-text-[#8E203A]" @click="emit('login')">sign in</span>
+    </p>
+  </div>
+</template>

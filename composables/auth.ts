@@ -1,194 +1,176 @@
-import type { SignInInputs, SignUpInputs } from "~/types/auth";
-import type { RegisterError } from "~/types/register";
-type loginResult = {
-    access: string
-    refresh: string
-}
+import type { SignInInputs, SignUpInputs } from '~/types/auth'
+import type { RegisterError } from '~/types/register'
 import type { Auth } from '~/types/login'
-export const useAuth = () => {
-    const { $authentication } = useNuxtApp();
-    const userStore = useUserStore()
-    const config = useRuntimeConfig();
-    const loading = ref(false);
-    const error = ref<null | string>(null);
 
-    const $q = useQuasar();
+export function useAuth() {
+  const { $authentication } = useNuxtApp()
+  const userStore = useUserStore()
+  const loading = ref(false)
+  const error = ref<null | string>(null)
 
-    const login = async (input: SignInInputs) => {
-        loading.value = true;
-        error.value = null;
-        try {
-            const response = await $fetch<{ data: loginResult, error: string }>(`/api/auth/login/`, {
-                method: 'POST',
-                body: input,
-            });
-            console.log("res", response);
+  const $q = useQuasar()
 
-            if (response?.error) {
-                throw new Error(response?.error);
-            }
+  const login = async (input: SignInInputs) => {
+    loading.value = true
+    error.value = null
+    try {
+      const response = await $fetch(`/api/auth/login/`, {
+        method: 'POST',
+        body: input,
+      })
+      if (response) {
+        const res = await $fetch(`/api/auth/user-info`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${response.access}`,
+          },
+        })
+        $authentication.updateSession({
+          access_token: response?.access,
+          refresh_token: response?.refresh,
+          user_id: res.user.id,
+          user_name: res.user.username,
+          email: res.user.email,
+          phone_number: res.user.phone_number,
+        })
+        userStore.user = res
 
-            if (response?.data) {
-                const res = await $fetch<{ data: Auth }>(`/api/getUser/`, {
-                    method: 'POST',
-                    body: {
-                        access: response.data.access
-                    },
-                });
-                console.log("ressss", res);
-                $authentication.updateSession({
-                    access_token: response.data?.access,
-                    refresh_token: response.data?.refresh,
-                    user_id: res.data.id,
-                    user_name: res.data.username,
-                    email: res.data.email,
-                    phone_number: res.data.phone_number,
-                });
-
-                return {
-                    data: { success: true }
-                };
-            }
-
-        } catch (err) {
-            error.value = `${err}` || 'Login failed';
-        } finally {
-            loading.value = false;
+        return {
+          data: { success: true },
         }
-    };
-
-    const register = async (input: SignUpInputs) => {
-        loading.value = true;
-        error.value = null;
-        try {
-            const res = await $fetch<{ data: Auth, error: RegisterError }>(`/api/auth/register`, {
-                method: 'POST',
-
-                body: input,
-            });
-            if (res.data) {
-                const email = res.data.email
-                const optRes = await sendOtp(email)
-                return optRes
-            }
-            else if (res.error ) {
-                let firstError = null;
-                Object.entries(res.error).forEach(([key, value]) => {
-                    if (value.length > 0) {
-                        firstError = value[0]
-                    } else {
-                        firstError= 'Connection Error'
-                    }
-                });
-                return {
-                    error: firstError ?? undefined
-                }
-            }
-             
-        } catch (err) {
-            console.log("er", err);
-            error.value = `Registration failed: ${err}`;
-            throw err;
-        } finally {
-            loading.value = false;
-        }
-    };
-
-
-    const sendOtp = async (email: string) => {
-        loading.value = true;
-        error.value = null;
-        try {
-            const res = await $fetch<{ data: { message: string }, error: { error: string } }>(`/api/sendAuthOtp/`, {
-                method: 'POST',
-                body: {
-                    email: email
-                },
-            });
-            console.log("res", res);
-            if (res.error) {
-                return res?.error
-            }
-
-            return res.data;
-        } catch (err) {
-           
-            error.value = "couldn't send otp"
-        } finally {
-            loading.value = false;
-        }
-    } 
-
-
-    const resetPassword = async (otp: string, newPassword: string) => {
-        loading.value = true;
-        error.value = null;
-        try {
-            const res = await $fetch<{ data: { Message: string }, error: { Error: string } }>(`/api/resetPassword/`, {
-                method: 'POST',
-
-                body: {
-                    otp: otp,
-                    new_password: newPassword
-                },
-            });
-            console.log("res", res);
-            if (res.error) {
-                return {
-                    error: res.error
-                }
-            }
-
-            return res.data;
-        } catch (err) {
-            error.value = "couldn't reset password"
-        } finally {
-            loading.value = false
-        }
+      }
+    } catch (err) {
+      error.value = `${err}` || 'Login failed'
+    } finally {
+      loading.value = false
     }
+  }
 
-    const verifyOtp = async (email: string, otp: string) => {
+  const register = async (input: SignUpInputs) => {
+    loading.value = true
+    error.value = null
+    try {
+      const res = await $fetch<{ data: Auth, error: RegisterError }>(`/api/auth/register`, {
+        method: 'POST',
 
-        loading.value = true;
-        error.value = null;
-        try {
-            const res = await $fetch<{ data: { message: string }, error: { error: string } }>(`/api/verifyOtp/`, {
-                method: 'POST',
-                body: {
-                    email: email,
-                    otp: otp
-                },
-            });
-            console.log("res", res);
-            if (res.error) {
-                return res?.error
-            }
-
-            return res.data;
-        } catch (err) {
-            
-            error.value = "could not verify this otp"
-        } finally {
-            loading.value = false;
+        body: input,
+      })
+      if (res.data) {
+        const email = res.data.email
+        const optRes = await sendOtp(email)
+        return optRes
+      } else if (res.error) {
+        let firstError = null
+        Object.entries(res.error).forEach(([key, value]) => {
+          if (value.length > 0) {
+            firstError = value[0]
+          } else {
+            firstError = 'Connection Error'
+          }
+        })
+        return {
+          error: firstError ?? undefined,
         }
-    };
+      }
+    } catch (err) {
+      console.log('er', err)
+      error.value = `Registration failed: ${err}`
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
 
-    const logout = () => {
-        $authentication.logout();
-        $q.notify({
-            message: `Successfully logged out.`,
-            color: "green",
-        });
-    };
+  const sendOtp = async (email: string) => {
+    loading.value = true
+    error.value = null
+    try {
+      const res = await $fetch<{ data: { message: string }, error: { error: string } }>(`/api/sendAuthOtp/`, {
+        method: 'POST',
+        body: {
+          email,
+        },
+      })
+      console.log('res', res)
+      if (res.error) {
+        return res?.error
+      }
 
-    return {
-        login,
-        register,
-        logout,
-        verifyOtp,
-        sendOtp,
-        resetPassword,
-        loading,
-        error,
-    };
-};
+      return res.data
+    } catch (err) {
+      error.value = 'couldn\'t send otp'
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const resetPassword = async (otp: string, newPassword: string) => {
+    loading.value = true
+    error.value = null
+    try {
+      const res = await $fetch<{ data: { Message: string }, error: { Error: string } }>(`/api/resetPassword/`, {
+        method: 'POST',
+
+        body: {
+          otp,
+          new_password: newPassword,
+        },
+      })
+      console.log('res', res)
+      if (res.error) {
+        return {
+          error: res.error,
+        }
+      }
+
+      return res.data
+    } catch (err) {
+      error.value = 'couldn\'t reset password'
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const verifyOtp = async (email: string, otp: string) => {
+    loading.value = true
+    error.value = null
+    try {
+      const res = await $fetch<{ data: { message: string }, error: { error: string } }>(`/api/verifyOtp/`, {
+        method: 'POST',
+        body: {
+          email,
+          otp,
+        },
+      })
+      console.log('res', res)
+      if (res.error) {
+        return res?.error
+      }
+
+      return res.data
+    } catch (err) {
+      error.value = 'could not verify this otp'
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const logout = () => {
+    $authentication.logout()
+    $q.notify({
+      message: `Successfully logged out.`,
+      color: 'green',
+    })
+  }
+
+  return {
+    login,
+    register,
+    logout,
+    verifyOtp,
+    sendOtp,
+    resetPassword,
+    loading,
+    error,
+  }
+}

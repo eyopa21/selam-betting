@@ -1,72 +1,67 @@
-
 <script setup lang="ts">
-
-const $q = useQuasar();
-const layout = useLayout();
-
 const props = defineProps<{
-    email: string
+  email: string
 }>()
 const emit = defineEmits<{
-    finishVerify: [void]
+  finishVerify: [void]
 }>()
-const { register, error, loading, verifyOtp } = useAuth();
+const $q = useQuasar()
+const layout = useLayout()
+
+const { register, error, loading, verifyOtp } = useAuth()
 const State = ref({
-    otp: ''
+  otp: '',
 })
-const verifyOTP = async () => {
-   
-    verifyOtp(props.email, State.value.otp).then(res => {
-        if ( res && 'error' in res) {
-            $q.notify({
-                message: res?.error,
-                color: "red",
-            });
-        } else {
-            layout.value.showRegister = false
-            layout.value.showLogin = true
-            emit('finishVerify')
-            $q.notify({
-                message: "Registered successfully!",
-                color: "green",
-            });
-
-        }
-    }).catch(error => {
-        $q.notify({
-            message: error,
-            color: "red",
-        });
+async function verifyOTP() {
+  verifyOtp(props.email, State.value.otp).then((res) => {
+    if (res && 'error' in res) {
+      $q.notify({
+        message: res?.error,
+        color: 'red',
+      })
+    } else {
+      layout.value.showRegister = false
+      layout.value.showLogin = true
+      emit('finishVerify')
+      $q.notify({
+        message: 'Registered successfully!',
+        color: 'green',
+      })
+    }
+  }).catch((error) => {
+    $q.notify({
+      message: error,
+      color: 'red',
     })
-
-
-
-};
-
+  })
+}
 </script>
 
-
 <template>
-    <div>
-        <q-icon name="mail"
-            class="tw-flex tw-justify-center tw-text-9xl tw-aspect-square tw-text-primary-700 tw-w-full mx-auto" />
-        <p class="tw-text-gray-700 tw-font-semibold tw-text-center tw-text-3xl">
-            Please check your email 
-        </p>
-        <p class="tw-text-gray-500 tw-text-center tw-text-md tw-font-semibold tw-my-4">
-            We've sent a code to {{ props.email }}
-        </p>
-        <q-form @submit="verifyOTP" class="q-gutter-md tw-my-8">
-            <q-input dense outlined v-model="State.otp" label="Code" lazy-rules class="tw-my-4" />
-            <div v-if="error">
-                {{ error }}
-            </div>
-            <q-btn :loading="loading" label="Verify" type="submit"
-                class="tw-w-[96%] tw-flex tw-justify-center tw-bg-[#8E203A] tw-text-white tw-font-semibold tw-my-2" />
-        </q-form>
-        <p class="tw-text-center tw-text-gray-600">
-            Go back to
-            <span class="tw-text-[#8E203A] tw-cursor-pointer">Sign up</span>
-        </p>
-    </div>
+  <div>
+    <q-icon
+      name="mail"
+      class="mx-auto tw-flex tw-aspect-square tw-w-full tw-justify-center tw-text-9xl tw-text-primary-700"
+    />
+    <p class="tw-text-center tw-text-3xl tw-font-semibold tw-text-gray-700">
+      Please check your email
+    </p>
+    <p class="tw-text-md tw-my-4 tw-text-center tw-font-semibold tw-text-gray-500">
+      We've sent a code to {{ props.email }}
+    </p>
+    <q-form class="q-gutter-md tw-my-8" @submit="verifyOTP">
+      <q-input v-model="State.otp" dense outlined label="Code" lazy-rules class="tw-my-4" />
+      <div v-if="error">
+        {{ error }}
+      </div>
+      <q-btn
+        :loading="loading" label="Verify" type="submit"
+        class="tw-my-2 tw-flex tw-w-[96%] tw-justify-center tw-bg-[#8E203A] tw-font-semibold tw-text-white"
+      />
+    </q-form>
+    <p class="tw-text-center tw-text-gray-600">
+      Go back to
+      <span class="tw-cursor-pointer tw-text-[#8E203A]">Sign up</span>
+    </p>
+  </div>
 </template>
