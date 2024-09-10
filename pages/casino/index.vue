@@ -93,17 +93,19 @@ function filterByCategory(categoryName: string) {
       <div class="tw-flex tw-gap-2">
         <q-input
           v-model="tempQuery"
+
           outlined standout="text-blue-grey-5" input-class="text-white"
-          placeholder="Search for your Games" class="tw-w-72 tw-bg-primary-700 "
+          rounded
+          placeholder="Search for your Games" class="tw-h-min tw-w-72 tw-rounded-full tw-bg-primary-700 "
         >
           <template #prepend>
             <q-icon name="search" color="blue-grey-2" />
           </template>
         </q-input>
-        <q-btn color="primary" label="Let's Look" text-color="blue-grey-2" @click="search()" />
+        <q-btn color="primary" rounded label="Let's Look" dense text-color="blue-grey-2" class="  tw-rounded-full tw-px-4 " @click="search()" />
       </div>
 
-      <div class="tw-flex1 tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
+      <div class="tw-flex tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
         <q-btn-group outline stretch>
           <q-btn color="primary-10" icon="filter_alt" size="lg" />
           <q-btn color="primary-10" icon="apps" size="lg" @click="toggleType()" />
@@ -145,8 +147,8 @@ function filterByCategory(categoryName: string) {
             </div>
             <div v-else>
               <q-avatar
-                size="200px" font-size="52px" color="primary" text-color="white"
-                class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105"
+                font-size="52px" color="primary" text-color="white"
+                class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105 lg:tw-size-[170px] 2xl:tw-size-[200px]"
               >
                 <q-img :src="ii.logo_url" />
               </q-avatar>
