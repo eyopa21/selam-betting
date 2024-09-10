@@ -6,7 +6,21 @@ const props = defineProps<{
 const emit = defineEmits<{
   close: [void]
 }>()
+
 const dialog = ref(true)
+const { $authentication } = useNuxtApp()
+const { data, error } = await useFetch('/api/casino/get-hmac', {
+  method: 'get',
+  headers: {
+    Authorization: `Bearer ${$authentication.accessToken.value}`,
+  },
+})
+if (error.value) {
+  useErrorNotifications(error)
+} else {
+  console.log(`${props.gameLink + $authentication.accessToken.value}&${data.value}`)
+  console.log('hmac', data.value)
+}
 </script>
 
 <template>
@@ -29,10 +43,11 @@ const dialog = ref(true)
           </div>
         </q-card-section>
 
-        <q-card-section class="q-pt-none tw-h-full">
+        <q-card-section v-if="data" class="q-pt-none tw-h-full">
+          {{ `${props.gameLink}&${data}` }}
           <iframe
             id="contentiframe"
-            :src="props.gameLink"
+            :src=" `${props.gameLink + $authentication.accessToken.value}&${data}`"
             :allowfullscreen="true" style="width: 100%; height: 100%;"
           />
         </q-card-section>
