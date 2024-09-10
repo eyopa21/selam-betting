@@ -7,9 +7,8 @@ definePageMeta({
 })
 
 const { $authentication } = useNuxtApp()
-
+const { scrollToTop } = useHelpers()
 const { data: games, error } = await useFetch('/api/casino/get-games', {
-
   method: 'GET',
   headers: {
     Authorization: `Bearer ${$authentication.accessToken.value}`,
@@ -47,6 +46,11 @@ const filteredGames = computed(() => {
     })
   })
 })
+
+function filterByCategory(categoryName: string) {
+  tempQuery.value = q.value = categoryName
+  scrollToTop()
+}
 </script>
 
 <template>
@@ -168,7 +172,7 @@ const filteredGames = computed(() => {
       <CasinoGamePlayer :game-link="selectedGameLink" @close="selectedGameLink = ''" />
     </div>
     <div v-if="games" class=" tw-p-8">
-      <CasinoCategories :games />
+      <CasinoCategories :games @filter="filterByCategory" />
     </div>
     <div class="tw-mx-auto tw-mt-8 tw-h-full tw-w-3/4 tw-bg-primary-500">
       <CasinoBottomAd />
