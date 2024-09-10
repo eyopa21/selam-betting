@@ -1,5 +1,4 @@
-<script setup>
-const userStore = useUserStore()
+<script setup lang="ts">
 const layout = useLayout()
 </script>
 
