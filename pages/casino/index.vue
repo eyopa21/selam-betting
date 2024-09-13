@@ -90,19 +90,10 @@ function filterByCategory(categoryName: string) {
     </div>
     <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-8">
       <div class="tw-self-end tw-text-lg tw-text-white" />
-      <div class="tw-flex tw-gap-2">
-        <q-input
-          v-model="tempQuery"
+      <div class="tw-flex tw-gap-2 tw-self-stretch ">
+        <input v-model="tempQuery" placeholder="Search for your Games" type="text" class="tw-w-128 tw-block tw-rounded-xl tw-border-0 tw-bg-inherit tw-py-1.5 tw-pl-7 tw-pr-20 tw-text-white  tw-ring-1 tw-ring-inset tw-ring-primary-500 placeholder:tw-text-secondary-500 focus:tw-outline-none focus:tw-ring-gray-200 sm:tw-text-sm sm:tw-leading-6">
 
-          outlined standout="text-blue-grey-5" input-class="text-white"
-          rounded
-          placeholder="Search for your Games" class="tw-h-min tw-w-72 tw-rounded-full tw-bg-primary-700 "
-        >
-          <template #prepend>
-            <q-icon name="search" color="blue-grey-2" />
-          </template>
-        </q-input>
-        <q-btn color="primary" rounded label="Let's Look" dense text-color="blue-grey-2" class="  tw-rounded-full tw-px-4 " @click="search()" />
+        <q-btn color="primary" rounded label="Let's Look" dense text-color="blue-grey-2" class="   tw-rounded-full tw-px-8  tw-ring-2 tw-ring-white" @click="search()" />
       </div>
 
       <div class="tw-flex tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
@@ -114,8 +105,8 @@ function filterByCategory(categoryName: string) {
       </div>
     </div>
     <div v-if="!!filteredGames?.length">
-      <div v-for="(i, key) in filteredGames" :key="key" class="tw-p-8">
-        <h1 class="tw-my-4 tw-text-3xl tw-font-extrabold tw-capitalize tw-text-white">
+      <div v-for="(i, key) in filteredGames" :key="key" class="tw-p-8 tw-py-0">
+        <h1 class="tw-my-4 tw-text-xl tw-font-extrabold tw-capitalize tw-text-white">
           {{ i.name }}
         </h1>
         <div
@@ -126,14 +117,14 @@ function filterByCategory(categoryName: string) {
             v-for="(ii, k) in i.games" :key="k"
             class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
           >
-            <div v-if="filterType === 'square'">
+            <div v-if="filterType === 'square'" class="tw-group">
               <div class="tw-absolute tw-right-0">
                 <q-btn
                   flat round color="white" icon="favorite_outline"
-                  class="tw-transition-all tw-duration-500 hover:tw-scale-110"
+                  class="tw-z-50 tw-transition-all tw-duration-500 group-hover:tw-scale-110"
                 />
               </div>
-              <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64 tw-rounded tw-ring tw-ring-blue-500" />
+              <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64  tw-rounded tw-ring tw-ring-blue-500" />
               <div class="tw-mt-3 tw-flex tw-w-full tw-justify-between tw-space-x-4">
                 <q-btn
                   color="deep-purple-14" label="Play" class="tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white"
@@ -173,6 +164,8 @@ function filterByCategory(categoryName: string) {
     <div v-if="selectedGameLink">
       <CasinoGamePlayer :game-link="selectedGameLink" @close="selectedGameLink = ''" />
     </div>
+
+    <hr class="tw-mx-20 tw-my-16 tw-border-gray-300">
     <div v-if="games" class=" tw-p-8">
       <CasinoCategories :games @filter="filterByCategory" />
     </div>
