@@ -17,9 +17,6 @@ const { data, error } = await useFetch('/api/casino/get-hmac', {
 })
 if (error.value) {
   useErrorNotifications(error)
-} else {
-  console.log(`${props.gameLink + $authentication.accessToken.value}&${data.value}`)
-  console.log('hmac', data.value)
 }
 </script>
 
@@ -29,7 +26,6 @@ if (error.value) {
       <q-card class="bg-primary text-white">
         <q-bar>
           <q-space />
-
           <q-btn v-close-popup dense flat icon="close" @click="emit('close')">
             <q-tooltip class="bg-white text-primary">
               Close
@@ -44,9 +40,8 @@ if (error.value) {
         </q-card-section>
 
         <q-card-section v-if="data" class="q-pt-none tw-h-full">
-          {{ `${props.gameLink}&${data}` }}
           <iframe
-            id="contentiframe"
+            id="gameplayer"
             :src=" `${props.gameLink + $authentication.accessToken.value}&${data}`"
             :allowfullscreen="true" style="width: 100%; height: 100%;"
           />

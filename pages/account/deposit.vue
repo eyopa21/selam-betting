@@ -7,7 +7,7 @@ definePageMeta({
   layout: 'account',
   pageType: 'authenticated',
 })
-const config = useRuntimeConfig()
+
 const tab = ref('recommended')
 const payments = ref<PaymentsRoot['results']>([])
 
@@ -18,7 +18,7 @@ const {
   data,
   error,
   status,
-} = useLazyFetch<PaymentsRoot>('/api/finance/get-payment-methods', {
+} = await useLazyFetch<PaymentsRoot>('/api/finance/get-payment-methods', {
   method: 'POST',
   headers: {
     Authorization: `Bearer ${$authentication.accessToken.value}`,
