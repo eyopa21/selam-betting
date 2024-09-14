@@ -33,11 +33,11 @@ if (error.value) {
           </q-btn>
         </q-bar>
 
-        <q-card-section>
+        <!-- <q-card-section>
           <div class="text-h6">
             Play
           </div>
-        </q-card-section>
+        </q-card-section> -->
 
         <q-card-section v-if="data" class="q-pt-none tw-h-full">
           <iframe
