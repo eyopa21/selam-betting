@@ -1,47 +1,33 @@
 <script setup lang="ts">
+import type { PaymentsRoot } from '~/server/api/finance/get-payment-methods'
+
 definePageMeta({
   layout: 'account',
   pageType: 'authenticated',
 })
 const userStore = useUserStore()
 
-const tab = ref('recommended')
-const payments = ref([{
-  label: 'Telebirr',
-  name: 'telebirr',
-  icon: '/icons/payment/telebirr.svg',
-  tags: ['wallet', 'recommended'],
-}, {
-  label: 'Yene Pay',
-  name: 'yenepay',
-  icon: '/icons/payment/yenepay.svg',
-  tags: ['wallet'],
-}, {
-  label: 'Amole',
-  name: 'amole',
-  icon: '/icons/payment/amole.svg',
-  tags: ['wallet'],
-}, {
-  label: 'CBE Birr',
-  name: 'cbebirr',
-  icon: '/icons/payment/cbebirr.svg',
-  tags: ['mobile', 'internet'],
-}, {
-  label: 'Visa',
-  name: 'visa',
-  icon: '/icons/payment/visa.svg',
-  tags: ['mobile'],
-}, {
-  label: 'Master Card',
-  name: 'mastercard',
-  icon: '/icons/payment/mastercard.svg',
-  tags: ['mobile', 'internet'],
-}, {
-  label: 'Zele',
-  name: 'zele',
-  icon: '/icons/payment/zele.svg',
-  tags: ['mobile', 'internet'],
-}])
+const payments = ref<PaymentsRoot['results']>([])
+
+const {
+  $authentication,
+} = useNuxtApp()
+const {
+  data,
+  error,
+  status,
+} = await useLazyFetch<PaymentsRoot>('/api/finance/get-payment-methods', {
+  method: 'POST',
+  headers: {
+    Authorization: `Bearer ${$authentication.accessToken.value}`,
+  },
+  cache: 'no-cache',
+})
+if (error.value) {
+  useErrorNotifications(error)
+} else if (data.value) {
+  payments.value = data.value.results
+}
 
 const columns = ref([
 
@@ -64,15 +50,6 @@ const rows = ref([
   },
 
 ])
-
-// const { data, error } = await useFetch('/api/finance/get-payout-balance', {
-//   headers: {
-//     Authorization: `Bearer ${$authentication.accessToken.value}`,
-//   },
-// })
-// if (error.value) {
-//   useErrorNotifications(error)
-// }
 </script>
 
 <template>
@@ -151,133 +128,10 @@ const rows = ref([
         </q-expansion-item>
       </div>
     </div>
-    <div class="tw-flex tw-justify-between tw-gap-32">
-      <div class="tw-h-min">
-        <q-tabs
-          v-model="tab" :outside-arrows="true" inline-label vertical class="text-primary-500  bg-white"
-          style="min-width: 300px; max-height: 240px;" active-class="bg-red-10 tw-text-white tw-font-bold"
-        >
-          <q-tab
-            name="recommended" class="tw-place-content-start  "
-            content-class="tw-flex tw-w-full tw-justify-between tw-relative "
-          >
-            <span>RECOMMENDED METHODS</span>
-            <span side>1</span>
-          </q-tab>
 
-          <q-tab
-            name="all" class=" tw-place-content-start "
-            content-class="tw-flex tw-w-full tw-justify-between"
-          >
-            <span>ALL METHODS </span>
-            <span side>16</span>
-          </q-tab>
-          <q-tab
-            name="wallet" class=" tw-place-content-start "
-            content-class="tw-flex tw-w-full tw-justify-between"
-          >
-            <span>E-WALLETS</span>
-            <span side>4</span>
-          </q-tab>
-
-          <q-tab
-            name="mobile" class=" tw-place-content-start "
-            content-class="tw-flex tw-w-full tw-justify-between"
-          >
-            <span>MOBILE PAYMENTS</span>
-            <span side>6</span>
-          </q-tab>
-          <q-tab
-            name="internet" class=" tw-place-content-start "
-            content-class="tw-flex tw-w-full tw-justify-between"
-          >
-            <span>INTERNET BANKING</span>
-            <span side>5</span>
-          </q-tab>
-        </q-tabs>
-      </div>
-      <div class=" tw-w-full">
-        <q-tab-panels
-          v-model="tab" animated swipeable vertical transition-prev="jump-up"
-          transition-next="jump-up"
-        >
-          <q-tab-panel name="recommended">
-            <div class=" q-mb-md tw-flex   tw-flex-wrap  tw-gap-4 tw-font-bold">
-              RECOMMENDED METHODS
-            </div>
-            <div v-for="(i, key) in payments" :key="key" class="tw-w-min tw-border">
-              <div v-if="i.tags.includes('recommended')">
-                <q-img fit="scale-down" :src="i.icon" :alt="i.name" class="tw-h-20 tw-w-32" />
-                <div style="width: 150px;" class="  tw-bg-primary-500 tw-text-center tw-text-white">
-                  {{ i.label }}
-                </div>
-              </div>
-            </div>
-          </q-tab-panel>
-
-          <q-tab-panel name="all">
-            <div class="q-mb-md tw-font-bold">
-              All METHODS
-            </div>
-            <div class="tw-flex tw-flex-wrap   tw-gap-4 ">
-              <div v-for="(i, key) in payments" :key="key" class="tw-border">
-                <div>
-                  <q-img fit="scale-down" :src="i.icon" :alt="i.name" class="tw-h-20 tw-w-32" />
-                  <div class="tw-w-full  tw-bg-primary-500 tw-text-center tw-text-white">
-                    {{ i.label }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </q-tab-panel>
-
-          <q-tab-panel name="mobile">
-            <div class="q-mb-md tw-font-bold">
-              MOBILE PAYMENTS
-            </div>
-            <div class="tw-flex tw-flex-wrap   tw-gap-4 ">
-              <div v-for="(i, key) in payments" :key="key">
-                <div v-if="i.tags.includes('mobile')" class="tw-border">
-                  <q-img fit="scale-down" :src="i.icon" :alt="i.name" class="tw-h-20 tw-w-32" />
-                  <div class="tw-w-full  tw-bg-primary-500 tw-text-center tw-text-white">
-                    {{ i.label }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </q-tab-panel>
-          <q-tab-panel name="wallet">
-            <div class="q-mb-md tw-font-bold">
-              WALLET METHODS
-            </div>
-            <div class="tw-flex tw-flex-wrap   tw-gap-4 ">
-              <div v-for="(i, key) in payments" :key="key">
-                <div v-if="i.tags.includes('wallet')" class="tw-border">
-                  <q-img fit="scale-down" :src="i.icon" :alt="i.name" class="tw-h-20 tw-w-32" />
-                  <div class="tw-w-full  tw-bg-primary-500 tw-text-center tw-text-white">
-                    {{ i.label }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </q-tab-panel>
-          <q-tab-panel name="internet">
-            <div class="q-mb-md tw-font-bold">
-              INTERNET BANKING METHODS
-            </div>
-            <div class="tw-flex tw-flex-wrap   tw-gap-4 ">
-              <div v-for="(i, key) in payments" :key="key">
-                <div v-if="i.tags.includes('internet')" class="tw-border">
-                  <q-img fit="scale-down" :src="i.icon" :alt="i.name" class="tw-h-20 tw-w-32" />
-                  <div class="tw-w-full  tw-bg-primary-500 tw-text-center tw-text-white">
-                    {{ i.label }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </q-tab-panel>
-        </q-tab-panels>
-      </div>
+    <div v-if="status === 'pending'">
+      <q-spinner color="primary" size="10em" />
     </div>
+    <WithdrawPaymentMethods v-else :payments="payments" />
   </div>
 </template>
