@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { InputBody } from '~/server/api/finance/pay.post'
 import type {
   PaymentsRoot,
 } from '~/server/api/finance/get-payment-methods'
@@ -8,7 +9,6 @@ definePageMeta({
   pageType: 'authenticated',
 })
 
-const tab = ref('recommended')
 const payments = ref<PaymentsRoot['results']>([])
 
 const {
@@ -29,6 +29,30 @@ if (error.value) {
   useErrorNotifications(error)
 } else if (data.value) {
   payments.value = data.value.results
+}
+
+async function deposit(paymentMethod: string, amount: number) {
+  try {
+    const response = await $fetch('/api/finance/pay', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${$authentication.accessToken.value}`,
+      },
+      cache: 'force-cache',
+      body: {
+        amount: +amount,
+        is_direct_payment: false,
+        paymentMethods: paymentMethod,
+      } as InputBody,
+    })
+    if (response.error === false && response.data.paymentUrl) {
+      window.open(response.data.paymentUrl)
+    } else {
+      console.error('Failed to fetch the image:')
+    }
+  } catch (err) {
+    useErrorNotifications(ref(err))
+  }
 }
 </script>
 
@@ -69,112 +93,7 @@ if (error.value) {
       <div v-if="status === 'pending'">
         <q-spinner color="primary" size="10em" />
       </div>
-      <div v-else class="tw-flex tw-justify-between tw-gap-32">
-        <div class="tw-h-min">
-          <q-tabs
-            v-model="tab" :outside-arrows="true" inline-label vertical class="text-primary-500  bg-white"
-            style="min-width: 300px; max-height: 240px;" active-class="tw-bg-primary-500 tw-text-white tw-font-bold"
-          >
-            <q-tab
-              name="recommended" class="tw-place-content-start  "
-              content-class="tw-flex tw-w-full tw-justify-between tw-relative "
-            >
-              <span>RECOMMENDED METHODS</span>
-              <span side>1</span>
-            </q-tab>
-            <q-tab name="all" class=" tw-place-content-start " content-class="tw-flex tw-w-full tw-justify-between">
-              <span>ALL METHODS </span>
-              <span side>{{ payments?.length || '' }}</span>
-            </q-tab>
-            <q-tab name="wallet" class=" tw-place-content-start " content-class="tw-flex tw-w-full tw-justify-between">
-              <span>E-WALLETS</span>
-              <span side>{{ payments?.filter(pay => !!pay.is_direct_payment_allowed)?.length || '' }}
-
-              </span>
-            </q-tab>
-            <q-tab name="mobile" class=" tw-place-content-start " content-class="tw-flex tw-w-full tw-justify-between">
-              <span>MOBILE PAYMENTS</span>
-              <span side>{{ payments?.filter(pay => pay.type_of_payment === 'Wallet')?.length || ''
-              }}</span>
-            </q-tab>
-            <q-tab
-              name="internet" class=" tw-place-content-start "
-              content-class="tw-flex tw-w-full tw-justify-between"
-            >
-              <span>INTERNET BANKING</span>
-              <span side>{{ payments?.length || '' }}</span>
-            </q-tab>
-          </q-tabs>
-        </div>
-        <div class=" tw-w-full">
-          <q-tab-panels v-model="tab" animated swipeable vertical transition-prev="jump-up" transition-next="jump-up">
-            <q-tab-panel name="recommended">
-              <div class=" q-mb-md tw-flex  tw-flex-wrap  tw-gap-4 tw-font-bold">
-                RECOMMENDED METHODS
-              </div>
-              <div v-for="(i, key) in payments" :key="key" class="tw-w-min tw-border">
-                <div v-if="i.name === 'TELEBIRR'">
-                  <VUEAuthImg :url="i.logo" :name="i.name" />
-                </div>
-              </div>
-            </q-tab-panel>
-            <q-tab-panel name="all">
-              <div class="q-mb-md tw-font-bold">
-                All METHODS
-              </div>
-              <div class="tw-flex tw-flex-wrap   tw-gap-4 ">
-                <div v-for="(i, key) in payments" :key="key" class="tw-border">
-                  <div>
-                    <VUEAuthImg :url="i.logo" :name="i.name" />
-                  </div>
-                </div>
-              </div>
-            </q-tab-panel>
-            <q-tab-panel name="mobile">
-              <div class="q-mb-md tw-font-bold">
-                MOBILE PAYMENTS
-              </div>
-              <div class="tw-flex tw-flex-wrap   tw-gap-4 ">
-                <div v-for="(i, key) in payments" :key="key">
-                  <div v-if="!!i.is_direct_payment_allowed" class="tw-border">
-                    <div>
-                      <VUEAuthImg :url="i.logo" :name="i.name" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </q-tab-panel>
-            <q-tab-panel name="wallet">
-              <div class="q-mb-md tw-font-bold">
-                WALLET METHODS
-              </div>
-              <div class="tw-flex tw-flex-wrap   tw-gap-4 ">
-                <div v-for="(i, key) in payments" :key="key">
-                  <div v-if="i.type_of_payment === 'Wallet'" class="tw-border">
-                    <div>
-                      <VUEAuthImg :url="i.logo" :name="i.name" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </q-tab-panel>
-            <q-tab-panel name="internet">
-              <div class="q-mb-md tw-font-bold">
-                INTERNET BANKING METHODS
-              </div>
-              <div class="tw-flex tw-flex-wrap   tw-gap-4 ">
-                <div v-for="(i, key) in payments" :key="key">
-                  <div class="tw-border">
-                    <div>
-                      <VUEAuthImg :url="i.logo" :name="i.name" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </q-tab-panel>
-          </q-tab-panels>
-        </div>
-      </div>
+      <WithdrawPaymentMethods v-else :payments="payments" @pay="deposit" />
     </div>
   </div>
 </template>

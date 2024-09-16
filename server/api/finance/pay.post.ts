@@ -1,7 +1,13 @@
+import type { NuxtError } from 'nuxt/app'
+
 export type InputBody = {
   amount: number
   paymentMethods: string
   is_direct_payment: boolean
+}
+
+type ErrorResponse = {
+  Error: string
 }
 
 export type Root = {
@@ -22,7 +28,6 @@ export default defineEventHandler(async (event) => {
   const url = `${config.baseApiEndpoint}/finance/payment/arif_payment/api/v1/stake_balance_deposit/`
   const authHeader = getHeader(event, 'authorization')
   const body = await readBody(event) as InputBody
-
   try {
     if (authHeader) {
       const result = await $fetch<Root>(url, {
@@ -42,10 +47,13 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Token is missing',
       })
     }
-  } catch (error: NuxtError | FetchError) {
-    console.error('Fetch error:', error)
+  } catch (err) {
+    const error = err as NuxtError
+    const errorResponse = error.data as ErrorResponse
     throw createError({
-      ...error,
+      statusCode: error.statusCode,
+      statusMessage: errorResponse?.Error ?? 'Connection Error',
+
     })
   }
 })
