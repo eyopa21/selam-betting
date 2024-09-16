@@ -28,7 +28,6 @@ const {
 if (error.value) {
   useErrorNotifications(error)
 } else if (data.value) {
-  console.log('pay', data.value)
   payments.value = data.value.results
 }
 </script>
@@ -73,9 +72,8 @@ if (error.value) {
       <div v-else class="tw-flex tw-justify-between tw-gap-32">
         <div class="tw-h-min">
           <q-tabs
-            v-model="tab" :outside-arrows="true" inline-label vertical
-            class="text-primary-500  bg-white" style="min-width: 300px; max-height: 240px;"
-            active-class="tw-bg-primary-500 tw-text-white tw-font-bold"
+            v-model="tab" :outside-arrows="true" inline-label vertical class="text-primary-500  bg-white"
+            style="min-width: 300px; max-height: 240px;" active-class="tw-bg-primary-500 tw-text-white tw-font-bold"
           >
             <q-tab
               name="recommended" class="tw-place-content-start  "
@@ -84,26 +82,17 @@ if (error.value) {
               <span>RECOMMENDED METHODS</span>
               <span side>1</span>
             </q-tab>
-            <q-tab
-              name="all" class=" tw-place-content-start "
-              content-class="tw-flex tw-w-full tw-justify-between"
-            >
+            <q-tab name="all" class=" tw-place-content-start " content-class="tw-flex tw-w-full tw-justify-between">
               <span>ALL METHODS </span>
               <span side>{{ payments?.length || '' }}</span>
             </q-tab>
-            <q-tab
-              name="wallet" class=" tw-place-content-start "
-              content-class="tw-flex tw-w-full tw-justify-between"
-            >
+            <q-tab name="wallet" class=" tw-place-content-start " content-class="tw-flex tw-w-full tw-justify-between">
               <span>E-WALLETS</span>
               <span side>{{ payments?.filter(pay => !!pay.is_direct_payment_allowed)?.length || '' }}
 
               </span>
             </q-tab>
-            <q-tab
-              name="mobile" class=" tw-place-content-start "
-              content-class="tw-flex tw-w-full tw-justify-between"
-            >
+            <q-tab name="mobile" class=" tw-place-content-start " content-class="tw-flex tw-w-full tw-justify-between">
               <span>MOBILE PAYMENTS</span>
               <span side>{{ payments?.filter(pay => pay.type_of_payment === 'Wallet')?.length || ''
               }}</span>
@@ -118,10 +107,7 @@ if (error.value) {
           </q-tabs>
         </div>
         <div class=" tw-w-full">
-          <q-tab-panels
-            v-model="tab" animated swipeable vertical transition-prev="jump-up"
-            transition-next="jump-up"
-          >
+          <q-tab-panels v-model="tab" animated swipeable vertical transition-prev="jump-up" transition-next="jump-up">
             <q-tab-panel name="recommended">
               <div class=" q-mb-md tw-flex  tw-flex-wrap  tw-gap-4 tw-font-bold">
                 RECOMMENDED METHODS

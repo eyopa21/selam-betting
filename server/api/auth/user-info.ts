@@ -8,7 +8,6 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const url = `${config.restApiEndpoint}/user_account/`
   const authHeader = getHeader(event, 'authorization')
-  console.log(authHeader)
   try {
     const result = await $fetch<Root>(url, {
       method: 'GET',
