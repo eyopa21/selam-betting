@@ -24,7 +24,6 @@ async function onSubmit() {
     username: state.value.username,
     password: state.value.password,
   })
-
   if (res?.data.success) {
     $q.notify({
       message: 'Successfully logged in',

@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
     const errorResponse = error.data as ErrorResponse
     throw createError({
       statusCode: error.statusCode,
-      statusMessage: errorResponse.detail,
+      statusMessage: errorResponse?.detail ?? 'Connection Error',
 
     })
   }
