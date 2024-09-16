@@ -1,7 +1,10 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'account',
+  pageType: 'authenticated',
 })
+const userStore = useUserStore()
+
 const tab = ref('recommended')
 const payments = ref([{
   label: 'Telebirr',
@@ -61,6 +64,15 @@ const rows = ref([
   },
 
 ])
+
+// const { data, error } = await useFetch('/api/finance/get-payout-balance', {
+//   headers: {
+//     Authorization: `Bearer ${$authentication.accessToken.value}`,
+//   },
+// })
+// if (error.value) {
+//   useErrorNotifications(error)
+// }
 </script>
 
 <template>
@@ -72,8 +84,14 @@ const rows = ref([
     <div class="tw-space-y-4 tw-pt-8">
       <div class="tw-flex tw-justify-between">
         <div class="tw-text-base">
-          Confirm transactions via: <q-btn icon="mail" label="SMS" color="red-10" />
+          Available Payout Balance:  <span class="tw-text-xl tw-font-bold">{{ userStore.user?.payout_balance.balance }} Birr
+          </span>
+          <div class="s tw-inline-block tw-space-x-2">
+            <WithdrawPayoutRequest />
+            <WithdrawPayoutToStake />
+          </div>
         </div>
+
         <q-expansion-item
           dense label="WITHDRAWAL REQUESTS" header-class="bg-red-10 text-white"
           expand-icon-class="text-white" expand-icon="keyboard_double_arrow_down"
