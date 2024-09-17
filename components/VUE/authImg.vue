@@ -1,12 +1,17 @@
 <script setup lang="ts">
+import { useDocumentVisibility } from '@vueuse/core'
+
 const props = defineProps<{
   url: string
   name: string
 }>()
-
 const emit = defineEmits<{
   pay: [string, number]
 }>()
+const documentVisibility = useDocumentVisibility()
+const isTabActive = computed(() =>
+  documentVisibility.value === 'visible',
+)
 const getName = computed(() => {
   if (props.name === 'COMMERCIAL BANK OF ETHIOPIA') {
     return 'CBE'
@@ -20,6 +25,7 @@ const state = ref({
   amount: 0,
 
 })
+const loading = ref(false)
 const isOpen = ref(false)
 const form = ref()
 onMounted(async () => {
@@ -41,8 +47,15 @@ onMounted(async () => {
 })
 
 function onSubmit() {
+  loading.value = true
   emit('pay', props.name, state.value.amount)
 }
+
+watch(isTabActive, () => {
+  loading.value = false
+  isOpen.value = false
+  form.value.reset()
+})
 </script>
 
 <template>
@@ -102,7 +115,7 @@ function onSubmit() {
           <q-separator />
 
           <q-card-actions align="right" class="tw-mt-4">
-            <q-btn type="submit" class="tw-w-full" label="CONFIRM" color="red-10" size="lg" />
+            <q-btn type="submit" class="tw-w-full" :label="loading ? 'Loading...' : 'CONFIRM'" color="red-10" size="lg" />
           </q-card-actions>
         </q-card>
       </q-form>
