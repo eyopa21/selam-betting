@@ -6,7 +6,7 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  pay: [string]
+  pay: [string, number]
 }>()
 const route = useRoute()
 const tab = ref('recommended')
