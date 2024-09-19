@@ -61,7 +61,7 @@ async function deposit(paymentMethod: string, amount: number) {
     if (response.error === false && response.data.paymentUrl) {
       window.open(response.data.paymentUrl)
     } else {
-      console.error('Failed to fetch the image:')
+      console.error('Failed to navigate the url')
     }
   } catch (err) {
     useErrorNotifications(ref(err))
