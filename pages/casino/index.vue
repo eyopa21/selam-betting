@@ -37,10 +37,10 @@ function search() {
 }
 const filteredGames = computed(() => {
   if (!q.value) {
-    return games.value
+    return games.value?.results
   }
 
-  return games.value?.filter((game) => {
+  return games.value?.results?.filter((game) => {
     return Object.values(game).some((value) => {
       return String(value).toLowerCase().includes(q.value.toLowerCase())
     })
@@ -70,7 +70,7 @@ function filterByCategory(categoryName: string) {
       </div>
       <CasinoAwards />
     </div>
-    <div class="tw-my-8 tw-flex tw-justify-center">
+    <!-- <div class="tw-my-8 tw-flex tw-justify-center">
       <q-tabs
         narrow-indicator dense align="justify" class="text-white text-weight-bolder tw-font-extrabold"
         content-class="text-white"
@@ -87,6 +87,10 @@ function filterByCategory(categoryName: string) {
         <q-route-tab name="slots" icon="fort" label="SLOTS" />
         <q-route-tab name="virtual_games" icon="directions_boat_filled" label="VIRTUAL GAMES" />
       </q-tabs>
+    </div> -->
+
+    <div v-if="games?.results" class="tw-p-8">
+      <CasinoCategories :games="games?.results" @filter="filterByCategory" />
     </div>
     <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-8">
       <div class="tw-self-end tw-text-lg tw-text-white" />
@@ -165,10 +169,6 @@ function filterByCategory(categoryName: string) {
       <CasinoGamePlayer :game-link="selectedGameLink" @close="selectedGameLink = ''" />
     </div>
 
-    <hr class="tw-mx-20 tw-my-16 tw-border-gray-300">
-    <div v-if="games" class=" tw-p-8">
-      <CasinoCategories :games @filter="filterByCategory" />
-    </div>
     <div class="tw-mx-auto tw-mt-8 tw-h-full tw-w-3/4 tw-bg-primary-500">
       <CasinoBottomAd />
     </div>
