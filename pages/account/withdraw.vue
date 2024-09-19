@@ -6,9 +6,17 @@ definePageMeta({
   pageType: 'authenticated',
 })
 const userStore = useUserStore()
-
+const isOpen = ref(false)
+const form = useTemplateRef('form')
+const loading = ref(false)
 const payments = ref<PaymentsRoot['results']>([])
 
+const state = ref({
+  paymentMethod: '',
+  paymentImg: '',
+  amount: 0,
+  password: undefined,
+})
 const {
   $authentication,
 } = useNuxtApp()
@@ -50,6 +58,37 @@ const rows = ref([
   },
 
 ])
+
+async function withDraw() {
+  loading.value = true
+  try {
+    const response = await $fetch('/api/finance/cashout', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${$authentication.accessToken.value}`,
+      },
+      cache: 'force-cache',
+      body: {
+        amount: +state.value.amount,
+        password: state.value.password,
+      },
+    })
+    if (response) {
+      console.log('good response', response)
+    } else {
+      console.error('failed to process cashout')
+    }
+  } catch (err) {
+    useErrorNotifications(ref(err))
+  } finally {
+    loading.value = false
+  }
+}
+function handlePaymentClick(paymentMethodName: string, logoUrl: string) {
+  isOpen.value = true
+  state.value.paymentMethod = paymentMethodName
+  state.value.paymentImg = logoUrl
+}
 </script>
 
 <template>
@@ -132,6 +171,63 @@ const rows = ref([
     <div v-if="status === 'pending'">
       <q-spinner color="primary" size="10em" />
     </div>
-    <WithdrawPaymentMethods v-else :payments="payments" />
+    <WithdrawPaymentMethods v-else :payments="payments" @pay="handlePaymentClick" />
+    <q-dialog v-model="isOpen">
+      <div>
+        <q-form
+          ref="form"
+          class="q-gutter-md"
+          @submit="withDraw"
+        >
+          <q-card class="tw-p-4">
+            <q-card-section>
+              <div class="text-h6">
+                <VUEAuthImg v-if="state.paymentImg" :url="state.paymentImg" fit="contain" class="tw-h-20 tw-w-full" />
+              </div>
+            </q-card-section>
+
+            <q-separator />
+
+            <q-card-section style="max-height: 50vh" class="scroll tw-my-8">
+              <div class="tw-grid tw-grid-cols-2 tw-gap-8">
+                <label for="available" class="tw-flex   tw-flex-col tw-text-lg tw-font-bold">
+                  <span>Amount (Min5.00 ETB / Max 15000.00 ETB):</span>
+
+                </label>
+                <q-input
+                  v-model="state.amount"
+                  filled
+                  name="amount"
+                  type="number"
+                  lazy-rules
+                  :rules="[
+                    val => val >= 5 || 'Minimum deposit amount is 5 Birr',
+                    val => val <= 15000 || 'Maximum deposit amount is 15,000 Birr',
+                  ]"
+                />
+
+                <label for="available" class="tw-flex tw-w-full tw-flex-col tw-place-content-center tw-text-xl tw-font-bold">
+                  <span>Password:</span>
+
+                </label>
+                <q-input
+                  v-model="state.password"
+                  placeholder="********"
+                  type="password"
+                  filled
+                  lazy-rules
+                />
+              </div>
+            </q-card-section>
+
+            <q-separator />
+
+            <q-card-actions align="right" class="tw-mt-4">
+              <q-btn type="submit" class="tw-w-full" :label="loading ? 'Loading...' : 'CONFIRM'" color="red-10" size="lg" />
+            </q-card-actions>
+          </q-card>
+        </q-form>
+      </div>
+    </q-dialog>
   </div>
 </template>
