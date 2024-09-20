@@ -94,7 +94,7 @@ async function onSubmit() {
         :type="!showPassword ? 'password' : 'text'"
         label="Your Password *"
         lazy-rules
-        :rules="[(val: string) => (val && val.length > 0) || 'Invalid username']"
+        :rules="[(val: string) => (val && val.length > 0) || 'Invalid password']"
       >
         <template #append>
           <q-icon
