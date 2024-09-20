@@ -40,8 +40,10 @@ if ($authentication.loggedIn.value) {
 </script>
 
 <template>
-  <NuxtLoadingIndicator :height="7" color="red" />
-  <NuxtLayout class="tw-min-h-screen tw-scroll-smooth">
-    <NuxtPage />
-  </NuxtLayout>
+  <ClientOnly>
+    <NuxtLoadingIndicator :height="7" color="red" />
+    <NuxtLayout class="tw-min-h-screen tw-scroll-smooth">
+      <NuxtPage />
+    </NuxtLayout>
+  </ClientOnly>
 </template>

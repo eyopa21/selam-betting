@@ -24,7 +24,7 @@ const {
   data,
   error,
   status,
-} = await useLazyFetch<PaymentsRoot>('/api/finance/get-payment-methods', {
+} = await useFetch<PaymentsRoot>('/api/finance/get-payment-methods', {
   method: 'POST',
   headers: {
     Authorization: `Bearer ${$authentication.accessToken.value}`,
