@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import type { CasinoGame } from '~/types/casino/games'
-
 definePageMeta({
   layout: 'casino',
   pageType: 'authenticated',
 })
 
 const { $authentication } = useNuxtApp()
-const { scrollToTop } = useHelpers()
-const { data: games, error } = await useFetch('/api/casino/get-games', {
-  method: 'GET',
+
+const currentPage = ref(1)
+
+const { data: games, error } = await useFetch(`/api/casino/get-groups`, {
+  method: 'POST',
   headers: {
     Authorization: `Bearer ${$authentication.accessToken.value}`,
+  },
+  body: {
+    page: currentPage,
   },
 })
 if (error.value) {
@@ -19,7 +22,6 @@ if (error.value) {
 }
 
 const slide = ref('1')
-
 const filterType = ref<'square' | 'circle'>('square')
 const selectedGameLink = ref('')
 
@@ -46,11 +48,6 @@ const filteredGames = computed(() => {
     })
   })
 })
-
-function filterByCategory(categoryName: string) {
-  tempQuery.value = q.value = categoryName
-  scrollToTop()
-}
 </script>
 
 <template>
@@ -89,9 +86,6 @@ function filterByCategory(categoryName: string) {
       </q-tabs>
     </div> -->
 
-    <div v-if="games?.results" class="tw-p-8">
-      <CasinoCategories :games="games?.results" @filter="filterByCategory" />
-    </div>
     <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-8">
       <div class="tw-self-end tw-text-lg tw-text-white" />
       <div class="tw-flex tw-gap-2 tw-self-stretch ">
@@ -108,58 +102,38 @@ function filterByCategory(categoryName: string) {
         </q-btn-group>
       </div>
     </div>
-    <div v-if="!!filteredGames?.length">
-      <div v-for="(i, key) in filteredGames" :key="key" class="tw-p-8 tw-py-0">
-        <h1 class="tw-my-4 tw-text-xl tw-font-extrabold tw-capitalize tw-text-white">
-          {{ i.name }}
-        </h1>
+    <div v-if="!!filteredGames?.length" class="tw-p-8">
+      <div
+        class="tw-grid  tw-gap-4 tw-gap-y-8"
+        :class="filterType === 'square' ? 'tw-grid-cols-4' : 'tw-grid-cols-7'"
+      >
         <div
-          class="tw-grid  tw-gap-4 tw-gap-y-8"
-          :class="filterType === 'square' ? 'tw-grid-cols-4' : 'tw-grid-cols-7'"
+          v-for="(ii, k) in filteredGames" :key="k"
+          class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
         >
-          <div
-            v-for="(ii, k) in i.games" :key="k"
-            class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
-          >
-            <div v-if="filterType === 'square'" class="tw-group">
-              <div class="tw-absolute tw-right-0">
-                <q-btn
-                  flat round color="white" icon="favorite_outline"
-                  class="tw-z-50 tw-transition-all tw-duration-500 group-hover:tw-scale-110"
-                />
-              </div>
-              <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64  tw-rounded tw-ring tw-ring-blue-500" />
-              <div class="tw-mt-3 tw-flex tw-w-full tw-justify-between tw-space-x-4">
-                <q-btn
-                  color="deep-purple-14" label="Play" class="tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white"
-                  @click="selectedGameLink = ii.play_url"
-                />
-                <q-btn
-                  color="black" label="Practice" class="tw-hidden tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white lg:tw-block"
-                  @click=" selectedGameLink = ii.play_url"
-                />
-              </div>
-            </div>
-            <div v-else>
-              <q-avatar
-                font-size="52px" color="primary" text-color="white"
-                class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105 lg:tw-size-[170px] 2xl:tw-size-[200px]"
-              >
-                <q-img :src="ii.logo_url" />
-              </q-avatar>
-              <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-4 ">
-                <q-btn
-                  size="sm" color="deep-purple-14" label="Play" class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
-                  @click="selectedGameLink = ii.play_url"
-                />
-                <q-btn
-                  size="sm" color="black" label="Practice" class=" tw-hidden tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white lg:tw-block"
-                  @click=" selectedGameLink = ii.play_url"
-                />
-              </div>
-            </div>
+          <div v-if="filterType === 'square'" class="tw-group">
+            <q-img :src="ii.icon_url" :alt="ii.name" fit="cover" class="tw-h-64  tw-rounded tw-ring tw-ring-blue-500" @click="navigateTo(`/casino/games/${ii.id}`)" />
+          </div>
+          <div v-else>
+            <q-avatar
+              font-size="52px" color="primary" text-color="white"
+              class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105 lg:tw-size-[170px] 2xl:tw-size-[200px]"
+            >
+              <q-img :src="ii.icon_url" />
+            </q-avatar>
           </div>
         </div>
+      </div>
+      <div class="tw-mt-16 tw-flex tw-w-full tw-justify-center">
+        <q-pagination
+          v-if="games"
+          v-model="currentPage"
+          :max="Math.ceil(games.count / 20)"
+          direction-links
+          gutter="20px"
+          color="white"
+          active-color="secondary"
+        />
       </div>
     </div>
     <div v-else class="tw-flex tw-justify-center ">
