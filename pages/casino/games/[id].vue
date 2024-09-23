@@ -19,7 +19,10 @@ if (error.value) {
 const slide = ref('1')
 
 const filterType = ref<'square' | 'circle'>('square')
-const selectedGameLink = ref('')
+const selectedGame = ref({
+  link: '',
+  id: '',
+})
 
 function toggleType() {
   if (filterType.value === 'circle') {
@@ -72,7 +75,7 @@ const filteredGames = computed(() => {
       <div class="tw-flex tw-gap-2 tw-self-stretch ">
         <input v-model="tempQuery" placeholder="Search for your Games" type="text" class="tw-w-128 tw-block tw-rounded-xl tw-border-0 tw-bg-inherit tw-py-1.5 tw-pl-7 tw-pr-20 tw-text-white  tw-ring-1 tw-ring-inset tw-ring-primary-500 placeholder:tw-text-secondary-500 focus:tw-outline-none focus:tw-ring-gray-200 sm:tw-text-sm sm:tw-leading-6">
 
-        <q-btn color="primary" rounded label="Let's Look" dense text-color="blue-grey-2" class="   tw-rounded-full tw-px-8  tw-ring-2 tw-ring-white" @click="search()" />
+        <q-btn color="primary" rounded label="Let's Look" dense text-color="blue-grey-2" class="   tw-px-8  " @click="search()" />
       </div>
 
       <div class="tw-flex tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
@@ -107,11 +110,11 @@ const filteredGames = computed(() => {
               <div class="tw-mt-3 tw-flex tw-w-full tw-justify-between tw-space-x-4">
                 <q-btn
                   color="deep-purple-14" label="Play" class="tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white"
-                  @click="selectedGameLink = ii.play_url"
+                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id"
                 />
                 <q-btn
                   color="black" label="Practice" class="tw-hidden tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white lg:tw-block"
-                  @click=" selectedGameLink = ii.play_url"
+                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id"
                 />
               </div>
             </div>
@@ -125,11 +128,11 @@ const filteredGames = computed(() => {
               <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-4 ">
                 <q-btn
                   size="sm" color="deep-purple-14" label="Play" class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
-                  @click="selectedGameLink = ii.play_url"
+                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id"
                 />
                 <q-btn
                   size="sm" color="black" label="Practice" class=" tw-hidden tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white lg:tw-block"
-                  @click=" selectedGameLink = ii.play_url"
+                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id"
                 />
               </div>
             </div>
@@ -140,8 +143,8 @@ const filteredGames = computed(() => {
     <div v-else class="tw-flex tw-justify-center ">
       <VUENoItemsFound :search="true" @back="tempQuery = ''; q = ''" />
     </div>
-    <div v-if="selectedGameLink">
-      <CasinoGamePlayer :game-link="selectedGameLink" @close="selectedGameLink = ''" />
+    <div v-if="selectedGame.id && selectedGame.link">
+      <CasinoGamePlayer :game-link="selectedGame.link" :game-id="selectedGame.id" @close="selectedGame.link = ''; selectedGame.id = ''" />
     </div>
 
     <div class="tw-mx-auto tw-mt-8 tw-h-full tw-w-3/4 tw-bg-primary-500">
