@@ -62,6 +62,10 @@ const percentage = ref(50)
               active-class="tw-bg-primary-900" to="/account/transaction-history" name="transaction_history" icon="multiple_stop" label="Transaction History"
               class=" tw-place-content-start "
             />
+            <q-route-tab
+              active-class="tw-bg-primary-900" to="/account/bet-for-me-agent" name="bet_for_me_agent" icon="multiple_stop" label="Bet For Me"
+              class=" tw-place-content-start "
+            />
           </q-tabs>
         </q-card>
       </q-expansion-item>
