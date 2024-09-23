@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'account',
+  pageType: 'authenticated',
 })
 
 const progress = ref(0.33)

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'account',
+  pageType: 'authenticated',
 })
 const showTerms = ref(false)
 const percentage = ref(50)
