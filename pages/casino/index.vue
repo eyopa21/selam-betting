@@ -23,7 +23,6 @@ if (error.value) {
 
 const slide = ref('1')
 const filterType = ref<'square' | 'circle'>('square')
-const selectedGameLink = ref('')
 
 function toggleType() {
   if (filterType.value === 'circle') {
@@ -91,7 +90,7 @@ const filteredGames = computed(() => {
       <div class="tw-flex tw-gap-2 tw-self-stretch ">
         <input v-model="tempQuery" placeholder="Search for your Games" type="text" class="tw-w-128 tw-block tw-rounded-xl tw-border-0 tw-bg-inherit tw-py-1.5 tw-pl-7 tw-pr-20 tw-text-white  tw-ring-1 tw-ring-inset tw-ring-primary-500 placeholder:tw-text-secondary-500 focus:tw-outline-none focus:tw-ring-gray-200 sm:tw-text-sm sm:tw-leading-6">
 
-        <q-btn color="primary" rounded label="Let's Look" dense text-color="blue-grey-2" class="   tw-rounded-full tw-px-8  tw-ring-2 tw-ring-white" @click="search()" />
+        <q-btn color="primary" label="Let's Look" dense text-color="blue-grey-2" rounded class="    tw-px-8  " @click="search()" />
       </div>
 
       <div class="tw-flex tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
@@ -111,13 +110,14 @@ const filteredGames = computed(() => {
           v-for="(ii, k) in filteredGames" :key="k"
           class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
         >
-          <div v-if="filterType === 'square'" class="tw-group">
+          <div v-if="filterType === 'square'" class="tw-group tw-cursor-pointer">
             <q-img :src="ii.icon_url" :alt="ii.name" fit="cover" class="tw-h-64  tw-rounded tw-ring tw-ring-blue-500" @click="navigateTo(`/casino/games/${ii.id}`)" />
           </div>
           <div v-else>
             <q-avatar
-              font-size="52px" color="primary" text-color="white"
-              class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105 lg:tw-size-[170px] 2xl:tw-size-[200px]"
+              font-size="52px"
+              color="primary" text-color="white" class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105 lg:tw-size-[170px] 2xl:tw-size-[200px]"
+              @click="navigateTo(`/casino/games/${ii.id}`)"
             >
               <q-img :src="ii.icon_url" />
             </q-avatar>
@@ -138,9 +138,6 @@ const filteredGames = computed(() => {
     </div>
     <div v-else class="tw-flex tw-justify-center ">
       <VUENoItemsFound :search="true" @back="tempQuery = ''; q = ''" />
-    </div>
-    <div v-if="selectedGameLink">
-      <CasinoGamePlayer :game-link="selectedGameLink" @close="selectedGameLink = ''" />
     </div>
 
     <div class="tw-mx-auto tw-mt-8 tw-h-full tw-w-3/4 tw-bg-primary-500">
