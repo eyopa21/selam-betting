@@ -19,7 +19,7 @@ export default defineNuxtPlugin({
         }
         const data = JSON.parse(sessionCookie.value)
         return data as AuthSessionSchema
-      } catch (error) {
+      } catch {
         console.warn(`Error parsing session cookie, received value that is not JSON serializable (${sessionCookie.value})`)
         return null
       }

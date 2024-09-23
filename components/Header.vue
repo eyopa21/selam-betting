@@ -3,6 +3,7 @@ const { $authentication } = useNuxtApp()
 
 const layout = useLayout()
 const userStore = useUserStore()
+const general = useGeneralClientInfo()
 
 const { logout } = useAuth()
 
@@ -10,34 +11,42 @@ const menuOptions = ref([
   {
     name: 'Sport',
     link: '#',
+    show: true,
   },
   {
     name: 'Live',
     link: '#',
+    show: true,
   },
   {
     name: 'Jackpot',
     link: '#',
+    show: true,
   },
   {
     name: 'Virtual Sport',
     link: '#',
+    show: true,
   },
   {
     name: 'Casino',
     link: '/casino',
+    show: general.generalClientInfo?.is_casino_game,
   },
   {
     name: 'Promotions',
     link: '#',
+    show: true,
   },
   {
     name: ' Deposit',
     link: '#',
+    show: true,
   },
   {
     name: 'Rules',
     link: '#',
+    show: true,
   },
 ])
 </script>
@@ -52,7 +61,7 @@ const menuOptions = ref([
     </q-toolbar>
 
     <div class="tw-hidden tw-items-start tw-justify-center lg:tw-flex">
-      <ul v-for="option in menuOptions" :key="option.name">
+      <ul v-for="option in menuOptions" :key="option.name" :class="option.show ? 'tw-block' : 'tw-hidden'">
         <a
           :href="option.link"
           class="tw-mx-2 tw-whitespace-nowrap tw-font-semibold tw-underline-offset-4 hover:tw-text-primary-300 hover:tw-underline"
