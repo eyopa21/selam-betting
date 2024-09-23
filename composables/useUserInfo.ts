@@ -9,16 +9,17 @@ export function useUserInfo() {
   async function fetchUserInfo() {
     loading.value = true
     try {
-      const response = await $fetch('/api/auth/user-info', {
-        method: 'GET',
-        cache: 'reload',
-        immediate: false,
-        headers: {
-          Authorization: `Bearer ${$authentication.accessToken.value}`,
-        },
-      })
-
-      userStore.user = response
+      if ($authentication.loggedIn.value) {
+        const response = await $fetch('/api/auth/user-info', {
+          method: 'GET',
+          cache: 'reload',
+          immediate: false,
+          headers: {
+            Authorization: `Bearer ${$authentication.accessToken.value}`,
+          },
+        })
+        userStore.user = response
+      }
     } catch (err) {
       useErrorNotifications(ref(err))
     } finally {
