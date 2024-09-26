@@ -1,6 +1,6 @@
 import { Notify } from 'quasar'
 
-export async function useLocation() {
+export function useLocation() {
   async function getLocation(): Promise<{ lat: number, lon: number } | undefined> {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
