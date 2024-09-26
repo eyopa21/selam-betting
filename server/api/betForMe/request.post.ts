@@ -17,8 +17,6 @@ export default defineEventHandler(async (event) => {
         'Authorization': authHeader!.toString()!,
       },
     })
-
-    console.log('res', result)
     return result
   } catch (err: unknown) {
     const error = err as NuxtError

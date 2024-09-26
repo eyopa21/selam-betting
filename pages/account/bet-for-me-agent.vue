@@ -24,33 +24,9 @@ if (error.value) {
     </div>
 
     <div class="tw-mt-4">
-      <h4 class="tw-text-lg tw-font-bold">
-        Search fo nearby
-      </h4>
       <div class="tw-flex tw-flex-col tw-justify-between tw-gap-6 lg:tw-flex-row">
         <div class="tw-flex tw-w-full tw-flex-col tw-gap-4 lg:tw-w-1/2">
-          <div class="tw-border  tw-bg-white tw-p-4">
-            <q-list separator class="rounded-borders">
-              <q-item v-for="i in 5" :key="i" v-ripple class="q-mb-sm" clickable>
-                <q-item-section avatar>
-                  <q-avatar>
-                    <img src="/arsenal.jpg">
-                  </q-avatar>
-                </q-item-section>
-
-                <q-item-section class="tw-border-2 tw-px-2">
-                  <q-item-label>@Abel_s21</q-item-label>
-                </q-item-section>
-
-                <q-item-section side>
-                  <div class="tw-border-2 tw-bg-gray-100 tw-p-2 tw-px-4">
-                    100 m
-                  </div>
-                </q-item-section>
-                <q-separator spaced inset />
-              </q-item>
-            </q-list>
-          </div>
+          <BetForMeNearby />
         </div>
 
         <div class="tw-flex tw-w-full tw-flex-col tw-gap-4 lg:tw-w-1/2">
