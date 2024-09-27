@@ -22,6 +22,7 @@ const filterType = ref<'square' | 'circle'>('square')
 const selectedGame = ref({
   link: '',
   id: '',
+  isPractice: true,
 })
 
 function toggleType() {
@@ -110,11 +111,11 @@ const filteredGames = computed(() => {
               <div class="tw-mt-3 tw-flex tw-w-full tw-justify-between tw-space-x-4">
                 <q-btn
                   color="deep-purple-14" label="Play" class="tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white"
-                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id"
+                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = false"
                 />
                 <q-btn
                   color="black" label="Practice" class="tw-hidden tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white lg:tw-block"
-                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id"
+                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = true"
                 />
               </div>
             </div>
@@ -128,11 +129,11 @@ const filteredGames = computed(() => {
               <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-4 ">
                 <q-btn
                   size="sm" color="deep-purple-14" label="Play" class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
-                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id"
+                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = false"
                 />
                 <q-btn
                   size="sm" color="black" label="Practice" class=" tw-hidden tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white lg:tw-block"
-                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id"
+                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = true"
                 />
               </div>
             </div>
@@ -144,7 +145,7 @@ const filteredGames = computed(() => {
       <VUENoItemsFound :search="true" @back="tempQuery = ''; q = ''" />
     </div>
     <div v-if="selectedGame.id && selectedGame.link">
-      <CasinoGamePlayer :game-link="selectedGame.link" :game-id="selectedGame.id" @close="selectedGame.link = ''; selectedGame.id = ''" />
+      <CasinoGamePlayer :game-link="selectedGame.link" :game-id="selectedGame.id" :practice="selectedGame.isPractice" @close="selectedGame.link = ''; selectedGame.id = ''" />
     </div>
 
     <div class="tw-mx-auto tw-mt-8 tw-h-full tw-w-3/4 tw-bg-primary-500">

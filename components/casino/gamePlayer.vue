@@ -2,6 +2,7 @@
 const props = defineProps<{
   gameLink: string
   gameId: string
+  practice: boolean
 }>()
 
 const emit = defineEmits<{
@@ -47,7 +48,7 @@ onBeforeUnmount(async () => {
           <iframe
 
             id="gamePlayer"
-            :src=" `${props.gameLink + $authentication.accessToken.value}&${data}`"
+            :src="props.practice ? `${`${props.gameLink}demo`}&${data}` : `${props.gameLink + $authentication.accessToken.value}&${data}`"
             :allowfullscreen="true"
             style="width: 100%; height: 100%;" @load="loading = false"
           />
