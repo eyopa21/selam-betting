@@ -6,26 +6,6 @@ export type CasinoGame = {
 
 export type CasinoRoot = Root
 
-// export type Root2 = {
-//   id: string
-//   name: string
-//   games: Game[]
-//   order: number
-//   icon_url: string
-// }
-
-// export type Game = {
-//   id: string
-//   game_id: string
-//   label: string
-//   tag: string
-//   logo_url: string
-//   play_url: string
-//   mobile: boolean
-//   desktop: boolean
-//   order: number
-// }
-
 export type Root = {
   count: number
   next: string | null

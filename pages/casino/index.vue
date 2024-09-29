@@ -31,21 +31,9 @@ function toggleType() {
     filterType.value = 'circle'
   }
 }
-const tempQuery = ref('')
-const q = ref('')
-function search() {
-  q.value = tempQuery.value
-}
-const filteredGames = computed(() => {
-  if (!q.value) {
-    return games.value?.results
-  }
 
-  return games.value?.results?.filter((game) => {
-    return Object.values(game).some((value) => {
-      return String(value).toLowerCase().includes(q.value.toLowerCase())
-    })
-  })
+const filteredGames = computed(() => {
+  return games.value?.results
 })
 </script>
 
@@ -66,32 +54,11 @@ const filteredGames = computed(() => {
       </div>
       <CasinoAwards />
     </div>
-    <!-- <div class="tw-my-8 tw-flex tw-justify-center">
-      <q-tabs
-        narrow-indicator dense align="justify" class="text-white text-weight-bolder tw-font-extrabold"
-        content-class="text-white"
-      >
-        <q-route-tab name="home" icon="home" label="LOBBY" />
-        <q-route-tab name="virtual" icon="add_to_queue" label="VIRTUAL" />
-        <q-route-tab name="league" icon="api" label=" LEAGUE" />
-        <q-route-tab name="crash" icon="videogame_asset" label="CRASH GAMES" />
-        <q-route-tab name="mines" icon="emoji_events" label="MINES" />
-        <q-route-tab name="instant" icon="casino" label="INSTANT WINS" />
-        <q-route-tab name="keno" icon="flight_takeoff" label="KENO" />
-        <q-route-tab name="plinko" icon="directions_boat_filled" label="PLINKO" />
-        <q-route-tab name="roulette" icon="directions_car_filled" label="ROULETTE" />
-        <q-route-tab name="slots" icon="fort" label="SLOTS" />
-        <q-route-tab name="virtual_games" icon="directions_boat_filled" label="VIRTUAL GAMES" />
-      </q-tabs>
-    </div> -->
 
     <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-8">
       <div class="tw-self-end tw-text-lg tw-text-white" />
-      <div class="tw-flex tw-gap-2 tw-self-stretch ">
-        <input v-model="tempQuery" placeholder="Search for your Games" type="text" class="tw-w-128 tw-block tw-rounded-xl tw-border-0 tw-bg-inherit tw-py-1.5 tw-pl-7 tw-pr-20 tw-text-white  tw-ring-1 tw-ring-inset tw-ring-primary-500 placeholder:tw-text-secondary-500 focus:tw-outline-none focus:tw-ring-gray-200 sm:tw-text-sm sm:tw-leading-6">
 
-        <q-btn color="primary" label="Let's Look" dense text-color="blue-grey-2" rounded class="    tw-px-8  " @click="search()" />
-      </div>
+      <CasinoSearchGames />
 
       <div class="tw-flex tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
         <q-btn-group outline stretch>
@@ -137,7 +104,7 @@ const filteredGames = computed(() => {
       </div>
     </div>
     <div v-else class="tw-flex tw-justify-center ">
-      <VUENoItemsFound :search="true" @back="tempQuery = ''; q = ''" />
+      <VUENoItemsFound :search="true" />
     </div>
 
     <div class="tw-mx-auto tw-mt-8 tw-h-full tw-w-3/4 tw-bg-primary-500">

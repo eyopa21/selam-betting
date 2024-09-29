@@ -1,0 +1,141 @@
+<script setup lang="ts">
+definePageMeta({
+  layout: 'casino',
+  pageType: 'authenticated',
+})
+
+const gameStore = useCasinoGameStore()
+const { $authentication } = useNuxtApp()
+const route = useRoute('casino-search')
+const q = ref<string>()
+const loading = ref(false)
+async function search() {
+  loading.value = true
+  try {
+    const response = await $fetch(`/api/casino/search-games?query=${q.value || route.params.query}`, {
+      headers: {
+        Authorization: `Bearer ${$authentication.accessToken.value}`,
+      },
+    })
+    if (response) {
+      gameStore.addGames(response)
+    }
+  } catch (err) {
+    useErrorNotifications(ref(err))
+  } finally {
+    loading.value = false
+  }
+}
+await search()
+
+const slide = ref('1')
+
+const filterType = ref<'square' | 'circle'>('square')
+const selectedGame = ref({
+  link: '',
+  id: '',
+  isPractice: true,
+})
+
+function toggleType() {
+  if (filterType.value === 'circle') {
+    filterType.value = 'square'
+  } else {
+    filterType.value = 'circle'
+  }
+}
+</script>
+
+<template>
+  <div class="tw-mx-auto tw-pb-20">
+    <div class="tw-flex tw-w-full tw-gap-2 tw-p-2 ">
+      <div class="tw-w-2/3">
+        <q-carousel
+          v-model="slide" transition-prev="slide-right" transition-next="slide-left" infinite animated
+          control-color="white" navigation padding arrows height="300px" :autoplay="true"
+          class="text-white shadow-1  rounded-border"
+        >
+          <q-carousel-slide
+            name="1" img-src="/casino/casinoImage.png"
+            class="tw-h-full tw-w-full"
+          />
+        </q-carousel>
+      </div>
+      <CasinoAwards />
+    </div>
+
+    <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-8">
+      <div class="tw-self-end tw-text-lg tw-text-white" />
+      <CasinoSearchGames />
+
+      <div class="tw-flex tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
+        <q-btn-group outline stretch>
+          <q-btn color="primary-10" icon="filter_alt" size="lg" />
+          <q-btn color="primary-10" icon="apps" size="lg" @click="toggleType()" />
+          <q-btn color="primary-10" icon="control_camera" size="lg" />
+        </q-btn-group>
+      </div>
+    </div>
+    <div v-if="gameStore.games?.length">
+      <div class="tw-p-8">
+        <div
+          class="tw-grid  tw-gap-4 tw-gap-y-8"
+          :class="filterType === 'square' ? 'tw-grid-cols-4' : 'tw-grid-cols-7'"
+        >
+          <div
+            v-for="(ii, k) in gameStore.games" :key="k"
+            class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
+          >
+            <div v-if="filterType === 'square'" class="tw-group">
+              <div class="tw-absolute tw-right-0">
+                <q-btn
+                  flat round color="white" icon="favorite_outline"
+                  class="tw-z-50 tw-transition-all tw-duration-500 group-hover:tw-scale-110"
+                />
+              </div>
+              <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64  tw-rounded tw-ring tw-ring-blue-500" />
+              <div class="tw-mt-3 tw-flex tw-w-full tw-justify-between tw-space-x-4">
+                <q-btn
+                  color="deep-purple-14" label="Play" class="tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white"
+                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = false"
+                />
+                <q-btn
+                  color="black" label="Practice" class="tw-hidden tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white lg:tw-block"
+                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = true"
+                />
+              </div>
+            </div>
+            <div v-else>
+              <q-avatar
+                font-size="52px" color="primary" text-color="white"
+                class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105 lg:tw-size-[170px] 2xl:tw-size-[200px]"
+              >
+                <q-img :src="ii.logo_url" />
+              </q-avatar>
+              <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-4 ">
+                <q-btn
+                  size="sm" color="deep-purple-14" label="Play" class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
+                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = false"
+                />
+                <q-btn
+                  size="sm" color="black" label="Practice" class=" tw-hidden tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white lg:tw-block"
+                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = true"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-else class="tw-flex tw-justify-center ">
+      <VUENoItemsFound :search="true" />
+    </div>
+    <div v-if="selectedGame.id && selectedGame.link">
+      <CasinoGamePlayer :game-link="selectedGame.link" :game-id="selectedGame.id" :practice="selectedGame.isPractice" @close="selectedGame.link = ''; selectedGame.id = ''" />
+    </div>
+
+    <div class="tw-mx-auto tw-mt-8 tw-h-full tw-w-3/4 tw-bg-primary-500">
+      <CasinoBottomAd />
+    </div>
+  </div>
+</template>
