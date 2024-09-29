@@ -3,6 +3,8 @@ definePageMeta({
   layout: 'casino',
   pageType: 'authenticated',
 })
+
+const gameStore = useCasinoGameStore()
 const route = useRoute('casino-games')
 const { $authentication } = useNuxtApp()
 
@@ -14,6 +16,9 @@ const { data: games, error } = await useFetch(`/api/casino/get-games-by-group/${
 })
 if (error.value) {
   useErrorNotifications(error)
+}
+if (games.value) {
+  gameStore.addGames(games.value.games)
 }
 
 const slide = ref('1')
@@ -32,22 +37,10 @@ function toggleType() {
     filterType.value = 'circle'
   }
 }
-const tempQuery = ref('')
-const q = ref('')
-function search() {
-  q.value = tempQuery.value
-}
-const filteredGames = computed(() => {
-  if (!q.value) {
-    return games.value?.games
-  }
 
-  return games.value?.games?.filter((game) => {
-    return Object.values(game).some((value) => {
-      return String(value).toLowerCase().includes(q.value.toLowerCase())
-    })
-  })
-})
+async function refetch() {
+  gameStore.addGames(games.value?.games ?? [])
+}
 </script>
 
 <template>
@@ -68,16 +61,9 @@ const filteredGames = computed(() => {
       <CasinoAwards />
     </div>
 
-    <!-- <div v-if="games?.games" class="tw-p-8">
-      <CasinoCategories :games="games?.games" @filter="filterByCategory" />
-    </div> -->
     <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-8">
       <div class="tw-self-end tw-text-lg tw-text-white" />
-      <div class="tw-flex tw-gap-2 tw-self-stretch ">
-        <input v-model="tempQuery" placeholder="Search for your Games" type="text" class="tw-w-128 tw-block tw-rounded-xl tw-border-0 tw-bg-inherit tw-py-1.5 tw-pl-7 tw-pr-20 tw-text-white  tw-ring-1 tw-ring-inset tw-ring-primary-500 placeholder:tw-text-secondary-500 focus:tw-outline-none focus:tw-ring-gray-200 sm:tw-text-sm sm:tw-leading-6">
-
-        <q-btn color="primary" rounded label="Let's Look" dense text-color="blue-grey-2" class="   tw-px-8  " @click="search()" />
-      </div>
+      <CasinoSearchGames />
 
       <div class="tw-flex tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
         <q-btn-group outline stretch>
@@ -87,7 +73,7 @@ const filteredGames = computed(() => {
         </q-btn-group>
       </div>
     </div>
-    <div v-if="!!filteredGames?.length">
+    <div v-if="gameStore.games?.length">
       <div class="tw-p-8 tw-py-0">
         <h1 class="tw-my-4 tw-text-xl tw-font-extrabold tw-capitalize tw-text-white">
           {{ games?.name }}
@@ -97,7 +83,7 @@ const filteredGames = computed(() => {
           :class="filterType === 'square' ? 'tw-grid-cols-4' : 'tw-grid-cols-7'"
         >
           <div
-            v-for="(ii, k) in filteredGames" :key="k"
+            v-for="(ii, k) in gameStore.games" :key="k"
             class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
           >
             <div v-if="filterType === 'square'" class="tw-group">
@@ -142,7 +128,7 @@ const filteredGames = computed(() => {
       </div>
     </div>
     <div v-else class="tw-flex tw-justify-center ">
-      <VUENoItemsFound :search="true" @back="tempQuery = ''; q = ''" />
+      <VUENoItemsFound :search="true" />
     </div>
     <div v-if="selectedGame.id && selectedGame.link">
       <CasinoGamePlayer :game-link="selectedGame.link" :game-id="selectedGame.id" :practice="selectedGame.isPractice" @close="selectedGame.link = ''; selectedGame.id = ''" />
