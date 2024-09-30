@@ -1,8 +1,4 @@
 <script setup lang="ts">
-const emit = defineEmits<{
-  search: [void]
-  clear: [void]
-}>()
 const route = useRoute('casino-search')
 const q = ref<string>(route.params.query as string)
 const loading = ref(false)
@@ -21,6 +17,6 @@ function clear() {
 
     <q-input v-model="q" color="secondary" clearable type="text" bg-color="primary" outlined label="Search for your Games" label-color="grey-5" style="width: 26rem" input-class="tw-text-white" @clear="clear()" />
 
-    <q-btn :loading color="primary" rounded label="Let's Look" dense text-color="blue-grey-2" class="tw-px-8  " @click="search()" />
+    <q-btn :loading color="primary" label="Let's Look" dense text-color="blue-grey-2" class="tw-px-8  " @click="search()" />
   </div>
 </template>
