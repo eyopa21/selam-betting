@@ -18,6 +18,7 @@ const state = ref({
   amount: 0,
   paymentImg: '',
   paymentMethod: '',
+  directPayment: false,
 })
 const isOpen = ref(false)
 const loading = ref(false)
@@ -44,7 +45,8 @@ if (error.value) {
   payments.value = data.value.results
 }
 
-async function deposit(paymentMethod: string, amount: number) {
+async function deposit(paymentMethod: string, amount: number, directPayment: boolean) {
+  loading.value = true
   try {
     const response = await $fetch('/api/finance/pay', {
       method: 'POST',
@@ -54,17 +56,19 @@ async function deposit(paymentMethod: string, amount: number) {
       cache: 'force-cache',
       body: {
         amount: +amount,
-        is_direct_payment: false,
+        is_direct_payment: directPayment,
         paymentMethods: paymentMethod,
       } as InputBody,
     })
     if (response.error === false && response.data.paymentUrl) {
       window.open(response.data.paymentUrl)
     } else {
-      console.error('Failed to navigate the url')
+      console.error('Failed to navigate the url', response)
     }
   } catch (err) {
     useErrorNotifications(ref(err))
+  } finally {
+    loading.value = false
   }
 }
 watch(isTabActive, () => {
@@ -73,10 +77,11 @@ watch(isTabActive, () => {
   form.value?.reset()
 })
 
-function handlePaymentClick(paymentMethodName: string, logoUrl: string) {
+function handlePaymentClick(paymentMethodName: string, logoUrl: string, is_direct_payment_allowed: boolean) {
   isOpen.value = true
   state.value.paymentMethod = paymentMethodName
   state.value.paymentImg = logoUrl
+  state.value.directPayment = is_direct_payment_allowed
 }
 </script>
 
@@ -123,7 +128,7 @@ function handlePaymentClick(paymentMethodName: string, logoUrl: string) {
           <q-form
             ref="form"
             class="q-gutter-md"
-            @submit="deposit(state.paymentMethod, state.amount)"
+            @submit="deposit(state.paymentMethod, state.amount, state.directPayment)"
           >
             <q-card class="tw-p-4">
               <q-card-section>

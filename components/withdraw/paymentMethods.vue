@@ -6,7 +6,7 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  pay: [string, string]
+  pay: [string, string, boolean]
 }>()
 const route = useRoute()
 const tab = ref('recommended')
@@ -58,7 +58,7 @@ const tab = ref('recommended')
           </div>
           <div v-for="(i, key) in payments" :key="key" class="tw-w-min tw-border">
             <div v-if="i.name === 'TELEBIRR'">
-              <VUEAuthImg :url="i.logo" :name="i.name" @click="emit('pay', i.name, i.logo)" />
+              <VUEAuthImg :url="i.logo" :name="i.name" @click="emit('pay', i.name, i.logo, i.is_direct_payment_allowed)" />
             </div>
           </div>
         </q-tab-panel>
@@ -69,7 +69,7 @@ const tab = ref('recommended')
           <div class="tw-flex tw-flex-wrap   tw-gap-4 ">
             <div v-for="(i, key) in payments" :key="key" class="tw-border">
               <div>
-                <VUEAuthImg :url="i.logo" :name="i.name" @click="emit('pay', i.name, i.logo)" />
+                <VUEAuthImg :url="i.logo" :name="i.name" @click="emit('pay', i.name, i.logo, i.is_direct_payment_allowed)" />
               </div>
             </div>
           </div>
@@ -82,7 +82,7 @@ const tab = ref('recommended')
             <div v-for="(i, key) in payments" :key="key">
               <div v-if="!!i.is_direct_payment_allowed" class="tw-border">
                 <div>
-                  <VUEAuthImg :url="i.logo" :name="i.name" @click="emit('pay', i.name, i.logo)" />
+                  <VUEAuthImg :url="i.logo" :name="i.name" @click="emit('pay', i.name, i.logo, i.is_direct_payment_allowed)" />
                 </div>
               </div>
             </div>
@@ -96,7 +96,7 @@ const tab = ref('recommended')
             <div v-for="(i, key) in payments" :key="key">
               <div v-if="i.type_of_payment === 'Wallet'" class="tw-border">
                 <div>
-                  <VUEAuthImg :url="i.logo" :name="i.name" @click="emit('pay', i.name, i.logo)" />
+                  <VUEAuthImg :url="i.logo" :name="i.name" @click="emit('pay', i.name, i.logo, i.is_direct_payment_allowed)" />
                 </div>
               </div>
             </div>
@@ -110,7 +110,7 @@ const tab = ref('recommended')
             <div v-for="(i, key) in payments" :key="key">
               <div class="tw-border">
                 <div>
-                  <VUEAuthImg :url="i.logo" :name="i.name" @click="emit('pay', i.name, i.logo)" />
+                  <VUEAuthImg :url="i.logo" :name="i.name" @click="emit('pay', i.name, i.logo, i.is_direct_payment_allowed)" />
                 </div>
               </div>
             </div>

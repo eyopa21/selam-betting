@@ -40,7 +40,7 @@ const menuOptions = ref([
   },
   {
     name: ' Deposit',
-    link: '#',
+    link: '/account/deposit',
     show: true,
   },
   {
