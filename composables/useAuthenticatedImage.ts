@@ -3,7 +3,6 @@ export function useAuthenticatedImage() {
   const { $authentication } = useNuxtApp()
 
   async function getImage(relativeUrl: string) {
-    console.log('rel', relativeUrl)
     loading.value = true
     try {
       const response = await $fetch(`/api/app/get-image?image=${relativeUrl}`, {
