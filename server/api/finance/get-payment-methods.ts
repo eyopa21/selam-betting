@@ -1,7 +1,9 @@
+import type { NuxtError } from 'nuxt/app'
+
 export type PaymentsRoot = {
   count: number
-  next: any
-  previous: any
+  next: string | null
+  previous: string | null
   results: Result[]
 }
 
@@ -12,7 +14,10 @@ export type Result = {
   is_direct_payment_allowed: boolean
   type_of_payment: string
 }
-
+type ErrorResponse = {
+  detail: string
+  Error: string
+}
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const url = `${config.baseApiEndpoint}/finance/user/api/v1/payment_methods/?page_size=20`
@@ -29,18 +34,19 @@ export default defineEventHandler(async (event) => {
         },
       })
     } else {
-      console.log('no token')
-
       throw createError({
         statusCode: 401,
         message: 'Token is missing',
       })
     }
-  } catch (err: NuxtError) {
-    console.error('Can not get the stake:', err.message)
-    return createError({
-      statusCode: err.statusCode,
-      statusMessage: err.message,
+  } catch (err: unknown) {
+    const error = err as NuxtError
+    const errorResponse = error.data as ErrorResponse
+
+    throw createError({
+      statusCode: error.statusCode,
+      statusMessage: errorResponse?.detail ?? errorResponse?.Error ?? 'Connection Error',
+
     })
   }
 })
