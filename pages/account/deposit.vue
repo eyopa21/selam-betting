@@ -64,6 +64,7 @@ async function deposit(paymentMethod: string, amount: number, directPayment: boo
       window.open(response.data.paymentUrl)
     } else {
       console.error('Failed to navigate the url', response)
+      useSuccessNotification('Please pay the money')
     }
   } catch (err) {
     useErrorNotifications(ref(err))
