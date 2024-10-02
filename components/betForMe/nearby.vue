@@ -54,23 +54,39 @@ async function search() {
     </div>
 
     <q-separator class="tw-mt-4" />
-    <div class="tw-p-2">
-      32 agents
+    <div v-if="agents" class="tw-p-2">
+      {{ agents?.count }} agents
     </div>
     <div class="tw-border  tw-bg-white tw-p-4">
       <q-list separator class="rounded-borders">
-        <q-item v-for="i in 5" :key="i" v-ripple class="q-mb-sm" clickable>
+        <div v-if="loading">
+          <q-item v-for="i in 3" :key="i" v-ripple class="q-mb-sm" clickable>
+            <q-item-section avatar>
+              <q-skeleton type="QAvatar" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                <q-skeleton type="rect" class="tw-h-10" />
+              </q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <q-skeleton type="QBtn" />
+            </q-item-section>
+            <q-separator spaced inset />
+          </q-item>
+        </div>
+        <q-item v-for="i in agents?.results" v-else :key="i.id" v-ripple class="q-mb-sm" clickable>
           <q-item-section avatar>
             <q-avatar>
-              <img src="/arsenal.jpg">
+              <VUEAsyncImg :relative-path="i.profile_picture" />
             </q-avatar>
           </q-item-section>
           <q-item-section class="tw-border-2 tw-px-2">
-            <q-item-label>@Abel_s21</q-item-label>
+            <q-item-label> {{ `${i.user_account.first_name} ${i.user_account.last_name}` }} </q-item-label>
           </q-item-section>
           <q-item-section side>
             <div class="tw-border-2 tw-bg-gray-100 tw-p-2 tw-px-4">
-              100 m
+              {{ +i.distance.toFixed(2) }} km
             </div>
           </q-item-section>
           <q-separator spaced inset />
