@@ -32,6 +32,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       financeApiEndpoint: '',
+      baseImageUrl: '',
     },
     serverApiKey: '',
     restApiEndpoint: '',
