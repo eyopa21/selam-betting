@@ -55,7 +55,7 @@ async function request() {
         You are aready an agent
       </div>
       <div class="tw-m-8">
-        <q-btn :loading="loading" @click="request()">
+        <q-btn :disable="props.info.is_bet_for_me_agent" :loading="loading" @click="request()">
           Send Request
         </q-btn>
       </div>

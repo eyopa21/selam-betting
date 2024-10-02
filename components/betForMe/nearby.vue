@@ -28,6 +28,7 @@ async function search() {
     loading.value = false
   }
 }
+search()
 </script>
 
 <template>
@@ -75,22 +76,27 @@ async function search() {
             <q-separator spaced inset />
           </q-item>
         </div>
-        <q-item v-for="i in agents?.results" v-else :key="i.id" v-ripple class="q-mb-sm" clickable>
-          <q-item-section avatar>
-            <q-avatar>
-              <VUEAsyncImg :relative-path="i.profile_picture" />
-            </q-avatar>
-          </q-item-section>
-          <q-item-section class="tw-border-2 tw-px-2">
-            <q-item-label> {{ `${i.user_account.first_name} ${i.user_account.last_name}` }} </q-item-label>
-          </q-item-section>
-          <q-item-section side>
-            <div class="tw-border-2 tw-bg-gray-100 tw-p-2 tw-px-4">
-              {{ +i.distance.toFixed(2) }} km
-            </div>
-          </q-item-section>
-          <q-separator spaced inset />
-        </q-item>
+        <div v-else>
+          <div v-if="!agents?.results?.length" class="tw-bg-primary-500 tw-p-8">
+            <VUENoItemsFound title="Agents" message="Please, Adjust the distance and search again" :search="false" />
+          </div>
+          <q-item v-for="i in agents?.results" :key="i.id" v-ripple class="q-mb-sm" clickable>
+            <q-item-section avatar>
+              <q-avatar>
+                <VUEAsyncImg :relative-path="i.profile_picture" />
+              </q-avatar>
+            </q-item-section>
+            <q-item-section class="tw-border-2 tw-px-2">
+              <q-item-label> {{ `${i.user_account.first_name} ${i.user_account.last_name}` }} </q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <div class="tw-border-2 tw-bg-gray-100 tw-p-2 tw-px-4">
+                {{ +i.distance.toFixed(2) }} km
+              </div>
+            </q-item-section>
+            <q-separator spaced inset />
+          </q-item>
+        </div>
       </q-list>
     </div>
   </div>

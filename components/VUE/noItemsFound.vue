@@ -30,6 +30,7 @@ const emit = defineEmits<{
       </p>
       <div class="tw-mt-8">
         <q-btn
+          v-if="props.search"
           color="secondary"
           @click="emit('back')"
         >
