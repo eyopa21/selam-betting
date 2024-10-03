@@ -7,6 +7,7 @@ type ErrorResponse = {
 }
 type body = {
   page: number
+  type: string
 }
 
 export default defineEventHandler(async (event) => {
@@ -14,7 +15,7 @@ export default defineEventHandler(async (event) => {
   const authHeader = getHeader(event, 'authorization')
   const body = await readBody(event) as body
   const page = body.page || 1
-  const url = `${config.restApiEndpoint}/transactions/?page=${page}`
+  const url = `${config.restApiEndpoint}/transactions/?transaction_for=${body.type}&page=${page}`
   try {
     const result = await $fetch<TransactionRoot>(url, {
       method: 'GET',
@@ -22,14 +23,13 @@ export default defineEventHandler(async (event) => {
         'Content-Type': 'application/json',
         'X-API-KEY': config.serverApiKey,
         'Authorization': authHeader!.toString()!,
-
       },
     })
     return result
   } catch (err: unknown) {
     const error = err as NuxtError
     const errorResponse = error.data as ErrorResponse
-
+    console.log(error)
     throw createError({
       statusCode: error.statusCode,
       statusMessage: errorResponse?.detail ?? errorResponse?.Error ?? 'Connection Error',
