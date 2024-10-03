@@ -14,8 +14,15 @@ export function useErrorNotifications(
     navigateTo('/')
   }
 
-  Notify.create({
-    message: err?.message,
-    color: 'red',
-  })
+  if (typeof unref(error) === 'string') {
+    Notify.create({
+      message: error.value as string,
+      color: 'red',
+    })
+  } else {
+    Notify.create({
+      message: err?.message,
+      color: 'red',
+    })
+  }
 }
