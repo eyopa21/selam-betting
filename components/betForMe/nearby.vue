@@ -61,20 +61,7 @@ search()
     <div class="tw-border  tw-bg-white tw-p-4">
       <q-list separator class="rounded-borders">
         <div v-if="loading">
-          <q-item v-for="i in 3" :key="i" v-ripple class="q-mb-sm" clickable>
-            <q-item-section avatar>
-              <q-skeleton type="QAvatar" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>
-                <q-skeleton type="rect" class="tw-h-10" />
-              </q-item-label>
-            </q-item-section>
-            <q-item-section side>
-              <q-skeleton type="QBtn" />
-            </q-item-section>
-            <q-separator spaced inset />
-          </q-item>
+          <SkeletonsNearbySearch />
         </div>
         <div v-else>
           <div v-if="!agents?.results?.length" class="tw-bg-primary-500 tw-p-8">
