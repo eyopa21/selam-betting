@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import { useMediaQuery } from '@vueuse/core'
+import type { GroupGamesRoot } from '~/types/casino/group-games'
+
 definePageMeta({
   layout: 'casino',
   pageType: 'authenticated',
 })
+
+const isMobile = useMediaQuery('(max-width: 768px)')
 
 const gameStore = useCasinoGameStore()
 const route = useRoute('casino-games')
@@ -38,8 +43,16 @@ function toggleType() {
   }
 }
 
-async function refetch() {
-  gameStore.addGames(games.value?.games ?? [])
+function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean) {
+  if (!!isMobile.value && !game.mobile) {
+    useErrorNotifications(ref('This game can not be played in mobile devices'))
+  } else if (!isMobile.value && !game.desktop) {
+    useErrorNotifications(ref('This game can not be played without mobile devices'))
+  } else {
+    selectedGame.value.id = game.id
+    selectedGame.value.link = game.play_url
+    selectedGame.value.isPractice = isPractice
+  }
 }
 </script>
 
@@ -76,7 +89,7 @@ async function refetch() {
     <div v-if="gameStore.games?.length">
       <div class="tw-p-8 tw-py-0">
         <h1 class="tw-my-4 tw-text-xl tw-font-extrabold tw-capitalize tw-text-white">
-          {{ games?.name }}
+          {{ games?.name }} {{ isMobile }}
         </h1>
         <div
           class="tw-grid  tw-gap-4 tw-gap-y-8"
@@ -97,11 +110,11 @@ async function refetch() {
               <div class="tw-mt-3 tw-flex tw-w-full tw-justify-between tw-space-x-4">
                 <q-btn
                   color="deep-purple-14" label="Play" class="tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white"
-                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = false"
+                  @click="handleClick(ii, false)"
                 />
                 <q-btn
                   color="black" label="Practice" class="tw-hidden tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white lg:tw-block"
-                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = true"
+                  @click="handleClick(ii, true)"
                 />
               </div>
             </div>
@@ -115,11 +128,11 @@ async function refetch() {
               <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-4 ">
                 <q-btn
                   size="sm" color="deep-purple-14" label="Play" class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
-                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = false"
+                  @click="handleClick(ii, false)"
                 />
                 <q-btn
                   size="sm" color="black" label="Practice" class=" tw-hidden tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white lg:tw-block"
-                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = true"
+                  @click="handleClick(ii, true)"
                 />
               </div>
             </div>
