@@ -3,22 +3,8 @@ definePageMeta({
   layout: 'account',
   pageType: 'authenticated',
 })
-const { formatDate } = useHelpers()
-const tab = ref<'deposit' | 'cash_out' | 'betting' | 'transfer_to_user'>('deposit')
-const { $authentication } = useNuxtApp()
-const currentPage = ref(1)
-const { data, error, status } = useLazyFetch('/api/finance/get-transactions', {
-  method: 'post',
-  headers: {
-    Authorization: `Bearer ${$authentication.accessToken.value}`,
-  },
-  body: {
-    page: currentPage,
-  },
-})
-if (error.value) {
-  useErrorNotifications(error)
-}
+
+const tab = ref<'deposit' | 'cash_out' | 'withdraw' | 'transfer_to_user'>('deposit')
 </script>
 
 <template>
@@ -47,9 +33,9 @@ if (error.value) {
               Transfers
             </q-btn>
           </q-tab>
-          <q-tab name="betting">
+          <q-tab name="withdraw">
             <q-btn text-color="black" class="tw-px-8 tw-py-3">
-              Betting
+              Withdrawals
             </q-btn>
           </q-tab>
         </q-tabs>
@@ -67,16 +53,19 @@ if (error.value) {
               <div class="text-h6 tw-uppercase">
                 Cash Outs
               </div>
-              <div class="tw-flex tw-h-full tw-flex-col tw-items-center tw-justify-center">
-                <p>No transactions {{ status }}</p>
-                {{ data?.results[0] }}
-              </div>
+              <TransactionCashouts />
             </q-tab-panel>
-            <q-tab-panel name="archive">
+            <q-tab-panel name="transfer_to_user">
               <div class="text-h6">
-                Movies
+                User Transfer
               </div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <TransactionUserTransfer />
+            </q-tab-panel>
+            <q-tab-panel name="withdraw">
+              <div class="text-h6">
+                Withdrawals
+              </div>
+              <TransactionWithdraw />
             </q-tab-panel>
           </q-tab-panels>
         </div>

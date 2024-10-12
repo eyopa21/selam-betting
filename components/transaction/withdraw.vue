@@ -2,7 +2,7 @@
 type TransactionType = 'withdraw' | 'to_cash' | 'to_user' | 'deposit'
 const { $authentication } = useNuxtApp()
 const currentPage = ref(1)
-const type: TransactionType = 'to_cash'
+const type: TransactionType = 'withdraw'
 const { data, error, status } = useLazyFetch('/api/finance/get-transactions', {
   method: 'post',
   headers: {
@@ -39,10 +39,7 @@ if (error.value) {
           <template #header>
             <div class="tw-flex tw-w-full tw-flex-wrap tw-items-stretch tw-self-end ">
               <span class="tw-flex-1  tw-px-4 tw-py-2 ">
-                {{ i.game_name }} ({{ i.transaction_type }})
-              </span>
-              <span class="tw-flex-1  tw-px-4 tw-py-2 ">
-                {{ i.id }}
+                {{ i.is_casino_game ? i.game_name : 'Withdraw' }} ({{ i.transaction_type }})
               </span>
               <span class=" tw-basis-48  tw-px-4 tw-py-2 ">
                 {{ i.amount }} ETB
