@@ -12,12 +12,12 @@ if (error.value) {
 </script>
 
 <template>
-  <q-scroll-area class="tw-max-h-[300px] tw-w-1/3 tw-gap-2 tw-overflow-auto tw-overflow-x-hidden ">
-    <div class="tw-p-2">
+  <q-scroll-area class="tw-h-[300px] tw-max-h-[300px] tw-min-h-[300px] tw-w-full tw-gap-2 tw-overflow-auto tw-overflow-x-hidden lg:tw-w-1/3 ">
+    <div class="tw-h-full tw-p-2">
       <div v-if="status === 'pending'">
         <SkeletonsLeaderBoard />
       </div>
-      <div v-for="(i, key) in data" v-else :key="key" class="tw-flex tw-flex-col tw-pb-1 ">
+      <div v-for="(i, key) in data" v-else :key="key" class="tw-flex tw-w-full tw-flex-col tw-pb-1 ">
         <div
           class="tw-my-1 tw-ml-1 tw-flex tw-h-20 tw-justify-between tw-gap-4 tw-rounded-md tw-bg-primary-900 tw-p-2 tw-shadow-[0_0_3px_0_rgba(0,0,0,0.1)] tw-shadow-fuchsia-500 "
         >

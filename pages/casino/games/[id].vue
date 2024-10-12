@@ -58,8 +58,8 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
 
 <template>
   <div class="tw-mx-auto tw-pb-20">
-    <div class="tw-flex tw-w-full tw-gap-2 tw-p-2 ">
-      <div class="tw-w-2/3">
+    <div class="tw-flex  tw-w-full tw-flex-col tw-gap-2  tw-p-2 lg:tw-flex-row ">
+      <div class="tw-w-full lg:tw-w-2/3">
         <q-carousel
           v-model="slide" transition-prev="slide-right" transition-next="slide-left" infinite animated
           control-color="white" navigation padding arrows height="300px" :autoplay="true"
@@ -74,16 +74,32 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
       <CasinoAwards />
     </div>
 
-    <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-8">
-      <div class="tw-self-end tw-text-lg tw-text-white" />
+    <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-2 lg:tw-px-8">
+      <div class="tw-hidden tw-self-end tw-text-lg tw-text-white lg:tw-block" />
       <CasinoSearchGames />
 
-      <div class="tw-flex tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
-        <q-btn-group outline stretch>
-          <q-btn color="primary-10" icon="filter_alt" size="lg" />
-          <q-btn color="primary-10" icon="apps" size="lg" @click="toggleType()" />
-          <q-btn color="primary-10" icon="control_camera" size="lg" />
-        </q-btn-group>
+      <div class="tw-flex  tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
+        <div class="tw-hidden md:tw-block">
+          <q-btn-group>
+            <q-btn color="primary-10" icon="filter_alt" size="lg" />
+            <q-btn color="primary-10" icon="apps" size="lg" @click="toggleType()" />
+            <q-btn color="primary-10" icon="control_camera" size="lg" />
+          </q-btn-group>
+        </div>
+        <div class="tw-block md:tw-hidden">
+          <q-fab
+            :model-value="false"
+            :square="true"
+            vertical-actions-align="left"
+            color="purple"
+            icon="keyboard_arrow_down"
+            direction="down"
+          >
+            <q-fab-action color="primary" icon="filter_alt" :square="true" />
+            <q-fab-action color="primary" icon="apps" :square="true" @click="toggleType()" />
+            <q-fab-action color="primary" icon="control_camera" :square="true" />
+          </q-fab>
+        </div>
       </div>
     </div>
     <div v-if="gameStore.games?.length">
@@ -93,7 +109,7 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
         </h1>
         <div
           class="tw-grid  tw-gap-4 tw-gap-y-8"
-          :class="filterType === 'square' ? 'tw-grid-cols-4' : 'tw-grid-cols-7'"
+          :class="filterType === 'square' ? 'tw-grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-3 lg:tw-grid-cols-7'"
         >
           <div
             v-for="(ii, k) in gameStore.games" :key="k"
@@ -113,7 +129,7 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
                   @click="handleClick(ii, false)"
                 />
                 <q-btn
-                  color="black" label="Practice" class="tw-hidden tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white lg:tw-block"
+                  color="black" label="Practice" class=" tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white "
                   @click="handleClick(ii, true)"
                 />
               </div>
@@ -131,7 +147,7 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
                   @click="handleClick(ii, false)"
                 />
                 <q-btn
-                  size="sm" color="black" label="Practice" class=" tw-hidden tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white lg:tw-block"
+                  size="sm" color="black" label="Practice" class=" tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
                   @click="handleClick(ii, true)"
                 />
               </div>
