@@ -9,10 +9,10 @@ export function useErrorNotifications(
   //   error.value.message = error.value.message
   // }
 
-  const route = useRoute()
-  if (err.statusCode === 401 && route.meta.pageType === 'authenticated') {
-    navigateTo('/')
-  }
+  // const route = useRoute()
+  // if (err.statusCode === 401 && route.meta.pageType === 'authenticated') {
+  //   navigateTo('/')
+  // }
 
   if (typeof unref(error) === 'string') {
     Notify.create({
