@@ -1,8 +1,5 @@
 import type { NuxtError } from 'nuxt/app'
-
-export type Root = {
-  Message: string
-}
+import type { CashoutRoot } from '~/types/finance/cahouts'
 
 type ErrorResponse = {
   Error: string
@@ -12,16 +9,14 @@ export default defineEventHandler(async (event) => {
 
   const url = `${config.restApiEndpoint}/process_cash_out/`
   const authHeader = getHeader(event, 'authorization')
-  const body = await readBody(event)
   try {
-    const result = await $fetch<Root>(url, {
-      method: 'POST',
+    const result = await $fetch<CashoutRoot>(url, {
+      method: 'get',
       headers: {
         'Content-Type': 'application/json',
         'X-API-KEY': config.serverApiKey,
         'Authorization': authHeader!.toString()!,
       },
-      body,
     })
 
     return result
