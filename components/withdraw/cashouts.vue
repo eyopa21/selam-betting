@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
 
-const { text, copy, copied, isSupported } = useClipboard()
+const { copy, copied, isSupported } = useClipboard()
 const { $authentication } = useNuxtApp()
 const columns = ref([
 
@@ -9,11 +9,12 @@ const columns = ref([
   { name: 'amount', label: 'Amount', field: 'amount' },
   { name: 'code', label: 'Cashout Code', field: 'code' },
   { name: 'status', label: 'Status', field: 'status' },
+  { name: 'delete', label: '', field: 'delete' },
   { name: 'copy', label: '', field: 'copy' },
 
 ])
 const { formatDate } = useHelpers()
-const { data, error, status } = useLazyFetch('/api/finance/get-cashouts', {
+const { data, error, status, execute: refetch } = useLazyFetch('/api/finance/get-cashouts', {
   server: false,
   headers: {
     Authorization: `Bearer ${$authentication.accessToken.value}`,
@@ -21,6 +22,29 @@ const { data, error, status } = useLazyFetch('/api/finance/get-cashouts', {
 })
 if (error.value) {
   useErrorNotifications(error)
+}
+const loading = ref(false)
+async function deleteVoucher(voucherId: string) {
+  loading.value = true
+  try {
+    const res = await $fetch('/api/finance/delete-cashout-voucher', {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${$authentication.accessToken.value}`,
+      },
+      body: {
+        voucherId,
+      },
+    })
+    if (res) {
+      await refetch()
+      useSuccessNotification('Voucher Deleted Successfully')
+    }
+  } catch (err) {
+    useErrorNotifications(ref(err))
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 
@@ -33,7 +57,7 @@ if (error.value) {
       <div class=" tw-border-gray-400 ">
         <q-table :loading="status === 'pending'" dense hide-pagination flat bordered :rows="data ?? []" :columns="columns" row-key="name">
           <template #top>
-            <WithdrawProcessCashout />
+            <WithdrawProcessCashout @refetch="refetch()" />
           </template>
 
           <template #body="props">
@@ -59,9 +83,20 @@ if (error.value) {
                   </q-badge>
                 </div>
               </q-td>
-              <q-td v-if="isSupported" key="copy" :props="props" class="!tw-pl-16">
-                <q-btn v-if="!copied" flat icon="content_copy" @click="copy(props.row.code)" />
+              <q-td v-if="isSupported" key="copy" :props="props">
+                <q-btn v-if="!copied" flat icon="content_copy" @click="copy(props.row.code)">
+                  <q-tooltip>
+                    Copy Code
+                  </q-tooltip>
+                </q-btn>
                 <span v-else>Copied!</span>
+              </q-td>
+              <q-td key="status" :props="props" class="!tw-pl-4">
+                <q-btn color="red" :loading icon="delete" flat size="md" @click="deleteVoucher(props.row.id)">
+                  <q-tooltip class="bg-red">
+                    Delete This Voucher
+                  </q-tooltip>
+                </q-btn>
               </q-td>
             </q-tr>
           </template>

@@ -1,7 +1,10 @@
 <script setup lang="ts">
+const emit = defineEmits<{
+  refetch: [void]
+}>()
+
 const { $authentication } = useNuxtApp()
 const showPassword = ref(false)
-const form = useTemplateRef('form')
 const isOpen = ref(false)
 const state = ref({
   amount: 0,
@@ -24,8 +27,11 @@ async function requestCashout() {
       },
     })
     if (response) {
-      useSuccessNotification('Process successull')
+      emit('refetch')
+      useSuccessNotification('Process successful')
       isOpen.value = false
+      state.value.amount = 0
+      state.value.password = undefined
     }
   } catch (err) {
     useErrorNotifications(ref(err))
