@@ -49,10 +49,7 @@ if (error.value) {
             </q-tab-panel>
 
             <q-tab-panel name="make_visible">
-              <div class="text-h6">
-                Make My self Visible
-              </div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <BetForMeVisibility />
             </q-tab-panel>
 
             <q-tab-panel name="update_location">
