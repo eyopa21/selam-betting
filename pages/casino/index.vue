@@ -41,7 +41,7 @@ const filteredGames = computed(() => {
     <div class="tw-flex  tw-w-full tw-flex-col tw-gap-2  tw-p-2 lg:tw-flex-row ">
       <div class="tw-w-full lg:tw-w-2/3">
         <q-img
-          class="lg:rounded-3xl tw-h-full tw-w-full tw-rounded-md"
+          class="tw-h-full tw-w-full tw-rounded-md lg:tw-rounded-3xl"
           src="/casino/casinoImage.png"
         />
       </div>
@@ -80,7 +80,7 @@ const filteredGames = computed(() => {
     <div v-if="!!filteredGames?.length" class="tw-mt-8 tw-p-4">
       <div
         class="tw-grid  tw-gap-4 tw-gap-y-8"
-        :class="filterType === 'square' ? 'tw-grid-cols-1 sm:grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-3 lg:tw-grid-cols-7'"
+        :class="filterType === 'square' ? 'tw-grid-cols-1 sm:grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-4 lg:tw-grid-cols-5 xl:tw-grid-cols-6 tw-place-items-center '"
       >
         <div
           v-for="(ii, k) in filteredGames" :key="k"
@@ -92,7 +92,7 @@ const filteredGames = computed(() => {
           <div v-else>
             <q-avatar
               font-size="52px"
-              color="primary" text-color="white" class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105 lg:tw-size-[170px] 2xl:tw-size-[200px]"
+              color="primary" text-color="white" class="tw-size-[200px] tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105 lg:tw-size-[170px] 2xl:tw-size-[200px]"
               @click="navigateTo(`/casino/games/${ii.id}`)"
             >
               <q-img :src="ii.icon_url" />

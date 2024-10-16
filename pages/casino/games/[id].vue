@@ -59,7 +59,7 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
     <div class="tw-flex  tw-w-full tw-flex-col tw-gap-2  tw-p-2 lg:tw-flex-row ">
       <div class="tw-w-full lg:tw-w-2/3">
         <q-img
-          class="lg:rounded-3xl tw-h-full tw-w-full tw-rounded-md"
+          class="tw-h-full tw-w-full tw-rounded-md lg:tw-rounded-3xl"
           src="/casino/casinoImage.png"
         />
       </div>
@@ -126,7 +126,7 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
                 />
               </div>
             </div>
-            <div v-else class="tw-p-2 tw-shadow-xl tw-shadow-primary-500">
+            <div v-else class="tw-p-2 tw-shadow-md tw-shadow-primary-500">
               <q-avatar
                 font-size="52px" color="primary" text-color="white"
                 class="tw-size-[200px] tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500  hover:tw-scale-105 2xl:tw-size-[250px]"

@@ -28,8 +28,6 @@ async function search() {
 }
 await search()
 
-const slide = ref('1')
-
 const filterType = ref<'square' | 'circle'>('square')
 const selectedGame = ref({
   link: '',
@@ -44,43 +42,66 @@ function toggleType() {
     filterType.value = 'circle'
   }
 }
+
+function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean) {
+  if (!!isMobile.value && !game.mobile) {
+    useErrorNotifications(ref('This game can not be played in mobile devices'))
+  } else if (!isMobile.value && !game.desktop) {
+    useErrorNotifications(ref('This game can not be played without mobile devices'))
+  } else {
+    selectedGame.value.id = game.id
+    selectedGame.value.link = game.play_url
+    selectedGame.value.isPractice = isPractice
+  }
+}
 </script>
 
 <template>
   <div class="tw-mx-auto tw-pb-20">
-    <div class="tw-flex tw-w-full tw-gap-2 tw-p-2 ">
-      <div class="tw-w-2/3">
-        <q-carousel
-          v-model="slide" transition-prev="slide-right" transition-next="slide-left" infinite animated
-          control-color="white" navigation padding arrows height="300px" :autoplay="true"
-          class="text-white shadow-1  rounded-border"
-        >
-          <q-carousel-slide
-            name="1" img-src="/casino/casinoImage.png"
-            class="tw-h-full tw-w-full"
-          />
-        </q-carousel>
+    <div class="tw-flex  tw-w-full tw-flex-col tw-gap-2  tw-p-2 lg:tw-flex-row ">
+      <div class="tw-w-full lg:tw-w-2/3">
+        <q-img
+          class="tw-h-full tw-w-full tw-rounded-md lg:tw-rounded-3xl"
+          src="/casino/casinoImage.png"
+        />
       </div>
       <CasinoAwards />
     </div>
 
-    <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-8">
-      <div class="tw-self-end tw-text-lg tw-text-white" />
+    <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-2 lg:tw-px-8">
+      <div class="tw-hidden tw-self-end tw-text-lg tw-text-white lg:tw-block" />
       <CasinoSearchGames />
 
-      <div class="tw-flex tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
-        <q-btn-group outline stretch>
-          <q-btn color="primary-10" icon="filter_alt" size="lg" />
-          <q-btn color="primary-10" icon="apps" size="lg" @click="toggleType()" />
-          <q-btn color="primary-10" icon="control_camera" size="lg" />
-        </q-btn-group>
+      <div class="tw-flex  tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
+        <div class="tw-hidden md:tw-block">
+          <q-btn-group>
+            <q-btn color="primary-10" icon="filter_alt" size="lg" />
+            <q-btn color="primary-10" icon="apps" size="lg" @click="toggleType()" />
+            <q-btn color="primary-10" icon="control_camera" size="lg" />
+          </q-btn-group>
+        </div>
+        <div class="tw-block md:tw-hidden">
+          <q-fab
+            :model-value="false"
+            :square="true"
+            vertical-actions-align="left"
+            color="purple"
+            icon="keyboard_arrow_down"
+            direction="down"
+          >
+            <q-fab-action color="primary" icon="filter_alt" :square="true" />
+            <q-fab-action color="primary" icon="apps" :square="true" @click="toggleType()" />
+            <q-fab-action color="primary" icon="control_camera" :square="true" />
+          </q-fab>
+        </div>
       </div>
     </div>
     <div v-if="gameStore.games?.length">
-      <div class="tw-p-8">
+      <div class=" tw-p-4">
+        >
         <div
           class="tw-grid  tw-gap-4 tw-gap-y-8"
-          :class="filterType === 'square' ? 'tw-grid-cols-4' : 'tw-grid-cols-7'"
+          :class="filterType === 'square' ? 'tw-grid-cols-1 sm:grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-4 lg:tw-grid-cols-5  tw-place-items-center '"
         >
           <div
             v-for="(ii, k) in gameStore.games" :key="k"
@@ -93,33 +114,33 @@ function toggleType() {
                   class="tw-z-50 tw-transition-all tw-duration-500 group-hover:tw-scale-110"
                 />
               </div>
-              <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64  tw-rounded tw-ring tw-ring-blue-500" />
-              <div class="tw-mt-3 tw-flex tw-w-full tw-justify-between tw-space-x-4">
+              <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64  tw-rounded-xl tw-ring tw-ring-violet-500  tw-ring-opacity-60" />
+              <div class="tw-mt-5 tw-flex tw-w-full tw-justify-between tw-space-x-4">
                 <q-btn
                   color="deep-purple-14" label="Play" class="tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white"
-                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = false"
+                  @click="handleClick(ii, false)"
                 />
                 <q-btn
-                  color="black" label="Practice" class="tw-hidden tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white lg:tw-block"
-                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = true"
+                  color="black" label="Practice" class=" tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white "
+                  @click="handleClick(ii, true)"
                 />
               </div>
             </div>
-            <div v-else>
+            <div v-else class="tw-p-2 tw-shadow-md tw-shadow-primary-500">
               <q-avatar
                 font-size="52px" color="primary" text-color="white"
-                class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105 lg:tw-size-[170px] 2xl:tw-size-[200px]"
+                class="tw-size-[200px] tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500  hover:tw-scale-105 2xl:tw-size-[250px]"
               >
                 <q-img :src="ii.logo_url" />
               </q-avatar>
               <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-4 ">
                 <q-btn
                   size="sm" color="deep-purple-14" label="Play" class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
-                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = false"
+                  @click="handleClick(ii, false)"
                 />
                 <q-btn
-                  size="sm" color="black" label="Practice" class=" tw-hidden tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white lg:tw-block"
-                  @click="selectedGame.link = ii.play_url; selectedGame.id = ii.id; selectedGame.isPractice = true"
+                  size="sm" color="black" label="Practice" class=" tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
+                  @click="handleClick(ii, true)"
                 />
               </div>
             </div>
