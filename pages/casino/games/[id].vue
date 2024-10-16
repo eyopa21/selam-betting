@@ -101,7 +101,7 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
         </h1>
         <div
           class="tw-grid  tw-gap-4 tw-gap-y-8"
-          :class="filterType === 'square' ? 'tw-grid-cols-1 sm:grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-3 lg:tw-grid-cols-7'"
+          :class="filterType === 'square' ? 'tw-grid-cols-1 sm:grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-4 lg:tw-grid-cols-5  tw-place-items-center '"
         >
           <div
             v-for="(ii, k) in gameStore.games" :key="k"
@@ -114,8 +114,8 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
                   class="tw-z-50 tw-transition-all tw-duration-500 group-hover:tw-scale-110"
                 />
               </div>
-              <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64  tw-rounded tw-ring tw-ring-blue-500" />
-              <div class="tw-mt-3 tw-flex tw-w-full tw-justify-between tw-space-x-4">
+              <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64  tw-rounded-xl tw-ring tw-ring-violet-500  tw-ring-opacity-60" />
+              <div class="tw-mt-5 tw-flex tw-w-full tw-justify-between tw-space-x-4">
                 <q-btn
                   color="deep-purple-14" label="Play" class="tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white"
                   @click="handleClick(ii, false)"
@@ -126,10 +126,10 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
                 />
               </div>
             </div>
-            <div v-else>
+            <div v-else class="tw-p-2 tw-shadow-xl tw-shadow-primary-500">
               <q-avatar
                 font-size="52px" color="primary" text-color="white"
-                class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105 lg:tw-size-[170px] 2xl:tw-size-[200px]"
+                class="tw-size-[200px] tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500  hover:tw-scale-105 2xl:tw-size-[250px]"
               >
                 <q-img :src="ii.logo_url" />
               </q-avatar>

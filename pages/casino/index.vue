@@ -21,7 +21,6 @@ if (error.value) {
   useErrorNotifications(error)
 }
 
-const slide = ref('1')
 const filterType = ref<'square' | 'circle'>('square')
 
 function toggleType() {
@@ -49,8 +48,8 @@ const filteredGames = computed(() => {
       <CasinoAwards />
     </div>
 
-    <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-8">
-      <div class="tw-self-end tw-text-lg tw-text-white" />
+    <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-2 lg:tw-px-8">
+      <div class="tw-hidden tw-self-end tw-text-lg tw-text-white lg:tw-block" />
 
       <CasinoSearchGames />
 
@@ -78,17 +77,17 @@ const filteredGames = computed(() => {
         </div>
       </div>
     </div>
-    <div v-if="!!filteredGames?.length" class="tw-p-8">
+    <div v-if="!!filteredGames?.length" class="tw-mt-8 tw-p-4">
       <div
         class="tw-grid  tw-gap-4 tw-gap-y-8"
-        :class="filterType === 'square' ? 'tw-grid-cols-4' : 'tw-grid-cols-7'"
+        :class="filterType === 'square' ? 'tw-grid-cols-1 sm:grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-3 lg:tw-grid-cols-7'"
       >
         <div
           v-for="(ii, k) in filteredGames" :key="k"
           class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
         >
           <div v-if="filterType === 'square'" class="tw-group tw-cursor-pointer">
-            <q-img :src="ii.icon_url" :alt="ii.name" fit="cover" class="tw-h-64  tw-rounded tw-ring tw-ring-blue-500" @click="navigateTo(`/casino/games/${ii.id}`)" />
+            <q-img :src="ii.icon_url" :alt="ii.name" fit="cover" class="tw-h-64  tw-rounded-xl tw-ring tw-ring-blue-500 tw-ring-opacity-40" @click="navigateTo(`/casino/games/${ii.id}`)" />
           </div>
           <div v-else>
             <q-avatar
