@@ -39,18 +39,12 @@ const filteredGames = computed(() => {
 
 <template>
   <div class="tw-mx-auto tw-pb-20">
-    <div class="tw-flex tw-w-full tw-gap-2 tw-p-2 ">
-      <div class="tw-w-2/3">
-        <q-carousel
-          v-model="slide" transition-prev="slide-right" transition-next="slide-left" infinite animated
-          control-color="white" navigation padding arrows height="300px" :autoplay="true"
-          class="text-white shadow-1  rounded-border"
-        >
-          <q-carousel-slide
-            name="1" img-src="/casino/casinoImage.png"
-            class="tw-h-full tw-w-full"
-          />
-        </q-carousel>
+    <div class="tw-flex  tw-w-full tw-flex-col tw-gap-2  tw-p-2 lg:tw-flex-row ">
+      <div class="tw-w-full lg:tw-w-2/3">
+        <q-img
+          class="lg:rounded-3xl tw-h-full tw-w-full tw-rounded-md"
+          src="/casino/casinoImage.png"
+        />
       </div>
       <CasinoAwards />
     </div>
@@ -60,12 +54,28 @@ const filteredGames = computed(() => {
 
       <CasinoSearchGames />
 
-      <div class="tw-flex tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
-        <q-btn-group outline stretch>
-          <q-btn color="primary-10" icon="filter_alt" size="lg" />
-          <q-btn color="primary-10" icon="apps" size="lg" @click="toggleType()" />
-          <q-btn color="primary-10" icon="control_camera" size="lg" />
-        </q-btn-group>
+      <div class="tw-flex  tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
+        <div class="tw-hidden md:tw-block">
+          <q-btn-group>
+            <q-btn color="primary-10" icon="filter_alt" size="lg" />
+            <q-btn color="primary-10" icon="apps" size="lg" @click="toggleType()" />
+            <q-btn color="primary-10" icon="control_camera" size="lg" />
+          </q-btn-group>
+        </div>
+        <div class="tw-block md:tw-hidden">
+          <q-fab
+            :model-value="false"
+            :square="true"
+            vertical-actions-align="left"
+            color="purple"
+            icon="keyboard_arrow_down"
+            direction="down"
+          >
+            <q-fab-action color="primary" icon="filter_alt" :square="true" />
+            <q-fab-action color="primary" icon="apps" :square="true" @click="toggleType()" />
+            <q-fab-action color="primary" icon="control_camera" :square="true" />
+          </q-fab>
+        </div>
       </div>
     </div>
     <div v-if="!!filteredGames?.length" class="tw-p-8">

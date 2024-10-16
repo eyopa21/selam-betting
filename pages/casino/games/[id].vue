@@ -26,8 +26,6 @@ if (games.value) {
   gameStore.addGames(games.value.games)
 }
 
-const slide = ref('1')
-
 const filterType = ref<'square' | 'circle'>('square')
 const selectedGame = ref({
   link: '',
@@ -60,16 +58,10 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
   <div class="tw-mx-auto tw-pb-20">
     <div class="tw-flex  tw-w-full tw-flex-col tw-gap-2  tw-p-2 lg:tw-flex-row ">
       <div class="tw-w-full lg:tw-w-2/3">
-        <q-carousel
-          v-model="slide" transition-prev="slide-right" transition-next="slide-left" infinite animated
-          control-color="white" navigation padding arrows height="300px" :autoplay="true"
-          class="text-white shadow-1  rounded-border"
-        >
-          <q-carousel-slide
-            name="1" img-src="/casino/casinoImage.png"
-            class="tw-h-full tw-w-full"
-          />
-        </q-carousel>
+        <q-img
+          class="lg:rounded-3xl tw-h-full tw-w-full tw-rounded-md"
+          src="/casino/casinoImage.png"
+        />
       </div>
       <CasinoAwards />
     </div>
@@ -103,13 +95,13 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
       </div>
     </div>
     <div v-if="gameStore.games?.length">
-      <div class="tw-p-8 tw-py-0">
+      <div class="tw-p-4 tw-py-0">
         <h1 class="tw-my-4 tw-text-xl tw-font-extrabold tw-capitalize tw-text-white">
-          {{ games?.name }} {{ isMobile }}
+          {{ games?.name }}
         </h1>
         <div
           class="tw-grid  tw-gap-4 tw-gap-y-8"
-          :class="filterType === 'square' ? 'tw-grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-3 lg:tw-grid-cols-7'"
+          :class="filterType === 'square' ? 'tw-grid-cols-1 sm:grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-3 lg:tw-grid-cols-7'"
         >
           <div
             v-for="(ii, k) in gameStore.games" :key="k"
