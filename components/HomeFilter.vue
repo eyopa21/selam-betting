@@ -107,12 +107,6 @@ async function filterGamesByDate(date: Date) {
     })
   })
 }
-
-const route = useRoute()
-
-if (route.meta.layout === 'account') {
-  layout.value.showSideBarProfileMenu = true
-}
 </script>
 
 <template>
@@ -120,7 +114,7 @@ if (route.meta.layout === 'account') {
     <div v-if="$authentication.loggedIn.value && layout.showSideBarProfileMenu">
       <NavUserInfo />
     </div>
-    <div v-else>
+    <div v-else class=" tw-rounded-xl tw-bg-primary-800 tw-py-2">
       <!-- <q-scroll-area style="height: 100vh; max-width: 300px"> -->
       <div class="tw-mt-6 tw-flex tw-justify-center tw-gap-4">
         <q-btn icon="favorite" flat no-caps label="Popular" />

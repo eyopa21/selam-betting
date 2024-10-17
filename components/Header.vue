@@ -63,10 +63,10 @@ const menuOptions = ref([
     <div class="tw-hidden tw-items-start tw-justify-center lg:tw-flex">
       <ul v-for="option in menuOptions" :key="option.name" :class="option.show ? 'tw-block' : 'tw-hidden'">
         <a
-          :href="option.link"
-          class="tw-mx-2 tw-whitespace-nowrap tw-font-semibold tw-underline-offset-4 hover:tw-text-primary-300 hover:tw-underline"
+
+          class=" tw-whitespace-nowrap tw-font-semibold tw-underline-offset-4 hover:tw-text-primary-300 hover:tw-underline"
         >
-          {{ option.name }}
+          <q-btn :to="option.link" flat size="13px">{{ option.name }}</q-btn>
         </a>
       </ul>
     </div>
@@ -83,8 +83,8 @@ const menuOptions = ref([
         v-if="$authentication.loggedIn.value"
         class="tw-my-auto tw-mr-4 tw-hidden tw-items-center tw-gap-2 lg:tw-flex lg:tw-justify-between"
       >
-        <q-btn v-if="userStore.user?.stake_balance.stake_balance" color="amber-8" class="tw-w-full" :label="`${userStore.user?.stake_balance.stake_balance} ETB`" dense no-wrap />
-        <q-btn label="Deposit" color="secondary" dense />
+        <q-btn v-if="userStore.user?.stake_balance.stake_balance" color="amber-8" class="tw-ml-2 tw-w-full" :label="`${userStore.user?.stake_balance.stake_balance} ETB`" dense no-wrap />
+        <!-- <q-btn label="Deposit" color="secondary" dense /> -->
         <q-btn dense round flat icon="redeem" size="md" class="tw-text-xl">
           <q-badge color="blue" floating transparent>
             2
