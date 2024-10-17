@@ -1,20 +1,21 @@
-<script setup>
+<script setup lang="ts">
 const layout = useLayout()
-const showLeftDrawer = ref(true)
+layout.value.showLeftDrawer = true
 </script>
 
 <template>
-  <q-layout view="hHh lpR lff" class="dark:tw-bg-primary-800">
-    <q-header elevated class="tw-bg-secondary-800 dark:tw-bg-gray-800">
+  <q-layout
+    view="lhh LpR lff"
+    container class="dark:tw-bg-primary-900"
+  >
+    <q-header reveal elevated class="tw-bg-secondary-800 dark:tw-bg-gray-900">
       <Header />
     </q-header>
-
     <q-drawer v-model="layout.showLeftDrawer" side="left">
       <q-scroll-area class="fit">
         <HomeFilter />
       </q-scroll-area>
     </q-drawer>
-
     <q-page-container>
       <div class="tw-m-2 ">
         <q-banner v-if="$route.name === 'account-deposit'" inline-actions class="text-white tw-bg-primary-700 ">
@@ -38,12 +39,13 @@ const showLeftDrawer = ref(true)
             <span>Account Number: </span>
             <span class="tw-text-amber-500">12097267625</span>
           </div>
-          <slot />
+          <div>
+            <slot />
+          </div>
         </div>
       </div>
     </q-page-container>
-
-    <q-footer bordered class="text-white tw-bg-primary-800">
+    <q-footer reveal bordered class="text-white tw-bg-primary-800">
       <div class="tw-flex tw-justify-end tw-p-4">
         <div class=" tw-rounded-full tw-bg-green-500 tw-p-2">
           <q-icon name="maps_ugc" size="xl" />

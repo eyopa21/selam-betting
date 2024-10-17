@@ -107,6 +107,12 @@ async function filterGamesByDate(date: Date) {
     })
   })
 }
+
+const route = useRoute()
+
+if (route.meta.layout === 'account') {
+  layout.value.showSideBarProfileMenu = true
+}
 </script>
 
 <template>
