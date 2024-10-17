@@ -6,8 +6,8 @@ const percentage = ref(50)
 
 <template>
   <q-list>
-    <div class="tw-m-1 tw-space-y-4">
-      <NavLogo />
+    <div class="tw-my-1 tw-space-y-4">
+      <!-- <NavLogo /> -->
       <div class="tw-flex tw-items-center  tw-justify-between tw-bg-primary-700 tw-px-2">
         <div class="tw-flex tw-flex-col tw-text-base">
           <div class="tw-flex tw-justify-start">
@@ -115,8 +115,8 @@ const percentage = ref(50)
           </q-tabs>
         </q-card>
       </q-expansion-item>
-      <div class="tw-pb-4 tw-pt-8 ">
-        <q-btn icon="logout" glossy outline color="red" size="lg" class="tw-w-full " @click="logout()">
+      <div class=" tw-absolute tw-bottom-0 tw-w-full tw-place-items-center tw-justify-items-center tw-px-4  tw-pb-4 tw-pt-8 ">
+        <q-btn icon="logout" outline color="red" size="lg" class="tw-w-full tw-rounded-lg" @click="logout()">
           <span class="text-white tw-text-sm tw-font-bold">
             Sign Out
           </span>

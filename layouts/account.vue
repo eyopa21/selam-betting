@@ -5,16 +5,14 @@ layout.value.showLeftDrawer = true
 
 <template>
   <q-layout
-    view="lhh LpR lff"
+    view="hhh lpr lff"
     container class="dark:tw-bg-primary-900"
   >
-    <q-header reveal elevated class="tw-bg-secondary-800 dark:tw-bg-gray-900">
+    <q-header reveal elevated class="tw-w-full tw-bg-secondary-800 dark:tw-bg-gray-900">
       <Header />
     </q-header>
-    <q-drawer v-model="layout.showLeftDrawer" side="left">
-      <q-scroll-area class="fit">
-        <HomeFilter />
-      </q-scroll-area>
+    <q-drawer v-model="layout.showLeftDrawer" :draggable="false" persistent show-if-above side="left" class=" tw-relative tw-bg-primary-900">
+      <HomeFilter />
     </q-drawer>
     <q-page-container>
       <div class="tw-m-2 ">

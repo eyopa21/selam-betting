@@ -116,7 +116,7 @@ if (route.meta.layout === 'account') {
 </script>
 
 <template>
-  <div class="text-white tw-h-full  tw-min-h-screen tw-bg-secondary-800 tw-py-3 dark:tw-bg-gray-800">
+  <q-scroll-area class="fit text-white   tw-py-1">
     <div v-if="$authentication.loggedIn.value && layout.showSideBarProfileMenu">
       <NavUserInfo />
     </div>
@@ -239,7 +239,7 @@ if (route.meta.layout === 'account') {
       </div>
       <!-- </q-scroll-area> -->
     </div>
-  </div>
+  </q-scroll-area>
 </template>
 
 <style scoped>
