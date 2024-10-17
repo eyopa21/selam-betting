@@ -1,0 +1,13 @@
+services:
+  web:
+    build:
+      context: .
+    environment:
+      NUXT_REST_API_ENDPOINT: ${NUXT_REST_API_ENDPOINT?}
+      NUXT_PUBLIC_FINANCE_API_ENDPOINT: ${NUXT_PUBLIC_FINANCE_API_ENDPOINT?}
+      NUXT_SERVER_API_KEY: ${NUXT_SERVER_API_KEY?}
+      NUXT_BASE_API_ENDPOINT: ${NUXT_BASE_API_ENDPOINT?}
+      NUXT_PUBLIC_BASE_IMAGE_URL: ${NUXT_PUBLIC_BASE_IMAGE_URL?}
+    ports:
+      - 3000:3000
+    restart: unless-stopped
