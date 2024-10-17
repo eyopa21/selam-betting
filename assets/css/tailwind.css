@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Prosto+One&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,7 +18,7 @@
      /* Hide scrollbar for IE, Edge and Firefox */
       .no-scrollbar {
           -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
+          scrollbar-width: nonez;  /* Firefox */
     }
   }
 
