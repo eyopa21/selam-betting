@@ -14,7 +14,7 @@ function clear() {
 <template>
   <!-- <q-input v-model="q" :clearable="true" placeholder="Search for your Games" type="text" class="tw-w-128 tw-block tw-rounded-xl tw-border-0 tw-bg-inherit tw-py-1.5 tw-pl-7 tw-pr-20 tw-text-white  tw-ring-1 tw-ring-inset tw-ring-primary-500 placeholder:tw-text-secondary-500 focus:tw-outline-none focus:tw-ring-gray-200 sm:tw-text-sm sm:tw-leading-6" /> -->
   <q-form
-    class="q-gutter-md"
+    class="q-gutter-md tw-mt-0"
     :greedy="false"
     @submit="search"
     @reset="clear"

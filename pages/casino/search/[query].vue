@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import type { GroupGamesRoot } from '~/types/casino/group-games'
+
 definePageMeta({
   layout: 'casino',
   pageType: 'authenticated',
 })
-
+const isMobile = useMediaQuery('(max-width: 768px)')
 const gameStore = useCasinoGameStore()
 const { $authentication } = useNuxtApp()
 const route = useRoute('casino-search')
@@ -85,7 +87,7 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
             :model-value="false"
             :square="true"
             vertical-actions-align="left"
-            color="purple"
+            color="primary"
             icon="keyboard_arrow_down"
             direction="down"
           >

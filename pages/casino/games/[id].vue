@@ -83,7 +83,7 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
             :model-value="false"
             :square="true"
             vertical-actions-align="left"
-            color="purple"
+            color="primary"
             icon="keyboard_arrow_down"
             direction="down"
           >

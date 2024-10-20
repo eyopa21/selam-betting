@@ -48,12 +48,12 @@ const filteredGames = computed(() => {
       <CasinoAwards />
     </div>
 
-    <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-2 lg:tw-px-8">
+    <div class="tw-mt-6 tw-flex tw-items-center  tw-justify-between tw-gap-4  tw-px-2 lg:tw-px-8">
       <div class="tw-hidden tw-self-end tw-text-lg tw-text-white lg:tw-block" />
 
       <CasinoSearchGames />
 
-      <div class="tw-flex  tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
+      <div class="tw-flex  tw-self-center tw-rounded-lg  tw-border-2 tw-border-primary-400">
         <div class="tw-hidden md:tw-block">
           <q-btn-group>
             <q-btn color="primary-10" icon="filter_alt" size="lg" />
@@ -61,12 +61,12 @@ const filteredGames = computed(() => {
             <q-btn color="primary-10" icon="control_camera" size="lg" />
           </q-btn-group>
         </div>
-        <div class="tw-block md:tw-hidden">
+        <div class=" tw-block md:tw-hidden">
           <q-fab
             :model-value="false"
             :square="true"
             vertical-actions-align="left"
-            color="purple"
+            color="primary"
             icon="keyboard_arrow_down"
             direction="down"
           >
