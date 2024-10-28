@@ -7,14 +7,14 @@
           Contacts
         </h2>
         <ul class="tw-space-y-4">
-          <li><span class="tw-font-semibold tw-text-gray-700">General queries:</span> <a href="mailto:info-en@1xbet-team.com" class="tw-text-blue-700">info-en@1xbet-team.com</a></li>
-          <li><span class="tw-font-semibold tw-text-gray-700">Security department:</span> <a href="mailto:security-en@1xbet-team.com" class="tw-text-blue-700">security-en@1xbet-team.com</a></li>
-          <li><span class="tw-font-semibold tw-text-gray-700">Public relations and advertising:</span> <a href="mailto:marketing@1xbet-team.com" class="tw-text-blue-700">marketing@1xbet-team.com</a></li>
-          <li><span class="tw-font-semibold tw-text-gray-700">Partnership queries (online):</span> <a href="mailto:b2b@1xbet-team.com" class="tw-text-blue-700">b2b@1xbet-team.com</a></li>
-          <li><span class="tw-font-semibold tw-text-gray-700">Partnership queries (betting shops):</span> <a href="mailto:retail@1xbet-team.com" class="tw-text-blue-700">retail@1xbet-team.com</a></li>
-          <li><span class="tw-font-semibold tw-text-gray-700">Finances:</span> <a href="mailto:accounting@1xbet-team.com" class="tw-text-blue-700">accounting@1xbet-team.com</a></li>
-          <li><span class="tw-font-semibold tw-text-gray-700">Chief information security officer:</span> <a href="mailto:ciso@1xbet-team.com" class="tw-text-blue-700">ciso@1xbet-team.com</a></li>
-          <li><span class="tw-font-semibold tw-text-gray-700">Privacy policy officer:</span> <a href="mailto:police@1xbet-team.com" class="tw-text-blue-700">police@1xbet-team.com</a></li>
+          <li><span class="tw-font-semibold tw-text-gray-700">General queries:</span> <a href="mailto:info-en@harifsport-team.com" class="tw-text-blue-700">info-en@harifsport-team.com</a></li>
+          <li><span class="tw-font-semibold tw-text-gray-700">Security department:</span> <a href="mailto:security-en@harifsport-team.com" class="tw-text-blue-700">security-en@harifsport-team.com</a></li>
+          <li><span class="tw-font-semibold tw-text-gray-700">Public relations and advertising:</span> <a href="mailto:marketing@harifsport-team.com" class="tw-text-blue-700">marketing@harifsport-team.com</a></li>
+          <li><span class="tw-font-semibold tw-text-gray-700">Partnership queries (online):</span> <a href="mailto:b2b@harifsport-team.com" class="tw-text-blue-700">b2b@harifsport-team.com</a></li>
+          <li><span class="tw-font-semibold tw-text-gray-700">Partnership queries (betting shops):</span> <a href="mailto:retail@harifsport-team.com" class="tw-text-blue-700">retail@harifsport-team.com</a></li>
+          <li><span class="tw-font-semibold tw-text-gray-700">Finances:</span> <a href="mailto:accounting@harifsport-team.com" class="tw-text-blue-700">accounting@harifsport-team.com</a></li>
+          <li><span class="tw-font-semibold tw-text-gray-700">Chief information security officer:</span> <a href="mailto:ciso@harifsport-team.com" class="tw-text-blue-700">ciso@harifsport-team.com</a></li>
+          <li><span class="tw-font-semibold tw-text-gray-700">Privacy policy officer:</span> <a href="mailto:police@harifsport-team.com" class="tw-text-blue-700">police@harifsport-team.com</a></li>
           <li><span class="tw-font-semibold tw-text-gray-700">CUSTOMER SUPPORT:</span> <span class="tw-text-blue-700">+441273256987</span></li>
         </ul>
       </div>
