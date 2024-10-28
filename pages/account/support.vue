@@ -3,31 +3,56 @@ definePageMeta({
   layout: 'account',
   pageType: 'authenticated',
 })
-
+const { $authentication } = useNuxtApp()
 const openMessenger = ref(false)
+const loading = ref(false)
 
 const state = ref({
   subject: '',
   description: '',
-  attachment: undefined,
+  attachment: [],
 })
-
-function onSubmit() {
-
+async function onSubmit() {
+  loading.value = true
+  try {
+    const response = await $fetch('/api/contact/create-ticket', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${$authentication.accessToken.value}`,
+      },
+      body: {
+        ...state.value,
+        attachment: state.value.attachment[0],
+      },
+    })
+    if (response) {
+      useSuccessNotification('You have send your message, and we will get back to you soon')
+      onReset()
+    }
+  } catch (err) {
+    useErrorNotifications(ref(err))
+  } finally {
+    loading.value = false
+  }
 }
-
 function onReset() {
-
+  state.value.subject = ''
+  state.value.description = ''
+  state.value.attachment = []
+  openMessenger.value = false
 }
 </script>
 
 <template>
   <div class="tw-text-primary-500">
-    <div class="tw-p-2 tw-pl-4 tw-font-bold tw-uppercase">
-      <h4 class="tw-text-lg">
-        Support Center
-      </h4>
-      <p>For all your website queries</p>
+    <div class="tw-flex tw-items-center tw-justify-between tw-p-2 tw-pl-4 tw-font-bold tw-uppercase">
+      <div>
+        <h4 class="tw-text-lg">
+          Support Center
+        </h4>
+        <p>For all your website queries</p>
+      </div>
+      <CustomerSupportChat />
     </div>
     <div class="tw-mt-2 tw-grid tw-grid-cols-3 tw-gap-4 tw-px-4">
       <div class="tw-col-span-2">
@@ -79,7 +104,7 @@ function onReset() {
       >
         <q-icon name="privacy_tip" size="xl" color="primary" />
         <p class="tw-text-lg tw-font-extrabold">
-          Customer Support query
+          Customer Support query {{ state }}
         </p>
         <div class="tw-flex tw-h-full tw-w-full tw-flex-col  tw-gap-2 tw-pt-4">
           <div class="tw-flex tw-w-full tw-gap-4">
@@ -110,7 +135,7 @@ function onReset() {
           </q-file>
         </div>
         <div class="tw-mt-6 tw-flex tw-w-full tw-justify-between tw-gap-4">
-          <q-btn type="submit" color="primary" class="tw-w-full">
+          <q-btn :loading type="submit" color="primary" class="tw-w-full">
             SAVE
           </q-btn>
           <q-btn type="reset" color="blue-grey-2" text-color="primary" class="tw-w-full">
@@ -119,7 +144,7 @@ function onReset() {
         </div>
       </q-form>
     </div>
-    <hr>
-    <CustomerSupportFaq />
+
+    <!-- <CustomerSupportFaq /> -->
   </div>
 </template>
