@@ -63,7 +63,7 @@ const percentage = ref(50)
               class=" tw-place-content-start "
             />
             <q-route-tab
-              active-class="tw-bg-primary-900" to="/account/bet-for-me-agent" name="bet_for_me_agent" icon="multiple_stop" label="Bet For Me"
+              active-class="tw-bg-primary-900" to="/account/bet-for-me-agent" name="bet_for_me_agent" icon="record_voice_over" label="Bet For Me"
               class=" tw-place-content-start "
             />
           </q-tabs>

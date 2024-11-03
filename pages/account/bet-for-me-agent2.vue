@@ -16,22 +16,42 @@ const state = ref<Partial<CreateBetForMeAccountBody>>({
 function onFileAdded(files: File[]) {
   console.log('files', files[0])
   state.value.profile_picture = files[0]
+  if (state.value.profile_picture instanceof File) {
+    console.log('This is a File object!')
+  } else {
+    console.log('This is not a File object.')
+  }
 }
 
 function onIdFileAdded(files: File[]) {
   console.log('files', files)
-  state.value.id_images = [files[0], files[1]]
+  state.value.id_images = [files[0], files[0]]
 }
 
 async function createAccount() {
   loading.value = true
+  const form = new FormData()
+  form.append('profile_picture', state.value.profile_picture! as File)
+  state.value.id_images!.forEach((file) => {
+    form.append(`id_images`, file as File)
+  })
+  form.append('level', '')
+
+  console.log('typeof', typeof form)
+
+  for (const [key, value] of form.entries()) {
+    console.log(`${key}:`, value)
+  }
+
   try {
     const res = await $fetch('/api/betForMe/create-account', {
       method: 'POST',
       headers: {
+
         Authorization: `Bearer ${$authentication.accessToken.value}`,
       },
-      body: state.value,
+      body: form,
+
     })
     if (res) {
       useSuccessNotification('You have successfully created create an account')
@@ -55,7 +75,7 @@ async function createAccount() {
     <div class="tw-mt-2">
       <q-bar dark class="bg-white text-primary tw-py-5">
         <div class=" text-left text-weight-bold tw-pl-4">
-          FILL IN PROFILE
+          FILL IN PROFILE {{ typeof state.profile_picture }}
         </div>
       </q-bar>
     </div>
