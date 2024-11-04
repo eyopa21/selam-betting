@@ -6,7 +6,7 @@ const logo = `${general.generalClientInfo?.nameAndLogo.logo_url}pp`
 <template>
   <ClientOnly>
     <div v-if="logo" class=" tw-max-h-12 ">
-      <q-img class="tw-flex tw-w-44 tw-items-center tw-justify-center " :src="logo" @click="navigateTo('/')">
+      <q-img class="tw-flex tw-max-h-12 tw-w-44 tw-items-center tw-justify-center " :src="logo" @click="navigateTo('/')">
         <template #loading>
           <q-skeleton type="QBtn" />
         </template>
