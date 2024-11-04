@@ -1,19 +1,12 @@
 import { Notify } from 'quasar'
+
 import type { NuxtError } from '#app'
+import { useNuxtApp } from '#app'
 
-export function useErrorNotifications(
-  error: Ref<unknown>,
-) {
+export function useErrorNotifications(error: Ref<unknown>) {
+//   const { $authentication } = useNuxtApp()
   const err = error.value as NuxtError
-  // if (error.value && error.value.statusCode === 401) {
-  //   error.value.message = error.value.message
-  // }
-
-  // const route = useRoute()
-  // if (err.statusCode === 401 && route.meta.pageType === 'authenticated') {
-  //   navigateTo('/')
-  // }
-
+  parseErrorNotification(err)
   if (typeof unref(error) === 'string') {
     Notify.create({
       message: error.value as string,
