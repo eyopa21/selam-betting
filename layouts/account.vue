@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const layout = useLayout()
 layout.value.showLeftDrawer = true
+layout.value.showSideBarProfileMenu = true
 </script>
 
 <template>

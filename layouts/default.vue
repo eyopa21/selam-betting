@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const layout = useLayout()
+
+layout.value.showSideBarProfileMenu = false
 </script>
 
 <template>
