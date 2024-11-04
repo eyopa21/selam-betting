@@ -97,5 +97,8 @@
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "tailwindCSS.emmetCompletions": true,
-  "eslint.format.enable": true
+  "eslint.format.enable": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

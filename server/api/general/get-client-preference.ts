@@ -17,22 +17,20 @@ export type AdsRoot = {
   previous: string | null
   results: unknown[]
 }
+export type BannerRoot = {
+  count: number
+  next: string | null
+  previous: string | null
+  results: unknown[]
+}
 
 export default defineEventHandler(async () => {
   const config = useRuntimeConfig()
   const featureUrl = `${config.restApiEndpoint}/features/`
   const systemNameAndLogoURL = `${config.baseApiEndpoint}/betting/api/v1/system_name_and_logo/`
   const adsUrl = `${config.baseApiEndpoint}/betting/api/v1/ads/`
-  // const bannerAdUrl = `${config.restApiEndpoint}/betting/api/v1/get_banner_ad/`
+  const bannerAdUrl = `${config.baseApiEndpoint}/betting/api/v1/get_banner_ad/`
   try {
-    // const result = await $fetch<GeneralRoot>(url, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'X-API-KEY': config.serverApiKey,
-    //   },
-    // })
-
     const result = await Promise.allSettled([
       $fetch<GeneralRoot>(featureUrl, {
         method: 'GET',
@@ -58,14 +56,23 @@ export default defineEventHandler(async () => {
 
         },
       }),
+      $fetch<BannerRoot>(bannerAdUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-KEY': config.serverApiKey,
+
+        },
+      }),
 
     ])
 
-    if (result[0].status === 'fulfilled' && result[1].status === 'fulfilled' && result[2].status === 'fulfilled') {
+    if (result[0].status === 'fulfilled' && result[1].status === 'fulfilled' && result[2].status === 'fulfilled' && result[3].status === 'fulfilled') {
       return {
         general: result[0].value,
         nameAndLogo: result[1].value,
         ads: [] as AdsRoot['results'],
+        banners: result[3].value.results,
       }
     } else {
       throw createError({
