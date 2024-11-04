@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const isOpen = ref(false)
-const { status, data, send, open, close } = useWebSocket(useRuntimeConfig().public.webSocketEndpoint)
+const { status, data, send, open, close } = useWebSocket(`ws://${location.host}/api/websocket`)
 const history = ref<string[]>([])
 watch(data, (newValue) => {
   history.value.push(`server: ${newValue}`)
@@ -29,7 +29,7 @@ function decline() {
 
 <template>
   <div>
-    <h1>WebSocket - let's go! {{ status }} {{ data }}</h1>
+    <h1>WebSocket - let's go! {{ status }} data={{ data }}</h1>
 
     <q-dialog v-model="isOpen" persistent>
       <q-card>

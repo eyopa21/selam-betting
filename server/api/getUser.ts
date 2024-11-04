@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
         'X-API-KEY': config.serverApiKey,
         'Authorization': `Bearer ${body.access}`,
       },
+
     })
 
     const data = await response.json()

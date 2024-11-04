@@ -1,19 +1,27 @@
 import { WebSocket as ClientWebSocket } from 'ws' // Import WebSocket client for server-to-server communication
-import type { Message, Peer } from 'crossws'
+import type { Message, Peer } from 'crossws' // Replace with the URL of the target WebSocket server
+
+import WebSocket from 'ws'
 
 const config = useRuntimeConfig()
 const room = 'ROOM'
-const targetServerUrl = config.public.webSocketEndpoint // Replace with the URL of the target WebSocket server
+const targetServerUrl = config.public.webSocketEndpoint
 
-// Initialize the connection to the external WebSocket server
-const targetWsClient = new ClientWebSocket(targetServerUrl)
+const targetWsUrl = config.public.webSocketEndpoint // URL of the target WebSocket server
+const wsClient = new WebSocket(targetWsUrl)
 
-// Handle messages from the target WebSocket server
-targetWsClient.on('connected', (data: string) => {
-  console.log('connected:', data)
-  // Optionally, broadcast the received message to all connected clients
+wsClient.on('open', () => {
+  console.log('Connected to target WebSocket server')
 })
 
+wsClient.on('message', (message) => {
+  console.log('Received from target WS server:', message)
+  // Process the incoming message and handle as needed
+})
+
+wsClient.on('error', (error) => {
+  console.error('WebSocket error:', error)
+})
 export default defineWebSocketHandler({
   open(peer: Peer) {
     console.warn('opened WS', peer)

@@ -26,12 +26,14 @@ async function processCashout() {
       } as ProcessCashoutBody,
     })
     if (response) {
+      console.log('res', response)
       state.value.amount = 0
       state.value.username = ''
       state.value.voucherCode = ''
       useSuccessNotification('Operation successfull')
     }
   } catch (err) {
+    console.log(err)
     useErrorNotifications(ref(err))
   } finally {
     loading.value = false
@@ -41,6 +43,7 @@ async function processCashout() {
 
 <template>
   <div class="tw-p-4">
+    <WsClient />
     <q-form
       class="q-gutter-md tw-min-w-96"
       @submit="processCashout()"
