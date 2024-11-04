@@ -13,7 +13,7 @@ export default defineNuxtRouteMiddleware((to, _) => {
     }
   }
 
-  if ((to.name === 'casino' || to.name === 'games-id') && !general.generalClientInfo?.is_casino_game) {
+  if ((to.name === 'casino' || to.name === 'games-id') && !general.generalClientInfo?.general.is_casino_game) {
     return navigateTo('/')
   }
 })

@@ -16,7 +16,7 @@ const menuOptions = ref([
   {
     name: 'Live',
     link: '#',
-    show: true,
+    show: general.generalClientInfo?.general.is_live_match,
   },
   {
     name: 'Jackpot',
@@ -31,7 +31,7 @@ const menuOptions = ref([
   {
     name: 'Casino',
     link: '/casino',
-    show: general.generalClientInfo?.is_casino_game,
+    show: general.generalClientInfo?.general.is_casino_game,
   },
   {
     name: 'Promotions',
