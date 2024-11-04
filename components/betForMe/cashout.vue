@@ -43,7 +43,7 @@ async function processCashout() {
 
 <template>
   <div class="tw-p-4">
-    <WsClient />
+    <!-- <WsClient /> -->
     <q-form
       class="q-gutter-md tw-min-w-96"
       @submit="processCashout()"
