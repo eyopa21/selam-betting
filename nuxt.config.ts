@@ -33,6 +33,7 @@ export default defineNuxtConfig({
     public: {
       financeApiEndpoint: '',
       baseImageUrl: '',
+      webSocketEndpoint: '',
     },
     serverApiKey: '',
     restApiEndpoint: '',
