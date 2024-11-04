@@ -4,10 +4,10 @@ import type { NuxtError } from '#app'
 import { useNuxtApp } from '#app'
 
 export function useErrorNotifications(error: Ref<unknown>) {
-  const { handleError } = useErrorHandler()
+  // const { handleError } = useErrorHandler()
 
   const err = error.value as NuxtError
-  handleError(err)
+  // handleError(err)
   if (typeof unref(error) === 'string') {
     Notify.create({
       message: error.value as string,

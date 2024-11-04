@@ -5,7 +5,6 @@ const slide = ref('1')
 </script>
 
 <template>
-  {{ banners }}
   <q-carousel
     v-model="slide" transition-prev="slide-right" transition-next="slide-left" infinite animated
     control-color="white" navigation padding arrows height="300px" :autoplay="true"

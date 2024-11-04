@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const general = useGeneralClientInfo()
 const logo = `${general.generalClientInfo?.nameAndLogo.logo_url}`
+console.log(logo)
 </script>
 
 <template>
