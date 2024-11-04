@@ -51,6 +51,9 @@ if (error.value) {
             <q-tab-panel name="make_visible">
               <BetForMeVisibility />
             </q-tab-panel>
+            <q-tab-panel name="bet_for_me">
+              <BetForMeCashout />
+            </q-tab-panel>
 
             <q-tab-panel name="update_location">
               <BetForMeUpdateLocation />

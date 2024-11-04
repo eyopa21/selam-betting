@@ -10,6 +10,7 @@
     "cashouts",
     "heroicons",
     "Nuxt",
+    "successfull",
     "tickable"
   ],
   // Set css custom data to handle tailwind directives

@@ -3,7 +3,6 @@ import type { Address } from '~/types/betForMe'
 
 const { $authentication } = useNuxtApp()
 const { getLocation } = useLocation()
-
 const loading = ref(false)
 const locationAddress = ref('')
 
