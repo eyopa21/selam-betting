@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const general = useGeneralClientInfo()
-const logo = `${general.generalClientInfo?.nameAndLogo.logo_url}pp`
+const logo = `${general.generalClientInfo?.nameAndLogo.logo_url}`
 </script>
 
 <template>
   <ClientOnly>
-    <div v-if="logo" class=" tw-max-h-12 ">
+    <div v-if="logo" class=" tw-max-h-12 tw-cursor-pointer hover:tw-opacity-90">
       <q-img class="tw-flex tw-max-h-12 tw-w-44 tw-items-center tw-justify-center " :src="logo" @click="navigateTo('/')">
         <template #loading>
           <q-skeleton type="QBtn" />
