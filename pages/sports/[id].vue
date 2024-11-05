@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
 
+definePageMeta({
+  pagePackageType: 'is_pre_match',
+})
+
 const $q = useQuasar()
 const { scrollToTop } = useHelpers()
 const layout = useLayout()

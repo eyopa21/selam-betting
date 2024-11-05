@@ -2,6 +2,7 @@
 definePageMeta({
   layout: 'casino',
   pageType: 'authenticated',
+  pagePackageType: 'is_casino_game',
 })
 
 const { $authentication } = useNuxtApp()

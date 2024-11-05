@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { Matches, Participants } from '~/types/matches'
 
+definePageMeta({
+  pagePackageType: 'is_pre_match',
+})
 const layout = useLayout()
 const { formatDate, scrollToTop } = useHelpers()
 

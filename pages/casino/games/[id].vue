@@ -5,6 +5,7 @@ import type { GroupGamesRoot } from '~/types/casino/group-games'
 definePageMeta({
   layout: 'casino',
   pageType: 'authenticated',
+  pagePackageType: 'is_casino_game',
 })
 
 const isMobile = useMediaQuery('(max-width: 768px)')

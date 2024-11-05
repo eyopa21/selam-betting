@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { MarketResults, Matches, Participants } from '~/types/matches'
 
+definePageMeta({
+  pagePackageType: 'is_pre_match',
+})
 type Market = {
   marketName: string
   values: Outcome[]
