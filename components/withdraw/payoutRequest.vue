@@ -19,7 +19,7 @@ function onSubmit() {
       >
         <q-card>
           <q-card-section>
-            <div class="text-h6">
+            <div class="text-h6 tw-uppercase">
               Request For Payout
             </div>
           </q-card-section>
@@ -27,13 +27,9 @@ function onSubmit() {
           <q-separator />
 
           <q-card-section style="max-height: 50vh" class="scroll">
-            <div class="tw-flex tw-flex-col tw-space-y-8">
+            <div class="tw-flex tw-min-w-96 tw-flex-col tw-space-y-8">
               <div class="tw-flex tw-w-full tw-items-center tw-gap-8 ">
-                <label for="available" class="tw-flex  tw-w-2/3 tw-flex-col tw-text-xl tw-font-bold">
-                  <span>Available amount:</span>
-
-                </label>
-                <q-field filled dense>
+                <q-field class="tw-w-full" filled label="Available stake balance" stack-label>
                   <template #control>
                     <div class="self-center full-width no-outline" tabindex="0">
                       ETB {{ userStore.user?.stake_balance.stake_balance }}
@@ -42,15 +38,15 @@ function onSubmit() {
                 </q-field>
               </div>
               <div class="tw-flex tw-w-full tw-items-center tw-gap-8">
-                <label for="available" class="tw-flex tw-w-full tw-flex-col tw-text-xl tw-font-bold">
-                  <span>Enter Amount:</span>
-                  <span class="tw-text-xs tw-font-thin">Amount (Min5.00 ETB / Max 15,000.00 ETB):</span>
-                </label>
                 <q-input
                   v-model="amount"
                   type="number"
                   dense
+                  outline
+                  label="Enter Amount:"
+                  hint="Amount (Min5.00 ETB / Max 15,000.00 ETB):"
                   lazy-rules
+                  class="tw-w-full"
                   :rules="[
                     val => val > 5 || 'Invalid payout amount',
                     val => val <= +userStore.user?.stake_balance.stake_balance! || 'You have no enough balance',
