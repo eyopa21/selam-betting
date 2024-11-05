@@ -17,13 +17,26 @@ export type AdsRoot = {
   previous: string | null
   results: unknown[]
 }
+type Banner = {
+  id: string
+  image: string
+  client_package: string
+  start_date: string
+  end_date: string
+  status: boolean
+  views: number
+  note: string
+  created_at: string
+  modified_at: string
+
+}
+
 export type BannerRoot = {
   count: number
   next: string | null
   previous: string | null
-  results: unknown[]
+  results: Banner[]
 }
-
 export default defineEventHandler(async () => {
   const config = useRuntimeConfig()
   const featureUrl = `${config.restApiEndpoint}/features/`
