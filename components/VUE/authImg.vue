@@ -17,6 +17,7 @@ const imageData = ref<string | null>(null)
 onMounted(async () => {
   try {
     const response = await $fetch<Blob>(`http://162.55.223.95:8000${props.url}`, {
+
       headers: {
         Authorization: `Bearer ${$authentication.accessToken.value}`,
       },

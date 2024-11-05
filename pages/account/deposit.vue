@@ -131,26 +131,24 @@ function handlePaymentClick(paymentMethodName: string, logoUrl: string, is_direc
             class="q-gutter-md"
             @submit="deposit(state.paymentMethod, state.amount, state.directPayment)"
           >
-            <q-card class="tw-p-4">
-              <q-card-section>
-                <div class="text-h6">
+            <q-card>
+              <q-card-section class="tw-flex tw-w-full tw-justify-center">
+                <div class="text-h6  ">
                   <VUEAuthImg v-if="state.paymentImg" :url="state.paymentImg" fit="contain" class="tw-h-20 tw-w-full" />
                 </div>
               </q-card-section>
 
               <q-separator />
 
-              <q-card-section style="max-height: 50vh" class="scroll tw-my-8">
+              <q-card-section style="max-height: 50vh" class="scroll ">
                 <div class="tw-grid tw-grid-cols-2 tw-gap-8">
-                  <label for="available" class="tw-flex   tw-flex-col tw-text-lg tw-font-bold">
-                    <span>Amount (Min5.00 ETB / Max 15000.00 ETB):</span>
-
-                  </label>
                   <q-input
                     v-model="state.amount"
                     filled
                     type="number"
                     lazy-rules
+                    class="tw-col-span-2 tw-min-w-96"
+                    label="Amount (Min5.00 ETB / Max 15000.00 ETB):"
                     :rules="[
                       val => val >= 5 || 'Minimum deposit amount is 5 Birr',
                       val => val <= 15000 || 'Maximum deposit amount is 15,000 Birr',
