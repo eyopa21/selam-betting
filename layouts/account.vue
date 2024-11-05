@@ -6,7 +6,7 @@ layout.value.showSideBarProfileMenu = true
 
 <template>
   <q-layout
-    view="hhh lpr lff"
+    view="hhh Lpr lff"
     container class="dark:tw-bg-primary-900"
   >
     <q-header reveal elevated class="tw-w-full tw-bg-secondary-800 dark:tw-bg-gray-900">

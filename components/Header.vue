@@ -24,7 +24,7 @@ const menuOptions = ref([
     show: true,
   },
   {
-    name: 'Virtual Sport',
+    name: 'Virtual',
     link: '#',
     show: true,
   },

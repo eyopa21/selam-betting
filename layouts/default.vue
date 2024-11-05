@@ -5,7 +5,8 @@ layout.value.showSideBarProfileMenu = false
 </script>
 
 <template>
-  <q-layout view="hhh lpr lff" container class="dark:tw-bg-primary-900">
+  <!-- view="hhh lpr lff"  -->
+  <q-layout container view="hHh Lpr lff" class="dark:tw-bg-primary-900">
     <q-header elevated class="tw-bg-secondary-800 dark:tw-bg-gray-800">
       <Header />
     </q-header>
@@ -22,12 +23,12 @@ layout.value.showSideBarProfileMenu = false
 
     <q-drawer
       v-model="layout.showRightDrawer" show-if-above side="right" :mini="layout.rightMiniState"
-      class="tw-bg-secondary-800  tw-px-2  tw-pt-3 dark:tw-bg-primary-900"
+      class="tw-h-full tw-bg-secondary-800  tw-px-2 tw-py-4  tw-pt-3 dark:tw-bg-primary-900"
     >
-      <div class="tw-rounded-2xl tw-bg-primary-800 tw-p-4">
+      <div class="tw-h-full tw-space-y-2 tw-rounded-2xl tw-bg-primary-800 tw-py-4" :class="layout.rightMiniState ? 'tw-p-2 ' : 'tw-p-3 '">
         <div class=" tw-flex tw-w-full tw-justify-center ">
           <q-btn
-            padding="none" color="primary" class="full-width -tw-mx-2"
+            padding="none" color="primary" class="full-width -tw-mx-2 tw-p-8"
             @click="layout.rightMiniState = !layout.rightMiniState"
           >
             <span v-if="!layout.rightMiniState" class="tw-text-xs">Collapse Block</span>
