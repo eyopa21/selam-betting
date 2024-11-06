@@ -24,15 +24,24 @@ export default defineNuxtRouteMiddleware((to, _) => {
     })
   }
 
-  if ((pagePackageType !== 'is_casino_game') && (!general.generalClientInfo?.general.is_live_match && !general.generalClientInfo?.general.is_pre_match)) {
-    return navigateTo('/casino')
-  }
-
-  if ((pagePackageType !== 'is_pre_match') && (!general.generalClientInfo?.general.is_casino_game && !general.generalClientInfo?.general.is_live_match)) {
+  if ((pagePackageType === 'is_casino_game') && (!general.generalClientInfo?.general.is_casino_game && general.generalClientInfo?.general.is_pre_match)) {
     return navigateTo('/')
   }
-
-  if ((pagePackageType !== 'is_live_match') && (!general.generalClientInfo?.general.is_pre_match && !general.generalClientInfo?.general.is_casino_game)) {
+  if ((pagePackageType === 'is_casino_game') && (!general.generalClientInfo?.general.is_casino_game && general.generalClientInfo?.general.is_live_match)) {
     return navigateTo('/live')
+  }
+
+  if ((pagePackageType === 'is_pre_match') && (!general.generalClientInfo?.general.is_pre_match && general.generalClientInfo?.general.is_casino_game)) {
+    return navigateTo('/casino')
+  }
+  if ((pagePackageType === 'is_pre_match') && (!general.generalClientInfo?.general.is_pre_match && general.generalClientInfo?.general.is_live_match)) {
+    return navigateTo('/live')
+  }
+
+  if ((pagePackageType === 'is_live_match') && (!general.generalClientInfo?.general.is_live_match && general.generalClientInfo?.general.is_casino_game)) {
+    return navigateTo('/casino')
+  }
+  if ((pagePackageType === 'is_live_match') && (!general.generalClientInfo?.general.is_live_match && general.generalClientInfo?.general.is_pre_match)) {
+    return navigateTo('/')
   }
 })
