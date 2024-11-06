@@ -8,7 +8,7 @@ const percentage = ref(50)
   <q-list>
     <div class="tw-my-1 tw-space-y-4">
       <!-- <NavLogo /> -->
-      <div class="tw-flex tw-items-center  tw-justify-between tw-bg-primary-700 tw-px-2">
+      <div class="tw-flex tw-items-center tw-justify-between tw-bg-primary-700 tw-px-2 tw-py-4">
         <div class="tw-flex tw-flex-col tw-text-base">
           <div class="tw-flex tw-justify-start">
             <p class="tw-font-semibold">
@@ -20,14 +20,14 @@ const percentage = ref(50)
             {{ userStore.user?.user.email }}
           </p>
         </div>
-        <div>
+        <!-- <div>
           <q-knob
             rounded readonly show-value :model-value="percentage" size="50px"
             color="accent" center-color="black" track-color="black" class="q-ma-md "
           >
             {{ percentage }}%
           </q-knob>
-        </div>
+        </div> -->
       </div>
       <div class="tw-bg-primary-700 tw-p-2 tw-font-semibold">
         <div class="tw-flex tw-items-center  tw-justify-between">
@@ -101,17 +101,17 @@ const percentage = ref(50)
       >
         <q-card class="tw-items-start tw-bg-primary-700">
           <q-tabs vertical inline-label dense no-caps>
-            <!-- <q-route-tab
+            <q-route-tab
               active-class="tw-bg-primary-900" to="/account/profile" name="profile" icon="person" label="Personal profile"
               class=" tw-place-content-start "
             />
-
-            <q-route-tab active-class="tw-bg-primary-900" to="/account/security" name="security" icon="lock" label="Security" class=" tw-place-content-start " /> -->
+            <!--
+            <q-route-tab active-class="tw-bg-primary-900" to="/account/security" name="security" icon="lock" label="Security" class=" tw-place-content-start " />
 
             <q-route-tab
               active-class="tw-bg-primary-900" to="/account/settings" name="settings" icon="settings" label="Account settings"
               class=" tw-place-content-start "
-            />
+            /> -->
           </q-tabs>
         </q-card>
       </q-expansion-item>

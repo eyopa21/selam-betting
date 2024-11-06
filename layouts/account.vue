@@ -24,9 +24,9 @@ const userStore = useUserStore()
             To discover the world of gaming and winning, top up your account using any payment method from
             Worldwide!
           </div>
-          <template #action>
+          <!-- <template #action>
             <q-btn flat color="white" icon="close" />
-          </template>
+          </template> -->
         </q-banner>
         <div
           :class="$route.name === 'account-bonus' ? 'dark:tw-bg-primary-800 tw-bg-primary-800' : 'dark:tw-bg-gray-200 tw-bg-gray-200'"
