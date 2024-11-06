@@ -40,9 +40,9 @@ async function updateLocation() {
 </script>
 
 <template>
-  <div class="tw-p-8">
-    <q-form
-      class="q-gutter-md tw-min-w-96"
+  <div>
+    <!-- <q-form
+      class=" tw-min-w-96"
       @submit="updateLocation()"
     >
       <q-card>
@@ -79,6 +79,9 @@ async function updateLocation() {
           <q-btn :loading type="submit" flat label="Proceed" color="primary" />
         </q-card-actions>
       </q-card>
-    </q-form>
+    </q-form> -->
+    <div class="tw-p-4 tw-text-2xl">
+      Coming soon
+    </div>
   </div>
 </template>

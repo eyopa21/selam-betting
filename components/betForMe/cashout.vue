@@ -44,7 +44,7 @@ async function processCashout() {
 <template>
   <div class="tw-p-4">
     <!-- <WsClient /> -->
-    <q-form
+    <!-- <q-form
       class="q-gutter-md tw-min-w-96"
       @submit="processCashout()"
     >
@@ -99,6 +99,9 @@ async function processCashout() {
       <div class="-tw-mt-2 tw-flex tw-justify-end">
         <q-btn :loading type="submit" label="Proceed" color="primary" />
       </div>
-    </q-form>
+    </q-form> -->
+    <div class="tw-p-4 tw-text-2xl">
+      Coming soon
+    </div>
   </div>
 </template>

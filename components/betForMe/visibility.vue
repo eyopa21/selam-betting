@@ -29,12 +29,15 @@ async function toggleVisibility(value: boolean) {
   <div class="text-h6 tw-font-semibold tw-uppercase tw-tracking-tighter">
     Make My self Visible
   </div>
-  <div class="tw-m-8 tw-space-x-4">
+  <!-- <div class="tw-m-8 tw-space-x-4">
     <q-btn :loading color="red-10" @click="toggleVisibility(false)">
       Hide visibility
     </q-btn>
     <q-btn :loading color="green-10" @click="toggleVisibility(true)">
       Make me Visible
     </q-btn>
+  </div> -->
+  <div class="tw-p-4 tw-text-2xl">
+    Coming soon
   </div>
 </template>

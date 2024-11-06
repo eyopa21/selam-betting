@@ -6,5 +6,5 @@ const image = await getAuthenticatedImage(props.relativePath)
 </script>
 
 <template>
-  <img :src="image">
+  <q-img :src="image" class="tw-h-full " />
 </template>

@@ -29,20 +29,20 @@ if (error.value) {
           <BetForMeNearby />
         </div>
 
-        <div class="tw-flex tw-w-full tw-flex-col tw-gap-4 lg:tw-w-1/2">
+        <div class="tw-mt-9 tw-flex tw-w-full tw-flex-col tw-gap-4 lg:tw-w-1/2">
           <q-tabs
             v-model="tab"
-            class="bg-primary text-white shadow-2 tw-flex tw-rounded-md"
+            class="bg-primary text-white shadow-2 tw-flex "
             align="left"
-            indicator-color="primary"
+            content-class="text-yellow-4"
+            indicator-color="yellow-4"
           >
-            <q-btn-group square class="tw-flex tw-w-full tw-justify-center tw-gap-4 tw-p-2">
-              <q-btn push class="!tw-rounded-md" outline color="yellow-4" label="Send Request " @click="tab = 'send_request'" />
-              <q-btn push outline class="!tw-rounded-md" color="yellow-4" label="Make my self visible" @click="tab = 'make_visible'" />
-              <q-btn push outline class="!tw-rounded-md" color="yellow-4" label="Bet for Me" @click="tab = 'bet_for_me'" />
-              <q-btn push outline class="!tw-rounded-md" color="yellow-4" label="Update Location" @click="tab = 'update_location'" />
-            </q-btn-group>
+            <q-tab name="send_request" label="Send Request " />
+            <q-tab name="make_visible" label="Make my self visible" />
+            <q-tab name="bet_for_me" label="Bet for me" />
+            <q-tab name="update_location" label="Update Location" />
           </q-tabs>
+
           <q-tab-panels v-model="tab" animated class="tw-border  tw-bg-white ">
             <q-tab-panel name="send_request">
               <BetForMeAccount v-if="data" :info="data" />

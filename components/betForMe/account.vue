@@ -31,7 +31,7 @@ async function request() {
     <div class="text-h6 tw-font-extrabold tw-leading-tight tw-tracking-tight">
       Your Account
     </div>
-    <div class="tw-p-8">
+    <!-- <div class="tw-p-8">
       <q-avatar rounded>
         <img src="/arsenal.jpg" alt="">
       </q-avatar>
@@ -59,6 +59,9 @@ async function request() {
           Send Request
         </q-btn>
       </div>
+    </div> -->
+    <div class="tw-p-4 tw-text-2xl">
+      Coming soon
     </div>
   </div>
 </template>
