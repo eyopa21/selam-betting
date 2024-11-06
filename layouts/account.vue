@@ -2,6 +2,7 @@
 const layout = useLayout()
 layout.value.showLeftDrawer = true
 layout.value.showSideBarProfileMenu = true
+const userStore = useUserStore()
 </script>
 
 <template>
@@ -36,7 +37,7 @@ layout.value.showSideBarProfileMenu = true
             class="tw-border-b-2 tw-text-lg tw-font-extrabold tw-leading-tight"
           >
             <span>Account Number: </span>
-            <span class="tw-text-amber-500">12097267625</span>
+            <span class="tw-text-amber-500">{{ userStore.user?.user.phone_number }}</span>
           </div>
           <div>
             <slot />

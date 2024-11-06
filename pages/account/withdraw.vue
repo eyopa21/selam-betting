@@ -38,15 +38,17 @@ function handlePaymentClick() {
   <div class="tw-space-y-4 tw-p-2 tw-pt-0 tw-font-semibold tw-text-primary-500">
     <div>
       <p>Select payment method to withdraw money:</p>
+      <p>
+        Available Payout Balance:  <span class="tw-text-sm tw-font-extrabold tw-underline">{{ userStore.user?.payout_balance.balance }} Birr
+        </span>
+      </p>
     </div>
-
-    <div class="tw-space-y-4 tw-pt-8">
+    <q-separator />
+    <div class="tw-space-y-4 ">
       <div class="tw-flex tw-justify-between">
         <div class="tw-text-base">
-          Available Payout Balance:  <span class="tw-text-xl tw-font-bold">{{ userStore.user?.payout_balance.balance }} Birr
-          </span>
           <div class="s tw-inline-block tw-space-x-2">
-            <WithdrawPayoutRequest />
+            <!-- <WithdrawPayoutRequest /> -->
             <WithdrawPayoutToStake />
           </div>
         </div>
