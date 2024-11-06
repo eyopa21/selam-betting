@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { AdsRoot, BannerRoot, GeneralRoot, SystemNameAndLogo } from '~/server/api/general/get-client-preference'
+import type { AdsRoot, BannerRoot, GeneralRoot, SystemNameAndLogo, ThemeRoot } from '~/server/api/general/get-client-preference'
 
 export const useGeneralClientInfo = defineStore('general', () => {
   const generalClientInfo = ref<{
@@ -7,6 +7,7 @@ export const useGeneralClientInfo = defineStore('general', () => {
     nameAndLogo: SystemNameAndLogo
     ads: AdsRoot['results']
     banners: BannerRoot['results']
+    theme: ThemeRoot
   }>()
 
   function setGeneralInfo(info: {
@@ -14,6 +15,7 @@ export const useGeneralClientInfo = defineStore('general', () => {
     nameAndLogo: SystemNameAndLogo
     ads: AdsRoot['results']
     banners: BannerRoot['results']
+    theme: ThemeRoot
   }) {
     generalClientInfo.value = { ...info }
   }
