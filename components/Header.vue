@@ -10,7 +10,7 @@ const { logout } = useAuth()
 const menuOptions = ref([
   {
     name: 'Sport',
-    link: '#',
+    link: '/',
     show: true,
   },
   {
@@ -27,7 +27,7 @@ const menuOptions = ref([
   {
     name: 'Promotions',
     link: '#',
-    show: true,
+    show: false,
   },
 
   {

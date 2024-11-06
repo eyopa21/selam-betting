@@ -17,12 +17,12 @@ const menuOptions = ref([
     icon: null,
     active: false,
   },
-  {
-    name: 'Promotions',
-    link: '/account/vip-cashback',
-    icon: null,
-    active: false,
-  },
+  // {
+  //   name: 'Promotions',
+  //   link: '/account/vip-cashback',
+  //   icon: null,
+  //   active: false,
+  // },
   {
     name: 'Withdraw',
     link: '/account/withdraw',
