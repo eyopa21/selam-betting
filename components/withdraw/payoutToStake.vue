@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { biCheckLg } from '@quasar/extras/bootstrap-icons'
 import type { NuxtError } from '#app'
 
 const isOpen = ref(false)
 const userStore = useUserStore()
 const { $authentication } = useNuxtApp()
-const amount = ref(0)
+const { fetchUserInfo } = useUserInfo()
+const state = ref({
+  amount: 0,
+})
 const form = ref()
 const loading = ref(false)
 const $q = useQuasar()
@@ -19,16 +21,17 @@ async function onSubmit() {
         Authorization: `Bearer ${$authentication.accessToken.value}`,
       },
       body: {
-        amount: amount.value,
+        amount: state.value.amount,
       },
     })
     if (res) {
       $q.notify({
-        message: `You have successfully converted Birr${amount.value}`,
+        message: `You have successfully converted Birr${state.value.amount}`,
         color: 'green',
       })
       isOpen.value = false
       form.value.reset()
+      await fetchUserInfo()
     }
   } catch (err) {
     useErrorNotifications(ref(err as NuxtError))
@@ -49,7 +52,7 @@ async function onSubmit() {
       >
         <q-card>
           <q-card-section>
-            <div class="text-h6 tw-uppercase">
+            <div class="text-h6 tw-font-bold tw-uppercase tw-leading-tight  tw-tracking-tight">
               Convert To Stake
             </div>
           </q-card-section>
@@ -62,7 +65,7 @@ async function onSubmit() {
                 <q-field class="tw-w-full" filled label="Available amount:" stack-label>
                   <template #control>
                     <div class="self-center full-width no-outline" tabindex="0">
-                      ETB {{ userStore.user?.stake_balance.stake_balance }}
+                      ETB {{ userStore.user?.payout_balance.balance }}
                     </div>
                   </template>
                 </q-field>
@@ -70,7 +73,7 @@ async function onSubmit() {
 
               <div class="tw-flex tw-w-full tw-items-center tw-gap-8">
                 <q-input
-                  v-model="amount"
+                  v-model="state.amount"
                   type="number"
                   dense
                   label="Enter Amount:"
