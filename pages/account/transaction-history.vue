@@ -50,19 +50,19 @@ const tab = ref<'deposit' | 'cash_out' | 'withdraw' | 'transfer_to_user'>('depos
               <TransactionDeposit />
             </q-tab-panel>
             <q-tab-panel name="cash_out">
-              <div class="text-h6 tw-uppercase">
+              <div class="text-h6 tw-pb-4 tw-font-semibold tw-uppercase">
                 Cash Outs
               </div>
               <TransactionCashouts />
             </q-tab-panel>
             <q-tab-panel name="transfer_to_user">
-              <div class="text-h6">
+              <div class="text-h6 tw-pb-4 tw-font-semibold tw-uppercase">
                 User Transfer
               </div>
               <TransactionUserTransfer />
             </q-tab-panel>
             <q-tab-panel name="withdraw">
-              <div class="text-h6">
+              <div class="text-h6 tw-pb-4 tw-font-semibold tw-uppercase">
                 Withdrawals
               </div>
               <TransactionWithdraw />
