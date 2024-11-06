@@ -111,12 +111,12 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
             class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
           >
             <div v-if="filterType === 'square'" class="tw-group">
-              <div class="tw-absolute tw-right-0">
+              <!-- <div class="tw-absolute tw-right-0">
                 <q-btn
                   flat round color="white" icon="favorite_outline"
                   class="tw-z-50 tw-transition-all tw-duration-500 group-hover:tw-scale-110"
                 />
-              </div>
+              </div> -->
               <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64  tw-rounded-xl tw-ring tw-ring-violet-500  tw-ring-opacity-60" />
               <div class="tw-mt-5 tw-flex tw-w-full tw-justify-between tw-space-x-4">
                 <q-btn
