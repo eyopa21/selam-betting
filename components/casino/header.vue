@@ -14,8 +14,8 @@ const menuOptions = ref([
   {
     name: 'Profile',
     link: '/account/profile',
-    icon: 'person',
-    active: true,
+    icon: null,
+    active: false,
   },
   {
     name: 'Promotions',
@@ -44,7 +44,7 @@ const menuOptions = ref([
 
     <div class="tw-hidden tw-items-start tw-justify-center lg:tw-flex">
       <ul v-for="option in menuOptions" :key="option.name" class="tw-gap-2">
-        <q-btn flat dense :icon="option.icon ?? undefined" no-wrap :to="option.link" :text-color="option.active ? 'white' : 'grey-5' " class="tw-mr-2 tw-rounded tw-px-3">
+        <q-btn flat dense :icon="option.icon ?? undefined" no-wrap :to="option.link" :text-color="option.active ? 'white' : 'grey-3' " class="tw-mr-2 tw-rounded tw-px-3">
           {{ option.name }}
         </q-btn>
       </ul>
@@ -55,7 +55,7 @@ const menuOptions = ref([
       <q-btn
         flat
         to="/account/deposit"
-        icons="add" label="Deposit" color="primary" dense no-wrap text-color="grey-5"
+        icons="add" label="Deposit" color="primary" dense no-wrap text-color="grey-3"
         class="tw-px-4"
       />
 

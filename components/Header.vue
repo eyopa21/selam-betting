@@ -23,26 +23,18 @@ const menuOptions = ref([
     link: '#',
     show: true,
   },
-  {
-    name: 'Virtual',
-    link: '#',
-    show: true,
-  },
+
   {
     name: 'Casino',
     link: '/casino',
-    show: general.generalClientInfo?.general.is_casino_game,
+    show: general.generalClientInfo?.general.is_casino_game && $authentication.loggedIn.value,
   },
   {
     name: 'Promotions',
     link: '#',
     show: true,
   },
-  {
-    name: ' Deposit',
-    link: '/account/deposit',
-    show: true,
-  },
+
   {
     name: 'Rules',
     link: '#',

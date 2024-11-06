@@ -54,10 +54,10 @@ const percentage = ref(50)
               active-class="tw-bg-primary-900" to="/account/withdraw" name="withdraw" icon="upload" label="Withdraw Funds"
               class=" tw-place-content-start "
             />
-            <q-route-tab
+            <!-- <q-route-tab
               active-class="tw-bg-primary-900" to="/account/bet-history" name="bet_history" icon="access_time" label="Bet History"
               class=" tw-place-content-start "
-            />
+            /> -->
             <q-route-tab
               active-class="tw-bg-primary-900" to="/account/transaction-history" name="transaction_history" icon="multiple_stop" label="Transaction History"
               class=" tw-place-content-start "
@@ -75,7 +75,7 @@ const percentage = ref(50)
       >
         <q-card class="tw-items-start tw-bg-primary-700">
           <q-tabs vertical inline-label dense no-caps>
-            <q-route-tab
+            <!-- <q-route-tab
               active-class="tw-bg-primary-900" to="/account/invite" name="invite" icon="groups" label="Invite Friends"
               class=" tw-place-content-start "
             />
@@ -87,7 +87,7 @@ const percentage = ref(50)
             <q-route-tab
               active-class="tw-bg-primary-900" to="/account/bonus" name="bonus" icon="redeem" label="Bonuses and gifts"
               class=" tw-place-content-start "
-            />
+            /> -->
             <q-route-tab
               active-class="tw-bg-primary-900" to="/account/support" name="support" icon="support_agent" label="Customer Support"
               class=" tw-place-content-start "
@@ -101,12 +101,12 @@ const percentage = ref(50)
       >
         <q-card class="tw-items-start tw-bg-primary-700">
           <q-tabs vertical inline-label dense no-caps>
-            <q-route-tab
+            <!-- <q-route-tab
               active-class="tw-bg-primary-900" to="/account/profile" name="profile" icon="person" label="Personal profile"
               class=" tw-place-content-start "
             />
 
-            <q-route-tab active-class="tw-bg-primary-900" to="/account/security" name="security" icon="lock" label="Security" class=" tw-place-content-start " />
+            <q-route-tab active-class="tw-bg-primary-900" to="/account/security" name="security" icon="lock" label="Security" class=" tw-place-content-start " /> -->
 
             <q-route-tab
               active-class="tw-bg-primary-900" to="/account/settings" name="settings" icon="settings" label="Account settings"

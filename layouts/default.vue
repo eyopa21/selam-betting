@@ -7,7 +7,7 @@ layout.value.showSideBarProfileMenu = false
 <template>
   <!-- view="hhh lpr lff"  -->
   <q-layout container view="hHh Lpr lff" class="dark:tw-bg-primary-900">
-    <q-header elevated class="tw-bg-secondary-800 dark:tw-bg-gray-800">
+    <q-header elevated class="tw-bg-secondary-800 dark:tw-bg-primary-900">
       <Header />
     </q-header>
 
