@@ -47,9 +47,7 @@ const termsAndPolicy = ref(false)
           </q-btn>
         </div>
       </div>
-      <div class="tw-mt-4">
-        <WithdrawSendMoneyToFriend />
-      </div>
+      <div class="tw-mt-4" />
     </div>
   </div>
 </template>

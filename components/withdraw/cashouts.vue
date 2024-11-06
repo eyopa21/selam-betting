@@ -50,7 +50,7 @@ async function deleteVoucher(voucherId: string) {
 
 <template>
   <q-expansion-item
-    dense label="WITHDRAWAL REQUESTS" header-class="bg-red-10 text-white"
+    dense label="WITHDRAWAL REQUESTS" header-class="bg-red-10 text-white tw-h-12"
     expand-icon-class="text-white" expand-icon="keyboard_double_arrow_down"
   >
     <div>

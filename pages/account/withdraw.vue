@@ -43,18 +43,20 @@ function handlePaymentClick() {
         </span>
       </p>
     </div>
-    <q-separator />
-    <div class="tw-space-y-4 ">
+    <div class="tw-space-y-4 tw-rounded-lg tw-bg-white tw-p-4">
+      <!-- <q-separator /> -->
       <div class="tw-flex tw-justify-between">
         <div class="tw-text-base">
           <div class="s tw-inline-block tw-space-x-2">
             <!-- <WithdrawPayoutRequest /> -->
             <WithdrawPayoutToStake />
+            <WithdrawSendMoneyToFriend />
           </div>
         </div>
 
         <WithdrawCashouts />
       </div>
+      <!-- <q-separator /> -->
     </div>
 
     <div v-if="status === 'pending'">

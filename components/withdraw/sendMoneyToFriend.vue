@@ -47,7 +47,7 @@ async function onSubmit() {
 </script>
 
 <template>
-  <q-btn icon="request_page" label="Send money to your friend" class="tw-h-12" color="primary" @click="isOpen = true" />
+  <q-btn icon="request_page" label="Send money to your friend" class="tw-h-12" color="red-10" @click="isOpen = true" />
   <q-dialog v-model="isOpen" @hide=" state.phoneNumber = state.amount = state.password = undefined">
     <div>
       <q-form
