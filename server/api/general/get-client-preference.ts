@@ -109,13 +109,13 @@ export default defineEventHandler(async () => {
 
     ])
 
-    if (result[0].status === 'fulfilled' && result[1].status === 'fulfilled' && result[2].status === 'fulfilled' && result[3].status === 'fulfilled' && result[4].status === 'fulfilled') {
+    if (result[0].status === 'fulfilled' && result[1].status === 'fulfilled' && result[2].status === 'fulfilled' && result[3].status === 'fulfilled') {
       return {
         general: result[0].value,
         nameAndLogo: result[1].value,
         ads: [] as AdsRoot['results'],
         banners: result[3].value.results,
-        theme: result[4].value,
+        // theme: result[4].value,
       }
     } else {
       throw createError({
