@@ -115,7 +115,7 @@ const percentage = ref(50)
           </q-tabs>
         </q-card>
       </q-expansion-item>
-      <div class="  tw-w-full tw-place-items-center tw-justify-items-center tw-px-4  tw-pb-4 tw-pt-8 ">
+      <div class=" tw-absolute tw-bottom-0 tw-w-full tw-place-items-center tw-justify-items-center tw-px-4  tw-pb-4 tw-pt-8 ">
         <q-btn icon="logout" outline color="red" size="lg" class="tw-w-full tw-rounded-lg" @click="logout()">
           <span class="text-white tw-text-sm tw-font-bold">
             Sign Out
