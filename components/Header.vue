@@ -96,10 +96,12 @@ const menuOptions = ref([
     <!-- mobile menu -->
     <div class="lg:tw-hidden">
       <q-btn unelevated icon="menu">
-        <q-menu fit class="tw-w-screen tw-bg-primary-600">
-          <q-list v-for="option in menuOptions" :key="option.name">
+        <q-menu fit class="tw-w-screen tw-bg-primary-800">
+          <q-list v-for="option in menuOptions" :key="option.name" :class="option.show ? 'tw-block' : 'tw-hidden'">
             <q-item clickable class="text-white font-bold">
-              <q-item-section>{{ option.name }} </q-item-section>
+              <q-btn flat :to="option.link">
+                {{ option.name }}
+              </q-btn>
             </q-item>
           </q-list>
           <div class="tw-m-2 tw-flex tw-justify-start tw-text-white">
