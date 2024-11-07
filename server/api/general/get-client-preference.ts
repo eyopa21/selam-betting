@@ -11,12 +11,21 @@ export type SystemNameAndLogo = {
   client_name: string
 }
 
+export type Ads = {
+  id: string
+  content: string
+  notes?: string
+  image_url: string
+  video_url: string | null
+}
+
 export type AdsRoot = {
   count: number
   next: string | null
   previous: string | null
-  results: unknown[]
+  results: Ads[]
 }
+
 type Banner = {
   id: string
   image: string
@@ -113,7 +122,7 @@ export default defineEventHandler(async () => {
       return {
         general: result[0].value,
         nameAndLogo: result[1].value,
-        ads: [] as AdsRoot['results'],
+        ads: result[2].value.results as AdsRoot['results'],
         banners: result[3].value.results,
         // theme: result[4].value,
       }
