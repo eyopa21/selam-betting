@@ -22,7 +22,7 @@ const menuOptions = ref([
   {
     name: 'Casino',
     link: '/casino',
-    show: general.generalClientInfo?.general.is_casino_game && $authentication.loggedIn.value,
+    show: $authentication.loggedIn.value,
   },
   {
     name: 'Promotions',
