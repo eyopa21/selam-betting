@@ -11,10 +11,8 @@ export default defineNuxtRouteMiddleware((to, _) => {
 
   console.log(pagePackageType)
 
-  if (pageType !== PageType.PUBLIC) {
-    if (pageType === PageType.AUTHENTICATED && !$authentication.loggedIn.value) {
-      return navigateTo('/')
-    }
+  if (pageType === PageType.AUTHENTICATED && !$authentication.loggedIn.value) {
+    return navigateTo('/')
   }
 
   if (!general.generalClientInfo?.general?.is_casino_game && !general.generalClientInfo?.general?.is_live_match && !general.generalClientInfo?.general?.is_pre_match) {

@@ -53,7 +53,6 @@ async function deposit(paymentMethod: string, amount: number, directPayment: boo
       headers: {
         Authorization: `Bearer ${$authentication.accessToken.value}`,
       },
-      cache: 'force-cache',
       body: {
         amount: +amount,
         is_direct_payment: directPayment,
