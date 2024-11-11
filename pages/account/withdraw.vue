@@ -55,6 +55,7 @@ async function withdraw() {
       body: {
         amount: +state.value.amount,
         paymentMethods: state.value.paymentMethod,
+        password: state.value.password,
       },
     })
     if (response.error === false && response.data.paymentUrl) {
