@@ -51,7 +51,7 @@ const menuOptions = ref([
     </div>
 
     <div class="tw-my-auto tw-mr-4 tw-hidden tw-items-center tw-gap-2 lg:tw-flex lg:tw-justify-between">
-      <q-btn color="amber-4" outline class="tw-w-full" icon="currency_pound" no-wrap :label="`${userStore.user?.stake_balance.stake_balance}ETB`" dense />
+      <q-btn color="amber-10" class="tw-w-full  tw-px-4 !tw-text-white" icon="currency_pound" no-wrap :label="`${userStore.user?.stake_balance.stake_balance}ETB`" dense />
       <q-btn
         flat
         to="/account/deposit"

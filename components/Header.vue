@@ -70,7 +70,7 @@ const menuOptions = ref([
         v-if="$authentication.loggedIn.value"
         class="tw-my-auto tw-mr-4 tw-hidden tw-items-center tw-gap-2 lg:tw-flex lg:tw-justify-between"
       >
-        <q-btn v-if="userStore.user?.stake_balance.stake_balance" color="amber-8" class="tw-ml-2 tw-w-full" :label="`${userStore.user?.stake_balance.stake_balance} ETB`" dense no-wrap />
+        <q-btn color="amber-10" class="tw-ml-2 tw-w-full tw-px-4" :label="`${userStore.user?.stake_balance.stake_balance ?? 0} ETB`" dense no-wrap />
         <!-- <q-btn label="Deposit" color="secondary" dense /> -->
         <q-btn dense round flat icon="redeem" size="md" class="tw-text-xl">
           <q-badge color="blue" floating transparent>
