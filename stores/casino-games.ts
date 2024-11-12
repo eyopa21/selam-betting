@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
-import type { Game } from '~/types/casino/games'
+import type { CasinoRoot } from '~/types/casino/games'
 
 export const useCasinoGameStore = defineStore('casino-games', () => {
-  const games = ref<Game[]>([])
+  const games = ref<CasinoRoot>()
 
-  function addGames(game: Game[]) {
+  function addGames(game: CasinoRoot) {
     games.value = game
   }
 

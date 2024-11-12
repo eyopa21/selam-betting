@@ -28,7 +28,7 @@ if (error.value) {
   useErrorNotifications(error)
 }
 if (games.value) {
-  gameStore.addGames(games.value.results)
+  gameStore.addGames(games.value)
 }
 
 const filterType = ref<'square' | 'circle'>('square')
@@ -97,14 +97,14 @@ function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolea
       </div>
     </div>
 
-    <div v-if="gameStore.games?.length">
+    <div v-if="gameStore.games?.results?.length">
       <div class="tw-p-4 tw-py-16">
         <div
           class="tw-grid  tw-gap-4 tw-gap-y-8"
           :class="filterType === 'square' ? 'tw-grid-cols-1 sm:grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-4 lg:tw-grid-cols-5  tw-place-items-center '"
         >
           <div
-            v-for="(ii, k) in gameStore.games" :key="k"
+            v-for="(ii, k) in gameStore.games.results" :key="k"
             class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
           >
             <div v-if="filterType === 'square'" class="tw-group">
@@ -148,7 +148,6 @@ function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolea
         </div>
       </div>
       <div class="tw-flex tw-w-full tw-justify-center tw-py-16">
-        {{ currentPage }} {{ status }}
         <q-pagination
           v-if="games?.results"
           v-model="currentPage"

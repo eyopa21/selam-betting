@@ -10,7 +10,7 @@ export type Root = {
   count: number
   next: string | null
   previous: string | null
-  results: Result[]
+  results: Games[]
 }
 
 export type Result = {
@@ -21,7 +21,7 @@ export type Result = {
   icon_url: string
 }
 
-export type Game = {
+export type Games = {
   id: string
   game_id: string
   label: string

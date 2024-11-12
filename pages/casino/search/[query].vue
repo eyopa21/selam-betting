@@ -9,6 +9,7 @@ definePageMeta({
 const isMobile = useMediaQuery('(max-width: 768px)')
 const gameStore = useCasinoGameStore()
 const { $authentication } = useNuxtApp()
+const currentPage = ref(1)
 const route = useRoute('casino-search')
 const q = ref<string>()
 const loading = ref(false)
@@ -19,6 +20,7 @@ async function search() {
       headers: {
         Authorization: `Bearer ${$authentication.accessToken.value}`,
       },
+      body: currentPage,
     })
     if (response) {
       gameStore.addGames(response)
@@ -99,7 +101,7 @@ function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolea
         </div>
       </div>
     </div>
-    <div v-if="gameStore.games?.length">
+    <div v-if="gameStore.games?.results?.length">
       <div class=" tw-p-4">
         >
         <div
@@ -107,16 +109,10 @@ function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolea
           :class="filterType === 'square' ? 'tw-grid-cols-1 sm:grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-4 lg:tw-grid-cols-5  tw-place-items-center '"
         >
           <div
-            v-for="(ii, k) in gameStore.games" :key="k"
+            v-for="(ii, k) in gameStore.games.results" :key="k"
             class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
           >
             <div v-if="filterType === 'square'" class="tw-group">
-              <!-- <div class="tw-absolute tw-right-0">
-                <q-btn
-                  flat round color="white" icon="favorite_outline"
-                  class="tw-z-50 tw-transition-all tw-duration-500 group-hover:tw-scale-110"
-                />
-              </div> -->
               <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64  tw-rounded-xl tw-ring tw-ring-violet-500  tw-ring-opacity-60" />
               <div class="tw-mt-5 tw-flex tw-w-full tw-justify-between tw-space-x-4">
                 <q-btn
@@ -149,6 +145,17 @@ function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolea
             </div>
           </div>
         </div>
+      </div>
+      <div class="tw-flex tw-w-full tw-justify-center tw-py-16">
+        <q-pagination
+          v-if="gameStore.games?.results?.length"
+          v-model="currentPage"
+          :max="Math.ceil(gameStore.games.count / 20)"
+          direction-links
+          gutter="20px"
+          color="white"
+          active-color="secondary"
+        />
       </div>
     </div>
     <div v-else class="tw-flex tw-justify-center ">

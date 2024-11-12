@@ -1,5 +1,5 @@
 import type { NuxtError } from 'nuxt/app'
-import type { CasinoRoot, Game } from '~/types/casino/games'
+import type { CasinoRoot } from '~/types/casino/games'
 
 type ErrorResponse = {
   detail: string
@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
         'Authorization': authHeader!.toString()!,
       },
     })
-    return result.results as unknown as Game[]
+    return result
   } catch (err: unknown) {
     const error = err as NuxtError
     const errorResponse = error.data as ErrorResponse
