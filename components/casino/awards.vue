@@ -12,7 +12,7 @@ if (error.value) {
 </script>
 
 <template>
-  <q-scroll-area class="tw-h-[300px] tw-max-h-[300px] tw-min-h-[300px] tw-w-full tw-gap-2 tw-overflow-auto tw-overflow-x-hidden tw-rounded-3xl tw-bg-primary-900 lg:tw-w-1/3 ">
+  <q-scroll-area class="tw-h-[28rem] tw-max-h-[28rem] tw-min-h-[28rem] tw-w-full tw-gap-2 tw-overflow-auto tw-overflow-x-hidden tw-rounded-3xl tw-bg-primary-900 lg:tw-w-1/3 ">
     <div class="tw-h-full tw-p-4">
       <div v-if="status === 'pending'">
         <SkeletonsLeaderBoard />
