@@ -167,6 +167,7 @@ function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolea
           v-if="gameStore.games?.results?.length"
           v-model="currentPage"
           :max="Math.ceil(gameStore.games.count / 20)"
+          :max-pages="10"
           direction-links
           gutter="20px"
           color="white"

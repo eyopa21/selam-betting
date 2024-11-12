@@ -158,6 +158,7 @@ function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolea
           v-if="games?.results"
           v-model="currentPage"
           :max="Math.ceil(games.count / 20)"
+          :max-pages="10"
           direction-links
           gutter="20px"
           color="white"
