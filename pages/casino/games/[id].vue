@@ -24,7 +24,7 @@ if (error.value) {
   useErrorNotifications(error)
 }
 if (games.value) {
-  gameStore.addGames(games.value.games)
+  gameStore.addGames(games.value.games.games)
 }
 
 const filterType = ref<'square' | 'circle'>('square')
@@ -42,7 +42,7 @@ function toggleType() {
   }
 }
 
-function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean) {
+function handleClick(game: GroupGamesRoot['games']['games'][number], isPractice: boolean) {
   if (!!isMobile.value && !game.mobile) {
     useErrorNotifications(ref('This game can not be played in mobile devices'))
   } else if (!isMobile.value && !game.desktop) {

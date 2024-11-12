@@ -1,6 +1,17 @@
 export type GroupGamesRoot = {
   id: string
   name: string
+  order_of_group: string | null
+  icon_url: string
+  games: Games
+}
+
+export type Games = {
+  count: number
+  num_pages: number
+  current_page: number
+  next: string
+  previous: string | null
   games: Game[]
 }
 
