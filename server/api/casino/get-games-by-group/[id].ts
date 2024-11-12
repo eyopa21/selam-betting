@@ -5,11 +5,16 @@ type ErrorResponse = {
   detail?: string
   error?: string
 }
+type Body = {
+  page: number
+}
 
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event)
   const config = useRuntimeConfig()
-  const url = `${config.baseApiEndpoint}/betting/casino/api/v1/get_game_by_group/${id}/`
+  const body: Body = await readBody(event)
+  const page = body.page || 1
+  const url = `${config.baseApiEndpoint}/betting/casino/api/v1/get_game_by_group/${id}/?page=${page}`
 
   const authHeader = getHeader(event, 'authorization')
   try {

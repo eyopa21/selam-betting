@@ -8,23 +8,27 @@ definePageMeta({
   pagePackageType: 'is_casino_game',
 })
 
-const isMobile = useMediaQuery('(max-width: 768px)')
+const currentPage = ref(1)
 
+const isMobile = useMediaQuery('(max-width: 768px)')
 const gameStore = useCasinoGameStore()
 const route = useRoute('casino-games')
 const { $authentication } = useNuxtApp()
 
-const { data: games, error } = await useFetch(`/api/casino/get-games-by-group/${route.params.id}`, {
-  method: 'GET',
+const { data: games, error, status } = await useFetch(`/api/casino/get-games-by-group/${route.params.id}`, {
+  method: 'POST',
   headers: {
     Authorization: `Bearer ${$authentication.accessToken.value}`,
+  },
+  body: {
+    page: currentPage,
   },
 })
 if (error.value) {
   useErrorNotifications(error)
 }
 if (games.value) {
-  gameStore.addGames(games.value.games.games)
+  gameStore.addGames(games.value.results)
 }
 
 const filterType = ref<'square' | 'circle'>('square')
@@ -42,7 +46,7 @@ function toggleType() {
   }
 }
 
-function handleClick(game: GroupGamesRoot['games']['games'][number], isPractice: boolean) {
+function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolean) {
   if (!!isMobile.value && !game.mobile) {
     useErrorNotifications(ref('This game can not be played in mobile devices'))
   } else if (!isMobile.value && !game.desktop) {
@@ -59,14 +63,11 @@ function handleClick(game: GroupGamesRoot['games']['games'][number], isPractice:
   <div class="tw-mx-auto tw-pb-20">
     <div class="tw-flex  tw-w-full tw-flex-col tw-gap-2  tw-p-2 lg:tw-flex-row ">
       <div class="tw-w-full lg:tw-w-2/3">
-        <q-img
-          class="tw-h-full tw-w-full tw-rounded-md lg:tw-rounded-3xl"
-          src="/casino/casinoImage.png"
-        />
+        <NavBanner class="tw-min-h-[28rem] !tw-w-full" />
       </div>
       <CasinoAwards />
     </div>
-
+    <CasinoFilters />
     <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-2 lg:tw-px-8">
       <div class="tw-hidden tw-self-end tw-text-lg tw-text-white lg:tw-block" />
       <CasinoSearchGames />
@@ -95,11 +96,9 @@ function handleClick(game: GroupGamesRoot['games']['games'][number], isPractice:
         </div>
       </div>
     </div>
+
     <div v-if="gameStore.games?.length">
-      <div class="tw-p-4 tw-py-0">
-        <h1 class="tw-my-4 tw-text-xl tw-font-extrabold tw-capitalize tw-text-white">
-          {{ games?.name }}
-        </h1>
+      <div class="tw-p-4 tw-py-16">
         <div
           class="tw-grid  tw-gap-4 tw-gap-y-8"
           :class="filterType === 'square' ? 'tw-grid-cols-1 sm:grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-4 lg:tw-grid-cols-5  tw-place-items-center '"
@@ -147,6 +146,18 @@ function handleClick(game: GroupGamesRoot['games']['games'][number], isPractice:
             </div>
           </div>
         </div>
+      </div>
+      <div class="tw-flex tw-w-full tw-justify-center tw-py-16">
+        {{ currentPage }} {{ status }}
+        <q-pagination
+          v-if="games?.results"
+          v-model="currentPage"
+          :max="Math.ceil(games.count / 20)"
+          direction-links
+          gutter="20px"
+          color="white"
+          active-color="secondary"
+        />
       </div>
     </div>
     <div v-else class="tw-flex tw-justify-center ">
