@@ -96,8 +96,14 @@ function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolea
         </div>
       </div>
     </div>
-
-    <div v-if="gameStore.games?.results?.length">
+    <div v-if="status === 'pending'">
+      <div class="tw-grid tw-grid-cols-4">
+        <div v-for="i in 12" :key="i">
+          <SkeletonsCasinoGames />
+        </div>
+      </div>
+    </div>
+    <div v-else-if="gameStore.games?.results?.length">
       <div class="tw-p-4 tw-py-16">
         <div
           class="tw-grid  tw-gap-4 tw-gap-y-8"
