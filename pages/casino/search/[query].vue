@@ -46,7 +46,7 @@ function toggleType() {
   }
 }
 
-function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean) {
+function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolean) {
   if (!!isMobile.value && !game.mobile) {
     useErrorNotifications(ref('This game can not be played in mobile devices'))
   } else if (!isMobile.value && !game.desktop) {
@@ -70,7 +70,7 @@ function handleClick(game: GroupGamesRoot['games'][number], isPractice: boolean)
       </div>
       <CasinoAwards />
     </div>
-
+    <CasinoFilters />
     <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-2 lg:tw-px-8">
       <div class="tw-hidden tw-self-end tw-text-lg tw-text-white lg:tw-block" />
       <CasinoSearchGames />
