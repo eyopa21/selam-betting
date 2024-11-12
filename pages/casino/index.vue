@@ -11,7 +11,7 @@ const { $authentication } = useNuxtApp()
 
 const currentPage = ref(1)
 
-const { data: games, error, status } = await useFetch(`/api/casino/gat-all-games`, {
+const { data: games, error, status } = await useFetch(`/api/casino/get-all-games`, {
   method: 'POST',
   headers: {
     Authorization: `Bearer ${$authentication.accessToken.value}`,
@@ -41,7 +41,7 @@ const selectedGame = ref({
   isPractice: true,
 })
 
-function handleClick(game: AllGamesRoot['results'][number]['games'][number], isPractice: boolean) {
+function handleClick(game: AllGamesRoot['results'][number]['games']['games'][number], isPractice: boolean) {
   if (!!isMobile.value && !game.mobile) {
     useErrorNotifications(ref('This game can not be played in mobile devices'))
   } else if (!isMobile.value && !game.desktop) {
@@ -52,11 +52,15 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
     selectedGame.value.isPractice = isPractice
   }
 }
+
+onUpdated(() => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+})
 </script>
 
 <template>
   <div class="tw-mx-auto tw-pb-20">
-    <div class="tw-flex  tw-w-full tw-flex-col tw-gap-2  tw-p-2 lg:tw-flex-row ">
+    <div class="tw-flex tw-min-h-[30rem] tw-w-full tw-flex-col tw-gap-2  tw-p-2 lg:tw-flex-row ">
       <div class="tw-w-full lg:tw-w-2/3">
         <q-img
           class="tw-h-full tw-w-full tw-rounded-md lg:tw-rounded-3xl"
@@ -96,19 +100,35 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
       </div>
     </div>
     <div v-if="status === 'pending'">
-      hello
+      <div class="tw-grid tw-grid-cols-4">
+        <div v-for="i in 12" :key="i">
+          <SkeletonsCasinoGames />
+        </div>
+      </div>
     </div>
     <div v-else-if="games?.results?.length">
-      <div v-for="game in games.results" :key="game.games" class="tw-p-4 tw-py-0">
-        <h1 class="tw-my-8 tw-text-4xl tw-font-extrabold tw-capitalize tw-text-white">
-          {{ game.name }}
-        </h1>
+      <div v-for="(game, key) in games.results" :key="key" class="tw-p-4 tw-py-0 first:-tw-mt-24">
+        <div class="tw-my-8 tw-mt-32 ">
+          <div class=" tw-flex tw-w-full tw-items-center tw-justify-between  tw-px-4">
+            <h1 class="tw-my-4 tw-text-4xl tw-font-extrabold tw-capitalize tw-text-gray-300">
+              {{ game.name }}
+            </h1>
+            <div>
+              <q-btn :to="`/casino/games/${game.id}`" color="grey-6" class="tw-group tw-px-8 !tw-text-black">
+                <span class="tw-mr-2">More</span>
+                <q-icon name="arrow_forward" class="tw-transition-all tw-duration-500 group-hover:tw-translate-x-4" />
+              </q-btn>
+            </div>
+          </div>
+          <q-separator inset size="1px" color="grey-8" />
+        </div>
+
         <div
           class="tw-grid  tw-gap-4 tw-gap-y-8"
           :class="filterType === 'square' ? 'tw-grid-cols-1 sm:grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-4 lg:tw-grid-cols-5  tw-place-items-center '"
         >
           <div
-            v-for="(ii, k) in game.games" :key="ii.game_id"
+            v-for="(ii) in game.games.games" :key="ii.game_id"
             class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
           >
             <div v-if="filterType === 'square'" class="tw-group">
