@@ -15,12 +15,17 @@ const q = ref<string>()
 const loading = ref(false)
 async function search() {
   loading.value = true
+
   try {
     const response = await $fetch(`/api/casino/search-games?query=${q.value || route.params.query}`, {
+      method: 'POST',
       headers: {
+
         Authorization: `Bearer ${$authentication.accessToken.value}`,
       },
-      body: currentPage,
+      body: {
+        page: currentPage.value,
+      },
     })
     if (response) {
       gameStore.addGames(response)
@@ -47,6 +52,10 @@ function toggleType() {
     filterType.value = 'circle'
   }
 }
+
+watch(currentPage, async () => {
+  await search()
+})
 
 function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolean) {
   if (!!isMobile.value && !game.mobile) {
@@ -101,7 +110,14 @@ function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolea
         </div>
       </div>
     </div>
-    <div v-if="gameStore.games?.results?.length">
+    <div v-if="loading">
+      <div class="tw-grid tw-grid-cols-4">
+        <div v-for="i in 12" :key="i">
+          <SkeletonsCasinoGames />
+        </div>
+      </div>
+    </div>
+    <div v-else-if="gameStore.games?.results?.length">
       <div class=" tw-p-4">
         >
         <div
@@ -158,6 +174,7 @@ function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolea
         />
       </div>
     </div>
+
     <div v-else class="tw-flex tw-justify-center ">
       <VUENoItemsFound :search="true" />
     </div>
