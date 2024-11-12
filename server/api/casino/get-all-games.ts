@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
   } catch (err: unknown) {
     const error = err as NuxtError
     const errorResponse = error.data as ErrorResponse
-    console.log(error)
+
     throw createError({
       statusCode: error.statusCode,
       statusMessage: errorResponse?.detail ?? 'Connection Error',

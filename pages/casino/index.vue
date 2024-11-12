@@ -41,7 +41,7 @@ const selectedGame = ref({
   isPractice: true,
 })
 
-function handleClick(game: AllGamesRoot['results'][number]['games']['games'][number], isPractice: boolean) {
+function handleClick(game: AllGamesRoot['results'][number]['games'][number], isPractice: boolean) {
   if (!!isMobile.value && !game.mobile) {
     useErrorNotifications(ref('This game can not be played in mobile devices'))
   } else if (!isMobile.value && !game.desktop) {
@@ -60,12 +60,9 @@ onUpdated(() => {
 
 <template>
   <div class="tw-mx-auto tw-pb-20">
-    <div class="tw-flex tw-min-h-[30rem] tw-w-full tw-flex-col tw-gap-2  tw-p-2 lg:tw-flex-row ">
+    <div class="tw-flex  tw-w-full tw-flex-col tw-gap-2  tw-p-2 lg:tw-flex-row ">
       <div class="tw-w-full lg:tw-w-2/3">
-        <q-img
-          class="tw-h-full tw-w-full tw-rounded-md lg:tw-rounded-3xl"
-          src="/casino/casinoImage.png"
-        />
+        <NavBanner class="tw-min-h-[28rem] !tw-w-full" />
       </div>
       <CasinoAwards />
     </div>
@@ -128,7 +125,7 @@ onUpdated(() => {
           :class="filterType === 'square' ? 'tw-grid-cols-1 sm:grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-4 lg:tw-grid-cols-5  tw-place-items-center '"
         >
           <div
-            v-for="(ii) in game.games.games" :key="ii.game_id"
+            v-for="(ii) in game.games" :key="ii.game_id"
             class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
           >
             <div v-if="filterType === 'square'" class="tw-group">

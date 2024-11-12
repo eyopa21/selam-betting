@@ -8,21 +8,21 @@ export type AllGamesRoot = {
 export type Result = {
   id: string
   name: string
-  games: Games
+  games: Games[]
   order_of_group: string | null
   icon_url: string
 }
 
-export type Games = {
-  count: number
-  num_pages: number
-  current_page: number
-  next: string | null
-  previous: string | null
-  games: Game[]
-}
+// export type Games = {
+//   count: number
+//   num_pages: number
+//   current_page: number
+//   next: string | null
+//   previous: string | null
+//   games: Game[]
+// }
 
-export type Game = {
+export type Games = {
   id: string
   game_id: string
   label: string
