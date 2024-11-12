@@ -4,9 +4,8 @@
 //   console.log(`New request: ${getRequestURL(event)}`)
 // })
 
-import type { H3Event, H3Response } from 'h3'
+import type { H3Event } from 'h3'
 import { defineEventHandler } from 'h3' // Import types as needed
-import { event } from 'quasar'
 
 export default defineEventHandler({
   onRequest: [],

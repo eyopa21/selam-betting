@@ -1,4 +1,3 @@
-import { PagePackageType } from '~/utils/auth/page-package-type.enum'
 import { PageType } from '~/utils/auth/page-type.enum'
 
 export default defineNuxtRouteMiddleware((to, _) => {
@@ -8,8 +7,6 @@ export default defineNuxtRouteMiddleware((to, _) => {
   // ! Defaults to authenticated to avoid accidentally allowing access for authenticated pages
   const pageType = to.meta.pageType ?? PageType.PUBLIC
   const pagePackageType = to.meta.pagePackageType
-
-  console.log(pagePackageType)
 
   if (pageType === PageType.AUTHENTICATED && !$authentication.loggedIn.value) {
     return navigateTo('/')

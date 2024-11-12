@@ -1,7 +1,6 @@
 import { Notify } from 'quasar'
 
 import type { NuxtError } from '#app'
-import { useNuxtApp } from '#app'
 
 export function useErrorNotifications(error: Ref<unknown>) {
   // const { handleError } = useErrorHandler()

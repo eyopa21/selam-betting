@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ProcessCashoutBody } from '~/server/api/betForMe/processCashout'
-import type { Address } from '~/types/betForMe'
 
 const { $authentication } = useNuxtApp()
 
