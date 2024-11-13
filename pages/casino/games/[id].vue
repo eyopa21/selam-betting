@@ -58,6 +58,9 @@ function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolea
     selectedGame.value.isPractice = isPractice
   }
 }
+onUpdated(() => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+})
 </script>
 
 <template>
@@ -104,14 +107,14 @@ function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolea
         </div>
       </div>
     </div>
-    <div v-else-if="gameStore.games?.results?.length">
+    <div v-else-if="games?.results?.length">
       <div class="tw-p-4 tw-py-16">
         <div
           class="tw-grid  tw-gap-4 tw-gap-y-8"
           :class="filterType === 'square' ? 'tw-grid-cols-1 sm:grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-4 lg:tw-grid-cols-5  tw-place-items-center '"
         >
           <div
-            v-for="(ii, k) in gameStore.games.results" :key="k"
+            v-for="(ii, k) in games.results" :key="k"
             class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
           >
             <div v-if="filterType === 'square'" class="tw-group">

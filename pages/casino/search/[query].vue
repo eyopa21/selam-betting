@@ -69,6 +69,9 @@ function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolea
     selectedGame.value.isPractice = isPractice
   }
 }
+onUpdated(() => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+})
 </script>
 
 <template>

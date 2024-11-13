@@ -16,7 +16,6 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event) as Body
   const page = body.page || 1
   const deviceType = body.deviceType || 'desktop'
-  console.log('type', deviceType)
   const searchQuery = query.query as string || ''
   const url = `${config.baseApiEndpoint}/betting/casino/api/v1/search_games/?query=${searchQuery}&page=${page}&device_type=${deviceType}`
   const authHeader = getHeader(event, 'authorization')
