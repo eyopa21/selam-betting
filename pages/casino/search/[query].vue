@@ -74,10 +74,7 @@ function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolea
   <div class="tw-mx-auto tw-pb-20">
     <div class="tw-flex  tw-w-full tw-flex-col tw-gap-2  tw-p-2 lg:tw-flex-row ">
       <div class="tw-w-full lg:tw-w-2/3">
-        <q-img
-          class="tw-h-full tw-w-full tw-rounded-md lg:tw-rounded-3xl"
-          src="/casino/casinoImage.png"
-        />
+        <NavBanner class="tw-min-h-[28rem] !tw-w-full" />
       </div>
       <CasinoAwards />
     </div>
