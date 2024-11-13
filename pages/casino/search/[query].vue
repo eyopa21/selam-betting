@@ -25,6 +25,7 @@ async function search() {
       },
       body: {
         page: currentPage.value,
+        deviceType: isMobile.value ? 'mobile' : 'desktop',
       },
     })
     if (response) {

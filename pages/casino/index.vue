@@ -9,6 +9,7 @@ definePageMeta({
 
 const { $authentication } = useNuxtApp()
 
+const isMobile = useMediaQuery('(max-width: 768px)')
 const currentPage = ref(1)
 
 const { data: games, error, status } = await useFetch(`/api/casino/get-all-games`, {
@@ -18,6 +19,7 @@ const { data: games, error, status } = await useFetch(`/api/casino/get-all-games
   },
   body: {
     page: currentPage,
+    deviceType: isMobile.value ? 'mobile' : 'desktop',
   },
 })
 if (error.value) {
@@ -34,7 +36,6 @@ function toggleType() {
   }
 }
 
-const isMobile = useMediaQuery('(max-width: 768px)')
 const selectedGame = ref({
   link: '',
   id: '',

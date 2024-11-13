@@ -22,6 +22,7 @@ const { data: games, error, status } = await useFetch(`/api/casino/get-games-by-
   },
   body: {
     page: currentPage,
+    deviceType: isMobile.value ? 'mobile' : 'desktop',
   },
 })
 if (error.value) {
