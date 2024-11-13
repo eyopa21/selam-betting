@@ -1,10 +1,55 @@
 <script setup lang="ts">
+import type { Body } from '~/server/api/auth/update-user-info.put'
+
 definePageMeta({
   layout: 'account',
   pageType: 'authenticated',
 })
+const { $authentication } = useNuxtApp()
+const progress = ref(0)
+const userStore = useUserStore()
+const state = ref({
+  username: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  phoneNumber: '',
+  address: '',
 
-const progress = ref(0.33)
+})
+
+state.value.firstName = userStore.user?.user.first_name ?? ''
+state.value.lastName = userStore.user?.user.last_name ?? ''
+state.value.username = userStore.user?.user.username ?? ''
+state.value.phoneNumber = userStore.user?.user.phone_number ?? ''
+state.value.email = userStore.user?.user.email ?? ''
+state.value.address = userStore.user?.user.address.address_line ?? ''
+
+const loading = ref(false)
+async function updateUserInfo() {
+  loading.value = true
+  try {
+    const response = await $fetch('/api/auth/update-user-info', {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${$authentication.accessToken.value}`,
+      },
+      body: {
+        username: state.value.username,
+        first_name: state.value.firstName,
+        last_name: state.value.lastName,
+        phone_number: state.value.lastName,
+        address: state.value.address,
+      } as Body,
+    })
+
+    useSuccessNotification('Account Updated Successfully')
+  } catch (err) {
+    useErrorNotifications(ref(err))
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 
 <template>
@@ -25,7 +70,7 @@ const progress = ref(0.33)
     </div>
     <div class="tw-mt-4">
       <div class="tw-flex tw-justify-between tw-gap-6">
-        <div class="tw-flex tw-w-1/2 tw-flex-col tw-gap-4">
+        <!-- <div class="tw-flex tw-w-1/2 tw-flex-col tw-gap-4">
           <div class="tw-border  tw-bg-white tw-p-4">
             <h5 class="tw-text-lg tw-font-bold">
               ACCOUNT
@@ -56,33 +101,38 @@ const progress = ref(0.33)
               </div>
             </div>
           </div>
-        </div>
-        <div class="tw-flex tw-h-full tw-w-1/2 tw-flex-col">
-          <div class="tw-grow tw-border tw-bg-white tw-p-4 tw-pb-12">
-            <h5 class="tw-text-lg tw-font-bold">
-              PERSONAL INFORMATION
-            </h5>
-            <div class="tw-mt-4 tw-grid tw-grid-cols-2 tw-gap-4">
-              <q-input type="text" outlined label="First name" dense class="tw-shadow-md" />
-              <q-input type="text" outlined label="Last name" dense class="tw-shadow-md" />
-              <q-input type="text" outlined label="Account" dense class="tw-shadow-md" />
-              <q-input type="date" outlined label="Document issued date" dense class="tw-shadow-md" />
-              <q-input type="date" outlined label="Date of birth" dense class="tw-shadow-md" />
-              <q-input type="text" outlined label="Country" dense class="tw-shadow-md" />
-              <q-input type="text" outlined label="Place of birth" dense class="tw-shadow-md" />
-              <q-input
-                type="text" outlined label="Permanent registration address" dense
-                class="tw-shadow-md"
-              />
-              <q-input type="text" outlined label="National Id" dense class="tw-shadow-md" />
+        </div> -->
+        <q-form class="tw-w-full" @submit="updateUserInfo">
+          <div class="tw-flex tw-h-full tw-w-full tw-flex-col">
+            <div class="tw-grow tw-border tw-bg-white tw-p-4 tw-pb-12">
+              <h5 class="tw-text-lg tw-font-bold">
+                PERSONAL INFORMATION
+              </h5>
+              <q-for class="tw-mt-4 tw-grid tw-grid-cols-2 tw-gap-4">
+                <q-input v-model="state.firstName" type="text" outlined label="First name" class="tw-shadow-md" />
+                <q-input v-model="state.email" type="email" outlined label="Email" class="tw-shadow-md" />
+                <q-input v-model="state.lastName" type="text" outlined label="Last name" class="tw-shadow-md" />
+                <!-- <q-input type="date" outlined label="Document issued date" class="tw-shadow-md" /> -->
+                <!-- <q-input type="date" outlined label="Date of birth" class="tw-shadow-md" /> -->
+                <q-input v-model="state.phoneNumber" type="text" outlined label="Phone number" class="tw-shadow-md" />
+                <div class="tw-space-y-4">
+                  <q-input v-model="state.username" type="text" outlined label="User name" class="tw-shadow-md" />
+                  <q-input
+                    v-model="state.address"
+                    type="text" outlined label="Permanent registration address"
+                    class="tw-shadow-md"
+                  />
+                </div>
+                <!-- <q-input type="text" outlined label="National Id" class="tw-shadow-md" /> -->
+              </q-for>
+            </div>
+            <div class="tw-mt-16 tw-px-8">
+              <q-btn type="submit" class="tw-w-full" color="primary" size="lg" :loading>
+                SAVE
+              </q-btn>
             </div>
           </div>
-          <div class="tw-mt-16 tw-px-8">
-            <q-btn class="tw-w-full" color="primary" size="lg">
-              SAVE
-            </q-btn>
-          </div>
-        </div>
+        </q-form>
       </div>
     </div>
   </div>
