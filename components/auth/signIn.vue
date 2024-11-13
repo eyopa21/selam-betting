@@ -18,7 +18,7 @@ function closePopup() {
       <q-icon v-close-popup name="close" class="tw-flex tw-w-full tw-justify-end" size="sm" @click="closePopup" />
 
       <div v-if="loginState === 'otp' && currentEmail">
-        <AuthOtp :email="currentEmail" />
+        <AuthOtp :email="currentEmail" @reset="loginState = 'login'" />
       </div>
       <div v-else-if="loginState === 'forgot'">
         <AuthForgot @login="loginState = 'login'" @otp-sent="(n: string) => { currentEmail = n; loginState = 'otp' }" />

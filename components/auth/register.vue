@@ -6,7 +6,7 @@ const emit = defineEmits<{
 }>()
 const $q = useQuasar()
 const showPassword = ref(false)
-const { register, error, loading } = useAuth()
+const { error, loading, sendOtp } = useAuth()
 const layout = useLayout()
 const State = reactive<SignUpInputs>({
   username: '',
@@ -28,35 +28,6 @@ const State = reactive<SignUpInputs>({
     longitude: 0,
   },
 })
-
-async function onSubmit() {
-  try {
-    const res = await register({
-      username: State.username,
-      email: State.email,
-      password: State.password,
-      password2: State.password2,
-      address: State.address,
-      first_name: State.first_name,
-      last_name: State.last_name,
-      phone_number: State.phone_number,
-    })
-    if (res && 'error' in res) {
-      $q.notify({
-        message: res.error,
-        color: 'red',
-      })
-    } else if (res && 'message' in res) {
-      emit('otpSent', State.email)
-    }
-  } catch (err) {
-    $q.notify({
-      message: 'error',
-      icon: 'announcement',
-      position: 'top',
-    })
-  }
-}
 
 function getLocation() {
   if (navigator.geolocation) {
@@ -81,6 +52,36 @@ function getLocation() {
     )
   } else {
     error.value = 'Geolocation is not supported by this browser.'
+  }
+}
+
+async function onSubmit() {
+  loading.value = true
+  error.value = null
+  try {
+    const res = await $fetch(`/api/auth/register`, {
+      method: 'POST',
+
+      body: {
+        username: State.username,
+        email: State.email,
+        password: State.password,
+        password2: State.password2,
+        address: State.address,
+        first_name: State.first_name,
+        last_name: State.last_name,
+        phone_number: State.phone_number,
+      },
+    })
+    if (res.email) {
+      const email = res.email
+      await sendOtp(email)
+      emit('otpSent', State.email)
+    }
+  } catch (err) {
+    useErrorNotifications(ref(err))
+  } finally {
+    loading.value = false
   }
 }
 </script>

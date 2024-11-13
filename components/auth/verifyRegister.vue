@@ -5,35 +5,24 @@ const props = defineProps<{
 const emit = defineEmits<{
   finishVerify: [void]
 }>()
-const $q = useQuasar()
+
 const layout = useLayout()
 
-const { register, error, loading, verifyOtp } = useAuth()
+const { error, loading, verifyOtp } = useAuth()
 const State = ref({
   otp: '',
 })
 async function verifyOTP() {
-  verifyOtp(props.email, State.value.otp).then((res) => {
-    if (res && 'error' in res) {
-      $q.notify({
-        message: res?.error,
-        color: 'red',
-      })
-    } else {
-      layout.value.showRegister = false
-      layout.value.showLogin = true
-      emit('finishVerify')
-      $q.notify({
-        message: 'Registered successfully!',
-        color: 'green',
-      })
-    }
-  }).catch((error) => {
-    $q.notify({
-      message: error,
-      color: 'red',
-    })
-  })
+  try {
+    await verifyOtp(props.email, State.value.otp)
+    layout.value.showRegister = false
+    layout.value.showLogin = true
+    emit('finishVerify')
+
+    useSuccessNotification('Registered successfully')
+  } catch (err) {
+    useErrorNotifications(ref(err))
+  }
 }
 </script>
 

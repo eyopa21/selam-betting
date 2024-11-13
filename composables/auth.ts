@@ -52,7 +52,6 @@ export function useAuth() {
     try {
       const res = await $fetch<{ data: Auth, error: RegisterError }>(`/api/auth/register`, {
         method: 'POST',
-
         body: input,
       })
       if (res.data) {
@@ -80,25 +79,20 @@ export function useAuth() {
       loading.value = false
     }
   }
-
   const sendOtp = async (email: string) => {
     loading.value = true
     error.value = null
     try {
-      const res = await $fetch<{ data: { message: string }, error: { error: string } }>(`/api/sendAuthOtp/`, {
+      const res = await $fetch(`/api/auth/send-otp`, {
         method: 'POST',
         body: {
           email,
         },
       })
-      console.log('res', res)
-      if (res.error) {
-        return res?.error
-      }
-
-      return res.data
+      return res.message
     } catch (err) {
-      error.value = 'couldn\'t send otp'
+      // useErrorNotifications(ref(err))
+      throw new Error(err as string)
     } finally {
       loading.value = false
     }
@@ -108,24 +102,17 @@ export function useAuth() {
     loading.value = true
     error.value = null
     try {
-      const res = await $fetch<{ data: { Message: string }, error: { Error: string } }>(`/api/resetPassword/`, {
+      const res = await $fetch(`/api/auth/reset-password`, {
         method: 'POST',
-
         body: {
           otp,
           new_password: newPassword,
         },
       })
-      console.log('res', res)
-      if (res.error) {
-        return {
-          error: res.error,
-        }
-      }
-
-      return res.data
+      return res.Message
     } catch (err) {
-      error.value = 'couldn\'t reset password'
+      // useErrorNotifications(ref(err))
+      throw new Error(err as string)
     } finally {
       loading.value = false
     }
@@ -135,21 +122,16 @@ export function useAuth() {
     loading.value = true
     error.value = null
     try {
-      const res = await $fetch<{ data: { message: string }, error: { error: string } }>(`/api/verifyOtp/`, {
+      const res = await $fetch(`/api/auth/verify-otp`, {
         method: 'POST',
         body: {
           email,
           otp,
         },
       })
-      console.log('res', res)
-      if (res.error) {
-        return res?.error
-      }
-
-      return res.data
+      return res.message
     } catch (err) {
-      error.value = 'could not verify this otp'
+      throw new Error(err as string)
     } finally {
       loading.value = false
     }

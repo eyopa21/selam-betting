@@ -2,7 +2,13 @@
 const props = defineProps<{
   email: string
 }>()
-const $q = useQuasar()
+
+const emit = defineEmits<{
+
+  reset: [void]
+
+}>()
+
 const layout = useLayout()
 const state = ref({
   code: '',
@@ -11,19 +17,13 @@ const state = ref({
 
 const { loading, resetPassword } = useAuth()
 async function onResetPassword() {
-  const res = await resetPassword(state.value.code, state.value.newPassword)
-  if (res && 'error' in res) {
-    $q.notify({
-      message: `${res.error.Error}`,
-      color: 'red',
-    })
-  }
-  if (res && 'Message' in res) {
-    $q.notify({
-      message: res.Message,
-      color: 'green',
-    })
+  try {
+    const res = await resetPassword(state.value.code, state.value.newPassword)
+    useSuccessNotification(res)
     layout.value.showLogin = false
+    emit('reset')
+  } catch (err) {
+    useErrorNotifications(ref(err))
   }
 }
 </script>

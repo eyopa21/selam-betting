@@ -4,25 +4,19 @@ const emit = defineEmits<{
   login: [void]
 
 }>()
-const $q = useQuasar()
+
 const { loading, sendOtp } = useAuth()
 const state = ref({
   email: '',
 })
 
 async function onSendOtp() {
-  const res = await sendOtp(state.value.email)
-  if (res && 'error' in res) {
-    $q.notify({
-      message: `${res?.error}`,
-      color: 'red',
-    })
-  } else if (res && 'message' in res) {
-    $q.notify({
-      message: `${res?.message}`,
-      color: 'green',
-    })
+  try {
+    const res = await sendOtp(state.value.email)
     emit('otpSent', state.value.email)
+    useSuccessNotification(res)
+  } catch (err) {
+    useErrorNotifications(ref(err))
   }
 }
 </script>
