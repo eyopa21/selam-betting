@@ -110,18 +110,18 @@ async function updateUserInfo() {
               </h5>
               <q-for class="tw-mt-4 tw-grid tw-grid-cols-2 tw-gap-4">
                 <q-input v-model="state.firstName" type="text" outlined label="First name" class="tw-shadow-md" />
-                <q-input v-model="state.email" type="email" outlined label="Email" class="tw-shadow-md" />
+                <q-input v-model="state.email" type="email" outlined label="Email" class="tw-shadow-md" disable readonly />
                 <q-input v-model="state.lastName" type="text" outlined label="Last name" class="tw-shadow-md" />
                 <!-- <q-input type="date" outlined label="Document issued date" class="tw-shadow-md" /> -->
                 <!-- <q-input type="date" outlined label="Date of birth" class="tw-shadow-md" /> -->
-                <q-input v-model="state.phoneNumber" type="text" outlined label="Phone number" class="tw-shadow-md" />
+                <q-input v-model="state.phoneNumber" type="text" outlined label="Phone number" class="tw-shadow-md" disable readonly />
                 <div class="tw-space-y-4">
-                  <q-input v-model="state.username" type="text" outlined label="User name" class="tw-shadow-md" />
                   <q-input
                     v-model="state.address"
                     type="text" outlined label="Permanent registration address"
                     class="tw-shadow-md"
                   />
+                  <q-input v-model="state.username" type="text" outlined label="User name" class="tw-shadow-md" disable readonly />
                 </div>
                 <!-- <q-input type="text" outlined label="National Id" class="tw-shadow-md" /> -->
               </q-for>
