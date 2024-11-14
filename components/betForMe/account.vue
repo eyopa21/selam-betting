@@ -28,40 +28,35 @@ async function request() {
 
 <template>
   <div>
-    <div class="text-h6 tw-font-extrabold tw-leading-tight tw-tracking-tight">
-      Your Account
+    <div class="text-h6 tw-items-centers tw-flex tw-justify-between tw-font-extrabold tw-leading-tight tw-tracking-tight">
+      <div>Your Account</div>
+      <q-btn v-if="props.info.profile_picture" :loading="loading" color="primary" @click="request()">
+        Send Request
+      </q-btn>
     </div>
-    <!-- <div class="tw-p-8">
-      <q-avatar rounded>
-        <img src="/arsenal.jpg" alt="">
-      </q-avatar>
-      <div>
-        {{ props.info.user_account.first_name }} {{ props.info.user_account.last_name }}
-      </div>
-      Id picture
+    <div v-if="props.info.profile_picture " class="tw-p-8">
       <div class="tw-flex tw-gap-4">
-        <q-img
-          src="/arsenal.jpg"
-          spinner-color="white"
-          style="height: 140px; max-width: 150px"
-        />
-        <q-img
-          src="/arsenal.jpg"
-          spinner-color="white"
-          style="height: 140px; max-width: 150px"
-        />
+        <q-avatar rounded class="tw-size-16">
+          <VUEAsyncImg :relative-path="props.info.profile_picture" />
+        </q-avatar>
+        <p class="tw-text-xl">
+          {{ props.info.user_account.first_name }} {{ props.info.user_account.last_name }}
+          <br>
+          {{ props.info.user_account.phone_number }}
+        </p>
       </div>
-      <div v-if="props.info.is_bet_for_me_agent">
-        You are aready an agent
+      <div class="tw-mt-4">
+        <p class="tw-text-lg tw-underline">
+          Id pictures
+        </p>
+        <div class="tw-flex tw-gap-4">
+          <VUEAsyncImg :relative-path="props.info.profile_picture" />
+          <VUEAsyncImg :relative-path="props.info.profile_picture" />
+        </div>
       </div>
-      <div class="tw-m-8">
-        <q-btn :disable="props.info.is_bet_for_me_agent" :loading="loading" @click="request()">
-          Send Request
-        </q-btn>
-      </div>
-    </div> -->
-    <div class="tw-p-4 tw-text-2xl">
-      Coming soon
+    </div>
+    <div v-else>
+      <BetForMeCreateAccount />
     </div>
   </div>
 </template>
