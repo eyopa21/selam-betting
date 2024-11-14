@@ -16,14 +16,14 @@ const menuOptions = ref([
     name: 'Profile',
     link: '/account/profile',
     icon: null,
-    show: $authentication.loggedIn.value,
+    show: $authentication.loggedIn,
   },
 
   {
     name: 'Withdraw',
     link: '/account/withdraw',
     icon: null,
-    show: $authentication.loggedIn.value,
+    show: $authentication.loggedIn,
   },
 
 ])

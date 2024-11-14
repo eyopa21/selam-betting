@@ -30,7 +30,7 @@ if (error.value) {
             <SkeletonsChat />
           </div>
           <div v-else class="q-pa-md row justify-center tw-bg-gray-100">
-            <div v-for="i in data.results" :key="i" style="width: 100%; ">
+            <div v-for="i in data?.results" :key="i.id" style="width: 100%; ">
               <q-chat-message
                 v-if="i.user"
                 :name="`${i.subject} (me)`"

@@ -104,7 +104,7 @@ function onReset() {
       >
         <q-icon name="privacy_tip" size="xl" color="primary" />
         <p class="tw-text-lg tw-font-extrabold">
-          Customer Support query {{ state }}
+          Customer Support query
         </p>
         <div class="tw-flex tw-h-full tw-w-full tw-flex-col  tw-gap-2 tw-pt-4">
           <div class="tw-flex tw-w-full tw-gap-4">
