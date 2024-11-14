@@ -42,7 +42,7 @@ async function onSubmit() {
 </script>
 
 <template>
-  <q-btn icon="restart_alt" label="Convert to Stake" class="tw-h-12" color="primary" @click="isOpen = true" />
+  <q-btn icon="restart_alt" unelevated label="Convert to Stake" class="tw-h-12" color="primary" @click="isOpen = true" />
   <q-dialog v-model="isOpen">
     <div>
       <q-form

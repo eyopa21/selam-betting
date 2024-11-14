@@ -50,12 +50,12 @@ async function deleteVoucher(voucherId: string) {
   <q-expansion-item
     class="tw-rounded-md"
 
-    dense label="WITHDRAWAL REQUESTS" header-class="tw-h-12"
+    dense label="Withdrawal Requests" header-class="tw-h-12"
     expand-icon-class="" expand-icon="keyboard_arrow_down"
   >
     <div>
       <div class=" tw-border-gray-400 ">
-        <q-table :loading="status === 'pending'" dense hide-pagination flat bordered :rows="data ?? []" :columns="columns" row-key="name">
+        <q-table :loading="status === 'pending'" hide-pagination flat bordered :rows="data ?? []" :columns="columns" row-key="name">
           <template #top-right>
             <WithdrawProcessCashout @refetch="refetch()" />
           </template>
@@ -75,46 +75,6 @@ async function deleteVoucher(voucherId: string) {
               </q-btn>
             </q-td>
           </template>
-
-          <!-- <template #body="props">
-            <q-tr :props="props" class="!tw-h-10">
-              <q-td key="amount" :props="props">
-                <div class="tw-w-16">
-                  <p>{{ props.row.amount }}</p>
-                </div>
-              </q-td>
-              <q-td key="date" :props="props">
-                <p>{{ formatDate(props.row.created_at) }}</p>
-              </q-td>
-              <q-td key="code" :props="props">
-                <div class="tw-w-16">
-                  {{ props.row.code }}
-                </div>
-              </q-td>
-              <q-td key="status" :props="props">
-                <div class="tw-w-16">
-                  <q-badge color="blue">
-                    PENDING
-                  </q-badge>
-                </div>
-              </q-td>
-              <q-td v-if="isSupported" key="copy" :props="props">
-                <q-btn v-if="!copied" flat icon="content_copy" @click="copy(props.row.code)">
-                  <q-tooltip>
-                    Copy Code
-                  </q-tooltip>
-                </q-btn>
-                <span v-else>Copied!</span>
-              </q-td>
-              <q-td key="status" :props="props" class="!tw-pl-4">
-                <q-btn color="red" :loading icon="delete" flat size="md" @click="deleteVoucher(props.row.id)">
-                  <q-tooltip class="bg-red">
-                    Delete This Voucher
-                  </q-tooltip>
-                </q-btn>
-              </q-td>
-            </q-tr>
-          </template> -->
         </q-table>
       </div>
     </div>
