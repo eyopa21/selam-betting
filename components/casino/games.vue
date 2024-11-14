@@ -40,7 +40,13 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
       class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
     >
       <div v-if="props.filterType === 'square'" class="tw-group">
-        <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64  tw-rounded-xl tw-ring tw-ring-violet-500  tw-ring-opacity-60" />
+        <q-img
+          :src="ii.logo_url"
+          :alt="ii.label"
+          fit="cover"
+          class="tw-h-64  tw-rounded-xl tw-ring tw-ring-violet-500  tw-ring-opacity-60"
+          placeholder-src="/casino/logo.svg"
+        />
         <div class="tw-mt-5 tw-flex tw-w-full tw-justify-between tw-space-x-4">
           <q-btn
             color="deep-purple-14" label="Play" class="tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white"
@@ -61,18 +67,21 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
         </q-avatar>
         <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-4 ">
           <q-btn
-            size="sm" color="deep-purple-14" label="Play" class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
-            @click="handleClick(ii, false)"
+            size="sm" color="deep-purple-14" label="Play"
+            class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white" @click="handleClick(ii, false)"
           />
           <q-btn
-            size="sm" color="black" label="Practice" class=" tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
-            @click="handleClick(ii, true)"
+            size="sm" color="black" label="Practice"
+            class=" tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white" @click="handleClick(ii, true)"
           />
         </div>
       </div>
     </div>
   </div>
   <div v-if="selectedGame.id && selectedGame.link">
-    <CasinoGamePlayer :game-link="selectedGame.link" :game-id="selectedGame.id" :practice="selectedGame.isPractice" @close="selectedGame.link = ''; selectedGame.id = ''" />
+    <CasinoGamePlayer
+      :game-link="selectedGame.link" :game-id="selectedGame.id" :practice="selectedGame.isPractice"
+      @close="selectedGame.link = ''; selectedGame.id = ''"
+    />
   </div>
 </template>
