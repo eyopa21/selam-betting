@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useMediaQuery } from '@vueuse/core'
-import type { GroupGamesRoot } from '~/types/casino/group-games'
 
 definePageMeta({
   layout: 'casino',
@@ -33,11 +32,6 @@ if (games.value) {
 }
 
 const filterType = ref<'square' | 'circle'>('square')
-const selectedGame = ref({
-  link: '',
-  id: '',
-  isPractice: true,
-})
 
 function toggleType() {
   if (filterType.value === 'circle') {
@@ -47,17 +41,6 @@ function toggleType() {
   }
 }
 
-function handleClick(game: GroupGamesRoot['results'][number], isPractice: boolean) {
-  if (!!isMobile.value && !game.mobile) {
-    useErrorNotifications(ref('This game can not be played in mobile devices'))
-  } else if (!isMobile.value && !game.desktop) {
-    useErrorNotifications(ref('This game can not be played without mobile devices'))
-  } else {
-    selectedGame.value.id = game.id
-    selectedGame.value.link = game.play_url
-    selectedGame.value.isPractice = isPractice
-  }
-}
 onUpdated(() => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 })
@@ -109,53 +92,7 @@ onUpdated(() => {
     </div>
     <div v-else-if="games?.results?.length">
       <div class="tw-p-4 tw-py-16">
-        <div
-          class="tw-grid  tw-gap-4 tw-gap-y-8"
-          :class="filterType === 'square' ? 'tw-grid-cols-1 sm:grid-cols-2 lg:tw-grid-cols-4' : 'tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-4 lg:tw-grid-cols-5  tw-place-items-center '"
-        >
-          <div
-            v-for="(ii, k) in games.results" :key="k"
-            class="tw-relative tw-transition-all  tw-duration-500 hover:-tw-translate-y-2"
-          >
-            <div v-if="filterType === 'square'" class="tw-group">
-              <!-- <div class="tw-absolute tw-right-0">
-                <q-btn
-                  flat round color="white" icon="favorite_outline"
-                  class="tw-z-50 tw-transition-all tw-duration-500 group-hover:tw-scale-110"
-                />
-              </div> -->
-              <q-img :src="ii.logo_url" :alt="ii.label" fit="cover" class="tw-h-64  tw-rounded-xl tw-ring tw-ring-violet-500  tw-ring-opacity-60" />
-              <div class="tw-mt-5 tw-flex tw-w-full tw-justify-between tw-space-x-4">
-                <q-btn
-                  color="deep-purple-14" label="Play" class="tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white"
-                  @click="handleClick(ii, false)"
-                />
-                <q-btn
-                  color="black" label="Practice" class=" tw-w-full tw-rounded-xl tw-ring-2 tw-ring-white "
-                  @click="handleClick(ii, true)"
-                />
-              </div>
-            </div>
-            <div v-else class="tw-p-2 tw-shadow-md tw-shadow-primary-500">
-              <q-avatar
-                font-size="52px" color="primary" text-color="white"
-                class="tw-size-[200px] tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500  hover:tw-scale-105 2xl:tw-size-[250px]"
-              >
-                <q-img :src="ii.logo_url" />
-              </q-avatar>
-              <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-4 ">
-                <q-btn
-                  size="sm" color="deep-purple-14" label="Play" class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
-                  @click="handleClick(ii, false)"
-                />
-                <q-btn
-                  size="sm" color="black" label="Practice" class=" tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white"
-                  @click="handleClick(ii, true)"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <CasinoGames :games="games.results" :filter-type="filterType" />
       </div>
       <div class="tw-flex tw-w-full tw-justify-center tw-py-16">
         <q-pagination
@@ -172,9 +109,6 @@ onUpdated(() => {
     </div>
     <div v-else class="tw-flex tw-justify-center ">
       <VUENoItemsFound :search="true" />
-    </div>
-    <div v-if="selectedGame.id && selectedGame.link">
-      <CasinoGamePlayer :game-link="selectedGame.link" :game-id="selectedGame.id" :practice="selectedGame.isPractice" @close="selectedGame.link = ''; selectedGame.id = ''" />
     </div>
 
     <div class="tw-mx-auto tw-mt-8 tw-h-full tw-w-3/4 tw-bg-primary-500">
