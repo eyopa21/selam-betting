@@ -6,7 +6,7 @@ const userStore = useUserStore()
 const { $authentication } = useNuxtApp()
 const { fetchUserInfo } = useUserInfo()
 const state = ref({
-  amount: 0,
+  amount: null,
 })
 const form = ref()
 const loading = ref(false)
@@ -43,26 +43,28 @@ async function onSubmit() {
 
 <template>
   <q-btn icon="restart_alt" unelevated label="Convert to Stake" class="tw-h-12" color="primary" @click="isOpen = true" />
-  <q-dialog v-model="isOpen">
+  <q-dialog v-model="isOpen" backdrop-filter="brightness(50%)">
     <div>
       <q-form
         ref="form"
         class="q-gutter-md"
         @submit="onSubmit"
       >
-        <q-card>
-          <q-card-section>
-            <div class="text-h6 tw-font-bold tw-uppercase tw-leading-tight  tw-tracking-tight">
-              Convert To Stake
+        <q-card class="tw-w-96">
+          <q-card-section class="row items-center q-pb-none q-pa-md">
+            <div class="text-h6 q-ml-md">
+              Convert to Stake
             </div>
+            <q-space />
+            <q-btn v-close-popup icon="close" size="sm" dense flat rounded />
           </q-card-section>
 
           <q-separator />
 
           <q-card-section style="max-height: 50vh" class="scroll">
-            <div class="tw-flex tw-min-w-96 tw-flex-col tw-space-y-8">
+            <div class="q-pa-md tw-grid tw-grid-cols-1 tw-gap-4">
               <div class="tw-flex tw-w-full tw-items-center tw-gap-8 ">
-                <q-field class="tw-w-full" filled label="Available amount:" stack-label>
+                <q-field class="tw-w-full" outlined disable label="Available amount:" stack-label>
                   <template #control>
                     <div class="self-center full-width no-outline" tabindex="0">
                       ETB {{ userStore.user?.payout_balance.balance }}
@@ -76,6 +78,7 @@ async function onSubmit() {
                   v-model="state.amount"
                   type="number"
                   dense
+                  outlined
                   label="Enter Amount:"
                   hint="Amount (Min5.00 ETB / Max 15,000.00 ETB):"
                   lazy-rules
@@ -92,7 +95,7 @@ async function onSubmit() {
           <q-separator />
 
           <q-card-actions align="right">
-            <q-btn :loading="loading" type="submit" flat label="Proceed" color="primary" />
+            <q-btn :loading="loading" no-caps type="submit" unelevated label="Proceed" color="primary" />
           </q-card-actions>
         </q-card>
       </q-form>

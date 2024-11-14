@@ -78,4 +78,13 @@ async function deleteVoucher(voucherId: string) {
       </q-table>
     </div>
   </div>
+  <q-dialog v-model="copied" position="right" seamless>
+    <q-card class="bg-primary">
+      <q-card-section>
+        <p class="text-white">
+          Voucher Code Copied
+        </p>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
