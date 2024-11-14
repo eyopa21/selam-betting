@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { $authentication } = useNuxtApp()
 const loading = ref(false)
-
+const visibility = ref(true)
 async function toggleVisibility(value: boolean) {
   loading.value = true
   try {
@@ -29,15 +29,12 @@ async function toggleVisibility(value: boolean) {
   <div class="text-h6 tw-font-semibold tw-uppercase tw-tracking-tighter">
     Make My self Visible
   </div>
-  <!-- <div class="tw-m-8 tw-space-x-4">
-    <q-btn :loading color="red-10" @click="toggleVisibility(false)">
+  <div class="tw-m-8 tw-space-x-4">
+    <q-btn :loading="loading && !visibility" color="red-10" @click="visibility = false; toggleVisibility(false)">
       Hide visibility
     </q-btn>
-    <q-btn :loading color="green-10" @click="toggleVisibility(true)">
+    <q-btn :loading="loading && visibility" color="green-8" @click="visibility = true; toggleVisibility(true)">
       Make me Visible
     </q-btn>
-  </div> -->
-  <div class="tw-p-4 tw-text-2xl">
-    Coming soon
   </div>
 </template>
