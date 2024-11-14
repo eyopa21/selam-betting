@@ -7,7 +7,8 @@ const props = withDefaults(defineProps<{
 }>(), {
   filterType: 'square',
 })
-
+const { $authentication } = useNuxtApp()
+const layout = useLayout()
 const isMobile = useMediaQuery('(max-width: 768px)')
 const filterType = ref<'square' | 'circle'>('square')
 
@@ -18,14 +19,18 @@ const selectedGame = ref({
 })
 
 function handleClick(game: AllGamesRoot['results'][number]['games'][number], isPractice: boolean) {
-  if (!!isMobile.value && !game.mobile) {
-    useErrorNotifications(ref('This game can not be played in mobile devices'))
-  } else if (!isMobile.value && !game.desktop) {
-    useErrorNotifications(ref('This game can not be played without mobile devices'))
+  if (!$authentication.loggedIn.value) {
+    layout.value.showLogin = true
   } else {
-    selectedGame.value.id = game.id
-    selectedGame.value.link = game.play_url
-    selectedGame.value.isPractice = isPractice
+    if (!!isMobile.value && !game.mobile) {
+      useErrorNotifications(ref('This game can not be played in mobile devices'))
+    } else if (!isMobile.value && !game.desktop) {
+      useErrorNotifications(ref('This game can not be played without mobile devices'))
+    } else {
+      selectedGame.value.id = game.id
+      selectedGame.value.link = game.play_url
+      selectedGame.value.isPractice = isPractice
+    }
   }
 }
 </script>
@@ -79,9 +84,11 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
     </div>
   </div>
   <div v-if="selectedGame.id && selectedGame.link">
-    <CasinoGamePlayer
-      :game-link="selectedGame.link" :game-id="selectedGame.id" :practice="selectedGame.isPractice"
-      @close="selectedGame.link = ''; selectedGame.id = ''"
-    />
+    <div>
+      <CasinoGamePlayer
+        :game-link="selectedGame.link" :game-id="selectedGame.id" :practice="selectedGame.isPractice"
+        @close="selectedGame.link = ''; selectedGame.id = ''"
+      />
+    </div>
   </div>
 </template>
