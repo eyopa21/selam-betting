@@ -3,6 +3,14 @@ type TransactionType = 'withdraw' | 'to_cash' | 'to_user' | 'deposit'
 const { $authentication } = useNuxtApp()
 const currentPage = ref(1)
 const type: TransactionType = 'deposit'
+
+const initialPagination = ref({
+
+  page: 1,
+  rowsPerPage: 10,
+  rowsNumber: 0,
+})
+
 const { data, error, status } = useLazyFetch('/api/finance/get-transactions', {
   method: 'post',
   headers: {
@@ -13,6 +21,51 @@ const { data, error, status } = useLazyFetch('/api/finance/get-transactions', {
     type,
   },
 })
+
+initialPagination.value.rowsNumber = data.value?.count
+
+const columns = [
+  {
+    name: 'detail',
+    required: true,
+    label: 'Transaction',
+    align: 'left',
+    field: row => `${row.is_casino_game ? row.game_name : 'Deposit'} (${row.transaction_type})`,
+    format: val => `${val}`,
+    sortable: true,
+  },
+
+  {
+    name: 'detail',
+    required: true,
+    label: 'Amount',
+    align: 'left',
+    field: row => `${row.amount} ETB`,
+    format: val => `${val}`,
+    sortable: true,
+  },
+  {
+    name: 'detail',
+    required: true,
+    label: 'Timestamp',
+    align: 'left',
+    field: row => formatDate(row.time_stamp),
+    format: val => `${val}`,
+
+  },
+
+]
+
+watch(initialPagination, () => {
+  requestData()
+})
+
+function onRequest(props) {
+  initialPagination.value.page = props.pagination.page
+  initialPagination.value.rowsPerPage = props.pagination.rowsPerPage
+  currentPage.value = props.pagination.page
+}
+
 if (error.value) {
   useErrorNotifications(error)
 }
@@ -27,41 +80,17 @@ if (error.value) {
       <div v-if="!data?.results?.length">
         <VUEEmptyState type="Transaction" />
       </div>
-      <q-list v-else>
-        <q-list
-          v-for="i in data?.results"
-          :key="i.id"
-
-          class="!tw-rounded-none"
-        >
-          <q-item>
-            <q-card class="tw-w-full ">
-              <q-card-section class="tw-flex  tw-flex-wrap tw-items-stretch tw-self-end  ">
-                <span class="tw-flex-1  tw-px-4 tw-py-2 ">
-                  {{ i.is_casino_game ? i.game_name : 'Deposit' }} ({{ i.transaction_type }})
-                </span>
-                <span class=" tw-basis-48  tw-px-4 tw-py-2 ">
-                  {{ i.amount }} ETB
-                </span>
-                <span class=" tw-basis-48  tw-px-4 tw-py-2 ">
-                  {{ formatDate(i.time_stamp) }}
-                </span>
-              </q-card-section>
-            </q-card>
-          </q-item>
-        </q-list>
-        <div class="tw-my-8 tw-flex tw-w-full tw-justify-end tw-p-4">
-          <q-pagination
-            v-if="data?.results"
-            v-model="currentPage"
-            :max="Math.ceil(data.count / 10)"
-            direction-links
-            gutter="20px"
-            color="primary"
-            active-color="secondary"
-          />
-        </div>
-      </q-list>
+      <div v-else>
+        <q-table
+          :pagination="initialPagination"
+          class="no-shadow"
+          title="Deposit History"
+          :rows="data?.results"
+          :columns="columns"
+          row-key="name"
+          @request="onRequest"
+        />
+      </div>
     </div>
   </div>
 </template>

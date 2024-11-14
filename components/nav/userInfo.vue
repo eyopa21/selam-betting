@@ -12,11 +12,11 @@ const percentage = ref(50)
         <div class="tw-flex tw-flex-col tw-text-base">
           <div class="tw-flex tw-justify-start">
             <p class="tw-font-semibold">
-              Account No:
+              Account No.
             </p>
-            <span v-if="userStore.user?.user.phone_number" class="tw-font-extrabold tw-text-amber-500">{{ userStore.user?.user.phone_number }}</span>
+            <span v-if="userStore.user?.user.phone_number" class="tw-px-2 tw-font-extrabold tw-text-amber-500">{{ userStore.user?.user.phone_number }}</span>
           </div>
-          <p v-if="userStore.user?.user.email" class="tw-text-xs tw-text-gray-400 tw-underline">
+          <p v-if="userStore.user?.user.email" class="tw-text-xs tw-text-gray-400">
             {{ userStore.user?.user.email }}
           </p>
         </div>
@@ -29,14 +29,41 @@ const percentage = ref(50)
           </q-knob>
         </div> -->
       </div>
-      <div class="tw-bg-primary-700 tw-p-2 tw-font-semibold">
-        <div class="tw-flex tw-items-center  tw-justify-between">
-          <p>Bonus Points</p>
-          <p>0</p>
+      <div class="tw-space-y-3 tw-bg-primary-900 tw-p-2 tw-font-semibold">
+        <div class="tw-flex tw-items-center tw-justify-between tw-rounded-md tw-bg-gradient-to-r  tw-from-slate-800 tw-to-blue-700 tw-px-3 tw-py-2 ">
+          <div>
+            <p class="tw-text-2xl tw-text-blue-500">
+              0 <span class="tw-text-lg">ETB</span>
+            </p>
+            <p>Bonus Points</p>
+          </div>
+          <div>
+            <q-icon name="redeem" size="md" />
+          </div>
         </div>
-        <div v-if="userStore.user?.stake_balance.stake_balance" class="tw-flex tw-items-center   tw-justify-between">
-          <p>Main Account(ETB)</p>
-          <p>{{ userStore.user?.stake_balance.stake_balance }}ETB</p>
+
+        <div class="tw-flex tw-items-center tw-justify-between tw-rounded-md tw-bg-gradient-to-r  tw-from-slate-800 tw-to-emerald-700 tw-px-3 tw-py-2 ">
+          <div>
+            <p class="tw-text-2xl tw-text-green-500">
+              {{ userStore.user?.stake_balance.stake_balance }} <span class="tw-text-lg">ETB</span>
+            </p>
+            <p>Main Account</p>
+          </div>
+          <div>
+            <q-icon name="assured_workload" size="md" />
+          </div>
+        </div>
+
+        <div class="tw-flex tw-items-center tw-justify-between tw-rounded-md tw-bg-gradient-to-r  tw-from-slate-800 tw-to-orange-700 tw-px-3 tw-py-2 ">
+          <div>
+            <p class="tw-text-2xl tw-text-amber-500">
+              {{ userStore.user?.payout_balance.balance }} <span class="tw-text-lg">ETB</span>
+            </p>
+            <p>Payable Account</p>
+          </div>
+          <div>
+            <q-icon name="account_balance_wallet" size="md" />
+          </div>
         </div>
       </div>
       <q-expansion-item
@@ -52,7 +79,7 @@ const percentage = ref(50)
 
             <q-route-tab
               active-class="tw-bg-primary-900" to="/account/withdraw" name="withdraw" icon="upload" label="Withdraw Funds"
-              class=" tw-place-content-start "
+              class="tw-place-content-start "
             />
             <!-- <q-route-tab
               active-class="tw-bg-primary-900" to="/account/bet-history" name="bet_history" icon="access_time" label="Bet History"
@@ -60,7 +87,7 @@ const percentage = ref(50)
             /> -->
             <q-route-tab
               active-class="tw-bg-primary-900" to="/account/transaction-history" name="transaction_history" icon="multiple_stop" label="Transaction History"
-              class=" tw-place-content-start "
+              class="tw-place-content-start "
             />
             <q-route-tab
               active-class="tw-bg-primary-900" to="/account/bet-for-me-agent" name="bet_for_me_agent" icon="record_voice_over" label="Bet For Me"
@@ -115,13 +142,13 @@ const percentage = ref(50)
           </q-tabs>
         </q-card>
       </q-expansion-item>
-      <div class=" tw-absolute tw-bottom-0 tw-w-full tw-place-items-center tw-justify-items-center tw-px-4  tw-pb-4 tw-pt-8 ">
+      <!-- <div class=" tw-absolute tw-bottom-0 tw-w-full tw-place-items-center tw-justify-items-center tw-px-4  tw-pb-4 tw-pt-8 ">
         <q-btn icon="logout" outline color="red" size="lg" class="tw-w-full tw-rounded-lg" @click="logout()">
           <span class="text-white tw-text-sm tw-font-bold">
             Sign Out
           </span>
         </q-btn>
-      </div>
+      </div> -->
     </div>
   </q-list>
 </template>

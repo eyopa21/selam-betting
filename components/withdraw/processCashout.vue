@@ -7,7 +7,7 @@ const { $authentication } = useNuxtApp()
 const showPassword = ref(false)
 const isOpen = ref(false)
 const state = ref({
-  amount: 0,
+  amount: null,
   password: undefined,
 })
 
@@ -42,29 +42,26 @@ async function requestCashout() {
 </script>
 
 <template>
-  <q-btn dark class="bg-red-10 text-white s tw-mx-8  tw-w-full" @click="isOpen = true">
-    <div class=" text-weight-bold">
-      Request Cashout
-    </div>
-    <q-btn dense flat round icon="send" size="md" color="white" />
-  </q-btn>
-  <q-dialog v-model="isOpen">
+  <q-btn label="Request Cashout" icon-right="send" dark unelevated class="bg-positive text-white s tw-mx-8  tw-w-full" @click="isOpen = true" />
+  <q-dialog v-model="isOpen" backdrop-filter="brightness(50%)">
     <div>
       <q-form
         ref="form"
         class="q-gutter-md"
         @submit="requestCashout"
       >
-        <q-card class="tw-w-96 tw-p-4">
-          <q-card-section>
-            <div class="text-h6">
-              Process your cashout
+        <q-card class="tw-w-96">
+          <q-card-section class="row items-center q-pb-none q-pa-md">
+            <div class="text-h6 q-ml-md">
+              Process Cashout
             </div>
+            <q-space />
+            <q-btn v-close-popup icon="close" size="sm" dense flat rounded />
           </q-card-section>
 
           <q-separator />
           <q-card-section>
-            <div class="tw-space-y-8">
+            <div class="q-pa-md tw-grid tw-grid-cols-1 tw-gap-4">
               <q-input
                 v-model="state.amount"
                 placeholder="amount"
@@ -72,8 +69,6 @@ async function requestCashout() {
                 label="Amount In Birr"
                 hint="Amount (Min5.00 ETB / Max 15,000.00 ETB)"
                 outlined
-                class="tw-w-full "
-                filled
                 name="amount"
                 type="number"
                 lazy-rules
@@ -85,15 +80,13 @@ async function requestCashout() {
 
               <q-input
                 v-model="state.password"
-
                 name="password"
                 outlined
                 :type="!showPassword ? 'password' : 'text'"
-
                 label="Password"
                 dense
                 lazy-rules
-                class="tw-w-full"
+
                 :rules="[
                   (val) => !!val || 'Password is required',
                   (val) => val.length >= 6 || 'Minimum of 6 chars is required',
@@ -114,7 +107,7 @@ async function requestCashout() {
           <q-separator />
 
           <q-card-actions align="right" class="tw-mt-4">
-            <q-btn type="submit" class="tw-w-full" :label="loading ? 'Loading...' : 'CONFIRM'" color="red-10" size="lg" />
+            <q-btn type="submit" :label="loading ? 'Loading...' : 'Confirm'" no-caps unelevated color="primary" />
           </q-card-actions>
         </q-card>
       </q-form>

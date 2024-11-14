@@ -47,8 +47,8 @@ async function onSubmit() {
 </script>
 
 <template>
-  <q-btn icon="request_page" label="Send money to your friend" class="tw-h-12" color="red-10" @click="isOpen = true" />
-  <q-dialog v-model="isOpen" @hide=" state.phoneNumber = state.amount = state.password = undefined">
+  <q-btn icon="request_page" label="Send money to your friend" outline class="tw-h-12" unelevated color="primary" @click="isOpen = true" />
+  <q-dialog v-model="isOpen" backdrop-filter="brightness(50%)" @hide="state.phoneNumber = state.amount = state.password = undefined">
     <div>
       <q-form
         ref="form"
@@ -56,16 +56,18 @@ async function onSubmit() {
         @submit="onSubmit"
       >
         <q-card>
-          <q-card-section>
-            <div class="text-h6">
-              Send money to your friend
+          <q-card-section class="row items-center q-pb-none q-pa-md">
+            <div class="text-h6 q-ml-md">
+              Send Money to Your Friend
             </div>
+            <q-space />
+            <q-btn v-close-popup icon="close" size="sm" dense flat rounded />
           </q-card-section>
 
           <q-separator />
 
           <q-card-section style="max-height: 50vh" class="scroll">
-            <div class="tw-flex tw-flex-col tw-space-y-4">
+            <div class="q-pa-md tw-grid tw-grid-cols-1 tw-gap-4">
               <div class="tw-flex tw-w-full tw-min-w-96 tw-flex-row tw-items-center tw-gap-8 ">
                 <q-field class="tw-w-full" filled label="Available stake balance" stack-label>
                   <template #control>
@@ -82,7 +84,7 @@ async function onSubmit() {
                   </template>
                 </q-field>
               </div>
-              <hr>
+
               <div class="tw-space-y-2">
                 <q-input
                   v-model="state.phoneNumber"
@@ -142,7 +144,7 @@ async function onSubmit() {
                   </template>
                 </q-input>
                 <div class="tw-flex tw-w-full tw-justify-end">
-                  <q-toggle v-model="state.isPayout" label="Transfer from payout" />
+                  <q-toggle v-model="state.isPayout" label="Transfer from Payout" />
                 </div>
               </div>
             </div>
@@ -151,7 +153,7 @@ async function onSubmit() {
           <q-separator />
 
           <q-card-actions align="right">
-            <q-btn type="submit" :loading flat label="Proceed" color="primary" />
+            <q-btn type="submit" :loading no-caps label="Proceed" color="primary" />
           </q-card-actions>
         </q-card>
       </q-form>

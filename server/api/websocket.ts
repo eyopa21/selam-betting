@@ -5,7 +5,7 @@ import WebSocket from 'ws'
 
 const config = useRuntimeConfig()
 const room = 'ROOM'
-const targetServerUrl = config.public.webSocketEndpoint
+// const targetServerUrl = config.public.webSocketEndpoint
 
 const targetWsUrl = config.public.webSocketEndpoint // URL of the target WebSocket server
 const wsClient = new WebSocket(targetWsUrl)
