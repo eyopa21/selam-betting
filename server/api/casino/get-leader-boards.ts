@@ -6,17 +6,17 @@ type ErrorResponse = {
   Error: string
 }
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
   const config = useRuntimeConfig()
   const url = `${config.baseApiEndpoint}/betting/casino/api/v1/top_ten_most_winner/`
-  const authHeader = getHeader(event, 'authorization')
+
   try {
     const result = await $fetch<LeaderBoardRoot>(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'X-API-KEY': config.serverApiKey,
-        'Authorization': authHeader!.toString()!,
+
       },
     })
     return result

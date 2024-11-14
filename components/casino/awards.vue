@@ -1,10 +1,6 @@
 <script setup lang="ts">
-const { $authentication } = useNuxtApp()
 const { data, error, status } = useLazyFetch('/api/casino/get-leader-boards', {
   method: 'get',
-  headers: {
-    Authorization: `Bearer ${$authentication.accessToken.value}`,
-  },
 })
 if (error.value) {
   useErrorNotifications(error)
