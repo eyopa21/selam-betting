@@ -79,7 +79,7 @@ const showAttachmentModal = computed(() => {
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <AuthImg v-if="selectedAttachment" :url="selectedAttachment" />
+          <VUEAsyncImg v-if="selectedAttachment" :relative-path="selectedAttachment" />
           <div v-else>
             Failed to load the image right nows
           </div>
