@@ -27,24 +27,24 @@ const tab = ref('recommended')
           <div class="tw-px-5 tw-py-2">
             Recommended Methods
           </div>
-          <div class="tw-text-center">
+          <div class="text-primary tw-size-6 tw-rounded-full tw-border tw-border-blue-950 tw-bg-white tw-text-center">
             1
           </div>
         </div>
       </q-tab>
       <q-tab name="all" class="tw-rounded-lg" no-caps content-class="tw-flex tw-w-full tw-justify-between">
         <span class="tw-px-5 tw-py-2">All Methods </span>
-        <span class="tw-px-5 tw-py-2" side>{{ payments?.length || '' }}</span>
+        <span class="text-primary tw-size-6 tw-rounded-full tw-border tw-border-blue-950 tw-bg-white tw-text-center">{{ payments?.length || '' }}</span>
       </q-tab>
       <q-tab name="wallet" class="tw-rounded-lg" no-caps content-class="tw-flex tw-w-full tw-justify-between">
         <span class="tw-px-5 tw-py-2">E-Wallets</span>
-        <span class="tw-px-5 tw-py-2" side>{{ payments?.filter(pay => !!pay.is_direct_payment_allowed)?.length || '' }}
+        <span class="text-primary tw-size-6 tw-rounded-full tw-border tw-border-blue-950 tw-bg-white tw-text-center">{{ payments?.filter(pay => !!pay.is_direct_payment_allowed)?.length || '' }}
 
         </span>
       </q-tab>
       <q-tab name="mobile" class="tw-rounded-lg" no-caps content-class="tw-flex tw-w-full tw-justify-between">
         <span class="tw-px-5 tw-py-2">Mobile Payments</span>
-        <span class="tw-px-5 tw-py-2" side>{{ payments?.filter(pay => pay.type_of_payment === 'Wallet')?.length || ''
+        <span class="text-primary tw-size-6 tw-rounded-full tw-border tw-border-blue-950 tw-bg-white tw-text-center">{{ payments?.filter(pay => pay.type_of_payment === 'Wallet')?.length || ''
         }}</span>
       </q-tab>
       <q-tab
@@ -52,7 +52,7 @@ const tab = ref('recommended')
         content-class="tw-flex tw-w-full tw-justify-between"
       >
         <span class="tw-px-5 tw-py-2">Internet Banking</span>
-        <span class="tw-px-5 tw-py-2" side>{{ payments?.length || '' }}</span>
+        <span class="text-primary tw-size-6 tw-rounded-full tw-border tw-border-blue-950 tw-bg-white tw-text-center">{{ payments?.length || '' }}</span>
       </q-tab>
     </q-tabs>
 

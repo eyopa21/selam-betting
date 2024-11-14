@@ -12,11 +12,11 @@ const percentage = ref(50)
         <div class="tw-flex tw-flex-col tw-text-base">
           <div class="tw-flex tw-justify-start">
             <p class="tw-font-semibold">
-              Account No:
+              Account No.
             </p>
-            <span v-if="userStore.user?.user.phone_number" class="tw-font-extrabold tw-text-amber-500">{{ userStore.user?.user.phone_number }}</span>
+            <span v-if="userStore.user?.user.phone_number" class="tw-px-2 tw-font-extrabold tw-text-amber-500">{{ userStore.user?.user.phone_number }}</span>
           </div>
-          <p v-if="userStore.user?.user.email" class="tw-text-xs tw-text-gray-400 tw-underline">
+          <p v-if="userStore.user?.user.email" class="tw-text-xs tw-text-gray-400">
             {{ userStore.user?.user.email }}
           </p>
         </div>
@@ -29,14 +29,41 @@ const percentage = ref(50)
           </q-knob>
         </div> -->
       </div>
-      <div class="tw-bg-primary-700 tw-p-2 tw-font-semibold">
-        <div class="tw-flex tw-items-center  tw-justify-between">
-          <p>Bonus Points</p>
-          <p>0</p>
+      <div class="tw-space-y-3 tw-bg-primary-900 tw-p-2 tw-font-semibold">
+        <div class="tw-flex tw-items-center tw-justify-between tw-rounded-md tw-bg-gradient-to-r  tw-from-slate-800 tw-to-blue-700 tw-px-3 tw-py-2 ">
+          <div>
+            <p class="tw-text-2xl tw-text-blue-500">
+              0 <span class="tw-text-lg">ETB</span>
+            </p>
+            <p>Bonus Points</p>
+          </div>
+          <div>
+            <q-icon name="redeem" size="md" />
+          </div>
         </div>
-        <div v-if="userStore.user?.stake_balance.stake_balance" class="tw-flex tw-items-center   tw-justify-between">
-          <p>Main Account(ETB)</p>
-          <p>{{ userStore.user?.stake_balance.stake_balance }}ETB</p>
+
+        <div class="tw-flex tw-items-center tw-justify-between tw-rounded-md tw-bg-gradient-to-r  tw-from-slate-800 tw-to-emerald-700 tw-px-3 tw-py-2 ">
+          <div>
+            <p class="tw-text-2xl tw-text-green-500">
+              {{ userStore.user?.stake_balance.stake_balance }} <span class="tw-text-lg">ETB</span>
+            </p>
+            <p>Main Account</p>
+          </div>
+          <div>
+            <q-icon name="assured_workload" size="md" />
+          </div>
+        </div>
+
+        <div class="tw-flex tw-items-center tw-justify-between tw-rounded-md tw-bg-gradient-to-r  tw-from-slate-800 tw-to-orange-700 tw-px-3 tw-py-2 ">
+          <div>
+            <p class="tw-text-2xl tw-text-amber-500">
+              {{ userStore.user?.payout_balance.balance }} <span class="tw-text-lg">ETB</span>
+            </p>
+            <p>Payable Account</p>
+          </div>
+          <div>
+            <q-icon name="account_balance_wallet" size="md" />
+          </div>
         </div>
       </div>
       <q-expansion-item

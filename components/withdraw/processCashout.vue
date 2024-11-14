@@ -42,8 +42,8 @@ async function requestCashout() {
 </script>
 
 <template>
-  <q-btn label="Request Cashout" no-caps icon-right="send" dark unelevated class="bg-positive text-white s tw-mx-8  tw-w-full" @click="isOpen = true" />
-  <q-dialog v-model="isOpen">
+  <q-btn label="Request Cashout" icon-right="send" dark unelevated class="bg-positive text-white s tw-mx-8  tw-w-full" @click="isOpen = true" />
+  <q-dialog v-model="isOpen" backdrop-filter="brightness(50%)">
     <div>
       <q-form
         ref="form"
@@ -59,7 +59,7 @@ async function requestCashout() {
 
           <q-separator />
           <q-card-section>
-            <div class="tw-space-y-8">
+            <div class="tw-space-y-4">
               <q-input
                 v-model="state.amount"
                 placeholder="amount"
@@ -67,8 +67,9 @@ async function requestCashout() {
                 label="Amount In Birr"
                 hint="Amount (Min5.00 ETB / Max 15,000.00 ETB)"
                 outlined
+
                 class="tw-w-full "
-                filled
+
                 name="amount"
                 type="number"
                 lazy-rules
@@ -109,7 +110,7 @@ async function requestCashout() {
           <q-separator />
 
           <q-card-actions align="right" class="tw-mt-4">
-            <q-btn type="submit" class="tw-w-full" :label="loading ? 'Loading...' : 'CONFIRM'" color="red-10" size="lg" />
+            <q-btn type="submit" class="tw-w-full" :label="loading ? 'Loading...' : 'Confirm'" no-caps unelevated dense color="primary" size="lg" />
           </q-card-actions>
         </q-card>
       </q-form>

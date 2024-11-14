@@ -47,36 +47,35 @@ async function deleteVoucher(voucherId: string) {
 </script>
 
 <template>
-  <q-expansion-item
-    class="tw-rounded-md"
-
-    dense label="Withdrawal Requests" header-class="tw-h-12"
-    expand-icon-class="" expand-icon="keyboard_arrow_down"
-  >
+  <div class="tw-p-4">
     <div>
-      <div class=" tw-border-gray-400 ">
-        <q-table :loading="status === 'pending'" hide-pagination flat bordered :rows="data ?? []" :columns="columns" row-key="name">
-          <template #top-right>
-            <WithdrawProcessCashout @refetch="refetch()" />
-          </template>
-
-          <template #body-cell-actions="props">
-            <q-td :props="props">
-              <q-btn v-if="isSupported" size="sm" flat icon="content_copy" @click="copy(props.row.code)">
-                <q-tooltip>
-                  Copy Voucher Code
-                </q-tooltip>
-              </q-btn>
-
-              <q-btn color="red" size="sm" icon="delete" flat @click="deleteVoucher(props.row.id)">
-                <q-tooltip class="bg-negative">
-                  Delete Voucher
-                </q-tooltip>
-              </q-btn>
-            </q-td>
-          </template>
-        </q-table>
-      </div>
+      <p class="tw-text-base">
+        Withdrawal Requests
+      </p>
     </div>
-  </q-expansion-item>
+
+    <div class="q-mt-md ">
+      <q-table :loading="status === 'pending'" hide-pagination flat bordered :rows="data ?? []" :columns="columns" row-key="name">
+        <template #top-right>
+          <WithdrawProcessCashout @refetch="refetch()" />
+        </template>
+
+        <template #body-cell-actions="props">
+          <q-td :props="props">
+            <q-btn v-if="isSupported" size="sm" flat icon="content_copy" @click="copy(props.row.code)">
+              <q-tooltip>
+                Copy Voucher Code
+              </q-tooltip>
+            </q-btn>
+
+            <q-btn color="negative" size="sm" icon="delete" flat @click="deleteVoucher(props.row.id)">
+              <q-tooltip class="bg-negative">
+                Delete Voucher
+              </q-tooltip>
+            </q-btn>
+          </q-td>
+        </template>
+      </q-table>
+    </div>
+  </div>
 </template>

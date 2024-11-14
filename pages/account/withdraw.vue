@@ -98,13 +98,6 @@ async function withdraw() {
         </div>
       </div>
     </div>
-    <div class="tw-space-y-4 tw-rounded-md tw-bg-white">
-      <div class="tw-grid tw-grid-cols-1 tw-gap-8">
-        <div class="tw-rounded-lg tw-p-4">
-          <WithdrawCashouts />
-        </div>
-      </div>
-    </div>
 
     <div class="tw-mt-24">
       <p>Select payment method to withdraw money</p>
@@ -114,6 +107,15 @@ async function withdraw() {
       <q-spinner color="primary" size="10em" />
     </div>
     <WithdrawPaymentMethods v-else :payments="payments" @pay="handlePaymentClick" />
+
+    <div class="tw-space-y-4 tw-rounded-md tw-bg-white">
+      <div class="tw-grid tw-grid-cols-1 tw-gap-8">
+        <div class="tw-rounded-lg tw-p-4">
+          <WithdrawCashouts />
+        </div>
+      </div>
+    </div>
+
     <q-dialog v-model="isOpen">
       <div>
         <q-form
