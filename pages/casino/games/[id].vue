@@ -3,7 +3,7 @@ import { useMediaQuery } from '@vueuse/core'
 
 definePageMeta({
   layout: 'casino',
-  pageType: 'authenticated',
+  pageType: 'public',
   pagePackageType: 'is_casino_game',
 })
 

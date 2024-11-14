@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'casino',
-  pageType: 'authenticated',
+  pageType: 'public',
   pagePackageType: 'is_casino_game',
 })
 const isMobile = useMediaQuery('(max-width: 768px)')

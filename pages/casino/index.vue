@@ -3,7 +3,7 @@ import type { AllGamesRoot } from '~/types/casino/all-games'
 
 definePageMeta({
   layout: 'casino',
-  pageType: 'authenticated',
+  pageType: 'public',
   pagePackageType: 'is_casino_game',
 })
 

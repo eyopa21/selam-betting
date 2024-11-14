@@ -8,7 +8,7 @@ const general = useGeneralClientInfo()
 const { logout } = useAuth()
 
 const showCasino = computed(() => {
-  return !!$authentication.loggedIn.value && general.generalClientInfo?.general.is_casino_game
+  return !!general.generalClientInfo?.general.is_casino_game
 })
 const menuOptions = ref([
   {
@@ -25,7 +25,7 @@ const menuOptions = ref([
   {
     name: 'Casino',
     link: '/casino',
-    show: showCasino,
+    show: showCasino.value,
   },
   {
     name: 'Promotions',
