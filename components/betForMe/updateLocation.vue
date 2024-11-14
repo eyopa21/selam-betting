@@ -41,7 +41,7 @@ async function updateLocation() {
 
 <template>
   <div>
-    <!-- <q-form
+    <q-form
       class=" tw-min-w-96"
       @submit="updateLocation()"
     >
@@ -79,9 +79,6 @@ async function updateLocation() {
           <q-btn :loading type="submit" flat label="Proceed" color="primary" />
         </q-card-actions>
       </q-card>
-    </q-form> -->
-    <div class="tw-p-4 tw-text-2xl">
-      Coming soon
-    </div>
+    </q-form>
   </div>
 </template>
