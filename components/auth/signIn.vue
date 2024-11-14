@@ -14,7 +14,7 @@ function closePopup() {
 
 <template>
   <q-dialog v-model="layout.showLogin">
-    <q-card class="tw-w-96 tw-p-8">
+    <q-card class="tw-w-96  tw-p-8">
       <q-icon v-close-popup name="close" class="tw-flex tw-w-full tw-justify-end" size="sm" @click="closePopup" />
 
       <div v-if="loginState === 'otp' && currentEmail">

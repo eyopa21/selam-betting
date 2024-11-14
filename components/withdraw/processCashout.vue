@@ -42,12 +42,7 @@ async function requestCashout() {
 </script>
 
 <template>
-  <q-btn dark class="bg-red-10 text-white s tw-mx-8  tw-w-full" @click="isOpen = true">
-    <div class=" text-weight-bold">
-      Request Cashout
-    </div>
-    <q-btn dense flat round icon="send" size="md" color="white" />
-  </q-btn>
+  <q-btn label="Request Cashout" no-caps icon-right="send" dark unelevated class="bg-positive text-white s tw-mx-8  tw-w-full" @click="isOpen = true" />
   <q-dialog v-model="isOpen">
     <div>
       <q-form

@@ -18,26 +18,28 @@ const userStore = useUserStore()
     </q-drawer>
     <q-page-container>
       <div class="tw-m-2 ">
-        <q-banner v-if="$route.name === 'account-deposit'" inline-actions class="text-white tw-bg-primary-700 ">
-          <div class="text-accent tw-font-bold">
+        <q-banner v-if="$route.name === 'account-deposit'" inline-actions class="text-white tw-bg-white">
+          <div class="text-primary tw-font-bold">
             <q-icon name="monetization_on" color="amber-10" size="sm" />
             To discover the world of gaming and winning, top up your account using any payment method from
             Worldwide!
           </div>
-          <!-- <template #action>
-            <q-btn flat color="white" icon="close" />
-          </template> -->
+          <template #action>
+            <q-btn flat color="black" icon="close" />
+          </template>
         </q-banner>
         <div
           :class="$route.name === 'account-bonus' ? 'dark:tw-bg-primary-800 tw-bg-primary-800' : 'dark:tw-bg-gray-200 tw-bg-gray-200'"
-          class="  tw-mt-4 tw-min-h-screen tw-p-2"
+          class="tw-mt-4 tw-min-h-screen tw-p-2"
         >
           <div
             v-if="$route.name === 'account-deposit' || $route.name === 'account-withdraw'"
-            class="tw-border-b-2 tw-text-lg tw-font-extrabold tw-leading-tight"
+            class="tw-border-b-2 tw-px-2 tw-text-lg tw-font-extrabold tw-leading-tight"
           >
-            <span>Account Number: </span>
-            <span class="tw-text-amber-500">{{ userStore.user?.user.phone_number }}</span>
+            <!-- <div class="">
+              <span>Account Number: </span>
+              <span class="text-amber-10">{{ userStore.user?.user.phone_number }}</span>
+            </div> -->
           </div>
           <div>
             <slot />
@@ -45,12 +47,12 @@ const userStore = useUserStore()
         </div>
       </div>
     </q-page-container>
-    <q-footer reveal bordered class="text-white tw-bg-primary-800">
+    <!-- <q-footer reveal bordered class="text-white tw-bg-white">
       <div class="tw-flex tw-justify-end tw-p-4">
         <div class=" tw-rounded-full tw-bg-green-500 tw-p-2">
           <q-icon name="maps_ugc" size="xl" />
         </div>
       </div>
-    </q-footer>
+    </q-footer> -->
   </q-layout>
 </template>

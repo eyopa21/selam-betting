@@ -73,27 +73,41 @@ async function withdraw() {
 
 <template>
   <div class="tw-space-y-4 tw-p-2 tw-pt-0 tw-font-semibold tw-text-primary-500">
-    <div>
-      <p>Select payment method to withdraw money:</p>
-      <p>
-        Available Payout Balance:  <span class="tw-text-sm tw-font-extrabold tw-underline">{{ userStore.user?.payout_balance.balance }} Birr
-        </span>
-      </p>
-    </div>
-    <div class="tw-space-y-4 tw-rounded-lg tw-bg-white tw-p-4">
-      <!-- <q-separator /> -->
-      <div class="tw-flex tw-justify-between">
-        <div class="tw-text-base">
-          <div class="s tw-inline-block tw-space-x-2">
-            <!-- <WithdrawPayoutRequest /> -->
-            <WithdrawPayoutToStake />
-            <WithdrawSendMoneyToFriend />
-          </div>
+    <div class="tw-mt-8 tw-grid tw-grid-cols-2 tw-gap-6">
+      <div class="tw-flex tw-items-center tw-justify-between tw-rounded-md tw-bg-white tw-px-8 tw-py-4">
+        <div class="tw-space-y-2 ">
+          <p class="tw-text-5xl tw-font-extrabold">
+            {{ userStore.user?.payout_balance.balance }} <span class="tw-text-2xl tw-font-normal">ETB</span>
+          </p>
+          <p>Payout Balance</p>
         </div>
-
-        <WithdrawCashouts />
+        <div>
+          <WithdrawPayoutToStake />
+        </div>
       </div>
-      <!-- <q-separator /> -->
+
+      <div class="tw-flex tw-items-center tw-justify-between tw-rounded-md tw-bg-white tw-px-8 tw-py-4">
+        <div class="tw-space-y-2 ">
+          <p class="tw-text-5xl tw-font-extrabold">
+            {{ userStore.user?.stake_balance.stake_balance }} <span class="tw-text-2xl tw-font-normal">ETB</span>
+          </p>
+          <p>Stake Balance</p>
+        </div>
+        <div>
+          <WithdrawSendMoneyToFriend />
+        </div>
+      </div>
+    </div>
+    <div class="tw-space-y-4 tw-rounded-md tw-bg-white">
+      <div class="tw-grid tw-grid-cols-1 tw-gap-8">
+        <div class="tw-rounded-lg tw-p-4">
+          <WithdrawCashouts />
+        </div>
+      </div>
+    </div>
+
+    <div class="tw-mt-24">
+      <p>Select payment method to withdraw money</p>
     </div>
 
     <div v-if="status === 'pending'">

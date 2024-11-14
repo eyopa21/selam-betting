@@ -52,7 +52,7 @@ const percentage = ref(50)
 
             <q-route-tab
               active-class="tw-bg-primary-900" to="/account/withdraw" name="withdraw" icon="upload" label="Withdraw Funds"
-              class=" tw-place-content-start "
+              class="tw-place-content-start "
             />
             <!-- <q-route-tab
               active-class="tw-bg-primary-900" to="/account/bet-history" name="bet_history" icon="access_time" label="Bet History"
@@ -60,7 +60,7 @@ const percentage = ref(50)
             /> -->
             <q-route-tab
               active-class="tw-bg-primary-900" to="/account/transaction-history" name="transaction_history" icon="multiple_stop" label="Transaction History"
-              class=" tw-place-content-start "
+              class="tw-place-content-start "
             />
             <q-route-tab
               active-class="tw-bg-primary-900" to="/account/bet-for-me-agent" name="bet_for_me_agent" icon="record_voice_over" label="Bet For Me"
@@ -115,13 +115,13 @@ const percentage = ref(50)
           </q-tabs>
         </q-card>
       </q-expansion-item>
-      <div class=" tw-absolute tw-bottom-0 tw-w-full tw-place-items-center tw-justify-items-center tw-px-4  tw-pb-4 tw-pt-8 ">
+      <!-- <div class=" tw-absolute tw-bottom-0 tw-w-full tw-place-items-center tw-justify-items-center tw-px-4  tw-pb-4 tw-pt-8 ">
         <q-btn icon="logout" outline color="red" size="lg" class="tw-w-full tw-rounded-lg" @click="logout()">
           <span class="text-white tw-text-sm tw-font-bold">
             Sign Out
           </span>
         </q-btn>
-      </div>
+      </div> -->
     </div>
   </q-list>
 </template>

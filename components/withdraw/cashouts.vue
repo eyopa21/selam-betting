@@ -4,13 +4,11 @@ import { useClipboard } from '@vueuse/core'
 const { copy, copied, isSupported } = useClipboard()
 const { $authentication } = useNuxtApp()
 const columns = ref([
-
-  { name: 'date', label: 'Date Of Request', field: 'date' },
-  { name: 'amount', label: 'Amount', field: 'amount' },
-  { name: 'code', label: 'Cashout Code', field: 'code' },
-  { name: 'status', label: 'Status', field: 'status' },
-  { name: 'delete', label: '', field: 'delete' },
-  { name: 'copy', label: '', field: 'copy' },
+  { name: 'amount', label: 'Amount', field: row => row.amount, format: val => `${val}`, align: 'left' },
+  { name: 'date', label: 'Date Of Request', field: row => formatDate(row.created_at), format: val => `${val}`, align: 'left' },
+  { name: 'code', label: 'Cashout Code', field: row => row.code, format: val => `${val}`, align: 'left' },
+  { name: 'status', label: 'Status', field: row => row.status ? 'Approved' : 'Pending', format: val => `${val}`, align: 'left' },
+  { name: 'actions', label: 'Actions', align: 'center' },
 
 ])
 const { formatDate } = useHelpers()
@@ -50,27 +48,44 @@ async function deleteVoucher(voucherId: string) {
 
 <template>
   <q-expansion-item
-    dense label="WITHDRAWAL REQUESTS" header-class="bg-red-10 text-white tw-h-12"
-    expand-icon-class="text-white" expand-icon="keyboard_double_arrow_down"
+    class="tw-rounded-md"
+
+    dense label="WITHDRAWAL REQUESTS" header-class="tw-h-12"
+    expand-icon-class="" expand-icon="keyboard_arrow_down"
   >
     <div>
       <div class=" tw-border-gray-400 ">
         <q-table :loading="status === 'pending'" dense hide-pagination flat bordered :rows="data ?? []" :columns="columns" row-key="name">
-          <template #top>
+          <template #top-right>
             <WithdrawProcessCashout @refetch="refetch()" />
           </template>
 
-          <template #body="props">
+          <template #body-cell-actions="props">
+            <q-td :props="props">
+              <q-btn v-if="isSupported" size="sm" flat icon="content_copy" @click="copy(props.row.code)">
+                <q-tooltip>
+                  Copy Voucher Code
+                </q-tooltip>
+              </q-btn>
+
+              <q-btn color="red" size="sm" icon="delete" flat @click="deleteVoucher(props.row.id)">
+                <q-tooltip class="bg-negative">
+                  Delete Voucher
+                </q-tooltip>
+              </q-btn>
+            </q-td>
+          </template>
+
+          <!-- <template #body="props">
             <q-tr :props="props" class="!tw-h-10">
-              <q-td key="date" :props="props">
-                <p>{{ formatDate(props.row.created_at) }}</p>
-              </q-td>
               <q-td key="amount" :props="props">
                 <div class="tw-w-16">
                   <p>{{ props.row.amount }}</p>
                 </div>
               </q-td>
-
+              <q-td key="date" :props="props">
+                <p>{{ formatDate(props.row.created_at) }}</p>
+              </q-td>
               <q-td key="code" :props="props">
                 <div class="tw-w-16">
                   {{ props.row.code }}
@@ -99,7 +114,7 @@ async function deleteVoucher(voucherId: string) {
                 </q-btn>
               </q-td>
             </q-tr>
-          </template>
+          </template> -->
         </q-table>
       </div>
     </div>
