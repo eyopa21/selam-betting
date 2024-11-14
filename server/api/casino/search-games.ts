@@ -18,14 +18,14 @@ export default defineEventHandler(async (event) => {
   const deviceType = body.deviceType || 'desktop'
   const searchQuery = query.query as string || ''
   const url = `${config.baseApiEndpoint}/betting/casino/api/v1/search_games/?query=${searchQuery}&page=${page}&device_type=${deviceType}`
-  const authHeader = getHeader(event, 'authorization')
+
   try {
     const result = await $fetch<CasinoRoot>(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'X-API-KEY': config.serverApiKey,
-        'Authorization': authHeader!.toString()!,
+
       },
     })
     return result

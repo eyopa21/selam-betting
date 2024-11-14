@@ -7,16 +7,11 @@ definePageMeta({
   pagePackageType: 'is_casino_game',
 })
 
-const { $authentication } = useNuxtApp()
-
 const isMobile = useMediaQuery('(max-width: 768px)')
 const currentPage = ref(1)
 
 const { data: games, error, status } = await useFetch(`/api/casino/get-all-games`, {
   method: 'POST',
-  headers: {
-    Authorization: `Bearer ${$authentication.accessToken.value}`,
-  },
   body: {
     page: currentPage,
     deviceType: isMobile.value ? 'mobile' : 'desktop',

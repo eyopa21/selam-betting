@@ -12,13 +12,10 @@ const currentPage = ref(1)
 const isMobile = useMediaQuery('(max-width: 768px)')
 const gameStore = useCasinoGameStore()
 const route = useRoute('casino-games')
-const { $authentication } = useNuxtApp()
 
 const { data: games, error, status } = await useFetch(`/api/casino/get-games-by-group/${route.params.id}`, {
   method: 'POST',
-  headers: {
-    Authorization: `Bearer ${$authentication.accessToken.value}`,
-  },
+
   body: {
     page: currentPage,
     deviceType: isMobile.value ? 'mobile' : 'desktop',

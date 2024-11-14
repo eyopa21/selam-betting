@@ -6,7 +6,7 @@ definePageMeta({
 })
 const isMobile = useMediaQuery('(max-width: 768px)')
 const gameStore = useCasinoGameStore()
-const { $authentication } = useNuxtApp()
+
 const currentPage = ref(1)
 const route = useRoute('casino-search')
 const q = ref<string>()
@@ -17,10 +17,6 @@ async function search() {
   try {
     const response = await $fetch(`/api/casino/search-games?query=${q.value || route.params.query}`, {
       method: 'POST',
-      headers: {
-
-        Authorization: `Bearer ${$authentication.accessToken.value}`,
-      },
       body: {
         page: currentPage.value,
         deviceType: isMobile.value ? 'mobile' : 'desktop',
