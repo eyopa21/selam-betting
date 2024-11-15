@@ -24,7 +24,7 @@ async function onSubmit() {
       },
       cache: 'force-cache',
       body: {
-        amount: state.value.amount,
+        amount: +(state.value.amount ?? 0),
         is_stake_balance: !state.value.isPayout,
         password: state.value.password,
         phone_number: state.value.phoneNumber,

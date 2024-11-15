@@ -4,6 +4,7 @@ definePageMeta({
   pageType: 'authenticated',
 })
 const { $authentication } = useNuxtApp()
+const userStore = useUserStore()
 const tab = ref('send_request')
 
 const { data, error } = await useFetch('/api/betForMe/get-account-info', {
@@ -20,7 +21,7 @@ if (error.value) {
 <template>
   <div class="tw-px-4 tw-text-primary-500">
     <div class="tw-flex tw-w-full tw-justify-end  tw-text-xl tw-font-extrabold ">
-      <p>Account No: <span class="tw-text-yellow-500">{{ data?.user_account.phone_number }}</span></p>
+      <p>Account No: <span class="tw-text-yellow-500">{{ userStore.user?.user.phone_number }}</span></p>
     </div>
 
     <div class="tw-mt-4">
@@ -45,6 +46,10 @@ if (error.value) {
 
           <q-tab-panels v-model="tab" animated class="tw-border  tw-bg-white ">
             <q-tab-panel name="send_request">
+              <pre>
+
+                {{ data }}
+              </pre>
               <BetForMeAccount v-if="data" :info="data" />
             </q-tab-panel>
 
