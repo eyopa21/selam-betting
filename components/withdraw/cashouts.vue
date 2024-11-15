@@ -2,6 +2,7 @@
 import { useClipboard } from '@vueuse/core'
 
 const { copy, copied, isSupported } = useClipboard()
+
 const { $authentication } = useNuxtApp()
 const columns = ref([
   { name: 'amount', label: 'Amount', field: row => row.amount, format: val => `${val}`, align: 'left' },
