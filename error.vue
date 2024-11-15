@@ -7,6 +7,10 @@ const error = useError()
   <div class="tw-flex tw-h-screen tw-w-screen tw-items-center tw-bg-gray-50">
     <div class="tw-container tw-flex tw-flex-col tw-items-center tw-justify-between tw-px-5 tw-text-gray-700 md:tw-flex-row">
       <div class="tw-mx-8 tw-w-full lg:tw-w-1/2">
+        <pre>
+
+       {{ error }}
+     </pre>
         <div class="tw-font-dark tw-mb-8 tw-text-7xl tw-font-extrabold tw-text-green-500">
           {{ error?.statusCode }}
         </div>
