@@ -1,48 +1,61 @@
 <script setup lang="ts">
-const isOpen = ref(false)
-const { status, data, send, open, close } = useWebSocket(`ws://${location.host}/api/websocket`)
-const history = ref<string[]>([])
-watch(data, (newValue) => {
-  history.value.push(`server: ${newValue}`)
-})
-
-const message = ref('')
-function sendData() {
-  history.value.push(`client: ${message.value}`)
-  send(message.value)
-  message.value = ''
+const { $authentication } = useNuxtApp()
+const userStore = useUserStore()
+type Message = {
+  message: {
+    message: string
+  }
 }
 
-watch(data, () => {
-  if (data) {
-    isOpen.value = true
+const message = ref(undefined)
+const eventSource = new EventSource(`/api/websocket?token=${encodeURIComponent($authentication.accessToken.value)}`)
+
+eventSource.onmessage = (event) => {
+  console.log('Message from server:', event.data) // Logs "Hello world" every second
+  message.value = event.data
+}
+
+eventSource.onerror = () => {
+  console.error('Error with the event stream')
+  eventSource.close() // Close the connection if there's an error
+}
+
+const parsedMessage = computed<Message>(() => {
+  if (message.value) {
+    return JSON.parse(message.value) ?? undefined
+  } else {
+    return undefined
   }
 })
+const openModal = computed(() => {
+  return parsedMessage.value?.message.message !== 'Request for cash out approval, Please approve in one minute'
+  // return true
+})
 
-function approve() {
-  console.log('approve')
-}
-function decline() {
-  console.log('decline')
+function approveCashout() {
+
 }
 </script>
 
 <template>
-  <div>
-    <h1>WebSocket - let's go! {{ status }} data={{ data }}</h1>
+  <q-dialog v-model="openModal" persistent transition-show="scale" transition-hide="scale">
+    <q-card class="bg-white text-black" style="width: 500px">
+      <q-card-section>
+        <div class="text-h6 tw-font-bold">
+          Dear {{ userStore.user?.user.first_name }},
+        </div>
+      </q-card-section>
+      <q-separator />
 
-    <q-dialog v-model="isOpen" persistent>
-      <q-card>
-        <q-card-section class="row items-center">
-          <q-avatar icon="add_alert" color="primary" text-color="white" />
-          <span class="q-ml-sm">Please approve the cashout request!</span>
-        </q-card-section>
+      <q-card-section v-if="parsedMessage" class="q-pt-none tw-py-16 tw-pt-8 tw-text-xl">
+        {{ parsedMessage?.message.message ?? parsedMessage.message }}
+      </q-card-section>
+      <q-separator />
 
-        <q-card-actions align="right">
-          <q-btn v-close-popup flat label="Decline" color="primary" />
-          <q-btn v-close-popup flat label="Approve" color="primary" />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-  </div>
+      <q-card-actions align="right" class="bg-white text-teal">
+        <q-btn flat label="Cancel" @click="message = undefined" />
+        <q-btn label="Approve" color="primary" />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
