@@ -39,6 +39,7 @@ pnpm install --frozen-lockfile
 
 FROM deps as build 
 
+COPY . . 
 
 
 # FIXME: Temporary fix for `nuxt build` running out memory (i.e. Heap memory allocation limit)
