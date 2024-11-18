@@ -50,7 +50,12 @@ FROM base as final
 
 # Use production node environment by default.
 ENV NODE_ENV production
-
+ENV NUXT_REST_API_ENDPOINT=http://162.55.223.95:8000/betting/api/v1
+ENV NUXT_PUBLIC_FINANCE_API_ENDPOINT=http://162.55.223.95:8000/finance/api/v1
+ENV NUXT_SERVER_API_KEY=RUDKb1iueBuAtFhYGKQxyXhSc2rVKYxe5TNIuTxtEDv6o2jcefPb6p7jXeZlu_LgHExd-_USDVruUS2LjHrSnTOXQnrhIrw9vHLlg7eJDNg
+ENV NUXT_BASE_API_ENDPOINT=http://162.55.223.95:8000
+ENV NUXT_PUBLIC_BASE_IMAGE_URL=http://162.55.223.95:8000
+ENV NUXT_PUBLIC_WEB_SOCKET_ENDPOINT=ws://162.55.223.95:8000/user_notification/
 # Run the application as a non-root user.
 USER node
 
