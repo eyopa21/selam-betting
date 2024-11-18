@@ -17,6 +17,8 @@ export default defineEventHandler(async (event) => {
   const url = `${config.baseApiEndpoint}/betting/api/v1/cash_out_for_user/`
   const authHeader = getHeader(event, 'authorization')
   const body: Body = await readBody(event)
+
+  console.log('bod', body)
   try {
     const result = await $fetch(url, {
       method: 'POST',

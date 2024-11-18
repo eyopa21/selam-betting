@@ -29,9 +29,6 @@ async function processCashout() {
     })
     if (response) {
       showConfirm.value = true
-      state.value.amount = 0
-      state.value.username = ''
-      state.value.voucherCode = ''
     }
   } catch (err) {
     useErrorNotifications(ref(err))
@@ -41,6 +38,7 @@ async function processCashout() {
 }
 
 async function finalize() {
+  console.log('finalize')
   finalLoading.value = true
   try {
     const response = await $fetch('/api/betForMe/finalize', {
@@ -49,8 +47,8 @@ async function finalize() {
         Authorization: `Bearer ${$authentication.accessToken.value}`,
       },
       body: {
-        amount: state.value.amount,
-        username: state.value.username,
+        amount: +state.value.amount,
+        user_name: state.value.username,
         voucher_code: state.value.voucherCode,
         password: state.value.password,
       } as ProcessCashoutBody,
@@ -129,7 +127,7 @@ async function finalize() {
       </div>
     </q-form>
 
-    <q-form @submit="finalize()">
+    <q-form>
       <q-dialog v-model="showConfirm" persistent>
         <q-card style="min-width: 350px">
           <q-card-section>
@@ -158,7 +156,7 @@ async function finalize() {
           </q-card-section>
           <q-card-actions align="right" class="text-primary">
             <q-btn v-close-popup flat type="button" label="Cancel" @click="showConfirm = false" />
-            <q-btn type="submit" label="Proceed" color="primary" :loading="finalLoading" />
+            <q-btn type="submit" label="Proceed" color="primary" :loading="finalLoading" @click="finalize()" />
           </q-card-actions>
         </q-card>
       </q-dialog>

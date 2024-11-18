@@ -46,18 +46,30 @@ if (error.value) {
 
           <q-tab-panels v-model="tab" animated class="tw-border  tw-bg-white ">
             <q-tab-panel name="send_request">
-              <pre>
-
-                {{ data }}
-              </pre>
               <BetForMeAccount v-if="data" :info="data" />
             </q-tab-panel>
 
             <q-tab-panel name="make_visible">
-              <BetForMeVisibility />
+              <div v-if="data?.approval === false ">
+                Please wait for your approval, our team is working on it
+              </div>
+              <div v-else-if="data?.is_bet_for_me_agent">
+                <BetForMeVisibility />
+              </div>
+              <div v-else>
+                We could not do anything right now please contact our support team, Thank you
+              </div>
             </q-tab-panel>
             <q-tab-panel name="bet_for_me">
-              <BetForMeCashout />
+              <div v-if="data?.approval === false">
+                Please wait for your approval, our team is working on it
+              </div>
+              <div v-else-if="data?.is_bet_for_me_agent">
+                <BetForMeCashout />
+              </div>
+              <div v-else>
+                We could not do anything right now please contact our support team, Thank you
+              </div>
             </q-tab-panel>
 
             <q-tab-panel name="update_location">

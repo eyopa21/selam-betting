@@ -12,7 +12,7 @@ const state = ref({
 })
 const message = ref(undefined)
 
-const { data, error, status, execute: refetch } = useLazyFetch('/api/finance/get-cashouts', {
+const { data, error, status } = useLazyFetch('/api/finance/get-cashouts', {
   server: false,
   headers: {
     Authorization: `Bearer ${$authentication.accessToken.value}`,
@@ -21,10 +21,10 @@ const { data, error, status, execute: refetch } = useLazyFetch('/api/finance/get
 if (error.value) {
   useErrorNotifications(error)
 }
-const eventSource = new EventSource(`/api/websocket?token=${encodeURIComponent($authentication.accessToken.value)}`)
+const eventSource = new EventSource(`/api/betForMe/send-notification?token=${encodeURIComponent($authentication.accessToken.value)}`)
 
 eventSource.onmessage = (event) => {
-  console.log('Message from server:', event.data) // Logs "Hello world" every second
+  console.log('Message from server:', event.data)
   message.value = event.data
 }
 
@@ -48,23 +48,26 @@ const openModal = computed(() => {
 const loading = ref(false)
 
 async function approveCashout() {
-  console.log('approve')
   loading.value = true
   try {
-    const response = await $fetch(`/api/betForMe/approve-cashout/${data.value![0].id}`, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${$authentication.accessToken.value}`,
-      },
-      body: {
-        code: data.value![0].code,
-        password: state.value.password,
-      },
-    })
-    if (response) {
-      useSuccessNotification('Transaction Approval successfull')
-      state.value.password = ''
-      message.value = undefined
+    if (data.value && data.value[0]) {
+      const response = await $fetch(`/api/betForMe/approve-cashout/${data.value![0].id}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${$authentication.accessToken.value}`,
+        },
+        body: {
+          code: data.value![0].code,
+          password: state.value.password,
+        },
+      })
+      if (response) {
+        useSuccessNotification('Transaction Approval successfull')
+        state.value.password = ''
+        message.value = undefined
+      }
+    } else {
+      useErrorNotifications(ref('Please check your connection and try again'))
     }
   } catch (err) {
     useErrorNotifications(ref(err))
@@ -89,7 +92,6 @@ async function approveCashout() {
             <div v-if="status === 'pending'">
               <q-spinner
                 color="primary"
-                size="6em&quot;"
               />
             </div>
             <div v-else>

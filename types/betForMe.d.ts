@@ -1,21 +1,10 @@
 export type BetForMeRoot = {
   id: string
-  user_profile: UserProfile
-  approval: boolean
-  reason: string
-  created_at: string
-  modified_at: string
-}
-
-export type UserProfile = {
-  id: string
   user_account: UserAccount
   profile_picture: string
   id_images: IdImage[]
   approval: boolean
-  level: string
   is_bet_for_me_agent: boolean
-  bet_for_me_request: string
   created_at: string
   modified_at: string
 }
