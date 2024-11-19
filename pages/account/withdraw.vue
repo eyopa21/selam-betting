@@ -73,7 +73,7 @@ async function withdraw() {
 
 <template>
   <div class="tw-space-y-4 tw-p-2 tw-pt-0 tw-font-semibold tw-text-primary-500">
-    <div class="tw-mt-8 tw-grid tw-grid-cols-2 tw-gap-6">
+    <div class="tw-mt-8 tw-grid tw-grid-cols-1 tw-gap-6 md:tw-grid-cols-2">
       <div class="tw-flex tw-items-center tw-justify-between tw-rounded-md tw-bg-white tw-px-8 tw-py-4">
         <div class="tw-space-y-2 ">
           <p class="tw-text-5xl tw-font-extrabold">
