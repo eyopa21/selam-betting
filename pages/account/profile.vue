@@ -108,7 +108,7 @@ async function updateUserInfo() {
               <h5 class="tw-text-lg tw-font-bold">
                 PERSONAL INFORMATION
               </h5>
-              <q-for class="tw-mt-4 tw-grid tw-grid-cols-2 tw-gap-4">
+              <div class="tw-mt-4 tw-grid tw-grid-cols-2 tw-gap-4">
                 <q-input v-model="state.firstName" type="text" outlined label="First name" class="tw-shadow-md" />
                 <q-input v-model="state.email" type="email" outlined label="Email" class="tw-shadow-md" disable readonly />
                 <q-input v-model="state.lastName" type="text" outlined label="Last name" class="tw-shadow-md" />
@@ -124,7 +124,7 @@ async function updateUserInfo() {
                   <q-input v-model="state.username" type="text" outlined label="User name" class="tw-shadow-md" disable readonly />
                 </div>
                 <!-- <q-input type="text" outlined label="National Id" class="tw-shadow-md" /> -->
-              </q-for>
+              </div>
             </div>
             <div class="tw-mt-16 tw-px-8">
               <q-btn type="submit" class="tw-w-full" color="primary" size="lg" :loading>
