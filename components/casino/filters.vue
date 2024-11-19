@@ -5,10 +5,10 @@ function navigate(q: string) {
 </script>
 
 <template>
-  <div class="tw-my-8 tw-flex tw-justify-center">
+  <span class=" md:tw-my-8 md:tw-flex md:tw-justify-center">
     <q-tabs
-      narrow-indicator dense align="justify" class="text-white text-weight-bolder tw-font-extrabold"
-      content-class="text-white"
+      narrow-indicator inline-label dense align="justify" class="text-white text-weight-bolder  tw-bg-primary-700 tw-p-4 tw-font-extrabold"
+      content-class="text-white  "
     >
       <q-route-tab name="home" icon="home" label="LOBBY" @click="navigateTo('/casino')" />
       <q-route-tab name="virtual" icon="add_to_queue" label="VIRTUAL" @click="navigate('virtual')" />
@@ -20,7 +20,6 @@ function navigate(q: string) {
       <q-route-tab name="plinko" icon="directions_boat_filled" label="PLINKO" @click="navigate('plinko')" />
       <q-route-tab name="roulette" icon="directions_car_filled" label="ROULETTE" @click="navigate('roulette')" />
       <q-route-tab name="slots" icon="fort" label="SLOTS" @click="navigate('slot')" />
-      <!-- <q-route-tab name="virtual_games" icon="directions_boat_filled" label="VIRTUAL GAMES" @click="navigate('virtual')" /> -->
     </q-tabs>
-  </div>
+  </span>
 </template>

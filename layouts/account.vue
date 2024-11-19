@@ -1,8 +1,15 @@
 <script setup lang="ts">
 const layout = useLayout()
-layout.value.showLeftDrawer = true
+
+const isMobile = useMediaQuery('(max-width: 768px)')
 layout.value.showSideBarProfileMenu = true
 const userStore = useUserStore()
+
+onMounted(() => {
+  if (!isMobile.value) {
+    layout.value.showLeftDrawer = true
+  }
+})
 </script>
 
 <template>
