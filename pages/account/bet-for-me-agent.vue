@@ -33,12 +33,14 @@ if (error.value) {
         <div class="tw-mt-9 tw-flex tw-w-full tw-flex-col tw-gap-4 lg:tw-w-1/2">
           <q-tabs
             v-model="tab"
-            class="bg-primary text-white shadow-2 tw-flex "
+            no-caps
+            inline-label class="bg-white tw-rounded-lg tw-p-4  tw-text-primary-500"s
             align="left"
-            content-class="text-yellow-4"
-            indicator-color="yellow-4"
           >
-            <q-tab name="send_request" label="Send Request " />
+            <!-- <q-tab name="send_request" label=" " /> -->
+            <q-tab name="send_request" class="tw-rounded-lg" no-caps content-class="tw-flex tw-w-full tw-justify-between">
+              <span class="tw-px-5 tw-py-2">Send request </span>
+            </q-tab>
             <q-tab name="make_visible" label="Make my self visible" />
             <q-tab name="bet_for_me" label="Bet for me" />
             <q-tab name="update_location" label="Update Location" />
