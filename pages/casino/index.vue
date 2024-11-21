@@ -83,8 +83,11 @@ onUpdated(() => {
     </div>
     <div v-else-if="games?.results.length ">
       <template v-for="(game, key) in games.results" :key="key">
-        <div v-if="game.games?.length" class="tw-p-4 tw-py-0 ">
-          <CasinoSwiper :slides="game.games" :game-name="game.name" :group-id="game.id" :filter-type="filterType" />
+        <div v-if="game.games?.length " class="tw-p-4 tw-py-0 ">
+          <CasinoSwiper :slides="game.games " :game-name="game.name" :group-id="game.id" :filter-type="filterType" />
+        </div>
+        <div v-else-if=" game.custom_games?.length" class="tw-p-4 tw-py-0 ">
+          <CasinoSwiper :slides="game.custom_games" :game-name="game.name" :group-id="game.id" :filter-type="filterType" />
         </div>
       </template>
       <div class="tw-flex tw-w-full tw-justify-center tw-py-16">
