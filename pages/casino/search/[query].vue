@@ -107,7 +107,7 @@ onUpdated(() => {
           v-if="gameStore.games?.results?.length"
           v-model="currentPage"
           :max="Math.ceil(gameStore.games.count / 20)"
-          :max-pages="10"
+          :max-pages="6"
           direction-links
           gutter="20px"
           color="white"

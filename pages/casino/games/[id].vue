@@ -96,7 +96,7 @@ onUpdated(() => {
           v-if="games?.results"
           v-model="currentPage"
           :max="Math.ceil(games.count / 20)"
-          :max-pages="10"
+          :max-pages="6"
           direction-links
           gutter="20px"
           color="white"
