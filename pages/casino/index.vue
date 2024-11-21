@@ -83,23 +83,8 @@ onUpdated(() => {
     </div>
     <div v-else-if="games?.results.length ">
       <template v-for="(game, key) in games.results" :key="key">
-        <div v-if="game.games?.length" class="tw-p-4 tw-py-0 first:-tw-mt-24">
-          <div class="tw-my-8 tw-mt-32 ">
-            <div class=" tw-flex tw-w-full tw-items-center tw-justify-between  tw-px-4">
-              <h1 class="tw-my-4 tw-text-4xl tw-font-extrabold tw-capitalize tw-text-gray-300">
-                {{ game.name }}
-              </h1>
-              <div>
-                <q-btn :to="`/casino/games/${game.id}`" color="grey-6" class="tw-group tw-px-8 !tw-text-black">
-                  <span class="tw-mr-2">More</span>
-                  <q-icon name="arrow_forward" class="tw-transition-all tw-duration-500 group-hover:tw-translate-x-4" />
-                </q-btn>
-              </div>
-            </div>
-            <q-separator inset size="1px" color="grey-8" />
-          </div>
-
-          <CasinoGames :games="game.games" :filter-type="filterType" />
+        <div v-if="game.games?.length" class="tw-p-4 tw-py-0 ">
+          <CasinoGames :games="game.games" :game-name="game.name" :group-id="game.id" :filter-type="filterType" />
         </div>
       </template>
       <div class="tw-flex tw-w-full tw-justify-center tw-py-16">
