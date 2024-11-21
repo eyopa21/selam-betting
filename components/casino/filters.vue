@@ -5,10 +5,10 @@ function navigate(q: string) {
 </script>
 
 <template>
-  <span class=" md:tw-my-8 md:tw-flex md:tw-justify-center">
+  <span class=" lg:tw-my-8 lg:tw-justify-center xl:tw-flex">
     <q-tabs
       narrow-indicator inline-label dense align="justify" class="text-white text-weight-bolder  tw-bg-primary-700 tw-p-4 tw-font-extrabold"
-      content-class="text-white  "
+      content-class="text-white "
     >
       <q-route-tab name="home" icon="home" label="LOBBY" @click="navigateTo('/casino')" />
       <q-route-tab name="virtual" icon="add_to_queue" label="VIRTUAL" @click="navigate('virtual')" />
