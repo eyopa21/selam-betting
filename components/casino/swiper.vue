@@ -120,6 +120,14 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
         </SwiperSlide>
       </Swiper>
     </div>
+    <div v-if="selectedGame.id && selectedGame.link">
+      <div>
+        <CasinoGamePlayer
+          :game-link="selectedGame.link" :game-id="selectedGame.id" :practice="selectedGame.isPractice"
+          @close="selectedGame.link = ''; selectedGame.id = ''"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
