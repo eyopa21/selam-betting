@@ -70,10 +70,6 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
           {{ props.gameName }}
         </h1>
         <div class="tw-flex tw-gap-2 tw-space-x-2 lg:tw-gap-8">
-          <q-btn :to="`/casino/games/${props.groupId}`" color="purple-8" class="tw-group tw-px-8 !tw-text-white">
-            <span class="tw-mr-2">More</span>
-            <q-icon name="arrow_forward" class="tw-transition-all tw-duration-500 group-hover:tw-translate-x-4" />
-          </q-btn>
           <div class="tw-space-x-2">
             <q-btn
               push round dense color="orange" text-color="black" icon="arrow_left"
@@ -84,6 +80,10 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
               @click="slideNext"
             />
           </div>
+          <q-btn :to="`/casino/games/${props.groupId}`" color="purple-8" class="tw-group tw-px-4 !tw-text-white lg:tw-px-8">
+            <span class="lg:tw-mr-2">More</span>
+            <q-icon name="arrow_forward" class="lg:block tw-hidden tw-transition-all tw-duration-500 group-hover:tw-translate-x-4" />
+          </q-btn>
         </div>
       </div>
       <!-- <q-separator inset size="1px" color="grey-8" /> -->
