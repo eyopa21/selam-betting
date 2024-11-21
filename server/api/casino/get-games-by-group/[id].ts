@@ -27,6 +27,7 @@ export default defineEventHandler(async (event) => {
 
       },
     })
+    console.table(result)
     return result
   } catch (err: unknown) {
     const error = err as NuxtError

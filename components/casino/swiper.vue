@@ -11,10 +11,6 @@ const props = defineProps<{
   groupId: string
 }>()
 
-const emit = defineEmits<{
-  play: [AllGamesRoot['results'][number]['games'][number], boolean]
-}>()
-
 import 'swiper/css'
 import 'swiper/css/pagination'
 
@@ -35,6 +31,33 @@ function slidePrev(): void {
 function slideNext(): void {
   if (swiperInstance) {
     swiperInstance.slideNext()
+  }
+}
+
+const { $authentication } = useNuxtApp()
+const layout = useLayout()
+const isMobile = useMediaQuery('(max-width: 768px)')
+const filterType = ref<'square' | 'circle'>('square')
+
+const selectedGame = ref({
+  link: '',
+  id: '',
+  isPractice: true,
+})
+
+function handleClick(game: AllGamesRoot['results'][number]['games'][number], isPractice: boolean) {
+  if (!$authentication.loggedIn.value) {
+    layout.value.showLogin = true
+  } else {
+    if (!!isMobile.value && !game.mobile) {
+      useErrorNotifications(ref('This game can not be played in mobile devices'))
+    } else if (!isMobile.value && !game.desktop) {
+      useErrorNotifications(ref('This game can not be played without mobile devices'))
+    } else {
+      selectedGame.value.id = game.id
+      selectedGame.value.link = game.play_url
+      selectedGame.value.isPractice = isPractice
+    }
   }
 }
 </script>
@@ -72,7 +95,6 @@ function slideNext(): void {
         :slides-per-view="5"
         :space-between="20"
         @swiper="onSwiper"
-        @slide-change="onSlideChange"
       >
         <SwiperSlide v-for="(game, index) in props.slides" :key="index">
           <q-img
@@ -86,11 +108,11 @@ function slideNext(): void {
               <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-4 ">
                 <q-btn
                   size="sm" color="deep-purple-14" label="Play"
-                  class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white" @click="emit('play', game, false)"
+                  class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white" @click="handleClick(game, true)"
                 />
                 <q-btn
                   size="sm" color="black" label="Practice"
-                  class=" tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white" @click="emit('play', game, true)"
+                  class=" tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white" @click="handleClick(game, true)"
                 />
               </div>
             </div>
