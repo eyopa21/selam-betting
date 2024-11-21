@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     'pinia-plugin-persistedstate/nuxt',
     '@vueuse/nuxt',
     '@nuxt/eslint',
+    'nuxt-swiper',
   ],
   css: ['~/assets/css/main.css'],
 
