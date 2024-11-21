@@ -10,7 +10,7 @@ function navigate(q: string) {
       narrow-indicator inline-label dense align="justify" class="text-white text-weight-bolder  tw-bg-primary-700 tw-p-4 tw-font-extrabold"
       content-class="text-white "
     >
-      <q-route-tab name="home" icon="home" label="LOBBY" @click="navigateTo('/casino')" />
+      <q-route-tab name="home" icon="home" label="HOME" @click="navigateTo('/casino')" />
       <q-route-tab name="virtual" icon="add_to_queue" label="VIRTUAL" @click="navigate('virtual')" />
       <q-route-tab name="league" icon="api" label=" LEAGUE" @click="navigate('league')" />
       <q-route-tab name="crash" icon="videogame_asset" label="CRASH GAMES" @click="navigate('crash')" />

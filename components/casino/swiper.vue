@@ -66,10 +66,10 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
   <div class="tw-h-full">
     <div class="tw-my-0 tw-mt-8  ">
       <div class=" tw-flex tw-w-full tw-items-center tw-justify-between  tw-px-4">
-        <h1 class="tw-my-4 tw-text-4xl tw-font-extrabold tw-capitalize tw-text-gray-300">
+        <h1 class="tw-my-4  tw-text-lg tw-font-extrabold tw-capitalize tw-text-gray-300 lg:tw-text-4xl">
           {{ props.gameName }}
         </h1>
-        <div class="tw-flex tw-gap-8 tw-space-x-2">
+        <div class="tw-flex tw-gap-2 tw-space-x-2 lg:tw-gap-8">
           <q-btn :to="`/casino/games/${props.groupId}`" color="purple-8" class="tw-group tw-px-8 !tw-text-white">
             <span class="tw-mr-2">More</span>
             <q-icon name="arrow_forward" class="tw-transition-all tw-duration-500 group-hover:tw-translate-x-4" />
@@ -89,10 +89,10 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
       <!-- <q-separator inset size="1px" color="grey-8" /> -->
     </div>
 
-    <div class="tw-place-content-center tw-place-items-center  tw-p-8">
+    <div class="tw-place-content-center tw-place-items-center  tw-p-2 lg:tw-p-8">
       <Swiper
         :modules="modules"
-        :slides-per-view="5"
+        :slides-per-view="isMobile ? 2 : 5"
         :space-between="20"
         @swiper="onSwiper"
       >
