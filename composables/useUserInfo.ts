@@ -34,6 +34,7 @@ export function useUserInfo() {
         spinnerColor: 'yellow',
         spinnerSize: 140,
         backgroundColor: 'purple',
+
         message: 'Loading user info. Hang on...',
         messageColor: 'black',
       })

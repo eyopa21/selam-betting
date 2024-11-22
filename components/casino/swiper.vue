@@ -54,9 +54,11 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
     } else if (!isMobile.value && !game.desktop) {
       useErrorNotifications(ref('This game can not be played without mobile devices'))
     } else {
-      selectedGame.value.id = game.id
-      selectedGame.value.link = game.play_url
-      selectedGame.value.isPractice = isPractice
+      // selectedGame.value.id = game.id
+      // selectedGame.value.link = game.play_url
+      // selectedGame.value.isPractice = isPractice
+
+      navigateTo(`/casino/play/${game.id}`)
     }
   }
 }
