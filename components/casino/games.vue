@@ -12,12 +12,6 @@ const layout = useLayout()
 const isMobile = useMediaQuery('(max-width: 768px)')
 const filterType = ref<'square' | 'circle'>('square')
 
-const selectedGame = ref({
-  link: '',
-  id: '',
-  isPractice: true,
-})
-
 function handleClick(game: AllGamesRoot['results'][number]['games'][number], isPractice: boolean) {
   if (!$authentication.loggedIn.value) {
     layout.value.showLogin = true
@@ -27,9 +21,11 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
     } else if (!isMobile.value && !game.desktop) {
       useErrorNotifications(ref('This game can not be played without mobile devices'))
     } else {
-      selectedGame.value.id = game.id
-      selectedGame.value.link = game.play_url
-      selectedGame.value.isPractice = isPractice
+      if (isPractice) {
+        navigateTo(`/casino/play/${game.id}?practice=true`)
+      } else {
+        navigateTo(`/casino/play/${game.id}`)
+      }
     }
   }
 }
@@ -81,14 +77,6 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
           />
         </div>
       </div>
-    </div>
-  </div>
-  <div v-if="selectedGame.id && selectedGame.link">
-    <div>
-      <CasinoGamePlayer
-        :game-link="selectedGame.link" :game-id="selectedGame.id" :practice="selectedGame.isPractice"
-        @close="selectedGame.link = ''; selectedGame.id = ''"
-      />
     </div>
   </div>
 </template>
