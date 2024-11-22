@@ -26,7 +26,7 @@ if (error.value) {
       </div>
     </div>
     <div v-else class="no-scrollbar tw-mt-4 tw-flex tw-max-w-full tw-flex-row tw-gap-4 tw-overflow-auto">
-      <div v-for="i in data?.results" :key="i.id" class="tw-m-1">
+      <div v-for="i in data?.results" :key="i.id" class="tw-m-1" @click="navigateTo(`/casino/games/${i.id}`)">
         <q-avatar size="200px" font-size="52px" color="primary" text-color="white" class="tw-cursor-pointer tw-ring-1 tw-transition-all tw-duration-500 hover:tw-scale-105">
           <q-img :src="i.icon_url" />
         </q-avatar>
