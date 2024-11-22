@@ -37,15 +37,8 @@ function slideNext(): void {
 const { $authentication } = useNuxtApp()
 const layout = useLayout()
 const isMobile = useMediaQuery('(max-width: 768px)')
-const filterType = ref<'square' | 'circle'>('square')
 
-const selectedGame = ref({
-  link: '',
-  id: '',
-  isPractice: true,
-})
-
-function handleClick(game: AllGamesRoot['results'][number]['games'][number], isPractice: boolean) {
+function handleClick(game: NonNullable<AllGamesRoot['results'][number]['games']>[number], isPractice: boolean) {
   if (!$authentication.loggedIn.value) {
     layout.value.showLogin = true
   } else {
@@ -54,37 +47,52 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
     } else if (!isMobile.value && !game.desktop) {
       useErrorNotifications(ref('This game can not be played without mobile devices'))
     } else {
-      // selectedGame.value.id = game.id
-      // selectedGame.value.link = game.play_url
-      // selectedGame.value.isPractice = isPractice
-
-      navigateTo(`/casino/play/${game.id}`)
+      if (isPractice) {
+        navigateTo(`/casino/play/${game.id}?practice=true`)
+      } else {
+        navigateTo(`/casino/play/${game.id}`)
+      }
     }
   }
 }
+
+const slidesPerRow = computed(() => {
+  if (isSmallScreen.value) {
+    return 1.1
+  } else if (isMediumScreen.value) {
+    return 2.2
+  } else if (isLargeScreen.value) {
+    return 3.3
+  } else if (isXLargeScreen.value) {
+    return 4.1
+  } else {
+    return 5.5
+  }
+})
 </script>
 
 <template>
   <div class="tw-h-full">
-    <div class="tw-my-0 tw-mt-8  ">
+    <div class="tw-my-0 tw-mt-4  ">
       <div class=" tw-flex tw-w-full tw-items-center tw-justify-between  tw-px-4">
-        <h1 class="tw-my-4  tw-text-lg tw-font-extrabold tw-capitalize tw-text-gray-300 lg:tw-text-4xl">
+        <h1 class="tw-my-0  tw-text-lg tw-font-extrabold tw-capitalize tw-text-gray-300 lg:tw-text-4xl">
           {{ props.gameName }}
         </h1>
         <div class="tw-flex tw-gap-2 tw-space-x-2 lg:tw-gap-8">
           <div class="tw-space-x-2">
-            <q-btn
-              push round dense color="orange" text-color="black" icon="arrow_left"
-              @click="slidePrev"
-            />
-            <q-btn
-              push round dense color="orange" text-color="black" icon="arrow_right"
-              @click="slideNext"
-            />
+            <q-btn push round dense color="orange" text-color="black" icon="arrow_left" @click="slidePrev" />
+            <q-btn push round dense color="orange" text-color="black" icon="arrow_right" @click="slideNext" />
           </div>
-          <q-btn :to="`/casino/games/${props.groupId}`" color="purple-8" class="tw-group tw-px-4 !tw-text-white lg:tw-px-8">
+          <q-btn
+            :to="`/casino/games/${props.groupId}`" color="purple-8"
+            class="tw-group tw-px-4 !tw-text-white lg:tw-px-8"
+            dense
+          >
             <span class="lg:tw-mr-2">More</span>
-            <q-icon name="arrow_forward" class="lg:block tw-hidden tw-transition-all tw-duration-500 group-hover:tw-translate-x-4" />
+            <q-icon
+              name="arrow_forward"
+              class="lg:block tw-hidden tw-transition-all tw-duration-500 group-hover:tw-translate-x-4"
+            />
           </q-btn>
         </div>
       </div>
@@ -94,23 +102,19 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
     <div class="tw-place-content-center tw-place-items-center  tw-p-2 lg:tw-p-8">
       <Swiper
         :modules="modules"
-        :slides-per-view="isMobile ? 2 : 5"
-        :space-between="20"
-        @swiper="onSwiper"
+        :slides-per-view="slidesPerRow"
+        :space-between="20" @swiper="onSwiper"
       >
         <SwiperSlide v-for="(game, index) in props.slides" :key="index">
           <q-img
-            :src="game.logo_url"
-            :alt="game.label"
-            fit="cover"
-            class="image-container  tw-h-64  tw-rounded-xl "
+            :src="game.logo_url" :alt="game.label" fit="cover" class="image-container  tw-h-64  tw-rounded-xl "
             placeholder-src="/casino/logo.svg"
           >
             <div class="caption absolute-full text-subtitle2 flex flex-center">
               <div class="tw-mt-3  tw-flex tw-justify-around tw-space-x-4 ">
                 <q-btn
                   size="sm" color="deep-purple-14" label="Play"
-                  class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white" @click="handleClick(game, true)"
+                  class="tw-h-6 tw-w-full tw-rounded-xl tw-ring-1 tw-ring-white" @click="handleClick(game, false)"
                 />
                 <q-btn
                   size="sm" color="black" label="Practice"
@@ -121,14 +125,6 @@ function handleClick(game: AllGamesRoot['results'][number]['games'][number], isP
           </q-img>
         </SwiperSlide>
       </Swiper>
-    </div>
-    <div v-if="selectedGame.id && selectedGame.link">
-      <div>
-        <CasinoGamePlayer
-          :game-link="selectedGame.link" :game-id="selectedGame.id" :practice="selectedGame.isPractice"
-          @close="selectedGame.link = ''; selectedGame.id = ''"
-        />
-      </div>
     </div>
   </div>
 </template>

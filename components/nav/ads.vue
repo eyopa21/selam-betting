@@ -11,14 +11,14 @@ const slide = ref('1')
     class="text-white shadow-1 rounded-border"
   >
     <q-carousel-slide v-for="i in ads" :key="i.id" :name="i.content" :img-src="i.image_url" class="tw-h-full tw-w-full">
-      <div class="absolute-bottom custom-caption tw-bg-primary-400 tw-p-4">
+      <!-- <div class="absolute-bottom custom-caption tw-bg-primary-400 tw-p-4">
         <div class="text-h2">
           {{ i.notes }}
         </div>
         <div class="text-subtitle1">
           {{ i.content }}
         </div>
-      </div>
+      </div> -->
     </q-carousel-slide>
   </q-carousel>
 </template>
