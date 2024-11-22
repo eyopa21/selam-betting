@@ -1,7 +1,16 @@
 <script setup lang="ts">
 const userStore = useUserStore()
-const { logout } = useAuth()
-const percentage = ref(50)
+// const { logout } = useAuth()
+// const percentage = ref(50)
+const layout = useLayout()
+
+const isMobile = useMediaQuery('(max-width: 768px)')
+
+function closeSideBar() {
+  if (isMobile.value) {
+    layout.value.showLeftDrawer = false
+  }
+}
 </script>
 
 <template>
@@ -71,7 +80,7 @@ const percentage = ref(50)
         header-class="tw-bg-primary-800 tw-text-gray-400 tw-text-lg"
       >
         <q-card class="tw-items-start tw-bg-primary-700">
-          <q-tabs vertical inline-label dense no-caps>
+          <q-tabs vertical inline-label dense no-caps @click="closeSideBar()">
             <q-route-tab
               active-class="tw-bg-primary-900" to="/account/deposit" name="deposit" icon="monetization_on" label="Deposit"
               class=" tw-place-content-start "
