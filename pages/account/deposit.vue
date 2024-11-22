@@ -118,6 +118,8 @@ function handlePaymentClick(paymentMethodName: string, logoUrl: string, is_direc
         <q-spinner color="primary" size="10em" />
       </div>
       <WithdrawPaymentMethods v-else :payments="payments" @pay="handlePaymentClick" />
+
+      <WithdrawBonus />
       <q-dialog v-model="isOpen">
         <div>
           <q-form
