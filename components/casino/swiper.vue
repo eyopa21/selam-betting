@@ -84,8 +84,9 @@ const slidesPerRow = computed(() => {
             <q-btn push round dense color="orange" text-color="black" icon="arrow_right" @click="slideNext" />
           </div>
           <q-btn
+            size="sm"
             :to="`/casino/games/${props.groupId}`" color="purple-8"
-            class="tw-group tw-px-4 !tw-text-white lg:tw-px-8"
+            class="tw-group tw-h-8 tw-px-4 !tw-text-white lg:tw-px-8"
             dense
           >
             <span class="lg:tw-mr-2">More</span>
