@@ -13,11 +13,11 @@ const getName = computed(() => {
 })
 const { $authentication } = useNuxtApp()
 const imageData = ref<string | null>(null)
-
+const config = useRuntimeConfig()
 onMounted(async () => {
   try {
     console.log('proo', props.url)
-    const response = await $fetch<Blob>(`http://162.55.223.95:8000${props.url}`, {
+    const response = await $fetch<Blob>(`${config.public.baseImageUrl}${props.url}`, {
       headers: {
         Authorization: `Bearer ${$authentication.accessToken.value}`,
       },
