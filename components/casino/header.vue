@@ -69,9 +69,38 @@ const menuOptions = ref([
       <q-btn round flat icon="logout" dense class="tw-text-xl tw-text-red-600" @click="logout()" />
     </div>
     <!-- mobile menu -->
-    <div class="tw:block lg:tw-hidden">
-      <q-btn unelevated icon="menu">
+    <div class="tw:block tw-flex lg:tw-hidden">
+      <q-btn icon="emoji_events" color="amber-10">
         <q-menu fit class="tw-w-screen tw-bg-primary-800">
+          <template v-for="option in menuOptions" :key="option.name">
+            <q-list v-if="option.show">
+              <q-item clickable class="text-white font-bold">
+                <q-btn flat :to="option.link">
+                  {{ option.name }}
+                </q-btn>
+              </q-item>
+            </q-list>
+          </template>
+          <div v-if="!$authentication.loggedIn.value" class="tw-flex tw-gap-4 tw-p-4">
+            <q-btn
+              label="LOGIN" no-wrap icon="login"
+              class="tw-bg-gray-500 tw-font-bold" unelevated @click="layout.showLogin = true"
+            />
+            <q-btn
+              no-wrap icon="app_registration" label="REGISTER" unelevated
+              class="bg-positive tw-font-bold" @click="layout.showRegister = true"
+            />
+          </div>
+          <div v-else class="tw-m-2 tw-flex tw-justify-start tw-text-white">
+            <q-btn
+              icon="logout" label="LOG OUT" unelevated class="tw-bg-primary-500 tw-font-bold"
+              @click="logout()"
+            />
+          </div>
+        </q-menu>
+      </q-btn>
+      <q-btn unelevated icon="menu">
+        <q-menu :offset="[5, 20]" fit class=" tw-w-screen tw-bg-secondary-900 tw-p-4">
           <template v-for="option in menuOptions" :key="option.name">
             <q-list v-if="option.show">
               <q-item clickable class="text-white font-bold">
