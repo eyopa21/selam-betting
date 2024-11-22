@@ -27,11 +27,11 @@ onMounted(async () => {
       imageData.value = URL.createObjectURL(response)
     } else {
       console.error('Failed to fetch the image:')
-      useErrorNotifications(ref('Failed to fetch the image'))
+      // useErrorNotifications(ref('Failed to fetch the image'))
     }
   } catch (err) {
     console.error('Failed to fetch the image:', err)
-    useErrorNotifications(ref('Failed to fetch the image'))
+    // useErrorNotifications(ref('Failed to fetch the image'))
   }
 })
 </script>

@@ -16,7 +16,8 @@ export function useAuthenticatedImage() {
         return blobUrl
       }
     } catch (err) {
-      useErrorNotifications(ref(err))
+      // useErrorNotifications(ref(err))
+      console.error(err)
     } finally {
       loading.value = false
     }
