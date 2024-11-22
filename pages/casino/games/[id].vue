@@ -5,6 +5,9 @@ definePageMeta({
   layout: 'casino',
   pageType: 'public',
   pagePackageType: 'is_casino_game',
+  validate(route) {
+    return validateUUID(route.params.id as string)
+  },
 })
 
 const currentPage = ref(1)

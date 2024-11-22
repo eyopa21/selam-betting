@@ -1,6 +1,11 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'casino',
+
+  validate(route) {
+    return validateUUID(route.params.id as string)
+  },
+
 })
 
 const isIframeError = ref(false)
@@ -75,10 +80,8 @@ const isDeviceTypeError = computed(() => {
           <iframe
             id="gamePlayer"
             :src="isPractice ? `${`${data.play_url}demo`}&${hmacData}` : `${data?.play_url}${$authentication.accessToken.value}&${hmacData}`"
-            :allowfullscreen="true" style="width: 100%; height: 100%;"
-            @load="loading = false"
-            @error="isIframeError = true"
-            @abort="isIframeError = true"
+            :allowfullscreen="true" style="width: 100%; height: 100%;" @load="loading = false"
+            @error="isIframeError = true" @abort="isIframeError = true"
           />
         </q-card-section>
       </q-card>
