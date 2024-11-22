@@ -8,6 +8,6 @@ export type CasinoGroupsRoot = {
 export type Result = {
   id: string
   name: string
-  order: string | null
+  order?: number
   icon_url: string
 }

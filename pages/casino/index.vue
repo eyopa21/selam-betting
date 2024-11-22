@@ -106,6 +106,9 @@ onUpdated(() => {
     <div v-else class="tw-flex tw-justify-center ">
       <VUENoItemsFound :search="true" @back="$router.back()" />
     </div>
+    <div class="tw-mt-8 tw-px-4">
+      <CasinoCategories />
+    </div>
 
     <div class="tw-mx-auto tw-mt-64 tw-h-full tw-w-full  tw-px-2">
       <CasinoBottomAd />
