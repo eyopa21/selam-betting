@@ -56,16 +56,15 @@ onUpdated(() => {
   <div class="tw-mx-auto tw-pb-20">
     <div class="tw-flex  tw-w-full tw-flex-col tw-gap-2  tw-p-2 lg:tw-flex-row ">
       <div class="tw-w-full lg:tw-w-2/3">
-        <NavBanner class="tw-min-h-[28rem] !tw-w-full" />
+        <NavBanner class="tw-min-h-32 !tw-w-full" />
       </div>
-      <CasinoAwards />
+      <CasinoAwards class="tw-hidden lg:tw-block" />
     </div>
     <CasinoFilters />
-    <div class="tw-mt-6 tw-flex tw-justify-between tw-gap-4 tw-px-2 lg:tw-px-8">
-      <div class="tw-hidden tw-self-end tw-text-lg tw-text-white lg:tw-block" />
+    <div class="tw-mt-0 tw-flex tw-justify-center tw-gap-4 tw-px-2 lg:tw-px-8">
       <CasinoSearchGames />
 
-      <div class="tw-flex  tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
+      <!-- <div class="tw-flex  tw-self-center tw-rounded-lg tw-border-2 tw-border-primary-400">
         <div class="tw-hidden md:tw-block">
           <q-btn-group>
             <q-btn color="primary-10" icon="filter_alt" size="lg" />
@@ -87,7 +86,7 @@ onUpdated(() => {
             <q-fab-action color="primary" icon="control_camera" :square="true" />
           </q-fab>
         </div>
-      </div>
+      </div> -->
     </div>
     <div v-if="loading">
       <div class="tw-grid tw-grid-cols-4">
@@ -107,7 +106,7 @@ onUpdated(() => {
           v-if="gameStore.games?.results?.length"
           v-model="currentPage"
           :max="Math.ceil(gameStore.games.count / 20)"
-          :max-pages="6"
+          :max-pages="5"
           direction-links
           gutter="20px"
           color="white"
@@ -117,10 +116,10 @@ onUpdated(() => {
     </div>
 
     <div v-else class="tw-flex tw-justify-center ">
-      <VUENoItemsFound :search="true" />
+      <VUENoItemsFound :search="true" @back="$router.back()" />
     </div>
 
-    <div class="tw-mx-auto tw-mt-8 tw-h-full tw-w-3/4 tw-bg-primary-500">
+    <div class="tw-mx-auto tw-mt-64 tw-h-full tw-w-full  tw-px-2">
       <CasinoBottomAd />
     </div>
   </div>

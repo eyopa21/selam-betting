@@ -8,7 +8,7 @@ function navigate(q: string) {
   <div class="tw-mx-2">
     <span class=" tw-mx-2 lg:tw-my-8 lg:tw-justify-center xl:tw-flex">
       <q-tabs
-        narrow-indicator inline-label align="left" class=" tw-rounded-lg tw-bg-primary-700  tw-text-primary-500"
+        narrow-indicator inline-label align="left" class=" tw-rounded-lg tw-bg-secondary-900  tw-text-primary-500"
         content-class="text-white "
       >
         <q-route-tab name="home" icon="home" label="HOME" @click="navigateTo('/casino')" />

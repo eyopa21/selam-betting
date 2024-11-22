@@ -29,11 +29,7 @@ const emit = defineEmits<{
         {{ props.message }}
       </p>
       <div class="tw-mt-8">
-        <q-btn
-          v-if="props.search"
-          color="secondary"
-          @click="emit('back')"
-        >
+        <q-btn v-if="props.search" color="secondary" @click="emit('back')">
           Get back
         </q-btn>
       </div>

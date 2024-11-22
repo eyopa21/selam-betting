@@ -7,7 +7,7 @@ const slide = ref('1')
 <template>
   <q-carousel
     v-model="slide"
-    control-color="white" navigation padding thumbnails height="300px" :autoplay="true"
+    control-color="white" navigation padding thumbnails height="150px" :autoplay="true"
     class="text-white shadow-1 rounded-border"
   >
     <q-carousel-slide v-for="i in ads" :key="i.id" :name="i.content" :img-src="i.image_url" class="tw-h-full tw-w-full">
