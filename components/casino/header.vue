@@ -3,7 +3,7 @@ const layout = useLayout()
 const userStore = useUserStore()
 const { $authentication } = useNuxtApp()
 const { logout } = useAuth()
-
+const showAwards = ref(false)
 const menuOptions = ref([
   {
     name: 'Home',
@@ -70,37 +70,14 @@ const menuOptions = ref([
     </div>
     <!-- mobile menu -->
     <div class="tw:block tw-flex lg:tw-hidden">
-      <q-btn icon="emoji_events" color="amber-10">
-        <q-menu fit class="tw-w-screen tw-bg-primary-800">
-          <template v-for="option in menuOptions" :key="option.name">
-            <q-list v-if="option.show">
-              <q-item clickable class="text-white font-bold">
-                <q-btn flat :to="option.link">
-                  {{ option.name }}
-                </q-btn>
-              </q-item>
-            </q-list>
-          </template>
-          <div v-if="!$authentication.loggedIn.value" class="tw-flex tw-gap-4 tw-p-4">
-            <q-btn
-              label="LOGIN" no-wrap icon="login"
-              class="tw-bg-gray-500 tw-font-bold" unelevated @click="layout.showLogin = true"
-            />
-            <q-btn
-              no-wrap icon="app_registration" label="REGISTER" unelevated
-              class="bg-positive tw-font-bold" @click="layout.showRegister = true"
-            />
-          </div>
-          <div v-else class="tw-m-2 tw-flex tw-justify-start tw-text-white">
-            <q-btn
-              icon="logout" label="LOG OUT" unelevated class="tw-bg-primary-500 tw-font-bold"
-              @click="logout()"
-            />
-          </div>
-        </q-menu>
+      <q-btn icon="emoji_events" color="amber-10" @click="showAwards = true">
+        <q-menu :offset="[50, 20]" fit class=" !tw-min-w-screen !tw-w-screen tw-bg-secondary-900 tw-p-4" />
       </q-btn>
+      <q-dialog v-model="showAwards" position="right">
+        <CasinoAwards class="!tw-w-screen" />
+      </q-dialog>
       <q-btn unelevated icon="menu">
-        <q-menu :offset="[5, 20]" fit class=" tw-w-screen tw-bg-secondary-900 tw-p-4">
+        <q-menu fit class=" tw-w-screen tw-bg-secondary-900 tw-p-4">
           <template v-for="option in menuOptions" :key="option.name">
             <q-list v-if="option.show">
               <q-item clickable class="text-white font-bold">
