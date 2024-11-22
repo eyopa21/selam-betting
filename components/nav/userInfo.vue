@@ -109,7 +109,7 @@ function closeSideBar() {
         default-opened expand-separator label="MISCELLANEOUS"
         header-class="tw-bg-primary-800 tw-text-gray-400 tw-text-lg"
       >
-        <q-card class="tw-items-start tw-bg-primary-700">
+        <q-card class="tw-items-start tw-bg-primary-700" @click="closeSideBar()">
           <q-tabs vertical inline-label dense no-caps>
             <!-- <q-route-tab
               active-class="tw-bg-primary-900" to="/account/invite" name="invite" icon="groups" label="Invite Friends"
@@ -135,7 +135,7 @@ function closeSideBar() {
         default-opened expand-separator label="PROFILE"
         header-class="tw-bg-primary-800 tw-text-gray-400 tw-text-lg"
       >
-        <q-card class="tw-items-start tw-bg-primary-700">
+        <q-card class="tw-items-start tw-bg-primary-700" @click="closeSideBar()">
           <q-tabs vertical inline-label dense no-caps>
             <q-route-tab
               active-class="tw-bg-primary-900" to="/account/profile" name="profile" icon="person" label="Personal profile"
