@@ -7,7 +7,6 @@ export function useErrorNotifications(error: Ref<unknown>) {
 
   const err = error.value as NuxtError
 
-  console.log({ err })
   // handleError(err)
   if (typeof unref(error) === 'string') {
     Notify.create({
@@ -16,7 +15,7 @@ export function useErrorNotifications(error: Ref<unknown>) {
     })
   } else {
     Notify.create({
-      messagse: err?.data.message ?? 'Something went wrong, please try again',
+      message: err?.data.message ?? 'Something went wrong, please try again',
       color: 'red',
       timeout: 5000,
     })
